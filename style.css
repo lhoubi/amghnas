@@ -431,6 +431,10 @@ h3 {
         font-size: 1rem;
     }
 
+    .keyboard-row {
+        gap: 6px; /* Slightly reduced gap for smaller screens */
+    }
+
     .keyboard-key {
         width: 45px;
         height: 45px;
@@ -439,6 +443,7 @@ h3 {
 
     .keyboard-key.wide {
         width: 95px;
+        font-size: 1rem; /* Adjust font size for SPACE on very small screens */
     }
 
     .action-buttons {
@@ -451,6 +456,32 @@ h3 {
         justify-content: center;
     }
 }
+
+/* NEW MEDIA QUERY FOR VERY SMALL SCREENS (e.g., iPhone 5/SE, older Androids) */
+@media (max-width: 360px) {
+    .keyboard-row {
+        gap: 4px; /* Even smaller gap between keys */
+    }
+
+    .keyboard-key {
+        width: 40px; /* Further reduction in key size */
+        height: 40px;
+        font-size: 1.1rem; /* Smaller font for key characters */
+    }
+
+    .keyboard-key.wide {
+        width: 85px; /* Spacebar adjustment for very small screens */
+        font-size: 0.9rem;
+    }
+    .keyboard-key.delete {
+        font-size: 1.2rem; /* Ensure delete icon remains visible and functional */
+    }
+    /* Adjust text area font for very small screens */
+    textarea {
+        font-size: 0.9rem;
+    }
+}
+
 
 /* Specific styling for active keyboard key */
 .keyboard-key.active {
@@ -491,7 +522,7 @@ body.dark-mode .action-buttons button.clear:hover {
 }
 
 body.dark-mode .action-buttons button.copy {
-    background-color: var(--dark-primary-color); /* Use dark primary color */
+    background-color: var(--dark-primary-color);
 }
 body.dark-mode .action-buttons button.copy:hover {
     background-color: var(--dark-primary-dark-color);
