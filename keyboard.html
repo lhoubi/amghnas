@@ -23,7 +23,6 @@
 
     <div class="container">
         <!-- Header Controls for Navigation & Dark Mode Toggle -->
-        <!-- This structure now exactly mirrors your index.html -->
         <div class="header-controls">
             <!-- Navigation link back to the main converter page -->
             <a href="index.html" class="nav-button">
@@ -40,7 +39,8 @@
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
 
         <!-- Textarea for Tifinagh Input -->
-        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." autofocus></textarea>
+        <!-- CHANGED: Added 'readonly' attribute and removed 'autofocus' -->
+        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." readonly></textarea>
 
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
@@ -71,7 +71,7 @@
                     <button class="keyboard-key" data-key="ⵎ">ⵎ</button>
                     <button class="keyboard-key" data-key="ⵇ">ⵇ</button>
                     <button class="keyboard-key" data-key="ⵙ">ⵙ</button>
-                    <button class="keyboard-key" data-key="ⵛ">ⵛ</button>
+                    <button class="keyboard-key" data-key="ⵛ">ⵛ</Gavbutton>
                     <button class="keyboard-key" data-key="ⴷ">ⴷ</button>
                     <button class="keyboard-key" data-key="ⵣ">ⵣ</button>
                 </div>
