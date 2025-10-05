@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearBtn = document.getElementById('clearBtn');
 
     if (!keyboardInput) {
-        console.error("Error: 'keyboardInput' div not found. Please ensure your HTML has <div id='keyboardInput' contenteditable='true'>.");
+        console.error("Error: 'keyboardInput' textarea not found. Please ensure your HTML has <textarea id='keyboardInput'>.");
         return;
     }
 
@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'Q': 'ⵇ', 'W': 'ⵯ',
     };
 
-    // --- Digraph Map (Longest matches first) ---
-    // These need to be processed carefully to ensure correct conversion.
+    // --- Digraph Map (Longest matches first for conversion logic) ---
     const digraphMap = {
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ',
         'dh': 'ⴹ', 'th': 'ⵜ', 'ts': 'ⵚ',
@@ -60,107 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Selection/Cursor Management for contenteditable div ---
-    // These are crucial for maintaining the cursor position after content updates.
-    let savedRange;
-
-    function saveSelection() {
-        if (window.getSelection) {
-            const sel = window.getSelection();
-            if (sel.rangeCount > 0) {
-                savedRange = sel.getRangeAt(0);
-            }
-        } else if (document.selection && document.selection.createRange) {
-            savedRange = document.selection.createRange();
-        }
-    }
-
-    function restoreSelection() {
-        if (savedRange) {
-            if (window.getSelection) {
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(savedRange);
-            } else if (document.selection && savedRange.select) {
-                savedRange.select();
-            }
-        }
-    }
-
-    // Helper to get caret position in contenteditable div
-    function getCaretCharacterOffset(element) {
-        let caretOffset = 0;
-        const doc = element.ownerDocument || element.document;
-        const win = doc.defaultView || doc.parentWindow;
-        let sel;
-        if (typeof win.getSelection != "undefined") {
-            sel = win.getSelection();
-            if (sel.rangeCount > 0) {
-                const range = win.getSelection().getRangeAt(0);
-                const preCaretRange = range.cloneRange();
-                preCaretRange.selectNodeContents(element);
-                preCaretRange.setEnd(range.endContainer, range.endOffset);
-                caretOffset = preCaretRange.toString().length;
-            }
-        } else if ((sel = doc.selection) && sel.type != "Control") {
-            const textRange = sel.createRange();
-            const preCaretTextRange = doc.body.createTextRange();
-            preCaretTextRange.moveToElementText(element);
-            preCaretTextRange.setEndPoint("EndToEnd", textRange);
-            caretOffset = preCaretTextRange.text.length;
-        }
-        return caretOffset;
-    }
-
-    // Helper to set caret position in contenteditable div
-    function setCaretPosition(element, offset) {
-        const range = document.createRange();
-        const sel = window.getSelection();
-        let currentOffset = 0;
-
-        function findNodeAndOffset(node) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                if (offset <= currentOffset + node.length) {
-                    range.setStart(node, offset - currentOffset);
-                    range.collapse(true);
-                    return true;
-                }
-                currentOffset += node.length;
-            } else {
-                for (let i = 0; i < node.childNodes.length; i++) {
-                    if (findNodeAndOffset(node.childNodes[i])) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        if (findNodeAndOffset(element)) {
-            sel.removeAllRanges();
-            sel.addRange(range);
-        } else {
-            // Fallback: set cursor to the end
-            range.selectNodeContents(element);
-            range.collapse(false);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
-    }
-
-
-    // --- Core Conversion Function (Latin to Tifinagh) ---
-    function convertLatinToTifinagh(latinText) {
+    // --- Core Conversion Function (Latin to Tifinagh with cursor tracking) ---
+    // This function will convert an entire Latin string to Tifinagh
+    // and ALSO return the new cursor position after conversion.
+    function convertLatinToTifinagh(latinText, originalCursorPos) {
         let tifinaghResult = '';
-        let i = 0;
-        while (i < latinText.length) {
+        let currentLatinIndex = 0;
+        let newCursorPos = 0;
+
+        while (currentLatinIndex < latinText.length) {
             let foundMapping = false;
+            let charToProcess = latinText[currentLatinIndex]; // Default to single char
 
             // Try to match digraphs first (longest matches first)
             for (const digraph in digraphMap) {
-                if (latinText.substring(i, i + digraph.length).toLowerCase() === digraph) {
+                if (latinText.substring(currentLatinIndex, currentLatinIndex + digraph.length).toLowerCase() === digraph) {
                     tifinaghResult += digraphMap[digraph];
-                    i += digraph.length;
+                    if (currentLatinIndex < originalCursorPos) {
+                         // If the cursor was *within* or *at the end of* this digraph in Latin,
+                         // it moves to the end of the single Tifinagh character.
+                        newCursorPos++;
+                    }
+                    currentLatinIndex += digraph.length;
                     foundMapping = true;
                     break;
                 }
@@ -168,71 +88,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!foundMapping) {
                 // If no digraph, try single character mapping
-                const char = latinText[i];
-                let mappedChar = combinedTifinaghMap[char]; // Check for case-sensitive first (e.g., 'A' for shifted)
-                if (!mappedChar) { // If no case-sensitive match, try lowercase
-                    mappedChar = combinedTifinaghMap[char.toLowerCase()];
+                const char = latinText[currentLatinIndex];
+                let mappedChar = tifinaghShiftMap[char]; // Check for case-sensitive first (e.g., 'A' for shifted)
+                if (!mappedChar) { // If no case-sensitive match, try regular map
+                    mappedChar = tifinaghMap[char.toLowerCase()];
                 }
 
                 if (mappedChar) {
                     tifinaghResult += mappedChar;
+                    if (currentLatinIndex < originalCursorPos) {
+                        newCursorPos++;
+                    }
                 } else {
-                    // If no Tifinagh mapping, keep the original character (e.g., numbers, punctuation)
+                    // If no Tifinagh mapping, keep the original character
                     tifinaghResult += char;
+                    if (currentLatinIndex < originalCursorPos) {
+                        newCursorPos++;
+                    }
                 }
-                i++;
+                currentLatinIndex++;
             }
         }
-        return tifinaghResult;
+        return { text: tifinaghResult, cursorPos: newCursorPos };
     }
-
-    // --- Main Input Processing Function ---
-    // This function will be called by the MutationObserver.
-    let isProcessingInput = false; // Flag to prevent infinite loops
-
-    function processInput() {
-        if (isProcessingInput) return; // Prevent re-entry
-
-        isProcessingInput = true;
-        
-        const originalLatinText = keyboardInput.textContent;
-        const currentCaretPos = getCaretCharacterOffset(keyboardInput);
-
-        const convertedTifinaghText = convertLatinToTifinagh(originalLatinText);
-
-        // Update the div's content if there's a change
-        if (keyboardInput.textContent !== convertedTifinaghText) {
-            keyboardInput.textContent = convertedTifinaghText;
-
-            // Recalculate new caret position based on conversion.
-            // This is the trickiest part for contenteditable.
-            // We assume that the conversion up to the original caret position
-            // determines the new caret position.
-            const prefixLatin = originalLatinText.substring(0, currentCaretPos);
-            const prefixTifinagh = convertLatinToTifinagh(prefixLatin);
-            const newCaretPos = prefixTifinagh.length;
-
-            setCaretPosition(keyboardInput, newCaretPos);
-        }
-        isProcessingInput = false;
-    }
-
-    // --- MutationObserver Setup ---
-    const observer = new MutationObserver((mutations) => {
-        // Disconnect observer temporarily to prevent infinite loop when we modify content
-        observer.disconnect();
-        processInput();
-        // Reconnect observer after processing
-        observer.observe(keyboardInput, observerConfig);
-    });
-
-    const observerConfig = {
-        childList: true, // Observe direct children changes
-        subtree: true,   // Observe all descendants
-        characterData: true, // Observe text changes within text nodes
-        characterDataOldValue: true // Get old value for character data
-    };
-    observer.observe(keyboardInput, observerConfig);
 
 
     // --- Virtual Keyboard Key Clicks ---
@@ -241,63 +119,93 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
 
             const keyValue = key.dataset.key;
-            saveSelection(); // Save cursor position before modification
-
-            let currentText = keyboardInput.textContent;
-            let newText = currentText;
+            const start = keyboardInput.selectionStart;
+            const end = keyboardInput.selectionEnd;
+            let newValue = keyboardInput.value;
+            let newCursorPos = start;
 
             if (keyValue === 'backspace') {
-                const sel = window.getSelection();
-                if (!sel.isCollapsed) { // If text is selected, delete it
-                    sel.deleteFromDocument();
-                } else { // No selection, delete character before cursor
-                    const range = sel.getRangeAt(0);
-                    if (range.startOffset > 0) {
-                        range.setStart(range.startContainer, range.startOffset - 1);
-                        range.deleteContents();
+                if (start === end) { // No text selected, delete preceding character
+                    if (start > 0) {
+                        newValue = newValue.substring(0, start - 1) + newValue.substring(end);
+                        newCursorPos = start - 1;
                     }
+                } else { // Text is selected, delete selected text
+                    newValue = newValue.substring(0, start) + newValue.substring(end);
+                    newCursorPos = start;
                 }
                 highlightKey('backspace');
             } else {
-                // Insert text at the current cursor position
-                document.execCommand('insertText', false, keyValue);
+                newValue = newValue.substring(0, start) + keyValue + newValue.substring(end);
+                newCursorPos = start + keyValue.length;
                 highlightKey(keyValue);
             }
-            // After direct manipulation or insertion, let the MutationObserver handle conversion
+
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
             keyboardInput.focus();
+            
+            // Manually trigger the conversion after virtual key input
+            // to ensure consistency with physical keyboard input.
+            processInputAndConvert();
         });
     });
 
-    // --- Physical Keyboard Keydown (for Backspace and Enter) ---
+
+    // --- Real-time Conversion on Input (for both physical and mobile native keyboards) ---
+    // This is the most robust approach for converting Latin to Tifinagh
+    // as it fires after any change to the textarea's value.
+    let ignoreNextInput = false; // Flag to prevent re-entrancy during our own updates
+
+    function processInputAndConvert() {
+        if (ignoreNextInput) return; // Skip if we are programmatically updating
+
+        const originalLatinInput = keyboardInput.value;
+        const originalCursorPos = keyboardInput.selectionStart;
+
+        const { text: convertedTifinaghText, cursorPos: newCursorPos } = convertLatinToTifinagh(originalLatinInput, originalCursorPos);
+
+        if (keyboardInput.value !== convertedTifinaghText) {
+            ignoreNextInput = true; // Set flag before updating
+            keyboardInput.value = convertedTifinaghText;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
+            ignoreNextInput = false; // Reset flag after update
+        }
+
+        // Attempt to highlight the last Tifinagh character if it was an insertion
+        // This is heuristic and might not always be perfect with complex mobile inputs.
+        const lastTifinaghChar = convertedTifinaghText[newCursorPos - 1];
+        if (lastTifinaghChar) {
+            highlightKey(lastTifinaghChar);
+        }
+    }
+
+    // Listen for any input changes (typing, pasting, mobile native keyboard, etc.)
+    keyboardInput.addEventListener('input', processInputAndConvert);
+
+    // --- Physical Keyboard Keydown (for specific key handling like Backspace/Enter) ---
     keyboardInput.addEventListener('keydown', (e) => {
+        // We generally let the 'input' event handle character conversions.
+        // This 'keydown' is for keys where we might want to prevent default browser behavior
+        // or trigger a specific visual feedback.
         if (e.key === 'Backspace') {
             highlightKey('backspace');
-            // The MutationObserver will handle the text content change
+            // Allow default browser backspace to happen, then 'input' will re-convert.
+            // If you want more custom backspace logic, uncomment e.preventDefault()
+            // and implement deletion here.
         } else if (e.key === 'Enter') {
-            e.preventDefault(); // Prevent default new line behavior if contenteditable is too complex
-            document.execCommand('insertHTML', false, '<br>'); // Insert a <br> for newline
             highlightKey('\n');
-            // MutationObserver will process the text change (newline character)
+            // Allow default browser Enter to happen, then 'input' will re-convert (mapping '\n' to '\n').
         }
-        // For other character keys, let the browser insert them (Latin),
-        // and the MutationObserver will then convert them to Tifinagh.
-        // No e.preventDefault() here for character keys unless absolutely necessary
-        // to avoid interfering with native mobile input methods.
     });
 
 
     // --- Action Buttons: Copy and Clear ---
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
-            // Select all content in the contenteditable div
-            const range = document.createRange();
-            range.selectNodeContents(keyboardInput);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
+            keyboardInput.select();
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(keyboardInput.textContent)
+                navigator.clipboard.writeText(keyboardInput.value)
                     .then(() => {
                         copyBtn.textContent = 'Copied!';
                         setTimeout(() => {
@@ -319,21 +227,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
                 }, 1500);
             }
-            selection.removeAllRanges(); // Deselect after copying
             keyboardInput.focus();
         });
     }
 
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
-            keyboardInput.textContent = '';
+            keyboardInput.value = '';
             keyboardInput.focus();
-            // No explicit 'input' event needed here as MutationObserver will pick up the change
-            // and processInput will convert empty string to empty string.
+            processInputAndConvert(); // Ensure conversion logic processes the empty string
         });
     }
 
-    // --- Optional: Visual Cue for Input Focus ---
+    // --- Optional: Visual Cue for Textarea Focus ---
     keyboardInput.addEventListener('focus', () => {
         keyboardInput.classList.add('focused');
     });
