@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berber/Tifinagh Virtual Keyboard</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- You might also want to add high-res favicons for various devices:
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    -->
+
     <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles, as per your style.css -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
@@ -38,9 +48,15 @@
         <h1>Berber/Tifinagh Virtual Keyboard</h1>
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
 
+        <!-- NEW: Instructions for Mobile Users -->
+        <div class="mobile-keyboard-tip">
+            <p><strong>Mobile Users:</strong> To type directly using your phone's native keyboard, you must first install and enable a Tifinagh keyboard in your device's language settings. Our virtual keyboard is available below if you prefer!</p>
+            <p>(e.g., For Android: Settings > System > Languages & Input > Virtual keyboard > Manage keyboards)</p>
+        </div>
+
         <!-- Textarea for Tifinagh Input -->
-        <!-- CHANGED: Added 'readonly' attribute and removed 'autofocus' -->
-        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." readonly></textarea>
+        <!-- CHANGED: Removed 'readonly', added 'lang="ber"' and 'inputmode="text"' -->
+        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
 
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
@@ -71,7 +87,7 @@
                     <button class="keyboard-key" data-key="ⵎ">ⵎ</button>
                     <button class="keyboard-key" data-key="ⵇ">ⵇ</button>
                     <button class="keyboard-key" data-key="ⵙ">ⵙ</button>
-                    <button class="keyboard-key" data-key="ⵛ">ⵛ</Gavbutton>
+                    <button class="keyboard-key" data-key="ⵛ">ⵛ</button>
                     <button class="keyboard-key" data-key="ⴷ">ⴷ</button>
                     <button class="keyboard-key" data-key="ⵣ">ⵣ</button>
                 </div>
