@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Correctly reference your main input textarea.
-    // Assuming 'keyboardInput' is the ID of your primary textarea for Tifinagh input.
     const keyboardInput = document.getElementById('keyboardInput');
     const keyboardKeys = document.querySelectorAll('.keyboard-key');
     const copyBtn = document.getElementById('copyBtn');
@@ -8,48 +6,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!keyboardInput) {
         console.error("Error: 'keyboardInput' textarea not found. Please ensure your HTML has <textarea id='keyboardInput'>.");
-        return; // Stop execution if the main input isn't found
+        return;
     }
 
     // --- Tifinagh Mapping ---
-    // This map is primarily for physical keyboard input, but the virtual keyboard will also use similar logic.
     const tifinaghMap = {
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
         'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
-        'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ', // *** NEW: 'o' maps to 'ⵓ' ***
+        'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ',
         'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
         's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ',
         'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
-        // Common digraphs or special characters (some will be handled by look-ahead, others by direct map)
-        'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ', 'dh': 'ⴷ',
-        'th': 'ⵜ', 'ts': 'ⵚ', 'dz': 'ⴷⵣ', 'tl': 'ⵟⵍ',
-        'j_soft': 'ⵊ', // You might need special mapping for soft 'j' if 'j' is hard
-        // Punctuation and special symbols you might want to map
-        ',': ',', '.': '.', '/': '/', '\'': '\'', '-': '-',
-        'ç': 'ⵛ', 'ṭ': 'ⴹ', 'ḍ': 'ⴹ', 'ḥ': 'ⵃ', 'ṣ': 'ⵚ', 'ẓ': 'ⵥ',
-        'ɛ': 'ⵄ', 'ɣ': 'ⵖ',
         ' ': ' ', // Space key
         'enter': '\n' // Enter key
     };
 
-    // New map for shifted/capitalized keys
     const tifinaghShiftMap = {
-        'A': 'ⵄ', // Added A majuscule mapping
+        'A': 'ⵄ', // 'A' can also be used for 'ⴰ' if 'ⵄ' is less common for 'A'
         'G': 'ⵖ', 'H': 'ⵃ', 'D': 'ⴹ', 'T': 'ⵟ', 'R': 'ⵕ',
-        'S': 'ⵚ', 'Z': 'ⵥ', 'K': 'ⴽ', 'L': 'ⵍ' // Added more shifted common Tifinagh characters for better coverage
+        'S': 'ⵚ', 'Z': 'ⵥ', 'K': 'ⴽ', 'L': 'ⵍ', 'N': 'ⵑ', // Added 'N' for Tifinagh letter N
+        'M': 'ⴾ', // Example for 'M'
+        // Add more shifted/capitalized mappings as needed for your specific Tifinagh layout.
+        // For example, some layouts use 'E' for 'ⴻ', 'I' for 'ⵉ', etc.
     };
 
     // Mapping to highlight the correct virtual key based on the Tifinagh character inserted
+    // Ensure this map covers ALL characters in tifinaghMap and tifinaghShiftMap
     const tifinaghKeyToVirtualDataKeyMap = {
         'ⴰ': 'ⴰ', 'ⴱ': 'ⴱ', 'ⵛ': 'ⵛ', 'ⴷ': 'ⴷ', 'ⴻ': 'ⴻ', 'ⴼ': 'ⴼ',
         'ⴳ': 'ⴳ', 'ⵀ': 'ⵀ', 'ⵉ': 'ⵉ', 'ⵊ': 'ⵊ', 'ⴽ': 'ⴽ', 'ⵍ': 'ⵍ',
-        'ⵎ': 'ⵎ', 'ⵏ': 'ⵏ', 'ⵒ': 'ⵒ', 'ⵇ': 'ⵇ', 'ⵕ': 'ⵕ', 'ⵙ': 'ⵙ',
-        'ⵜ': 'ⵜ', 'ⵓ': 'ⵓ', 'ⵠ': 'ⵠ', 'ⵡ': 'ⵡ',
-        'ⵅ': 'ⵅ', 'ⵢ': 'ⵢ', 'ⵣ': 'ⵣ', 'ⵖ': 'ⵖ', 'ⴹ': 'ⴹ', 'ⵃ': 'ⵃ',
-        'ⵚ': 'ⵚ', 'ⵥ': 'ⵥ', 'ⵄ': 'ⵄ', 'ⵔ': 'ⵔ',
+        'ⵎ': 'ⵎ', 'ⵏ': 'ⵏ', 'ⵒ': 'ⵒ', 'ⵇ': 'ⵇ', 'ⵔ': 'ⵔ', 'ⵙ': 'ⵙ',
+        'ⵜ': 'ⵜ', 'ⵓ': 'ⵓ', 'ⵠ': 'ⵠ', 'ⵡ': 'ⵡ', 'ⵅ': 'ⵅ', 'ⵢ': 'ⵢ',
+        'ⵣ': 'ⵣ', 'ⵖ': 'ⵖ', 'ⴹ': 'ⴹ', 'ⵃ': 'ⵃ', 'ⵚ': 'ⵚ', 'ⵥ': 'ⵥ',
+        'ⵄ': 'ⵄ', 'ⵕ': 'ⵕ', 'ⵟ': 'ⵟ', 'ⵯ': 'ⵯ', // Added missing Tifinagh characters that are in your virtual keyboard
+        'ⵑ': 'ⵑ', 'ⴾ': 'ⴾ', // Added for the example Shifted N/M
         ' ': ' ',
-        'backspace': 'backspace'
-        // Ensure all Tifinagh characters you expect to be inserted have a mapping here
+        'backspace': 'backspace',
+        '\n': 'enter' // Although not a key, it's good for internal consistency if needed
     };
 
 
@@ -62,20 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
         field.value = value.substring(0, start) + text + value.substring(end);
         field.selectionStart = field.selectionEnd = start + text.length;
 
-        // *** NEW: Trigger 'input' event manually ***
-        // This will make your converter.js (and other listeners) react immediately.
+        // Trigger 'input' event manually for other listeners (e.g., converter.js)
         const event = new Event('input', { bubbles: true });
         field.dispatchEvent(event);
 
-        field.focus(); // Keep focus on the textarea after virtual input
+        // Crucial: Manually set and then blur focus for mobile 'readonly' input.
+        // This ensures the cursor is where it should be but doesn't trigger native keyboard.
+        field.focus();
+        // A slight delay might be needed on some devices to ensure focus is "registered" before blur,
+        // but typically direct blur works with readonly.
+        if (document.activeElement === field) {
+             field.blur();
+        }
     }
 
     // Function to highlight a virtual key temporarily
     function highlightKey(tifinaghDataKey) {
-        // Use the tifinaghKeyToVirtualDataKeyMap to find the correct data-key if needed,
-        // otherwise assume tifinaghDataKey is already a valid data-key.
-        const virtualKey = tifinaghKeyToVirtualDataKeyMap[tifinaghDataKey] || tifinaghDataKey;
-        const matchingKey = document.querySelector(`.keyboard-key[data-key="${virtualKey}"]`);
+        const virtualKeyToSelect = tifinaghKeyToVirtualDataKeyMap[tifinaghDataKey] || tifinaghDataKey;
+        const matchingKey = document.querySelector(`.keyboard-key[data-key="${virtualKeyToSelect}"]`);
         if (matchingKey) {
             matchingKey.classList.add('active');
             setTimeout(() => {
@@ -87,9 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Virtual Keyboard Key Clicks ---
     keyboardKeys.forEach(key => {
-        key.addEventListener('click', (event) => { // *** NEW: Add event parameter ***
-            event.preventDefault(); // *** NEW: Prevent default behavior for virtual keyboard keys ***
-                                    // This is CRUCIAL for mobile to prevent unwanted actions like native keyboard pop-up or scrolling.
+        key.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default button behavior (e.g., form submission)
 
             const keyValue = key.dataset.key; // Get the character from data-key attribute
 
@@ -106,30 +102,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
                 }
                 highlightKey('backspace');
-                // *** NEW: Trigger input event for backspace too ***
                 const inputEvent = new Event('input', { bubbles: true });
                 keyboardInput.dispatchEvent(inputEvent);
 
             } else {
-                // *** NEW: Directly insert the Tifinagh character from data-tifinagh-char if available ***
-                // This makes the virtual keyboard's 'o' button directly insert 'ⵓ' if you set data-tifinagh-char="ⵓ" on it.
-                const tifinaghCharToInsert = key.dataset.tifinaghChar || keyValue;
-                insertAtCursor(keyboardInput, tifinaghCharToInsert);
-                highlightKey(tifinaghCharToInsert);
+                // For regular keys, insert the character defined by data-key
+                insertAtCursor(keyboardInput, keyValue);
+                highlightKey(keyValue);
             }
-            keyboardInput.focus(); // Keep focus on the textarea after any virtual input
+            // After inserting, explicitly ensure the actual text area doesn't have focus
+            // to prevent accidental native keyboard pop-ups on some devices.
+            keyboardInput.blur();
         });
     });
 
     // --- Physical Keyboard Input Handling ---
+    // This listener is now primarily for desktop users. On mobile, the 'readonly'
+    // attribute on the textarea should prevent this from firing in most browsers.
     keyboardInput.addEventListener('keydown', (e) => {
+        // Since the textarea is readonly, the keydown event is still captured,
+        // but we'll prevent default for almost everything to control input.
+
+        // If you want to allow native text input for some reason (e.g. for desktop users
+        // to directly type in the box, and only use virtual keyboard on mobile),
+        // you would need to implement complex logic to differentiate mobile vs. desktop
+        // or toggle readonly based on device. For simplicity, we assume this is a
+        // virtual-keyboard-first experience.
+
+        e.preventDefault(); // Crucial: Prevent default input into the readonly textarea
+
         const currentCursorPos = keyboardInput.selectionStart;
         const precedingChar = keyboardInput.value.substring(currentCursorPos - 1, currentCursorPos).toLowerCase();
         const key = e.key; // Get the pressed key as is (to differentiate 'g' from 'G')
 
         // 1. Handle Backspace key
         if (key === 'Backspace') {
-            e.preventDefault(); // Prevent default browser backspace
             const start = keyboardInput.selectionStart;
             const end = keyboardInput.selectionEnd;
             if (start === end) {
@@ -142,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
             }
             highlightKey('backspace'); // Highlight the virtual backspace key
-            // *** NEW: Trigger input event for physical backspace too ***
             const inputEvent = new Event('input', { bubbles: true });
             keyboardInput.dispatchEvent(inputEvent);
             return;
@@ -153,28 +159,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Prevent default character input for mapped keys and potential digraphs
-        // We generally want to prevent default for any key we are mapping to Tifinagh
-        // to avoid Latin character showing up first then being replaced.
-        e.preventDefault();
-
         // 3. Handle Enter/Return Key
         if (key === 'Enter') {
-            insertAtCursor(keyboardInput, '\n'); // insertAtCursor already triggers 'input'
+            insertAtCursor(keyboardInput, '\n');
             return;
         }
 
         let insertedTifinaghChar = null;
-        const lowerKey = key.toLowerCase(); // Use lowercase for map lookups
+        const lowerKey = key.toLowerCase();
 
         // --- Handle Shifted/Capitalized Mappings FIRST ---
         const isShiftedOrCaps = e.shiftKey || e.getModifierState('CapsLock');
-        if (isShiftedOrCaps && tifinaghShiftMap[key]) { // Use raw 'key' for shifted map
+        if (isShiftedOrCaps && tifinaghShiftMap[key]) {
             insertAtCursor(keyboardInput, tifinaghShiftMap[key]);
             insertedTifinaghChar = tifinaghShiftMap[key];
         } else {
             // --- Handle Digraphs (two-key combinations) ---
-            // Only check for digraphs if a single char hasn't been handled by shiftMap
             if (precedingChar && !e.shiftKey) { // Avoid digraphs if Shift is held down for clarity
                 let replaced = false;
                 if (lowerKey === 'h') {
@@ -191,16 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         keyboardInput.selectionStart = keyboardInput.selectionEnd = currentCursorPos;
                         insertedTifinaghChar = 'ⵅ'; replaced = true;
                     }
-                    // Add more 'h' digraphs here (e.g., 'th', 'dh')
-                    // For 'dh', if 'd' is already mapped, you need to decide if 'dh' replaces 'd' + 'h'
-                    // For now, let's keep it simple.
                 } else if (lowerKey === 's' && precedingChar === 't') { // ts
                     keyboardInput.value = keyboardInput.value.substring(0, currentCursorPos - 1) + 'ⵚ' + keyboardInput.value.substring(currentCursorPos);
                     keyboardInput.selectionStart = keyboardInput.selectionEnd = currentCursorPos;
                     insertedTifinaghChar = 'ⵚ'; replaced = true;
                 }
-                // *** NEW: Trigger input event for digraphs ***
-                if(replaced) {
+                // Trigger input event for digraphs
+                if (replaced) {
                     const inputEvent = new Event('input', { bubbles: true });
                     keyboardInput.dispatchEvent(inputEvent);
                 }
@@ -211,11 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (insertedTifinaghChar === null) {
                 const mappedChar = tifinaghMap[lowerKey];
                 if (mappedChar) {
-                    insertAtCursor(keyboardInput, mappedChar); // insertAtCursor already triggers 'input'
+                    insertAtCursor(keyboardInput, mappedChar);
                     insertedTifinaghChar = mappedChar;
                 } else {
                     // If no Tifinagh mapping, insert the original key (for numbers, unmapped punctuation, etc.)
-                    // insertAtCursor will also trigger 'input'
                     insertAtCursor(keyboardInput, key);
                 }
             }
@@ -234,26 +230,66 @@ document.addEventListener('DOMContentLoaded', () => {
             document.execCommand('copy');
             copyBtn.textContent = 'Copied!';
             setTimeout(() => {
-                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy'; // Assuming FontAwesome for icon
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
             }, 1500);
+            keyboardInput.blur(); // Remove focus after copying
         });
     }
 
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             keyboardInput.value = '';
-            keyboardInput.focus();
-            // *** NEW: Trigger input event for clear button too ***
+            // No need to focus then blur for clear, as input is empty and not "active"
             const inputEvent = new Event('input', { bubbles: true });
             keyboardInput.dispatchEvent(inputEvent);
+            keyboardInput.blur(); // Ensure no lingering focus
         });
     }
 
-    // --- Optional: Visual Cue for Textarea Focus ---
-    keyboardInput.addEventListener('focus', () => {
+    // --- Preventing Native Keyboard on Mobile (Important!) ---
+    // This is the core fix for the "unidentified" characters issue.
+    // By making the textarea readonly, we essentially tell the browser not to manage its input itself.
+    // The following listeners ensure that even if a touch event somehow tries to open the native keyboard,
+    // we immediately dismiss it or prevent it from fully appearing.
+
+    keyboardInput.addEventListener('focus', (event) => {
+        // On mobile, tapping a readonly input might still momentarily try to bring up the keyboard.
+        // We immediately blur to dismiss it.
+        event.preventDefault(); // Prevent default focus behavior
+        if (document.activeElement === keyboardInput) {
+            keyboardInput.blur();
+        }
+    });
+
+    keyboardInput.addEventListener('click', (event) => {
+        // For extra measure, especially on mobile.
+        event.preventDefault();
+        if (document.activeElement === keyboardInput) {
+            keyboardInput.blur();
+        }
+    });
+
+    // The 'touchend' event can also be useful for mobile touch devices
+    keyboardInput.addEventListener('touchend', (event) => {
+        event.preventDefault();
+        if (document.activeElement === keyboardInput) {
+            keyboardInput.blur();
+        }
+    });
+
+    // Optional: Visual Cue for Textarea Focus (will only apply on desktop where actual focus might happen briefly)
+    keyboardInput.addEventListener('mouseenter', () => {
+        keyboardInput.classList.add('hovered'); // Add a hovered state for desktop
+    });
+    keyboardInput.addEventListener('mouseleave', () => {
+        keyboardInput.classList.remove('hovered');
+    });
+
+    // Keeping a visual cue for desktop users where focus can persist
+    keyboardInput.addEventListener('focusin', () => { // Use focusin for events that bubble
         keyboardInput.classList.add('focused');
     });
-    keyboardInput.addEventListener('blur', () => {
+    keyboardInput.addEventListener('focusout', () => { // Use focusout
         keyboardInput.classList.remove('focused');
     });
 });
