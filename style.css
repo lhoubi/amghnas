@@ -599,4 +599,33 @@ body.dark-mode h2 {
 
 body.dark-mode h3 {
     color: var(--dark-text-color);
+    /* Add to your existing style.css */
+.mobile-keyboard-tip {
+    background-color: #fff3cd; /* Light yellow background */
+    border-left: 5px solid #ffc107; /* Yellow border for emphasis */
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    color: #664d03;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.mobile-keyboard-tip p {
+    margin: 5px 0;
+}
+
+.mobile-keyboard-tip strong {
+    color: #856404;
+}
+
+/* Dark mode styling for the tip */
+body.dark-mode .mobile-keyboard-tip {
+    background-color: #494025; /* Darker yellow for dark mode */
+    border-left-color: #ffc107;
+    color: #ffeeba;
+}
+body.dark-mode .mobile-keyboard-tip strong {
+    color: #ffeeba;
+}
 }
