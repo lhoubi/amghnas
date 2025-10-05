@@ -22,9 +22,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
 
-        /* Remove/Revert any contenteditable specific CSS if you added it */
         /* Ensure your .text-input (textarea) styles are correct from original */
-        .text-input { /* Your original textarea styles should be here */
+        .text-input {
             width: 100%;
             min-height: 150px;
             border: 1px solid var(--border-color);
@@ -67,48 +66,55 @@
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
 
         <!-- REVERTED: Back to textarea -->
-        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
+        <!-- The input area should be centered within its available width -->
+        <div class="input-area-wrapper">
+            <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
+        </div>
+
 
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
             <div class="keyboard-layout">
+
                 <!-- Keyboard Row 1 -->
                 <div class="keyboard-row">
-                    <button class="keyboard-key" data-key="ⵕ"> <span class="latin-char">ḍ</span><span class="tifinagh-char">ⵕ</span></button>
-                    <button class="keyboard-key" data-key="ⵖ"> <span class="latin-char">ɣ</span><span class="tifinagh-char">ⵖ</span></button>
-                    <button class="keyboard-key" data-key="ⵜ"> <span class="latin-char">t</span><span class="tifinagh-char">ⵜ</span></button>
-                    <button class="keyboard-key" data-key="ⵢ"> <span class="latin-char">y</span><span class="tifinagh-char">ⵢ</span></button>
-                    <button class="keyboard-key" data-key="ⵓ"> <span class="latin-char">u</span><span class="tifinagh-char">ⵓ</span></button>
-                    <button class="keyboard-key" data-key="ⵉ"> <span class="latin-char">i</span><span class="tifinagh-char">ⵉ</span></button>
-                    <button class="keyboard-key" data-key="ⴱ"> <span class="latin-char">b</span><span class="tifinagh-char">ⴱ</span></button>
-                    <button class="keyboard-key" data-key="ⵀ"> <span class="latin-char">h</span><span class="tifinagh-char">ⵀ</span></button>
-                    <button class="keyboard-key" data-key="ⵃ"> <span class="latin-char">ḥ</span><span class="tifinagh-char">ⵃ</span></button>
-                    <button class="keyboard-key" data-key="ⴳ"> <span class="latin-char">g</span><span class="tifinagh-char">ⴳ</span></button>
-                    <button class="keyboard-key" data-key="ⵍ"> <span class="latin-char">l</span><span class="tifinagh-char">ⵍ</span></button>
-                    <button class="keyboard-key" data-key="ⵅ"> <span class="latin-char">kh</span><span class="tifinagh-char">ⵅ</span></button>
-                    <button class="keyboard-key" data-key="ⵚ"> <span class="latin-char">ṣ</span><span class="tifinagh-char">ⵚ</span></button>
+                    <div class="key-group"> <span class="latin-label">Ṛ</span> <button class="keyboard-key" data-key="ⵕ">ⵕ</button> </div>
+                    <div class="key-group"> <span class="latin-label">ɣ</span> <button class="keyboard-key" data-key="ⵖ">ⵖ</button> </div>
+                    <div class="key-group"> <span class="latin-label">t</span> <button class="keyboard-key" data-key="ⵜ">ⵜ</button> </div>
+                    <div class="key-group"> <span class="latin-label">y</span> <button class="keyboard-key" data-key="ⵢ">ⵢ</button> </div>
+                    <div class="key-group"> <span class="latin-label">u</span> <button class="keyboard-key" data-key="ⵓ">ⵓ</button> </div>
+                    <div class="key-group"> <span class="latin-label">i</span> <button class="keyboard-key" data-key="ⵉ">ⵉ</button> </div>
+                    <div class="key-group"> <span class="latin-label">b</span> <button class="keyboard-key" data-key="ⴱ">ⴱ</button> </div>
+                    <div class="key-group"> <span class="latin-label">h</span> <button class="keyboard-key" data-key="ⵀ">ⵀ</button> </div>
+                    <div class="key-group"> <span class="latin-label">ḥ</span> <button class="keyboard-key" data-key="ⵃ">ⵃ</button> </div>
+                    <div class="key-group"> <span class="latin-label">g</span> <button class="keyboard-key" data-key="ⴳ">ⴳ</button> </div>
+                    <div class="key-group"> <span class="latin-label">l</span> <button class="keyboard-key" data-key="ⵍ">ⵍ</button> </div>
+                    <div class="key-group"> <span class="latin-label">kh</span><button class="keyboard-key" data-key="ⵅ">ⵅ</button> </div>
+                    <div class="key-group"> <span class="latin-label">ṣ</span> <button class="keyboard-key" data-key="ⵚ">ⵚ</button> </div>
                 </div>
+
                 <!-- Keyboard Row 2 -->
                 <div class="keyboard-row">
-                    <button class="keyboard-key" data-key="ⵄ"> <span class="latin-char">ɛ</span><span class="tifinagh-char">ⵄ</span></button>
-                    <button class="keyboard-key" data-key="ⴹ"> <span class="latin-char">ḍ</span><span class="tifinagh-char">ⴹ</span></button>
-                    <button class="keyboard-key" data-key="ⴼ"> <span class="latin-char">f</span><span class="tifinagh-char">ⴼ</span></button>
-                    <button class="keyboard-key" data-key="ⴽ"> <span class="latin-char">k</span><span class="tifinagh-char">ⴽ</span></button>
-                    <button class="keyboard-key" data-key="ⵏ"> <span class="latin-char">n</span><span class="tifinagh-char">ⵏ</span></button>
-                    <button class="keyboard-key" data-key="ⵎ"> <span class="latin-char">m</span><span class="tifinagh-char">ⵎ</span></button>
-                    <button class="keyboard-key" data-key="ⵇ"> <span class="latin-char">q</span><span class="tifinagh-char">ⵇ</span></button>
-                    <button class="keyboard-key" data-key="ⵙ"> <span class="latin-char">s</span><span class="tifinagh-char">ⵙ</span></button>
-                    <button class="keyboard-key" data-key="ⵛ"> <span class="latin-char">sh</span><span class="tifinagh-char">ⵛ</span></button>
-                    <button class="keyboard-key" data-key="ⴷ"> <span class="latin-char">d</span><span class="tifinagh-char">ⴷ</span></button>
-                    <button class="keyboard-key" data-key="ⵣ"> <span class="latin-char">z</span><span class="tifinagh-char">ⵣ</span></button>
+                    <div class="key-group"> <span class="latin-label">ɛ</span> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
+                    <div class="key-group"> <span class="latin-label">ḍ</span> <button class="keyboard-key" data-key="ⴹ">ⴹ</button> </div>
+                    <div class="key-group"> <span class="latin-label">f</span> <button class="keyboard-key" data-key="ⴼ">ⴼ</button> </div>
+                    <div class="key-group"> <span class="latin-label">k</span> <button class="keyboard-key" data-key="ⴽ">ⴽ</button> </div>
+                    <div class="key-group"> <span class="latin-label">n</span> <button class="keyboard-key" data-key="ⵏ">ⵏ</button> </div>
+                    <div class="key-group"> <span class="latin-label">m</span> <button class="keyboard-key" data-key="ⵎ">ⵎ</button> </div>
+                    <div class="key-group"> <span class="latin-label">q</span> <button class="keyboard-key" data-key="ⵇ">ⵇ</button> </div>
+                    <div class="key-group"> <span class="latin-label">s</span> <button class="keyboard-key" data-key="ⵙ">ⵙ</button> </div>
+                    <div class="key-group"> <span class="latin-label">sh</span><button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
+                    <div class="key-group"> <span class="latin-label">d</span> <button class="keyboard-key" data-key="ⴷ">ⴷ</button> </div>
+                    <div class="key-group"> <span class="latin-label">z</span> <button class="keyboard-key" data-key="ⵣ">ⵣ</button> </div>
                 </div>
+
                 <!-- Keyboard Row 3 (Special Keys: ⵥ, ⵯ, Space, Backspace) -->
                 <div class="keyboard-row">
-                    <button class="keyboard-key" data-key="ⵥ"> <span class="latin-char">ẓ</span><span class="tifinagh-char">ⵥ</span></button>
-                    <button class="keyboard-key" data-key="ⵯ"> <span class="latin-char">ʷ</span><span class="tifinagh-char">ⵯ</span></button> <!-- Labialized sound 'ʷ' -->
+                    <div class="key-group"> <span class="latin-label">ẓ</span> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
+                    <div class="key-group"> <span class="latin-label">ʷ</span> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div> <!-- Labialized sound 'ʷ' -->
                     <button class="keyboard-key wide" data-key=" ">SPACE</button> <!-- 'wide' for visual width -->
                     <button class="keyboard-key delete" data-key="backspace" title="Backspace">
-                        <i class="fas fa-backspace"></i>
+                        <i class="fas fa-times"></i> <!-- Changed to 'x' icon as in your example for clear/delete -->
                     </button>
                 </div>
                 <!-- Additional rows can be added here -->
