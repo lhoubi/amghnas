@@ -6,15 +6,8 @@
     <title>Berber/Tifinagh Virtual Keyboard</title>
 
     <!-- Favicon -->
-    <!-- CORRECTED: Changed to favicon.png -->
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
-    <!-- You might also want to add high-res favicons for various devices:
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    -->
 
     <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles, as per your style.css -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -28,6 +21,36 @@
     <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+
+        /* NEW/MODIFIED CSS FOR contenteditable DIV */
+        /* Make the contenteditable div look like your textarea */
+        #keyboardInput {
+            min-height: 150px; /* Ensure it has height like a textarea */
+            border: 1px solid var(--border-color); /* Match border */
+            border-radius: 8px; /* Match border-radius */
+            padding: 15px; /* Match padding */
+            font-family: 'Noto Sans Tifinagh', sans-serif; /* Crucial for display */
+            font-size: 1.2em; /* Match font size */
+            line-height: 1.6; /* Match line height */
+            outline: none; /* Remove default focus outline */
+            resize: vertical; /* Allow vertical resize like textarea */
+            overflow-y: auto; /* Enable scroll if content exceeds height */
+            background-color: var(--input-bg); /* Match background color */
+            color: var(--text-color); /* Match text color */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #keyboardInput.focused {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
+        }
+        /* Placeholder for contenteditable div - requires JavaScript */
+        #keyboardInput:empty:before {
+            content: attr(data-placeholder);
+            color: var(--placeholder-color);
+            opacity: 0.7;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -49,11 +72,8 @@
         <h1>Berber/Tifinagh Virtual Keyboard</h1>
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
 
-       
-
-        <!-- Textarea for Tifinagh Input -->
-        <!-- CHANGED: Removed 'readonly', added 'lang="ber"' and 'inputmode="text"' -->
-        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
+        <!-- Changed: Textarea to contenteditable div -->
+        <div id="keyboardInput" class="text-input" contenteditable="true" data-placeholder="Start typing in Tifinagh here..." lang="ber"></div>
 
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
@@ -80,7 +100,7 @@
                     <button class="keyboard-key" data-key="ⴹ">ⴹ</button>
                     <button class="keyboard-key" data-key="ⴼ">ⴼ</button>
                     <button class="keyboard-key" data-key="ⴽ">ⴽ</button>
-                    <button class="keyboard-key" data-key="ⵏ">ⵏ</button>
+                    <button class="keyboard-key" data-key="ⵏ">ⵏ</ⵏ>
                     <button class="keyboard-key" data-key="ⵎ">ⵎ</button>
                     <button class="keyboard-key" data-key="ⵇ">ⵇ</button>
                     <button class="keyboard-key" data-key="ⵙ">ⵙ</button>
