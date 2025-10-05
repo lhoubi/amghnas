@@ -9,40 +9,27 @@
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
 
-    <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles, as per your style.css -->
+    <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Your Custom Stylesheet - This file contains all the professional CSS styles -->
+    <!-- Your Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
     <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
 
-        /* Ensure your .text-input (textarea) styles are correct from original */
-        .text-input {
-            width: 100%;
-            min-height: 150px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
-            font-family: 'Noto Sans Tifinagh', sans-serif; /* Crucial for display */
-            font-size: 1.2em;
-            line-height: 1.6;
-            outline: none;
-            resize: vertical;
-            overflow-y: auto;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
+        /*
+           IMPORTANT: The .text-input styles that were here are MOVED to style.css
+           and combined with the general 'textarea' rule for consistency and proper
+           box-sizing. This inline style block is now clean.
+        */
         .text-input.focused {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
+            border-color: var(--accent-color); /* Assuming --accent-color is defined in :root or body.dark-mode */
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3); /* Assuming --accent-rgb is defined */
         }
     </style>
 </head>
@@ -65,7 +52,6 @@
         <h1>Berber/Tifinagh Virtual Keyboard</h1>
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
 
-        <!-- REVERTED: Back to textarea -->
         <!-- The input area should be centered within its available width -->
         <div class="input-area-wrapper">
             <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
@@ -100,7 +86,7 @@
                     <div class="key-group"> <span class="latin-label">f</span> <button class="keyboard-key" data-key="ⴼ">ⴼ</button> </div>
                     <div class="key-group"> <span class="latin-label">k</span> <button class="keyboard-key" data-key="ⴽ">ⴽ</button> </div>
                     <div class="key-group"> <span class="latin-label">n</span> <button class="keyboard-key" data-key="ⵏ">ⵏ</button> </div>
-                    <div class="key-group"> <span class="latin-label">r</span> <button class="keyboard-key" data-key="ⵏ">ⵔ</button> </div>
+                    <div class="key-group"> <span class="latin-label">r</span> <button class="keyboard-key" data-key="ⵔ">ⵔ</button> </div>
                     <div class="key-group"> <span class="latin-label">m</span> <button class="keyboard-key" data-key="ⵎ">ⵎ</button> </div>
                     <div class="key-group"> <span class="latin-label">q</span> <button class="keyboard-key" data-key="ⵇ">ⵇ</button> </div>
                     <div class="key-group"> <span class="latin-label">s</span> <button class="keyboard-key" data-key="ⵙ">ⵙ</button> </div>
@@ -109,17 +95,25 @@
                     <div class="key-group"> <span class="latin-label">z</span> <button class="keyboard-key" data-key="ⵣ">ⵣ</button> </div>
                 </div>
 
-                <!-- Keyboard Row 3 (Special Keys: ⵥ, ⵯ, Space, Backspace) -->
+                <!-- Keyboard Row 3 (Special Keys: ⵥ, ⵯ, Space, Backspace) - UPDATED FOR CONSISTENCY -->
                 <div class="keyboard-row">
                     <div class="key-group"> <span class="latin-label">ẓ</span> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
-                    <div class="key-group"> <span class="latin-label">Ṭ</span> <button class="keyboard-key" data-key="ⵣ">ⵟ</button> </div>
-                    <div class="key-group"> <span class="latin-label">p</span> <button class="keyboard-key" data-key="ⵣ">ⵒ</button> </div>
-                    <div class="key-group"> <span class="latin-label">v</span> <button class="keyboard-key" data-key="ⵣ">ⵠ</button> </div>
-                    <div class="key-group"> <span class="latin-label">ʷ</span> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div> <!-- Labialized sound 'ʷ' -->
-                    <button class="keyboard-key wide" data-key=" ">SPACE</button> <!-- 'wide' for visual width -->
-                    <button class="keyboard-key delete" data-key="backspace" title="Backspace">
-                        <i class="fas fa-times"></i> <!-- Changed to 'x' icon as in your example for clear/delete -->
-                    </button>
+                    <div class="key-group"> <span class="latin-label">Ṭ</span> <button class="keyboard-key" data-key="ⵟ">ⵟ</button> </div>
+                    <div class="key-group"> <span class="latin-label">p</span> <button class="keyboard-key" data-key="ⵒ">ⵒ</button> </div>
+                    <div class="key-group"> <span class="latin-label">v</span> <button class="keyboard-key" data-key="ⵠ">ⵠ</button> </div>
+                    <div class="key-group"> <span class="latin-label">ʷ</span> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div>
+
+                    <!-- SPACE and DELETE buttons wrapped in key-group for consistent alignment -->
+                    <div class="key-group">
+                        <span class="latin-label visually-hidden">Space</span>
+                        <button class="keyboard-key wide" data-key=" ">SPACE</button>
+                    </div>
+                    <div class="key-group">
+                        <span class="latin-label visually-hidden">Del</span>
+                        <button class="keyboard-key delete" data-key="backspace" title="Backspace">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
                 <!-- Additional rows can be added here -->
             </div>
