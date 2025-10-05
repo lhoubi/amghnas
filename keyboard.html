@@ -22,34 +22,28 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
 
-        /* NEW/MODIFIED CSS FOR contenteditable DIV */
-        /* Make the contenteditable div look like your textarea */
-        #keyboardInput {
-            min-height: 150px; /* Ensure it has height like a textarea */
-            border: 1px solid var(--border-color); /* Match border */
-            border-radius: 8px; /* Match border-radius */
-            padding: 15px; /* Match padding */
+        /* Remove/Revert any contenteditable specific CSS if you added it */
+        /* Ensure your .text-input (textarea) styles are correct from original */
+        .text-input { /* Your original textarea styles should be here */
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
             font-family: 'Noto Sans Tifinagh', sans-serif; /* Crucial for display */
-            font-size: 1.2em; /* Match font size */
-            line-height: 1.6; /* Match line height */
-            outline: none; /* Remove default focus outline */
-            resize: vertical; /* Allow vertical resize like textarea */
-            overflow-y: auto; /* Enable scroll if content exceeds height */
-            background-color: var(--input-bg); /* Match background color */
-            color: var(--text-color); /* Match text color */
+            font-size: 1.2em;
+            line-height: 1.6;
+            outline: none;
+            resize: vertical;
+            overflow-y: auto;
+            background-color: var(--input-bg);
+            color: var(--text-color);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        #keyboardInput.focused {
+        .text-input.focused {
             border-color: var(--accent-color);
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
-        }
-        /* Placeholder for contenteditable div - requires JavaScript */
-        #keyboardInput:empty:before {
-            content: attr(data-placeholder);
-            color: var(--placeholder-color);
-            opacity: 0.7;
-            font-style: italic;
         }
     </style>
 </head>
@@ -72,8 +66,8 @@
         <h1>Berber/Tifinagh Virtual Keyboard</h1>
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
 
-        <!-- Changed: Textarea to contenteditable div -->
-        <div id="keyboardInput" class="text-input" contenteditable="true" data-placeholder="Start typing in Tifinagh here..." lang="ber"></div>
+        <!-- REVERTED: Back to textarea -->
+        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
 
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
@@ -89,7 +83,7 @@
                     <button class="keyboard-key" data-key="ⴱ">ⴱ</button>
                     <button class="keyboard-key" data-key="ⵀ">ⵀ</button>
                     <button class="keyboard-key" data-key="ⵃ">ⵃ</button>
-                    <button class="keyboard-key" data-key="ⴳ">ⴳ</button>
+                    <button class="keyboard-key" data-key="ⴳ">ⴳ</ⴳ>
                     <button class="keyboard-key" data-key="ⵍ">ⵍ</button>
                     <button class="keyboard-key" data-key="ⵅ">ⵅ</button>
                     <button class="keyboard-key" data-key="ⵚ">ⵚ</button>
