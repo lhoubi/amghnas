@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tifinagh & Talatint (Old Latin) Script Converter</title>
+    
+    <!-- UPDATED: Title changed to ⴰⵎⵖⵏⴰⵙ -->
+    <title>ⴰⵎⵖⵏⴰⵙ</title>
 
     <!-- Google Fonts for a fancy look -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -19,6 +21,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
     </style>
+
+    <!-- NEW: Favicon Link -->
+    <!-- Assumes favicon.png is in an 'images' folder relative to this HTML file -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
 </head>
 <body>
 
@@ -40,10 +47,12 @@
         <!-- Tifinagh to Talatint Section -->
         <div class="converter-section">
             <h2>Tifinagh to Talatint</h2>
-            <textarea id="tifinaghInput" placeholder="ⴰⵣⵓⵍ (Azul) - Enter Tifinagh text here..."></textarea>
-            <button id="convertToTalatintBtn">
+            <!-- Changed ID to 'tifinaghInputMain' to avoid conflict if keyboardInput is used on keyboard.html -->
+            <textarea id="tifinaghInputMain" placeholder="ⴰⵣⵓⵍ (Azul) - Enter Tifinagh text here..."></textarea>
+            <!-- Original button will now be replaced by immediate conversion in converter.js -->
+            <!-- <button id="convertToTalatintBtn">
                 <i class="fas fa-arrow-right"></i> Convert to Talatint
-            </button>
+            </button> -->
             <h3>Talatint Output:</h3>
             <textarea id="talatintOutput" readonly placeholder="Your converted Old Latin text will appear here..."></textarea>
         </div>
@@ -53,10 +62,12 @@
         <!-- Latin to Tifinagh Section -->
         <div class="converter-section">
             <h2>Latin to Tifinagh</h2>
-            <textarea id="latinInput" placeholder="Azul - Enter Latin text here..."></textarea>
-            <button id="convertToTifinaghBtn">
+            <!-- Changed ID to 'latinInputMain' -->
+            <textarea id="latinInputMain" placeholder="Azul - Enter Latin text here..."></textarea>
+            <!-- Original button will now be replaced by immediate conversion in converter.js -->
+            <!-- <button id="convertToTifinaghBtn">
                 <i class="fas fa-arrow-left"></i> Convert to Tifinagh
-            </button>
+            </button> -->
             <h3>Tifinagh Output:</h3>
             <textarea id="tifinaghLatinOutput" readonly placeholder="Your converted Tifinagh text will appear here..."></textarea>
         </div>
@@ -67,7 +78,10 @@
         </footer>
     </div>
 
+    <!-- Your JavaScript file for dark mode toggle -->
+    <script src="themeToggle.js"></script> 
     <!-- Your JavaScript file for the converter logic -->
-    <script src="Converter.js"></script>
+    <script src="converter.js"></script> 
+    <!-- keyboard.js should only be on keyboard.html if it's a separate page -->
 </body>
 </html>
