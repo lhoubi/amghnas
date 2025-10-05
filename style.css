@@ -1,0 +1,571 @@
+/* --- Global Resets & Base Styles --- */
+:root {
+    --primary-color: #007bff; /* A clean blue for accents */
+    --primary-dark-color: #0056b3; /* Darker blue for hover */
+    --text-color: #333;
+    --background-color: #f8f9fa; /* Light background */
+    --card-background: #ffffff; /* White cards */
+    --border-color: #dee2e6;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-strong: rgba(0, 0, 0, 0.15);
+
+    /* Dark Mode Variables */
+    --dark-primary-color: #5dade2; /* Lighter blue for dark mode */
+    --dark-primary-dark-color: #4a90d4; /* Even lighter for hover */
+    --dark-text-color: #e0e0e0;
+    --dark-background-color: #2c3e50; /* Dark blue-grey */
+    --dark-card-background: #34495e; /* Slightly lighter dark card */
+    --dark-border-color: #495057;
+    --dark-shadow-light: rgba(0, 0, 0, 0.2);
+    --dark-shadow-strong: rgba(0, 0, 0, 0.3);
+
+    /* Amazigh Flag Colors (still defined, but not used for the body background here) */
+    --amazigh-green: #00A650; /* Green */
+    --amazigh-blue: #007FFF;  /* Blue */
+    --amazigh-yellow: #FCD116; /* Yellow */
+}
+
+/* Dark Mode Specific Styles */
+body.dark-mode {
+    --primary-color: var(--dark-primary-color);
+    --primary-dark-color: var(--dark-primary-dark-color);
+    --text-color: var(--dark-text-color);
+    --background-color: var(--dark-background-color);
+    --card-background: var(--dark-card-background);
+    --border-color: var(--dark-border-color);
+    --shadow-light: var(--dark-shadow-light);
+    --shadow-strong: var(--dark-shadow-strong);
+}
+
+body {
+    font-family: 'Roboto', sans-serif; /* Modern, readable font */
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex; /* For footer to stick to bottom */
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    /* --- NEW GRADIENT BACKGROUND --- */
+    background: linear-gradient(135deg, #ff8c42, #ffd700, #98fb98); /* Orange, Yellow, Green */
+    background-size: cover; /* Ensures it covers the entire viewport */
+    background-attachment: fixed; /* Keeps the background fixed when scrolling */
+    /* --- END NEW GRADIENT BACKGROUND --- */
+}
+
+.container {
+    max-width: 960px; /* Max width for content */
+    margin: 40px auto; /* Centered with vertical spacing */
+    padding: 25px 30px; /* Internal padding */
+    background: var(--card-background); /* White cards */
+    border-radius: 12px; /* Smoother corners */
+    box-shadow: 0 10px 25px var(--shadow-light); /* Subtle elevation */
+    flex-grow: 1; /* Allows container to expand */
+    position: relative; /* Essential: For z-index to work with body's background */
+    z-index: 1; /* Ensure container is above the body's background */
+}
+
+/* --- Header & Navigation --- */
+.header-controls {
+    display: flex;
+    justify-content: flex-end; /* Align to right */
+    gap: 15px; /* Space between items */
+    margin-bottom: 25px; /* Space below header controls */
+    padding-bottom: 15px; /* Separation from H1 */
+    border-bottom: 1px solid var(--border-color); /* Subtle line */
+}
+
+.header-controls a,
+.header-controls button {
+    display: flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 8px; /* Consistent rounded buttons */
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.header-controls a {
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    border: none; /* No default border */
+}
+
+.header-controls button {
+    background-color: #6c757d; /* Grey for toggle */
+    color: #fff;
+    border: none;
+}
+
+.header-controls a:hover {
+    background-color: var(--primary-dark-color);
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.header-controls button:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.header-controls .fas {
+    margin-right: 8px;
+}
+
+/* --- Headings --- */
+h1 {
+    font-family: 'Playfair Display', serif; /* Elegant serif for main title */
+    font-size: 2.8rem; /* Larger, more impactful */
+    color: var(--primary-color); /* Highlighted */
+    text-align: center;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+h1 small {
+    display: block; /* Make subtitle go to new line */
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #6c757d; /* Muted color */
+    margin-top: 5px;
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-top: 35px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color); /* Underline with accent */
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+p.tagline {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 40px;
+}
+
+/* --- Textarea Styles --- */
+textarea {
+    width: calc(100% - 30px); /* Account for padding */
+    min-height: 180px; /* Ample space */
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.2rem; /* Larger text for readability */
+    font-family: 'Noto Sans Tifinagh', 'Roboto', sans-serif; /* Tifinagh first, then fallback */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    resize: vertical; /* Allow vertical resizing only */
+    box-shadow: inset 0 1px 3px var(--shadow-light); /* Inner shadow */
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus ring */
+}
+
+/* --- Converter Section Specific Styles (Buttons for Conversion) --- */
+.converter-section button { /* Target buttons directly within converter sections */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 10px var(--shadow-light);
+    margin: 0 auto 25px auto; /* Center conversion buttons */
+}
+
+.converter-section button:hover {
+    background-color: var(--primary-dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--shadow-strong);
+}
+
+.converter-section button .fas {
+    margin-right: 10px;
+}
+
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text-color);
+    margin-top: 25px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+/* --- Virtual Keyboard Layout --- */
+.keyboard-layout {
+    display: flex; /* Use flexbox for the overall layout */
+    flex-direction: column; /* Stack rows vertically */
+    gap: 10px; /* Space between rows */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    justify-content: center; /* Center the keyboard horizontally */
+    align-items: center; /* Center rows if they don't take full width */
+}
+
+/* Each keyboard-row will now be a flex container itself */
+.keyboard-row {
+    display: flex; /* Arrange keys horizontally within this row */
+    flex-wrap: wrap; /* Allow keys to wrap to the next line if space is limited */
+    justify-content: center; /* Center the keys within the row */
+    gap: 8px; /* Space between individual keys */
+}
+
+
+/* --- Keyboard Key Buttons --- */
+.keyboard-key {
+    width: 65px; /* Fixed width for keys for consistency */
+    height: 65px; /* Make keys square */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--card-background); /* White key background */
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Consistent rounded corners */
+    font-size: 1.8rem; /* Large Tifinagh characters */
+    font-family: 'Noto Sans Tifinagh', sans-serif;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 3px 6px var(--shadow-light); /* Key press-like shadow */
+}
+
+.keyboard-key:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 5px 12px var(--shadow-strong);
+}
+
+.keyboard-key:active {
+    transform: translateY(1px); /* Press effect */
+    box-shadow: 0 2px 4px var(--shadow-strong);
+    background-color: var(--primary-dark-color);
+}
+
+/* Specific styling for 'ESPACE' or other special keys */
+.keyboard-key.wide {
+    width: 130px; /* Double width for spacebar */
+    font-size: 1.2rem; /* Adjust font size for text like "SPACE" */
+    font-family: 'Roboto', sans-serif; /* Use Roboto for text labels */
+}
+.keyboard-key.delete {
+    background-color: #dc3545; /* Red for delete */
+    color: #fff;
+    font-size: 1.5rem; /* Adjust icon size */
+}
+.keyboard-key.delete:hover {
+    background-color: #c82333;
+}
+
+
+/* --- Action Buttons (Copy/Clear) --- */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    margin-top: 35px;
+    margin-bottom: 40px;
+}
+
+.action-buttons button {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.action-buttons button.copy {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.action-buttons button.copy:hover {
+    background-color: var(--primary-dark-color);
+    box-shadow: 0 6px 15px var(--shadow-strong);
+}
+
+.action-buttons button.clear {
+    background-color: #f0ad4e; /* Warning color for clear */
+    color: #fff;
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.action-buttons button.clear:hover {
+    background-color: #ec971f;
+    box-shadow: 0 6px 15px var(--shadow-strong);
+}
+
+.action-buttons button .fas {
+    margin-right: 8px;
+}
+
+/* --- Footer --- */
+.footer {
+    margin-top: auto; /* Pushes footer to the bottom */
+    padding: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--card-background); /* Match container background */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Add transition */
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+.footer i {
+    color: #e74c3c; /* Red heart */
+    margin: 0 5px;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h1 small {
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .header-controls {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .header-controls a,
+    .header-controls button {
+        width: auto; /* Allow buttons to size naturally */
+        justify-content: flex-end;
+    }
+
+    textarea {
+        min-height: 150px;
+        font-size: 1.1rem;
+    }
+
+    .keyboard-key {
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+    }
+
+    .keyboard-key.wide {
+        width: 115px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 15px auto;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h1 small {
+        font-size: 0.9rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .header-controls {
+        align-items: stretch; /* Stretch items to full width */
+        gap: 10px;
+    }
+
+    .header-controls a,
+    .header-controls button {
+        justify-content: center; /* Center text/icon in stretched button */
+        padding: 8px 10px;
+    }
+
+    textarea {
+        min-height: 120px;
+        font-size: 1rem;
+    }
+
+    .keyboard-key {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    .keyboard-key.wide {
+        width: 95px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Specific styling for active keyboard key */
+.keyboard-key.active {
+    background-color: #ffe0b2; /* A soft orange or other distinct color */
+    border-color: #ff9800;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+}
+.dark-mode .keyboard-key.active {
+    background-color: #5d4037; /* Darker tone for dark mode */
+    border-color: #ff9800;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+}
+
+/* Dark mode specific for footer */
+.dark-mode .footer {
+    border-top-color: var(--dark-border-color);
+    color: var(--dark-text-color); /* Use dark mode text color */
+}
+
+/* Dark mode for the grey button in header controls */
+body.dark-mode .header-controls button {
+    background-color: #7f8c8d; /* A dark mode friendly grey */
+    border-color: #7f8c8d;
+}
+
+body.dark-mode .header-controls button:hover {
+    background-color: #95a5a6;
+    border-color: #95a5a6;
+}
+
+/* Dark mode for action buttons */
+body.dark-mode .action-buttons button.clear {
+    background-color: #f39c12; /* Darker yellow for clear in dark mode */
+    color: var(--dark-text-color);
+}
+body.dark-mode .action-buttons button.clear:hover {
+    background-color: #e67e22;
+}
+
+body.dark-mode .action-buttons button.copy {
+    background-color: var(--dark-primary-color); /* Use dark primary color */
+}
+body.dark-mode .action-buttons button.copy:hover {
+    background-color: var(--dark-primary-dark-color);
+}
+
+/* Dark mode for textarea */
+body.dark-mode textarea {
+    background-color: #2c3e50;
+    border-color: #495057;
+    color: #ecf0f1;
+}
+
+body.dark-mode textarea:focus {
+    border-color: var(--dark-primary-color);
+    box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.25);
+}
+
+/* Dark mode for standard keyboard keys */
+body.dark-mode .keyboard-key {
+    background-color: #3f5871;
+    border-color: #546a81;
+    color: var(--dark-text-color);
+    box-shadow: 0 3px 6px var(--dark-shadow-light);
+}
+
+body.dark-mode .keyboard-key:hover {
+    background-color: var(--dark-primary-color); /* Use dark primary for hover */
+    border-color: var(--dark-primary-color);
+    color: #fff;
+    box-shadow: 0 5px 12px var(--dark-shadow-strong);
+}
+
+body.dark-mode .keyboard-key:active {
+    background-color: var(--dark-primary-dark-color);
+    box-shadow: 0 2px 4px var(--dark-shadow-strong);
+}
+
+/* Dark mode for delete key */
+body.dark-mode .keyboard-key.delete {
+    background-color: #e74c3c; /* Red for delete button */
+    border-color: #e74c3c;
+    color: #fff;
+}
+body.dark-mode .keyboard-key.delete:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+/* Dark mode for conversion buttons */
+body.dark-mode .converter-section button {
+    background-color: var(--dark-primary-color);
+    color: #fff;
+    box-shadow: 0 4px 10px var(--dark-shadow-light);
+}
+body.dark-mode .converter-section button:hover {
+    background-color: var(--dark-primary-dark-color);
+    box-shadow: 0 6px 15px var(--dark-shadow-strong);
+}
+
+/* Dark mode for heading colors */
+body.dark-mode h1 {
+    color: var(--dark-primary-color);
+}
+
+body.dark-mode h1 small,
+body.dark-mode p.tagline {
+    color: #bdc3c7;
+}
+
+body.dark-mode h2 {
+    color: var(--dark-text-color);
+    border-bottom-color: var(--dark-primary-color);
+}
+
+body.dark-mode h3 {
+    color: var(--dark-text-color);
+}

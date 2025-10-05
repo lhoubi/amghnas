@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tifinagh & Talatint (Old Latin) Script Converter</title>
+
+    <!-- Google Fonts for a fancy look -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons (optional, but good for buttons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Your Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Optional: Inline CSS for Noto Sans Tifinagh if not system font -->
+    <!-- You might need to link this font if users don't have it -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Controls for Dark Mode Toggle & Navigation -->
+        <div class="header-controls">
+            <!-- ADDED THIS NAVIGATION LINK FOR THE BERBER KEYBOARD -->
+            <a href="keyboard.html" class="nav-button">
+                <i class="fas fa-keyboard"></i> Berber Keyboard
+            </a>
+            <button id="themeToggle" aria-label="Toggle light and dark mode">
+                <i class="fas fa-moon"></i> Toggle Dark Mode
+            </button>
+        </div>
+
+        <h1>Tifinagh & Talatint <br><small>(Old Latin Script Converter)</small></h1>
+        <p class="tagline">Journey between ancient Tifinagh and classical Talatint scripts with ease.</p>
+
+        <!-- Tifinagh to Talatint Section -->
+        <div class="converter-section">
+            <h2>Tifinagh to Talatint</h2>
+            <textarea id="tifinaghInput" placeholder="ⴰⵣⵓⵍ (Azul) - Enter Tifinagh text here..."></textarea>
+            <button id="convertToTalatintBtn">
+                <i class="fas fa-arrow-right"></i> Convert to Talatint
+            </button>
+            <h3>Talatint Output:</h3>
+            <textarea id="talatintOutput" readonly placeholder="Your converted Old Latin text will appear here..."></textarea>
+        </div>
+
+        <hr> <!-- Separator -->
+
+        <!-- Latin to Tifinagh Section -->
+        <div class="converter-section">
+            <h2>Latin to Tifinagh</h2>
+            <textarea id="latinInput" placeholder="Azul - Enter Latin text here..."></textarea>
+            <button id="convertToTifinaghBtn">
+                <i class="fas fa-arrow-left"></i> Convert to Tifinagh
+            </button>
+            <h3>Tifinagh Output:</h3>
+            <textarea id="tifinaghLatinOutput" readonly placeholder="Your converted Tifinagh text will appear here..."></textarea>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 Tifinagh & Talatint Converter. All rights reserved.</p>
+            <p>Made with <i class="fas fa-heart"></i> for Amazigh culture.</p>
+        </footer>
+    </div>
+
+    <!-- Your JavaScript file for the converter logic -->
+    <script src="Converter.js"></script>
+</body>
+</html>

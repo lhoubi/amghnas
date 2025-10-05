@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berber/Tifinagh Virtual Keyboard</title>
+
+    <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles, as per your style.css -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Your Custom Stylesheet - This file contains all the professional CSS styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Controls for Navigation & Dark Mode Toggle -->
+        <!-- This structure now exactly mirrors your index.html -->
+        <div class="header-controls">
+            <!-- Navigation link back to the main converter page -->
+            <a href="index.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Converter
+            </a>
+            <!-- Dark Mode Toggle Button -->
+            <button id="themeToggle" aria-label="Toggle light and dark mode">
+                <i class="fas fa-moon"></i> Toggle Dark Mode
+            </button>
+        </div>
+
+        <!-- Main Title for the Keyboard Page -->
+        <h1>Berber/Tifinagh Virtual Keyboard</h1>
+        <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
+
+        <!-- Textarea for Tifinagh Input -->
+        <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." autofocus></textarea>
+
+        <!-- Virtual Keyboard Section -->
+        <section class="keyboard-section">
+            <div class="keyboard-layout">
+                <!-- Keyboard Row 1 -->
+                <div class="keyboard-row">
+                    <button class="keyboard-key" data-key="ⵕ">ⵕ</button>
+                    <button class="keyboard-key" data-key="ⵖ">ⵖ</button>
+                    <button class="keyboard-key" data-key="ⵜ">ⵜ</button>
+                    <button class="keyboard-key" data-key="ⵢ">ⵢ</button>
+                    <button class="keyboard-key" data-key="ⵓ">ⵓ</button>
+                    <button class="keyboard-key" data-key="ⵉ">ⵉ</button>
+                    <button class="keyboard-key" data-key="ⴱ">ⴱ</button>
+                    <button class="keyboard-key" data-key="ⵀ">ⵀ</button>
+                    <button class="keyboard-key" data-key="ⵃ">ⵃ</button>
+                    <button class="keyboard-key" data-key="ⴳ">ⴳ</button>
+                    <button class="keyboard-key" data-key="ⵍ">ⵍ</button>
+                    <button class="keyboard-key" data-key="ⵅ">ⵅ</button>
+                    <button class="keyboard-key" data-key="ⵚ">ⵚ</button>
+                </div>
+                <!-- Keyboard Row 2 -->
+                <div class="keyboard-row">
+                    <button class="keyboard-key" data-key="ⵄ">ⵄ</button>
+                    <button class="keyboard-key" data-key="ⴹ">ⴹ</button>
+                    <button class="keyboard-key" data-key="ⴼ">ⴼ</button>
+                    <button class="keyboard-key" data-key="ⴽ">ⴽ</button>
+                    <button class="keyboard-key" data-key="ⵏ">ⵏ</button>
+                    <button class="keyboard-key" data-key="ⵎ">ⵎ</button>
+                    <button class="keyboard-key" data-key="ⵇ">ⵇ</button>
+                    <button class="keyboard-key" data-key="ⵙ">ⵙ</button>
+                    <button class="keyboard-key" data-key="ⵛ">ⵛ</button>
+                    <button class="keyboard-key" data-key="ⴷ">ⴷ</button>
+                    <button class="keyboard-key" data-key="ⵣ">ⵣ</button>
+                </div>
+                <!-- Keyboard Row 3 (Special Keys: ⵥ, ⵯ, Space, Backspace) -->
+                <div class="keyboard-row">
+                    <button class="keyboard-key" data-key="ⵥ">ⵥ</button>
+                    <button class="keyboard-key" data-key="ⵯ">ⵯ</button> <!-- Labialized sound 'ʷ' -->
+                    <button class="keyboard-key wide" data-key=" ">SPACE</button> <!-- 'wide' for visual width -->
+                    <button class="keyboard-key delete" data-key="backspace" title="Backspace">
+                        <i class="fas fa-backspace"></i>
+                    </button>
+                </div>
+                <!-- Additional rows can be added here -->
+            </div>
+        </section>
+
+        <!-- Action Buttons: Copy and Clear -->
+        <div class="action-buttons">
+            <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
+            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>&copy; 2026 Tifinagh & Talatint Converter. All rights reserved.</p>
+            <p>Made with <i class="fas fa-heart" aria-hidden="true"></i> for Amazigh culture.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript files for keyboard functionality and theme toggle -->
+    <script src="keyboard.js"></script>
+    <script src="themeToggle.js"></script>
+</body>
+</html>
