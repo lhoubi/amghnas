@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const keyboardInput = document.getElementById('keyboardInput');
-    const keyboardKeys = document.querySelectorAll('.keyboard-key');
+    const keyboardKeys = document.querySelectorAll('.keyboard-key'); // Selects ALL keyboard keys
     const copyBtn = document.getElementById('copyBtn');
     const clearBtn = document.getElementById('clearBtn');
 
@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- Tifinagh Mapping ---
-    // This map defines the Latin-to-Tifinagh conversions.
+    // --- Tifinagh Mapping (for Latin input) ---
     const tifinaghMap = {
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
         'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
@@ -22,17 +21,37 @@ document.addEventListener('DOMContentLoaded', () => {
         '\n': '\n' // Enter key (newline)
     };
 
-    // --- Shifted/Capitalized Tifinagh Mapping ---
+    // --- Shifted/Capitalized Tifinagh Mapping (for Latin input) ---
     const tifinaghShiftMap = {
         'A': 'ⵄ', 'G': 'ⵖ', 'H': 'ⵃ', 'D': 'ⴹ', 'T': 'ⵟ', 'R': 'ⵕ',
         'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'Q': 'ⵇ', 'W': 'ⵯ',
     };
 
-    // --- Digraph Map (Longest matches first for conversion logic) ---
+    // --- Digraph Map (Longest matches first for Latin conversion logic) ---
     const digraphMap = {
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ',
         'dh': 'ⴹ', 'th': 'ⵜ', 'ts': 'ⵚ',
     };
+
+    // --- NEW: Arabic to Tifinagh Mapping ---
+    // This map defines the Arabic-to-Tifinagh conversions.
+    // This is a direct mapping as requested. Adjust specific mappings as needed.
+    const arabicToTifinaghMap = {
+        'ا': 'ⴰ', 'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ', 'ج': 'ⴳ', 'ح': 'ⵃ', 'خ': 'ⵅ',
+        'د': 'ⴷ', 'ذ': 'ⴷ', 'ر': 'ⵔ', 'ز': 'ⵣ', 'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ',
+        'ض': 'ⴹ', 'ط': 'ⵟ', 'ظ': 'ⴹ', 'ع': 'ⵄ', 'غ': 'ⵖ', 'ف': 'ⴼ',
+        'ق': 'ⵇ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ', 'ه': 'ⵀ', 'و': 'ⵡ',
+        'ي': 'ⵢ', 'ؤ': 'ⵓ', 'ئ': 'ⵉ', 'ة': 'ⴻ', 'أ': 'ⴰ', 'إ': 'ⵉ', 'آ': 'ⴰ',
+        'ء': 'ⴻ', // Hamza often mapped to E or not converted
+        'ـ': '-', // Tatweel for hyphen
+        ' ': ' ', // Space
+        '\n': '\n', // Newline
+
+        // Common Arabic ligatures or combined characters that might be typed
+        'لا': 'ⵍⴰ',
+        'لأ': 'ⵍⴰ'
+    };
+
 
     // Mapping to highlight the correct virtual key based on the Tifinagh character inserted.
     const tifinaghCharToVirtualKeyMap = {
@@ -59,9 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Core Conversion Function (Latin to Tifinagh with cursor tracking) ---
-    // This function will convert an entire Latin string to Tifinagh
-    // and ALSO return the new cursor position after conversion.
+    // --- Helper to detect if a string contains Arabic characters ---
+    function containsArabic(text) {
+        // Regex to match Arabic script characters (including presentation forms, extended, etc.)
+        // This is a broad range. Adjust if you need a more specific set.
+        return /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(text);
+    }
+
+    // --- Core Conversion Function: Latin to Tifinagh with cursor tracking ---
     function convertLatinToTifinagh(latinText, originalCursorPos) {
         let tifinaghResult = '';
         let currentLatinIndex = 0;
@@ -76,8 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (latinText.substring(currentLatinIndex, currentLatinIndex + digraph.length).toLowerCase() === digraph) {
                     tifinaghResult += digraphMap[digraph];
                     if (currentLatinIndex < originalCursorPos) {
-                         // If the cursor was *within* or *at the end of* this digraph in Latin,
-                         // it moves to the end of the single Tifinagh character.
                         newCursorPos++;
                     }
                     currentLatinIndex += digraph.length;
@@ -112,138 +134,93 @@ document.addEventListener('DOMContentLoaded', () => {
         return { text: tifinaghResult, cursorPos: newCursorPos };
     }
 
+    // --- NEW: Core Conversion Function: Arabic to Tifinagh with cursor tracking ---
+    function convertArabicToTifinagh(arabicText, originalCursorPos) {
+        let tifinaghResult = '';
+        let currentArabicIndex = 0;
+        let newCursorPos = 0;
+
+        // Sort Arabic map keys by length descending to handle ligatures/longer sequences first
+        const sortedArabicKeys = Object.keys(arabicToTifinaghMap).sort((a, b) => b.length - a.length);
+
+        while (currentArabicIndex < arabicText.length) {
+            let foundMapping = false;
+
+            // Try to match longer sequences (like 'لا') first
+            for (const arabicKey of sortedArabicKeys) {
+                if (arabicText.substring(currentArabicIndex, currentArabicIndex + arabicKey.length) === arabicKey) {
+                    tifinaghResult += arabicToTifinaghMap[arabicKey];
+                    if (currentArabicIndex < originalCursorPos) {
+                        newCursorPos++;
+                    }
+                    currentArabicIndex += arabicKey.length;
+                    foundMapping = true;
+                    break;
+                }
+            }
+
+            if (!foundMapping) {
+                // If no specific mapping, keep the original character (e.g., numbers, punctuation, chars not in map)
+                const char = arabicText[currentArabicIndex];
+                tifinaghResult += char;
+                if (currentArabicIndex < originalCursorPos) {
+                    newCursorPos++;
+                }
+                currentArabicIndex++;
+            }
+        }
+        return { text: tifinaghResult, cursorPos: newCursorPos };
+    }
+
 
     // --- Virtual Keyboard Key Clicks ---
     keyboardKeys.forEach(key => {
         key.addEventListener('click', (event) => {
             event.preventDefault();
 
-            const keyValue = key.dataset.key;
             const start = keyboardInput.selectionStart;
             const end = keyboardInput.selectionEnd;
             let newValue = keyboardInput.value;
             let newCursorPos = start;
 
-            if (keyValue === 'backspace') {
-                if (start === end) { // No text selected, delete preceding character
+            let charToInsert = '';
+            let tifinaghCharForHighlight = '';
+
+            // Check if it's a Tifinagh key
+            if (key.dataset.key) {
+                const keyValue = key.dataset.key;
+                if (keyValue === 'backspace') {
+                    if (start === end) { // No text selected, delete preceding character
+                        if (start > 0) {
+                            newValue = newValue.substring(0, start - 1) + newValue.substring(end);
+                            newCursorPos = start - 1;
+                        }
+                    } else { // Text is selected, delete selected text
+                        newValue = newValue.substring(0, start) + newValue.substring(end);
+                        newCursorPos = start;
+                    }
+                    tifinaghCharForHighlight = 'backspace';
+                } else {
+                    charToInsert = keyValue; // Directly insert Tifinagh
+                    newValue = newValue.substring(0, start) + charToInsert + newValue.substring(end);
+                    newCursorPos = start + charToInsert.length;
+                    tifinaghCharForHighlight = charToInsert;
+                }
+            }
+            // Check if it's an Arabic key
+            else if (key.dataset.keyArabic && key.dataset.tifinaghMap) {
+                charToInsert = key.dataset.tifinaghMap; // Insert the mapped Tifinagh character
+                newValue = newValue.substring(0, start) + charToInsert + newValue.substring(end);
+                newCursorPos = start + charToInsert.length;
+                tifinaghCharForHighlight = charToInsert;
+            } else if (key.classList.contains('delete')) { // Generic delete for arabic row
+                 if (start === end) {
                     if (start > 0) {
                         newValue = newValue.substring(0, start - 1) + newValue.substring(end);
                         newCursorPos = start - 1;
                     }
-                } else { // Text is selected, delete selected text
+                } else {
                     newValue = newValue.substring(0, start) + newValue.substring(end);
                     newCursorPos = start;
                 }
-                highlightKey('backspace');
-            } else {
-                newValue = newValue.substring(0, start) + keyValue + newValue.substring(end);
-                newCursorPos = start + keyValue.length;
-                highlightKey(keyValue);
-            }
-
-            keyboardInput.value = newValue;
-            keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
-            keyboardInput.focus();
-            
-            // Manually trigger the conversion after virtual key input
-            // to ensure consistency with physical keyboard input.
-            processInputAndConvert();
-        });
-    });
-
-
-    // --- Real-time Conversion on Input (for both physical and mobile native keyboards) ---
-    // This is the most robust approach for converting Latin to Tifinagh
-    // as it fires after any change to the textarea's value.
-    let ignoreNextInput = false; // Flag to prevent re-entrancy during our own updates
-
-    function processInputAndConvert() {
-        if (ignoreNextInput) return; // Skip if we are programmatically updating
-
-        const originalLatinInput = keyboardInput.value;
-        const originalCursorPos = keyboardInput.selectionStart;
-
-        const { text: convertedTifinaghText, cursorPos: newCursorPos } = convertLatinToTifinagh(originalLatinInput, originalCursorPos);
-
-        if (keyboardInput.value !== convertedTifinaghText) {
-            ignoreNextInput = true; // Set flag before updating
-            keyboardInput.value = convertedTifinaghText;
-            keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
-            ignoreNextInput = false; // Reset flag after update
-        }
-
-        // Attempt to highlight the last Tifinagh character if it was an insertion
-        // This is heuristic and might not always be perfect with complex mobile inputs.
-        const lastTifinaghChar = convertedTifinaghText[newCursorPos - 1];
-        if (lastTifinaghChar) {
-            highlightKey(lastTifinaghChar);
-        }
-    }
-
-    // Listen for any input changes (typing, pasting, mobile native keyboard, etc.)
-    keyboardInput.addEventListener('input', processInputAndConvert);
-
-    // --- Physical Keyboard Keydown (for specific key handling like Backspace/Enter) ---
-    keyboardInput.addEventListener('keydown', (e) => {
-        // We generally let the 'input' event handle character conversions.
-        // This 'keydown' is for keys where we might want to prevent default browser behavior
-        // or trigger a specific visual feedback.
-        if (e.key === 'Backspace') {
-            highlightKey('backspace');
-            // Allow default browser backspace to happen, then 'input' will re-convert.
-            // If you want more custom backspace logic, uncomment e.preventDefault()
-            // and implement deletion here.
-        } else if (e.key === 'Enter') {
-            highlightKey('\n');
-            // Allow default browser Enter to happen, then 'input' will re-convert (mapping '\n' to '\n').
-        }
-    });
-
-
-    // --- Action Buttons: Copy and Clear ---
-    if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-            keyboardInput.select();
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(keyboardInput.value)
-                    .then(() => {
-                        copyBtn.textContent = 'Copied!';
-                        setTimeout(() => {
-                            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                        }, 1500);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy text using Clipboard API: ', err);
-                        document.execCommand('copy'); // Fallback
-                        copyBtn.textContent = 'Copied!';
-                        setTimeout(() => {
-                            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                        }, 1500);
-                    });
-            } else {
-                document.execCommand('copy'); // Fallback for older browsers
-                copyBtn.textContent = 'Copied!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                }, 1500);
-            }
-            keyboardInput.focus();
-        });
-    }
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            keyboardInput.value = '';
-            keyboardInput.focus();
-            processInputAndConvert(); // Ensure conversion logic processes the empty string
-        });
-    }
-
-    // --- Optional: Visual Cue for Textarea Focus ---
-    keyboardInput.addEventListener('focus', () => {
-        keyboardInput.classList.add('focused');
-    });
-    keyboardInput.addEventListener('blur', () => {
-        keyboardInput.classList.remove('focused');
-    });
-});
+                tifinaghCharForHighlight = 'back
