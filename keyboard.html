@@ -4,184 +4,227 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berber/Tifinagh Virtual Keyboard</title>
+<!-- Favicon -->
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="shortcut icon" href="favicon.png" type="image/png">
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
+<!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Your Custom Stylesheet -->
+<link rel="stylesheet" href="style.css">
 
-    <!-- Your Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+<!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
+<!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
 
-    <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
-    <!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
+    /* Textarea Focus Style (from original keyboard.js) */
+    .text-input.focused {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
+    }
 
-        /* Textarea Focus Style (from original keyboard.js) */
-        .text-input.focused {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
-        }
+    /* Styles for consolidated labels above Tifinagh keys */
+    .key-group {
+        position: relative; /* Establish positioning context for labels */
+        padding-top: 35px; /* Make space for both labels above the button */
+        /* --- ADDED/MODIFIED CSS FOR LAYOUT & RESPONSIVENESS --- */
+        display: flex; /* Make key-group a flex container */
+        justify-content: center; /* Center button horizontally */
+        align-items: center; /* Center button vertically */
+        flex-grow: 1; /* Allow keys to grow to fill space */
+        flex-shrink: 1; /* Allow keys to shrink if needed */
+        flex-basis: 0; /* Base size for flex items, allows flex-grow to work effectively */
+        min-width: 55px; /* Minimum width for key groups */
+        max-width: 90px; /* Maximum width for key groups to prevent stretching too much */
+        box-sizing: border-box; /* Include padding/border in the element's total width and height */
+        text-align: center; /* Center labels */
+    }
 
-        /* Styles for consolidated labels above Tifinagh keys */
-        .key-group {
-            position: relative; /* Establish positioning context for labels */
-            padding-top: 35px; /* Make space for both labels above the button */
-            display: flex; /* Use flex to center the button within its group */
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1; /* Allow keys to grow and shrink */
-            flex-basis: 0; /* Important for flexible grid-like behavior */
-            min-width: 50px; /* Minimum width for keys */
-            max-width: 90px; /* Max width to prevent them from becoming too large */
-        }
+    .latin-label, .arabic-label {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7em; /* Smaller font size */
+        color: var(--text-color-light); /* Assuming --text-color-light is defined */
+        pointer-events: none; /* Do not interfere with button clicks */
+        white-space: nowrap; /* Prevent labels from wrapping */
+        z-index: 10; /* Ensure labels are above the button */
+        width: 100%; /* Ensure labels occupy full width for centering text */
+    }
 
-        .latin-label, .arabic-label {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.7em; /* Smaller font size */
-            color: var(--text-color-light); /* Assuming --text-color-light is defined */
-            pointer-events: none; /* Do not interfere with button clicks */
-            white-space: nowrap; /* Prevent labels from wrapping */
-            z-index: 10; /* Ensure labels are above the button */
-        }
+    .latin-label {
+        top: 5px; /* Latin label higher */
+    }
 
-        .latin-label {
-            top: 5px; /* Latin label higher */
-        }
+    .arabic-label {
+        top: 20px; /* Arabic label below Latin one */
+        font-family: 'Noto Naskh Arabic', sans-serif; /* Apply Arabic font */
+        direction: rtl; /* Ensure Arabic text is right-to-left within its span */
+    }
 
-        .arabic-label {
-            top: 20px; /* Arabic label below Latin one */
-            font-family: 'Noto Naskh Arabic', sans-serif; /* Apply Arabic font */
-            direction: rtl; /* Ensure Arabic text is right-to-left within its span */
-        }
+    /* Adjust button height slightly if needed due to extra padding, or remove if existing button height is fine */
+    .keyboard-key {
+        height: 50px; /* Example, adjust to fit your design */
+        line-height: 50px;
+        /* --- ADDED/MODIFIED CSS FOR BUTTON SHAPE & FILL --- */
+        width: 100%; /* Make button fill its key-group */
+        border-radius: var(--border-radius, 8px); /* Ensure consistent rounding */
+        display: flex; /* For centering content within the button */
+        justify-content: center;
+        align-items: center;
+        font-family: 'Noto Sans Tifinagh', sans-serif; /* Ensure Tifinagh font is applied */
+        font-size: 1.5em; /* Default font size for keys */
+        background-color: var(--button-bg, #e0e0e0); /* Default background if not defined in style.css */
+        color: var(--button-text-color, #333); /* Default text color */
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+        user-select: none;
+        box-sizing: border-box; /* Crucial for consistent sizing */
+    }
 
-        /* Adjust button height slightly if needed due to extra padding, or remove if existing button height is fine */
-        .keyboard-key {
-            height: 50px; /* Example, adjust to fit your design */
-            line-height: 50px;
-            width: 100%; /* Make the button take full width of its key-group */
-            border-radius: var(--border-radius); /* Assuming --border-radius is defined */
-            font-family: 'Noto Sans Tifinagh', sans-serif;
-            font-size: 1.5em;
-            background-color: var(--button-bg); /* Use theme vars */
-            color: var(--button-text-color);
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s, box-shadow 0.2s;
-            display: flex; /* For internal centering of text/icon */
-            justify-content: center;
-            align-items: center;
-            user-select: none; /* Prevent text selection */
-        }
+    /* Active key highlight */
+    .keyboard-key.active {
+        background-color: var(--accent-color); /* Use your theme's accent color */
+        box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
+    }
 
-        /* Active key highlight */
-        .keyboard-key.active {
-            background-color: var(--accent-color); /* Use your theme's accent color */
-            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
-        }
+    /* --- ADDED CSS FOR KEYBOARD LAYOUT & RESPONSIVENESS --- */
+    .keyboard-layout {
+        display: flex;
+        flex-direction: column; /* Stack rows vertically */
+        gap: 10px; /* Space between rows */
+        max-width: 1000px; /* Max width for the entire keyboard */
+        margin: 20px auto; /* Center the keyboard */
+        padding: 15px;
+        background-color: var(--secondary-bg, #2d3748); /* Default background */
+        border-radius: var(--border-radius, 8px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
 
-        /* Responsive Keyboard Layout */
+    .keyboard-row {
+        display: flex;
+        flex-wrap: wrap; /* Allow keys to wrap to the next line on smaller screens */
+        justify-content: center; /* Center keys in the row */
+        gap: 10px; /* Space between keys */
+    }
+
+    /* Styles for the wide SPACE key */
+    .keyboard-key.wide {
+        flex-grow: 2; /* Make SPACE key wider relative to others */
+        min-width: 120px; /* Minimum width for the space key */
+        max-width: 250px; /* Maximum width for the space key */
+    }
+
+    /* Styles for the DELETE key */
+    .keyboard-key.delete {
+        background-color: var(--delete-button-bg, #e74c3c); /* Default red for delete */
+        color: var(--delete-button-text-color, #fff); /* Default white text */
+        font-size: 1.2em; /* Slightly smaller font for the icon */
+        flex-grow: 1; /* Allow delete key to grow */
+        min-width: 60px; /* Minimum width for delete key */
+        max-width: 100px; /* Maximum width for delete key */
+    }
+    .keyboard-key.delete i {
+        font-size: 1.5em; /* Adjust icon size within the delete button */
+    }
+
+    /* Hide labels for screen readers for SPACE and DELETE keys */
+    .key-group .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
         .keyboard-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 10px; /* Space between rows */
-            max-width: 1200px; /* Max width for the entire keyboard */
-            margin: 20px auto; /* Center the keyboard */
+            padding: 10px;
+            gap: 8px;
         }
-
         .keyboard-row {
-            display: flex;
-            flex-wrap: wrap; /* Allow keys to wrap to the next line */
-            justify-content: center; /* Center keys in the row */
-            gap: 10px; /* Space between keys */
+            gap: 8px;
         }
-
+        .key-group {
+            min-width: 45px; /* Adjust min width for tablets */
+            max-width: 70px;
+            padding-top: 30px; /* Adjust padding for labels */
+        }
+        .latin-label, .arabic-label {
+            font-size: 0.65em; /* Smaller labels */
+            top: 3px;
+        }
+        .arabic-label {
+            top: 18px;
+        }
+        .keyboard-key {
+            height: 45px;
+            line-height: 45px;
+            font-size: 1.3em;
+        }
         .keyboard-key.wide {
-            flex-grow: 2; /* Make SPACE key wider */
-            min-width: 120px; /* Minimum width for space key */
+            min-width: 90px;
+            max-width: 180px;
         }
-
         .keyboard-key.delete {
-            background-color: var(--delete-button-bg); /* Assuming --delete-button-bg is defined */
-            color: var(--delete-button-text-color);
-            flex-grow: 1; /* Allow delete key to grow */
-            min-width: 60px; /* Minimum width for delete key */
+            min-width: 50px;
+            max-width: 80px;
         }
-
-        /* Visually hidden for screen readers but not completely display:none */
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            margin: -1px;
-            padding: 0;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+        .keyboard-key.delete i {
+            font-size: 1.3em;
         }
+    }
 
-        /* General Container and Responsiveness */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+    @media (max-width: 480px) {
+        .keyboard-layout {
+            padding: 5px;
+            gap: 5px;
         }
-
-        @media (max-width: 768px) {
-            .keyboard-key {
-                font-size: 1.2em;
-                height: 45px;
-                line-height: 45px;
-            }
-            .latin-label, .arabic-label {
-                font-size: 0.6em;
-            }
-            .key-group {
-                min-width: 40px;
-                max-width: unset;
-                flex-basis: auto; /* Revert flex-basis for smaller screens */
-            }
-            .keyboard-key.wide {
-                min-width: 80px;
-            }
+        .keyboard-row {
+            gap: 5px;
         }
-
-        @media (max-width: 480px) {
-            .keyboard-key {
-                font-size: 1em;
-                height: 40px;
-                line-height: 40px;
-            }
-            .latin-label, .arabic-label {
-                font-size: 0.5em;
-                top: 2px;
-            }
-            .arabic-label {
-                top: 15px;
-            }
-            .key-group {
-                padding-top: 25px;
-                min-width: 35px;
-            }
-            .keyboard-key.wide {
-                min-width: 60px;
-            }
-            .keyboard-key.delete {
-                min-width: 45px;
-            }
+        .key-group {
+            min-width: 40px; /* Further adjust for mobile phones */
+            max-width: 60px;
+            padding-top: 25px;
         }
+        .latin-label, .arabic-label {
+            font-size: 0.6em;
+            top: 2px;
+        }
+        .arabic-label {
+            top: 15px;
+        }
+        .keyboard-key {
+            height: 40px;
+            line-height: 40px;
+            font-size: 1.1em;
+        }
+        .keyboard-key.wide {
+            min-width: 70px;
+            max-width: 140px;
+        }
+        .keyboard-key.delete {
+            min-width: 45px;
+            max-width: 70px;
+        }
+        .keyboard-key.delete i {
+            font-size: 1.2em;
+        }
+    }
 
-    </style>
+</style>
 </head>
 <body>
 
@@ -207,70 +250,96 @@
             <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here..." lang="ber" inputmode="text"></textarea>
         </div>
 
+
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
             <div class="keyboard-layout">
 
                 <!-- Keyboard Row 1: Tifinagh with Latin and Arabic Labels -->
                 <div class="keyboard-row">
-                    <!-- The key-group now wraps both labels and the button -->
+                    <!-- R -->
                     <div class="key-group"> <span class="latin-label">Ṛ</span><span class="arabic-label"></span> <button class="keyboard-key" data-key="ⵕ" data-arabic-key=" ">ⵕ</button> </div>
+                    <!-- gh -->
                     <div class="key-group"> <span class="latin-label">ɣ</span><span class="arabic-label">غ</span> <button class="keyboard-key" data-key="ⵖ" data-arabic-key="غ">ⵖ</button> </div>
+                    <!-- t -->
                     <div class="key-group"> <span class="latin-label">t</span><span class="arabic-label">ت</span> <button class="keyboard-key" data-key="ⵜ" data-arabic-key="ت">ⵜ</button> </div>
+                    <!-- y -->
                     <div class="key-group"> <span class="latin-label">y</span><span class="arabic-label">ي</span> <button class="keyboard-key" data-key="ⵢ" data-arabic-key="ي">ⵢ</button> </div>
+                    <!-- u -->
                     <div class="key-group"> <span class="latin-label">u</span><span class="arabic-label">أُ</span> <button class="keyboard-key" data-key="ⵓ" data-arabic-key="أُ">ⵓ</button> </div>
+                    <!-- i -->
                     <div class="key-group"> <span class="latin-label">i</span><span class="arabic-label">إ</span> <button class="keyboard-key" data-key="ⵉ" data-arabic-key="إ">ⵉ</button> </div>
+                    <!-- b -->
                     <div class="key-group"> <span class="latin-label">b</span><span class="arabic-label">ب</span> <button class="keyboard-key" data-key="ⴱ" data-arabic-key="ب">ⴱ</button> </div>
+                    <!-- h -->
                     <div class="key-group"> <span class="latin-label">h</span><span class="arabic-label">ه</span> <button class="keyboard-key" data-key="ⵀ" data-arabic-key="ه">ⵀ</button> </div>
+                    <!-- H -->
                     <div class="key-group"> <span class="latin-label">ḥ</span><span class="arabic-label">ح</span> <button class="keyboard-key" data-key="ⵃ" data-arabic-key="ح">ⵃ</button> </div>
+                    <!-- g -->
                     <div class="key-group"> <span class="latin-label">g</span><span class="arabic-label">ڭ</span> <button class="keyboard-key" data-key="ⴳ" data-arabic-key="ڭ">ⴳ</button> </div>
+                    <!-- L -->
                     <div class="key-group"> <span class="latin-label">L</span><span class="arabic-label">ل</span> <button class="keyboard-key" data-key="ⵍ" data-arabic-key="ل">ⵍ</button> </div>
+                    <!-- kh -->
                     <div class="key-group"> <span class="latin-label">kh</span><span class="arabic-label">خ</span> <button class="keyboard-key" data-key="ⵅ" data-arabic-key="خ">ⵅ</button> </div>
+                    <!-- S. -->
                     <div class="key-group"> <span class="latin-label">ṣ</span><span class="arabic-label">ص</span> <button class="keyboard-key" data-key="ⵚ" data-arabic-key="ص">ⵚ</button> </div>
                 </div>
 
                 <!-- Keyboard Row 2: Tifinagh with Latin and Arabic Labels -->
                 <div class="keyboard-row">
+                    <!-- A -->
                     <div class="key-group"> <span class="latin-label">A</span><span class="arabic-label">ع</span> <button class="keyboard-key" data-key="ⵄ" data-arabic-key="ع">ⵄ</button> </div>
+                    <!-- D. -->
                     <div class="key-group"> <span class="latin-label">ḍ</span><span class="arabic-label">ض</span> <button class="keyboard-key" data-key="ⴹ" data-arabic-key="ض">ⴹ</button> </div>
+                    <!-- f -->
                     <div class="key-group"> <span class="latin-label">f</span><span class="arabic-label">ف</span> <button class="keyboard-key" data-key="ⴼ" data-arabic-key="ف">ⴼ</button> </div>
+                    <!-- k -->
                     <div class="key-group"> <span class="latin-label">k</span><span class="arabic-label">ك</span> <button class="keyboard-key" data-key="ⴽ" data-arabic-key="ك">ⴽ</button> </div>
+                    <!-- n -->
                     <div class="key-group"> <span class="latin-label">n</span><span class="arabic-label">ن</span> <button class="keyboard-key" data-key="ⵏ" data-arabic-key="ن">ⵏ</button> </div>
+                    <!-- r -->
                     <div class="key-group"> <span class="latin-label">r</span><span class="arabic-label">ر</span> <button class="keyboard-key" data-key="ⵔ" data-arabic-key="ر">ⵔ</button> </div>
+                    <!-- m (Corrected position) -->
                     <div class="key-group"> <span class="latin-label">m</span><span class="arabic-label">م</span> <button class="keyboard-key" data-key="ⵎ" data-arabic-key="م">ⵎ</button> </div>
+                    <!-- q -->
                     <div class="key-group"> <span class="latin-label">q</span><span class="arabic-label">ق</span> <button class="keyboard-key" data-key="ⵇ" data-arabic-key="ق">ⵇ</button> </div>
+                    <!-- s -->
                     <div class="key-group"> <span class="latin-label">s</span><span class="arabic-label">س</span> <button class="keyboard-key" data-key="ⵙ" data-arabic-key="س">ⵙ</button> </div>
+                    <!-- sh -->
                     <div class="key-group"> <span class="latin-label">sh</span><span class="arabic-label">ش</span><button class="keyboard-key" data-key="ⵛ" data-arabic-key="ش">ⵛ</button> </div>
+                    <!-- d -->
                     <div class="key-group"> <span class="latin-label">d</span><span class="arabic-label">د</span> <button class="keyboard-key" data-key="ⴷ" data-arabic-key="د">ⴷ</button> </div>
+                    <!-- z -->
                     <div class="key-group"> <span class="latin-label">z</span><span class="arabic-label">ز</span> <button class="keyboard-key" data-key="ⵣ" data-arabic-key="ز">ⵣ</button> </div>
                 </div>
 
                 <!-- Keyboard Row 3 (Special Keys: ẓ, Ṭ, p, v, ʷ, Space, Backspace) -->
                 <div class="keyboard-row">
+                    <!-- Z. -->
                     <div class="key-group"> <span class="latin-label">ẓ</span><span class="arabic-label"></span> <button class="keyboard-key" data-key="ⵥ" data-arabic-key="">ⵥ</button> </div>
+                    <!-- T. -->
                     <div class="key-group"> <span class="latin-label">Ṭ</span><span class="arabic-label">ط</span> <button class="keyboard-key" data-key="ⵟ" data-arabic-key="ط">ⵟ</button> </div>
+                    <!-- p -->
                     <div class="key-group"> <span class="latin-label">p</span><span class="arabic-label">پ</span> <button class="keyboard-key" data-key="ⵒ" data-arabic-key="پ">ⵒ</button> </div>
+                    <!-- v -->
                     <div class="key-group"> <span class="latin-label">v</span><span class="arabic-label">ڤ</span> <button class="keyboard-key" data-key="ⵠ" data-arabic-key="ڤ">ⵠ</button> </div>
+                    <!-- w -->
                     <div class="key-group"> <span class="latin-label">ʷ</span><span class="arabic-label">ـ</span> <button class="keyboard-key" data-key="ⵯ" data-arabic-key="ـ">ⵯ</button> </div>
 
                     <!-- SPACE button -->
-                    <div class="key-group space-key-group">
-                        <span class="latin-label">Space</span>
-                        <span class="arabic-label">مسافة</span>
+                    <div class="key-group">
+                        <span class="latin-label visually-hidden">Space</span> <!-- Added visually-hidden -->
+                        <span class="arabic-label visually-hidden">مسافة</span> <!-- Added visually-hidden -->
                         <button class="keyboard-key wide" data-key=" " data-arabic-key=" ">SPACE</button>
                     </div>
                     <!-- DELETE button -->
-                    <div class="key-group delete-key-group">
-                        <span class="latin-label">Del</span>
-                        <span class="arabic-label">حذف</span>
+                    <div class="key-group">
+                        <span class="latin-label visually-hidden">Del</span> <!-- Added visually-hidden -->
+                        <span class="arabic-label visually-hidden">حذف</span> <!-- Added visually-hidden -->
                         <button class="keyboard-key delete" data-key="backspace" title="Backspace">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                </div>
-                 <!-- Additional row for "m" that was misplaced -->
-                <div class="keyboard-row">
-                    <div class="key-group"> <span class="latin-label">m</span><span class="arabic-label">م</span> <button class="keyboard-key" data-key="ⵎ" data-arabic-key="م">ⵎ</button> </div>
                 </div>
             </div>
         </section>
