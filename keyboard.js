@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Arabic to Tifinagh Mapping ---
     // Adjusted some mappings for better common use
     const arabicToTifinaghMap = {
-        'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', // Alef variations
+        'ا': 'ⴰ', 'أ': 'ⴰ','آ': 'ⴰ', 'إ':'ⵉ', 'أُ':'ⵓ', // Alef variations
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
         'د': 'ⴷ', 'ذ': 'ⴷ',
         'ر': 'ⵔ', 'ز': 'ⵣ',
         'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ', // ض often ⴹ
-        'ط': 'ⵟ', '': 'ⵥ', // ظ often ⵥ or ⴹ depending on dialect
+        'ط': 'ⵟ', 'ظ': 'ⵥ', // ظ often ⴹ depending on dialect
         'ع': 'ⵄ', 'غ': 'ⵖ',
         'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
