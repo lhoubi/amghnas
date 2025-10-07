@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- Latin to Tifinagh Mapping Function (No change here, it was fine) ---
+    // --- Latin to Tifinagh Mapping Function (Unchanged, as this part works) ---
     function latinToTifinagh(latinText) {
         const complexMappings = {
             'kh': 'ⵅ', 'gh': 'ⵖ', 'ch': 'ⵛ', 'sh': 'ⵛ',
@@ -86,10 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return tifinaghText;
     }
 
-    // --- Simulate a Backend Tamazight STT Service (No change, it was fine) ---
+    // --- Simulate a Backend Tamazight STT Service (Unchanged) ---
     async function simulateTamazightSTT(audioBlob) {
         sttStatus.textContent = "Sending audio to backend STT (simulated)...";
         debugOutput.textContent = "Simulating STT for " + audioBlob.size + " bytes of audio...";
+        console.log("Simulating STT for audio blob of size:", audioBlob.size);
 
         return new Promise(resolve => {
             setTimeout(() => {
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     "afus afus",
                     "tudert n tmaziɣt",
                     "adrar n snu",
-                    "ⴰⵣⵓⵍ ⴼⴻⵍⵍⴰⵡⴻⵏ",
+                    "ⴰⵣⵓⵍ ⴼⴻⵍⵍⴰⵡⴻⵏ", // Directly Tifinagh, to test conversion robustness
                     "azul fellam a yemma",
                     "tassawit n wawal",
                     "iẓlan imaziɣen",
@@ -111,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const simulatedTamazightLatin = mockResponses[Math.floor(Math.random() * mockResponses.length)];
                 sttStatus.textContent = "STT received response.";
                 debugOutput.textContent = `Simulated STT Raw Output: "${simulatedTamazightLatin}"`;
+                console.log("Simulated STT output:", simulatedTamazightLatin);
                 resolve(simulatedTamazightLatin);
             }, 1500 + Math.random() * 1000); // Simulate network delay
         });
@@ -121,20 +123,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function onDataAvailable(event) {
         if (event.data.size > 0) {
             audioChunks.push(event.data);
+            console.log("Audio data available, chunk size:", event.data.size);
         }
     }
 
     async function onStop() {
+        console.log("MediaRecorder onStop event fired. State:", mediaRecorder.state);
+
+        // UI reset immediately
         isRecording = false;
         audioRecordToggle.classList.remove('recording');
         icon.className = 'fas fa-microphone';
         textSpan.textContent = "Start Recording";
         sttStatus.textContent = "Processing audio...";
-        console.log("MediaRecorder stopped.");
 
         // Stop the microphone stream tracks
         if (micStream) {
-            micStream.getTracks().forEach(track => track.stop());
+            micStream.getTracks().forEach(track => {
+                track.stop();
+                console.log("Microphone track stopped.");
+            });
             micStream = null; // Clear the stream reference
         }
 
@@ -142,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         audioChunks = []; // Clear chunks for the next recording
 
         if (audioBlob.size > 0) {
+            console.log("Audio blob created, size:", audioBlob.size);
             try {
                 const tamazightLatinOutput = await simulateTamazightSTT(audioBlob);
                 if (tamazightLatinOutput) {
@@ -160,12 +169,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             sttStatus.textContent = "No audio recorded (too short or silent).";
             debugOutput.textContent = "No audio data was captured during the last recording.";
+            console.warn("No audio data captured.");
         }
+        audioRecordToggle.disabled = false; // Re-enable button after processing
     }
 
     function onMediaRecorderError(event) {
         console.error('MediaRecorder error:', event.error);
-        sttStatus.textContent = `Recording error: ${event.error.name}`;
+        sttStatus.textContent = `Recording error: ${event.error.name}: ${event.error.message}`;
         debugOutput.textContent = `MediaRecorder Error: ${event.error.message}`;
 
         // Ensure button state is reset on error
@@ -173,10 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
         audioRecordToggle.classList.remove('recording');
         icon.className = 'fas fa-microphone';
         textSpan.textContent = "Start Recording";
+        audioRecordToggle.disabled = false; // Re-enable button
 
         // Stop the microphone stream tracks if an error occurred while active
         if (micStream) {
-            micStream.getTracks().forEach(track => track.stop());
+            micStream.getTracks().forEach(track => {
+                track.stop();
+                console.log("Microphone track stopped due to error.");
+            });
             micStream = null;
         }
     }
@@ -186,51 +201,57 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isRecording) {
             // Start recording
             sttStatus.textContent = "Requesting microphone access...";
-            audioRecordToggle.disabled = true; // Disable button while requesting mic
+            audioRecordToggle.disabled = true; // Disable button while requesting mic to prevent double-clicks
             debugOutput.textContent = ""; // Clear previous debug messages
+            console.log("Attempting to get microphone access...");
 
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then(stream => {
+                    console.log("Microphone access granted.");
                     micStream = stream; // Store the stream
                     mediaRecorder = new MediaRecorder(stream);
                     mediaRecorder.ondataavailable = onDataAvailable;
                     mediaRecorder.onstop = onStop;
-                    mediaRecorder.onerror = onMediaRecorderError; // Use the dedicated error handler
+                    mediaRecorder.onerror = onMediaRecorderError;
 
-                    mediaRecorder.start();
+                    mediaRecorder.start(); // Start recording immediately
+                    console.log("MediaRecorder.start() called.");
+
+                    // Update UI state
                     isRecording = true;
                     audioRecordToggle.disabled = false; // Re-enable button
-                    audioRecordToggle.classList.add('recording');
+                    audioRecordToggle.classList.add('recording'); // This should make it red
                     icon.className = 'fas fa-stop-circle';
                     textSpan.textContent = "Stop Recording";
                     sttStatus.textContent = "Recording...";
-                    console.log("MediaRecorder started...");
                     keyboardInput.focus();
                 })
                 .catch(err => {
                     console.error('Microphone access denied or error:', err);
-                    sttStatus.textContent = `Microphone access denied: ${err.name}`;
-                    debugOutput.textContent = `Microphone Error: ${err.message}. Please allow microphone access.`;
-                    audioRecordToggle.disabled = true; // Keep button disabled if mic access fails
+                    sttStatus.textContent = `Microphone access denied: ${err.name}. Please check permissions.`;
+                    debugOutput.textContent = `Microphone Error: ${err.message}. Please enable microphone access for this site.`;
+                    audioRecordToggle.disabled = false; // Re-enable so user can try again
                     textSpan.textContent = "Mic Denied";
-
-                    // Ensure the button's visual state is correct even if disabled
                     audioRecordToggle.classList.remove('recording');
-                    icon.className = 'fas fa-microphone'; // Show mic icon (but disabled)
+                    icon.className = 'fas fa-microphone';
                 });
         } else {
             // Stop recording
+            console.log("Stop button clicked. MediaRecorder state:", mediaRecorder ? mediaRecorder.state : 'undefined');
             if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
+                audioRecordToggle.disabled = true; // Disable button briefly while processing
+                sttStatus.textContent = "Stopping recording...";
             } else {
-                console.warn("Attempted to stop MediaRecorder when it was not active.");
-                // If for some reason state is 'inactive' but isRecording is true, reset manually
+                console.warn("Attempted to stop MediaRecorder when it was not active. Resetting state.");
+                // This block should ideally not be hit if `isRecording` is managed correctly
                 isRecording = false;
                 audioRecordToggle.classList.remove('recording');
                 icon.className = 'fas fa-microphone';
                 textSpan.textContent = "Start Recording";
-                sttStatus.textContent = "Recording unexpectedly stopped.";
-                 if (micStream) { // Also stop stream if somehow it was left on
+                sttStatus.textContent = "Recording unexpectedly stopped. Click to restart.";
+                audioRecordToggle.disabled = false;
+                 if (micStream) {
                     micStream.getTracks().forEach(track => track.stop());
                     micStream = null;
                 }
