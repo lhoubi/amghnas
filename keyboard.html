@@ -21,6 +21,7 @@
     <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap'); /* Added for Arabic font */
 
         /*
            IMPORTANT: The .text-input styles that were here are MOVED to style.css
@@ -30,6 +31,22 @@
         .text-input.focused {
             border-color: var(--accent-color); /* Assuming --accent-color is defined in :root or body.dark-mode */
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3); /* Assuming --accent-rgb is defined */
+        }
+
+        /* Styles for Arabic labels - can be moved to style.css */
+        .arabic-label {
+            position: absolute;
+            top: 5px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em; /* Smaller font size for Arabic labels */
+            color: var(--text-color-light); /* Or adjust to fit your theme */
+            pointer-events: none; /* Make sure it doesn't interfere with button clicks */
+            font-family: 'Noto Naskh Arabic', sans-serif; /* Apply Arabic font */
+        }
+        .key-group {
+            position: relative; /* Needed for absolute positioning of arabic-label */
+            margin-top: 20px; /* Give space for arabic label above */
         }
     </style>
 </head>
@@ -50,11 +67,11 @@
 
         <!-- Main Title for the Keyboard Page -->
         <h1>Berber/Tifinagh Virtual Keyboard</h1>
-        <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard.</p>
+        <p class="tagline">Type directly in Tifinagh using this virtual keyboard or your physical keyboard. Now with Arabic input!</p>
 
         <!-- The input area should be centered within its available width -->
         <div class="input-area-wrapper">
-            <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh here..." lang="ber" inputmode="text"></textarea>
+            <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh or Arabic here..." lang="ber" inputmode="text"></textarea>
         </div>
 
 
@@ -62,7 +79,57 @@
         <section class="keyboard-section">
             <div class="keyboard-layout">
 
-                <!-- Keyboard Row 1 -->
+                <!-- New Arabic Keyboard Row 1 -->
+                <div class="keyboard-row arabic-row">
+                    <div class="key-group"> <span class="arabic-label">ق</span> <button class="keyboard-key arabic-key" data-key-arabic="ق" data-tifinagh-map="ⵇ">ⵇ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">و</span> <button class="keyboard-key arabic-key" data-key-arabic="و" data-tifinagh-map="ⵡ">ⵡ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ر</span> <button class="keyboard-key arabic-key" data-key-arabic="ر" data-tifinagh-map="ⵔ">ⵔ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ت</span> <button class="keyboard-key arabic-key" data-key-arabic="ت" data-tifinagh-map="ⵜ">ⵜ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ي</span> <button class="keyboard-key arabic-key" data-key-arabic="ي" data-tifinagh-map="ⵢ">ⵢ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">غ</span> <button class="keyboard-key arabic-key" data-key-arabic="غ" data-tifinagh-map="ⵖ">ⵖ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ع</span> <button class="keyboard-key arabic-key" data-key-arabic="ع" data-tifinagh-map="ⵄ">ⵄ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ظ</span> <button class="keyboard-key arabic-key" data-key-arabic="ظ" data-tifinagh-map="ⴹ">ⴹ</button> </div> <!-- Placeholder, 'ض' or similar for ⴹ often -->
+                    <div class="key-group"> <span class="arabic-label">ط</span> <button class="keyboard-key arabic-key" data-key-arabic="ط" data-tifinagh-map="ⵟ">ⵟ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ك</span> <button class="keyboard-key arabic-key" data-key-arabic="ك" data-tifinagh-map="ⴽ">ⴽ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">م</span> <button class="keyboard-key arabic-key" data-key-arabic="م" data-tifinagh-map="ⵎ">ⵎ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ن</span> <button class="keyboard-key arabic-key" data-key-arabic="ن" data-tifinagh-map="ⵏ">ⵏ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ل</span> <button class="keyboard-key arabic-key" data-key-arabic="ل" data-tifinagh-map="ⵍ">ⵍ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ه</span> <button class="keyboard-key arabic-key" data-key-arabic="ه" data-tifinagh-map="ⵀ">ⵀ</button> </div>
+                </div>
+
+                <!-- New Arabic Keyboard Row 2 -->
+                <div class="keyboard-row arabic-row">
+                    <div class="key-group"> <span class="arabic-label">ا</span> <button class="keyboard-key arabic-key" data-key-arabic="ا" data-tifinagh-map="ⴰ">ⴰ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">س</span> <button class="keyboard-key arabic-key" data-key-arabic="س" data-tifinagh-map="ⵙ">ⵙ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">د</span> <button class="keyboard-key arabic-key" data-key-arabic="د" data-tifinagh-map="ⴷ">ⴷ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ف</span> <button class="keyboard-key arabic-key" data-key-arabic="ف" data-tifinagh-map="ⴼ">ⴼ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ج</span> <button class="keyboard-key arabic-key" data-key-arabic="ج" data-tifinagh-map="ⴳ">ⴳ</button> </div> <!-- Not direct, often mapped to ⴳ or ⵊ -->
+                    <div class="key-group"> <span class="arabic-label">ح</span> <button class="keyboard-key arabic-key" data-key-arabic="ح" data-tifinagh-map="ⵃ">ⵃ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">خ</span> <button class="keyboard-key arabic-key" data-key-arabic="خ" data-tifinagh-map="ⵅ">ⵅ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ش</span> <button class="keyboard-key arabic-key" data-key-arabic="ش" data-tifinagh-map="ⵛ">ⵛ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ص</span> <button class="keyboard-key arabic-key" data-key-arabic="ص" data-tifinagh-map="ⵚ">ⵚ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ض</span> <button class="keyboard-key arabic-key" data-key-arabic="ض" data-tifinagh-map="ⴹ">ⴹ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ز</span> <button class="keyboard-key arabic-key" data-key-arabic="ز" data-tifinagh-map="ⵣ">ⵣ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ة</span> <button class="keyboard-key arabic-key" data-key-arabic="ة" data-tifinagh-map="ⴻ">ⴻ</button> </div>
+                </div>
+
+                <!-- New Arabic Keyboard Row 3 (remaining Arabic chars + space/backspace with specific mappings) -->
+                <div class="keyboard-row arabic-row">
+                    <div class="key-group"> <span class="arabic-label">ذ</span> <button class="keyboard-key arabic-key" data-key-arabic="ذ" data-tifinagh-map="ⴷ">ⴷ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ث</span> <button class="keyboard-key arabic-key" data-key-arabic="ث" data-tifinagh-map="ⵜ">ⵜ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ب</span> <button class="keyboard-key arabic-key" data-key-arabic="ب" data-tifinagh-map="ⴱ">ⴱ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">لأ</span> <button class="keyboard-key arabic-key" data-key-arabic="لأ" data-tifinagh-map="ⵍⴰ">ⵍⴰ</button> </div> <!-- Example compound -->
+                    <div class="key-group"> <span class="arabic-label">لا</span> <button class="keyboard-key arabic-key" data-key-arabic="لا" data-tifinagh-map="ⵍⴰ">ⵍⴰ</button> </div> <!-- Example compound -->
+                    <div class="key-group"> <span class="arabic-label">آ</span> <button class="keyboard-key arabic-key" data-key-arabic="آ" data-tifinagh-map="ⴰ">ⴰ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ئ</span> <button class="keyboard-key arabic-key" data-key-arabic="ئ" data-tifinagh-map="ⵉ">ⵉ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ؤ</span> <button class="keyboard-key arabic-key" data-key-arabic="ؤ" data-tifinagh-map="ⵓ">ⵓ</button> </div>
+                    <div class="key-group"> <span class="arabic-label">ـ</span> <button class="keyboard-key arabic-key" data-key-arabic="ـ" data-tifinagh-map="-">-</button> </div> <!-- Tatweel for hyphen -->
+                    <div class="key-group"> <span class="arabic-label visually-hidden">Space</span> <button class="keyboard-key wide arabic-key" data-key-arabic=" " data-tifinagh-map=" ">مسافة</button> </div>
+                    <div class="key-group"> <span class="arabic-label visually-hidden">Del</span> <button class="keyboard-key delete arabic-key" data-key="backspace" title="Backspace"><i class="fas fa-times"></i></button> </div>
+                </div>
+
+
+                <!-- Keyboard Row 1 (Original Tifinagh) -->
                 <div class="keyboard-row">
                     <div class="key-group"> <span class="latin-label">Ṛ</span> <button class="keyboard-key" data-key="ⵕ">ⵕ</button> </div>
                     <div class="key-group"> <span class="latin-label">ɣ</span> <button class="keyboard-key" data-key="ⵖ">ⵖ</button> </div>
@@ -79,7 +146,7 @@
                     <div class="key-group"> <span class="latin-label">ṣ</span> <button class="keyboard-key" data-key="ⵚ">ⵚ</button> </div>
                 </div>
 
-                <!-- Keyboard Row 2 -->
+                <!-- Keyboard Row 2 (Original Tifinagh) -->
                 <div class="keyboard-row">
                     <div class="key-group"> <span class="latin-label">A</span> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
                     <div class="key-group"> <span class="latin-label">ḍ</span> <button class="keyboard-key" data-key="ⴹ">ⴹ</button> </div>
@@ -95,7 +162,7 @@
                     <div class="key-group"> <span class="latin-label">z</span> <button class="keyboard-key" data-key="ⵣ">ⵣ</button> </div>
                 </div>
 
-                <!-- Keyboard Row 3 (Special Keys: ⵥ, ⵯ, Space, Backspace) - UPDATED FOR CONSISTENCY -->
+                <!-- Keyboard Row 3 (Original Tifinagh Special Keys) -->
                 <div class="keyboard-row">
                     <div class="key-group"> <span class="latin-label">ẓ</span> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
                     <div class="key-group"> <span class="latin-label">Ṭ</span> <button class="keyboard-key" data-key="ⵟ">ⵟ</button> </div>
@@ -115,7 +182,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- Additional rows can be added here -->
             </div>
         </section>
 
