@@ -187,6 +187,44 @@
         border: 0;
     }
 
+    /* Styles for the new audio controls */
+    .audio-input-controls {
+        display: flex;
+        flex-wrap: wrap; /* Allow buttons to wrap */
+        justify-content: center;
+        gap: 10px;
+        margin: 20px auto;
+        max-width: 1000px;
+        padding: 0 15px; /* Align with keyboard padding */
+    }
+    .audio-input-controls .action-button {
+        padding: 10px 20px;
+        border-radius: var(--border-radius, 8px);
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+        border: none; /* Remove default button border */
+        color: white;
+        background-color: var(--accent-color, #007bff); /* Default blue */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .audio-input-controls .action-button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .audio-input-controls .action-button:disabled {
+        background-color: #cccccc; /* Grey out disabled buttons */
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+    #recordBtn { background-color: #28a745; /* Green */ }
+    #recordBtn:hover:not(:disabled) { background-color: #218838; }
+    #stopBtn { background-color: #dc3545; /* Red */ }
+    #stopBtn:hover:not(:disabled) { background-color: #c82333; }
+    #sendAudioBtn { background-color: #007bff; /* Blue */ }
+    #sendAudioBtn:hover:not(:disabled) { background-color: #0069d9; }
+
+
     /* Responsive adjustments for smaller screens */
     @media (max-width: 768px) {
         .keyboard-layout {
@@ -228,6 +266,14 @@
         .final-action-row .key-group {
             min-width: 100px;
             max-width: 160px;
+        }
+        .audio-input-controls {
+            padding: 0 10px;
+            gap: 8px;
+        }
+        .audio-input-controls .action-button {
+            padding: 8px 15px;
+            font-size: 0.9em;
         }
     }
 
@@ -272,6 +318,15 @@
             min-width: 80px;
             max-width: 130px;
         }
+        .audio-input-controls {
+            padding: 0 5px;
+            gap: 5px;
+        }
+        .audio-input-controls .action-button {
+            padding: 7px 12px;
+            font-size: 0.8em;
+            flex-grow: 1; /* Allow buttons to grow to fill space better */
+        }
     }
 
 </style>
@@ -282,7 +337,7 @@
         <!-- Header Controls for Navigation & Dark Mode Toggle -->
         <div class="header-controls">
             <!-- Navigation link back to the main converter page -->
-            <a href="index.html" class="nav-button">
+            <a href="index.html" class="nav-button"> <!-- Corrected link here -->
                 <i class="fas fa-arrow-left"></i> Converter
             </a>
             <!-- Dark Mode Toggle Button -->
@@ -300,6 +355,14 @@
             <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here..." lang="ber" inputmode="text"></textarea>
         </div>
 
+        <!-- NEW: Audio Input Controls Section -->
+        <div class="audio-input-controls">
+            <button id="recordBtn" class="action-button"><i class="fas fa-microphone"></i> Start Recording</button>
+            <button id="stopBtn" class="action-button" disabled><i class="fas fa-stop"></i> Stop Recording</button>
+            <button id="sendAudioBtn" class="action-button" disabled><i class="fas fa-paper-plane"></i> Transcribe Audio</button>
+            <audio id="audioPlayback" controls style="display: none; margin-top: 10px;"></audio>
+        </div>
+        <!-- END NEW -->
 
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
@@ -387,5 +450,6 @@
     <!-- JavaScript files for keyboard functionality and theme toggle -->
     <script src="keyboard.js"></script>
     <script src="themeToggle.js"></script>
+    <script src="audioRecorder.js"></script> <!-- NEW SCRIPT LINK -->
 </body>
 </html>
