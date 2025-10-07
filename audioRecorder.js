@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let audioChunks = [];
     let isRecording = false; // Tracks our UI/logic state
     let micStream = null;
+    let sendIntervalId = null; // To manage our continuous audio sending
+    let lastPartialTranscription = ""; // Stores the last known partial transcription (Latin)
+    let currentFullTranscriptionPrefix = ""; // Stores the confirmed transcription that precedes the current partial (Tifinagh)
 
     // --- Browser Compatibility Check for MediaRecorder ---
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -22,8 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return; // Exit if not supported
     }
 
-    // --- Latin to Tifinagh Mapping Function (Unchanged) ---
+    // --- Latin to Tifinagh Mapping Function (Unchanged - IMPORTANT: keep this for display) ---
     function latinToTifinagh(latinText) {
+        // ... (Your existing latinToTifinagh function here) ...
         const complexMappings = {
             'kh': 'ⵅ', 'gh': 'ⵖ', 'ch': 'ⵛ', 'sh': 'ⵛ',
             'dj': 'ⴷⵊ', 'ts': 'ⵜⵙ',
@@ -85,24 +89,54 @@ document.addEventListener('DOMContentLoaded', () => {
         return tifinaghText;
     }
 
-    // --- Simulate a Backend Tamazight STT Service (Unchanged) ---
-    async function simulateTamazightSTT(audioBlob) {
+
+    // --- Simulate a Backend Tamazight STT Service for real-time (MODIFIED) ---
+    const mockResponsesPool = [
+        "azul fellawen", "manzaɣ immi", "nek d Amzigh", "tamaziɣt tuḍfi", "axam-inu",
+        "aman iggi", "afus afus", "tudert n tmaziɣt", "adrar n snu",
+        "azul fellam a yemma", "tassawit n wawal", "iẓlan imaziɣen",
+    ];
+    let selectedMockResponse = "";
+    let mockResponseCharIndex = 0; // Tracks how much of the selectedMockResponse has been "transcribed"
+
+    async function simulateTamazightSTT(audioBlob, isFinal = false) {
+        if (!selectedMockResponse) {
+            // Pick a new random response at the start of a recording session
+            selectedMockResponse = mockResponsesPool[Math.floor(Math.random() * mockResponsesPool.length)];
+            mockResponseCharIndex = 0; // Reset for new response
+        }
+
         sttStatus.textContent = "Sending audio to backend STT (simulated)...";
-        debugOutput.textContent = "Simulating STT for " + audioBlob.size + " bytes of audio...";
-        console.log("Simulating STT for audio blob of size:", audioBlob.size);
+        debugOutput.textContent = `Simulating STT for ${audioBlob.size} bytes. IsFinal: ${isFinal}`;
+        console.log(`Simulating STT for audio blob of size: ${audioBlob.size}, isFinal: ${isFinal}`);
+
         return new Promise(resolve => {
+            // Simulate network latency and processing time, but faster for real-time feel
             setTimeout(() => {
-                const mockResponses = [
-                    "azul fellawen", "manzaɣ immi", "nek d Amzigh", "tamaziɣt tuḍfi", "axam-inu",
-                    "aman iggi", "afus afus", "tudert n tmaziɣt", "adrar n snu", "ⴰⵣⵓⵍ ⴼⴻⵍⵍⴰⵡⴻⵏ",
-                    "azul fellam a yemma", "tassawit n wawal", "iẓlan imaziɣen",
-                ];
-                const simulatedTamazightLatin = mockResponses[Math.floor(Math.random() * mockResponses.length)];
-                sttStatus.textContent = "STT received response.";
-                debugOutput.textContent = `Simulated STT Raw Output: "${simulatedTamazightLatin}"`;
-                console.log("Simulated STT output:", simulatedTamazightLatin);
-                resolve(simulatedTamazightLatin);
-            }, 1500 + Math.random() * 1000);
+                let partialResult = "";
+                if (!isFinal) {
+                    // Simulate receiving partial results over time
+                    // Advance the index by a random amount (1-3 characters) to make it look dynamic
+                    mockResponseCharIndex = Math.min(mockResponseCharIndex + 1 + Math.floor(Math.random() * 3), selectedMockResponse.length);
+                    partialResult = selectedMockResponse.substring(0, mockResponseCharIndex);
+                } else {
+                    // When final, send the complete response
+                    partialResult = selectedMockResponse;
+                    selectedMockResponse = ""; // Reset for next recording
+                    mockResponseCharIndex = 0;
+                }
+
+                if (partialResult) {
+                    sttStatus.textContent = `Partial STT: "${partialResult}"`;
+                    debugOutput.textContent = `Simulated STT Output: "${partialResult}" (isFinal: ${isFinal})`;
+                    console.log(`Simulated STT output: "${partialResult}" (isFinal: ${isFinal})`);
+                } else {
+                    sttStatus.textContent = isFinal ? "No speech recognized." : "Waiting for speech...";
+                    debugOutput.textContent = "Simulated STT: No partial result yet.";
+                    console.log("Simulated STT: No partial result yet.");
+                }
+                resolve(partialResult);
+            }, 200 + Math.random() * 200); // Shorter delay for "instant" feel
         });
     }
 
@@ -113,9 +147,21 @@ document.addEventListener('DOMContentLoaded', () => {
         icon.className = 'fas fa-microphone';
         textSpan.textContent = "Start Recording";
         audioRecordToggle.disabled = false; // Ensure button is re-enabled
-        sttStatus.textContent = "Click 'Start Recording' to begin.";
+        sttStatus.textContent = "Ready to record."; // More professional initial status
         debugOutput.textContent = ""; // Clear debug on reset
         console.log("UI reset to 'Start Recording' state.");
+
+        // Clear any pending send interval
+        if (sendIntervalId) {
+            clearInterval(sendIntervalId);
+            sendIntervalId = null;
+        }
+
+        // Reset transcription states
+        lastPartialTranscription = "";
+        currentFullTranscriptionPrefix = "";
+        selectedMockResponse = ""; // Reset mock response for the next recording
+        mockResponseCharIndex = 0;
     }
 
     // --- MediaRecorder Event Handlers ---
@@ -129,6 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
     async function onStop() {
         console.log("MediaRecorder onStop event fired. State:", mediaRecorder ? mediaRecorder.state : 'undefined');
 
+        // Stop the continuous sending interval immediately
+        if (sendIntervalId) {
+            clearInterval(sendIntervalId);
+            sendIntervalId = null;
+            console.log("Stopped continuous audio sending interval.");
+        }
+
         // Stop all tracks in the stream
         if (micStream) {
             micStream.getTracks().forEach(track => {
@@ -138,34 +191,48 @@ document.addEventListener('DOMContentLoaded', () => {
             micStream = null;
         }
 
-        sttStatus.textContent = "Processing audio...";
+        sttStatus.textContent = "Finalizing transcription...";
         audioRecordToggle.disabled = true; // Disable during processing
 
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        audioChunks = []; // Clear chunks for next recording
-
-        if (audioBlob.size > 0) {
-            console.log("Audio blob created, size:", audioBlob.size);
-            try {
-                const tamazightLatinOutput = await simulateTamazightSTT(audioBlob);
-                if (tamazightLatinOutput) {
-                    const tifinaghOutput = latinToTifinagh(tamazightLatinOutput);
-                    keyboardInput.value += tifinaghOutput + ' ';
-                    keyboardInput.scrollTop = keyboardInput.scrollHeight;
-                    sttStatus.textContent = "Transcription complete.";
-                } else {
-                    sttStatus.textContent = "No speech recognized by STT.";
+        // Send any remaining chunks as a final request
+        if (audioChunks.length > 0) {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            audioChunks = []; // Clear chunks for next recording
+            if (audioBlob.size > 0) {
+                try {
+                    const finalTamazightLatinOutput = await simulateTamazightSTT(audioBlob, true); // Mark as final
+                    if (finalTamazightLatinOutput) {
+                        const tifinaghOutput = latinToTifinagh(finalTamazightLatinOutput);
+                        
+                        // Remove the last partial (which was still based on the mock)
+                        // and append the full, final transcription.
+                        let currentInputValue = keyboardInput.value;
+                        if (lastPartialTranscription && currentInputValue.endsWith(latinToTifinagh(lastPartialTranscription))) {
+                            currentInputValue = currentInputValue.slice(0, -latinToTifinagh(lastPartialTranscription).length);
+                        }
+                        
+                        keyboardInput.value = currentInputValue + tifinaghOutput + ' '; // Add space after final word
+                        currentFullTranscriptionPrefix = currentInputValue + tifinaghOutput + ' '; // Update prefix
+                        keyboardInput.scrollTop = keyboardInput.scrollHeight;
+                        sttStatus.textContent = "Transcription complete.";
+                        lastPartialTranscription = ""; // Clear for next round
+                    } else {
+                        sttStatus.textContent = "No speech recognized during final pass.";
+                    }
+                } catch (error) {
+                    console.error("Error during final STT process:", error);
+                    sttStatus.textContent = "Error processing final speech.";
+                    debugOutput.textContent = "Error: " + error.message;
                 }
-            } catch (error) {
-                console.error("Error during STT process:", error);
-                sttStatus.textContent = "Error processing speech.";
-                debugOutput.textContent = "Error: " + error.message;
+            } else {
+                sttStatus.textContent = "No audio recorded (too short or silent).";
+                debugOutput.textContent = "No audio data was captured during the last recording.";
+                console.warn("No audio data captured.");
             }
         } else {
-            sttStatus.textContent = "No audio recorded (too short or silent).";
-            debugOutput.textContent = "No audio data was captured during the last recording.";
-            console.warn("No audio data captured.");
+            sttStatus.textContent = "No new audio chunks to finalize.";
         }
+
         resetUI(); // Always reset UI after recording stops or processing finishes
     }
 
@@ -174,7 +241,12 @@ document.addEventListener('DOMContentLoaded', () => {
         sttStatus.textContent = `Recording error: ${event.error.name}: ${event.error.message}`;
         debugOutput.textContent = `MediaRecorder Error: ${event.error.message}`;
 
-        // Stop all tracks in the stream
+        // Stop interval and mic stream on error
+        if (sendIntervalId) {
+            clearInterval(sendIntervalId);
+            sendIntervalId = null;
+            console.log("Stopped continuous audio sending interval due to error.");
+        }
         if (micStream) {
             micStream.getTracks().forEach(track => {
                 track.stop();
@@ -185,8 +257,48 @@ document.addEventListener('DOMContentLoaded', () => {
         resetUI(); // Reset UI on error
     }
 
+    // --- Function to send accumulated audio chunks to STT (for real-time) ---
+    async function sendAudioChunks() {
+        if (audioChunks.length === 0) {
+            debugOutput.textContent = "No audio chunks to send yet.";
+            return;
+        }
+
+        // Combine chunks and clear for the next interval
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        audioChunks = []; // Clear chunks *after* creating blob for sending
+
+        try {
+            const partialTamazightLatinOutput = await simulateTamazightSTT(audioBlob, false); // Mark as not final
+            if (partialTamazightLatinOutput) {
+                const tifinaghOutput = latinToTifinagh(partialTamazightLatinOutput);
+
+                // Update keyboardInput: remove previous partial, add new one
+                // Ensure we only modify the current 'partial' part of the input,
+                // leaving any previously confirmed text intact.
+                let currentInputValue = keyboardInput.value;
+                
+                // If there was a previous partial, remove its Tifinagh representation
+                if (lastPartialTranscription) {
+                    const lastPartialTifinagh = latinToTifinagh(lastPartialTranscription);
+                    if (currentInputValue.endsWith(lastPartialTifinagh)) {
+                        currentInputValue = currentInputValue.slice(0, -lastPartialTifinagh.length);
+                    }
+                }
+                
+                keyboardInput.value = currentInputValue + tifinaghOutput;
+                keyboardInput.scrollTop = keyboardInput.scrollHeight;
+                lastPartialTranscription = partialTamazightLatinOutput; // Store this partial for future replacement
+            }
+        } catch (error) {
+            console.error("Error sending partial audio to STT:", error);
+            debugOutput.textContent = "Error sending partial audio: " + error.message;
+        }
+    }
+
+
     // --- Toggle Button Click Handler ---
-    audioRecordToggle.addEventListener('click', async () => { // Made async for getUserMedia await
+    audioRecordToggle.addEventListener('click', async () => {
         if (!isRecording) {
             // Start Recording flow
             sttStatus.textContent = "Requesting microphone access...";
@@ -198,13 +310,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 console.log("Microphone access granted.");
 
-                mediaRecorder = new MediaRecorder(micStream);
+                mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/webm' }); // Explicitly set mimeType
                 mediaRecorder.ondataavailable = onDataAvailable;
                 mediaRecorder.onstop = onStop;
                 mediaRecorder.onerror = onMediaRecorderError;
 
-                mediaRecorder.start();
-                console.log("MediaRecorder.start() called. State:", mediaRecorder.state);
+                // Start recording, requesting data every 500ms
+                mediaRecorder.start(500); // This creates chunks every 500ms
+                console.log("MediaRecorder.start(500) called. State:", mediaRecorder.state);
+
+                // Start sending chunks every 1 second (adjust as needed for responsiveness vs. simulated load)
+                sendIntervalId = setInterval(sendAudioChunks, 1000);
+                console.log("Started continuous audio sending interval.");
 
                 isRecording = true; // Update our state
                 audioRecordToggle.disabled = false; // Re-enable button
@@ -223,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Stop Recording flow
             console.log("Stop button clicked. MediaRecorder state:", mediaRecorder ? mediaRecorder.state : 'undefined');
-            if (mediaRecorder && mediaRecorder.state === 'recording') { // Ensure it's actually recording
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
                 audioRecordToggle.disabled = true; // Disable button during stop/processing
                 sttStatus.textContent = "Stopping recording...";
                 mediaRecorder.stop();
@@ -237,5 +354,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initial status message
-    resetUI(); // Set initial state
+    resetUI(); // Set initial state and status
 });
