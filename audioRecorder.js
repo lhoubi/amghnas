@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let mediaRecorder;
     let audioChunks = [];
     let isRecording = false;
-    let micStream = null; // To hold the microphone stream
+    let micStream = null;
 
     // --- Browser Compatibility Check for MediaRecorder ---
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
         textSpan.textContent = "Mic Not Supported";
         sttStatus.textContent = "Your browser does not support audio recording. Please update or use a modern browser.";
         console.error('MediaRecorder API not supported on this browser.');
-        return;
+        return; // Exit if not supported
     }
 
-    // --- Latin to Tifinagh Mapping Function (Unchanged, as this part works) ---
+    // --- Latin to Tifinagh Mapping Function (Unchanged) ---
     function latinToTifinagh(latinText) {
         const complexMappings = {
             'kh': 'ⵅ', 'gh': 'ⵖ', 'ch': 'ⵛ', 'sh': 'ⵛ',
@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-
             if (!matched) {
                 const char = lowerLatin[i];
                 if (complexMappings[char]) {
@@ -91,35 +90,23 @@ document.addEventListener('DOMContentLoaded', () => {
         sttStatus.textContent = "Sending audio to backend STT (simulated)...";
         debugOutput.textContent = "Simulating STT for " + audioBlob.size + " bytes of audio...";
         console.log("Simulating STT for audio blob of size:", audioBlob.size);
-
         return new Promise(resolve => {
             setTimeout(() => {
                 const mockResponses = [
-                    "azul fellawen",
-                    "manzaɣ immi",
-                    "nek d Amzigh",
-                    "tamaziɣt tuḍfi",
-                    "axam-inu",
-                    "aman iggi",
-                    "afus afus",
-                    "tudert n tmaziɣt",
-                    "adrar n snu",
-                    "ⴰⵣⵓⵍ ⴼⴻⵍⵍⴰⵡⴻⵏ", // Directly Tifinagh, to test conversion robustness
-                    "azul fellam a yemma",
-                    "tassawit n wawal",
-                    "iẓlan imaziɣen",
+                    "azul fellawen", "manzaɣ immi", "nek d Amzigh", "tamaziɣt tuḍfi", "axam-inu",
+                    "aman iggi", "afus afus", "tudert n tmaziɣt", "adrar n snu", "ⴰⵣⵓⵍ ⴼⴻⵍⵍⴰⵡⴻⵏ",
+                    "azul fellam a yemma", "tassawit n wawal", "iẓlan imaziɣen",
                 ];
                 const simulatedTamazightLatin = mockResponses[Math.floor(Math.random() * mockResponses.length)];
                 sttStatus.textContent = "STT received response.";
                 debugOutput.textContent = `Simulated STT Raw Output: "${simulatedTamazightLatin}"`;
                 console.log("Simulated STT output:", simulatedTamazightLatin);
                 resolve(simulatedTamazightLatin);
-            }, 1500 + Math.random() * 1000); // Simulate network delay
+            }, 1500 + Math.random() * 1000);
         });
     }
 
     // --- MediaRecorder Event Handlers ---
-
     function onDataAvailable(event) {
         if (event.data.size > 0) {
             audioChunks.push(event.data);
@@ -130,24 +117,22 @@ document.addEventListener('DOMContentLoaded', () => {
     async function onStop() {
         console.log("MediaRecorder onStop event fired. State:", mediaRecorder.state);
 
-        // UI reset immediately
-        isRecording = false;
+        isRecording = false; // Set this first
         audioRecordToggle.classList.remove('recording');
         icon.className = 'fas fa-microphone';
         textSpan.textContent = "Start Recording";
         sttStatus.textContent = "Processing audio...";
 
-        // Stop the microphone stream tracks
         if (micStream) {
             micStream.getTracks().forEach(track => {
                 track.stop();
                 console.log("Microphone track stopped.");
             });
-            micStream = null; // Clear the stream reference
+            micStream = null;
         }
 
         const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        audioChunks = []; // Clear chunks for the next recording
+        audioChunks = [];
 
         if (audioBlob.size > 0) {
             console.log("Audio blob created, size:", audioBlob.size);
@@ -171,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             debugOutput.textContent = "No audio data was captured during the last recording.";
             console.warn("No audio data captured.");
         }
-        audioRecordToggle.disabled = false; // Re-enable button after processing
+        audioRecordToggle.disabled = false; // Re-enable button
     }
 
     function onMediaRecorderError(event) {
@@ -179,14 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
         sttStatus.textContent = `Recording error: ${event.error.name}: ${event.error.message}`;
         debugOutput.textContent = `MediaRecorder Error: ${event.error.message}`;
 
-        // Ensure button state is reset on error
         isRecording = false;
         audioRecordToggle.classList.remove('recording');
         icon.className = 'fas fa-microphone';
         textSpan.textContent = "Start Recording";
-        audioRecordToggle.disabled = false; // Re-enable button
+        audioRecordToggle.disabled = false; // Re-enable button on error too
 
-        // Stop the microphone stream tracks if an error occurred while active
         if (micStream) {
             micStream.getTracks().forEach(track => {
                 track.stop();
@@ -199,28 +182,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Toggle Button Click Handler ---
     audioRecordToggle.addEventListener('click', () => {
         if (!isRecording) {
-            // Start recording
             sttStatus.textContent = "Requesting microphone access...";
-            audioRecordToggle.disabled = true; // Disable button while requesting mic to prevent double-clicks
-            debugOutput.textContent = ""; // Clear previous debug messages
+            audioRecordToggle.disabled = true; // Disable button while requesting mic
+            debugOutput.textContent = "";
             console.log("Attempting to get microphone access...");
 
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then(stream => {
                     console.log("Microphone access granted.");
-                    micStream = stream; // Store the stream
+                    micStream = stream;
                     mediaRecorder = new MediaRecorder(stream);
                     mediaRecorder.ondataavailable = onDataAvailable;
                     mediaRecorder.onstop = onStop;
-                    mediaRecorder.onerror = onMediaRecorderError;
+                    mediaRecorder.onerror = onMediaRecorderError; // Assign error handler here
 
-                    mediaRecorder.start(); // Start recording immediately
+                    mediaRecorder.start();
                     console.log("MediaRecorder.start() called.");
 
-                    // Update UI state
                     isRecording = true;
-                    audioRecordToggle.disabled = false; // Re-enable button
-                    audioRecordToggle.classList.add('recording'); // This should make it red
+                    audioRecordToggle.disabled = false; // Re-enable button after successful start
+                    audioRecordToggle.classList.add('recording'); // Apply red style
                     icon.className = 'fas fa-stop-circle';
                     textSpan.textContent = "Stop Recording";
                     sttStatus.textContent = "Recording...";
@@ -230,28 +211,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('Microphone access denied or error:', err);
                     sttStatus.textContent = `Microphone access denied: ${err.name}. Please check permissions.`;
                     debugOutput.textContent = `Microphone Error: ${err.message}. Please enable microphone access for this site.`;
-                    audioRecordToggle.disabled = false; // Re-enable so user can try again
-                    textSpan.textContent = "Mic Denied";
-                    audioRecordToggle.classList.remove('recording');
-                    icon.className = 'fas fa-microphone';
+                    
+                    // Reset button state and re-enable it so the user can try again
+                    audioRecordToggle.disabled = false; // Important: re-enable so user can click again
+                    textSpan.textContent = "Start Recording"; // Reset text
+                    icon.className = 'fas fa-microphone'; // Reset icon
+                    audioRecordToggle.classList.remove('recording'); // Ensure no red style
                 });
         } else {
-            // Stop recording
             console.log("Stop button clicked. MediaRecorder state:", mediaRecorder ? mediaRecorder.state : 'undefined');
             if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
-                audioRecordToggle.disabled = true; // Disable button briefly while processing
+                audioRecordToggle.disabled = true; // Disable button briefly during stop/processing
                 sttStatus.textContent = "Stopping recording...";
             } else {
-                console.warn("Attempted to stop MediaRecorder when it was not active. Resetting state.");
-                // This block should ideally not be hit if `isRecording` is managed correctly
+                console.warn("Attempted to stop MediaRecorder when it was not active. Manually resetting state.");
                 isRecording = false;
                 audioRecordToggle.classList.remove('recording');
                 icon.className = 'fas fa-microphone';
                 textSpan.textContent = "Start Recording";
                 sttStatus.textContent = "Recording unexpectedly stopped. Click to restart.";
                 audioRecordToggle.disabled = false;
-                 if (micStream) {
+                if (micStream) {
                     micStream.getTracks().forEach(track => track.stop());
                     micStream = null;
                 }
