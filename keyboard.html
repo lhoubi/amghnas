@@ -4,353 +4,391 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berber/Tifinagh Virtual Keyboard</title>
-<!-- Favicon -->
-<link rel="icon" href="favicon.png" type="image/png">
-<link rel="shortcut icon" href="favicon.png" type="image/png">
 
-<!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
 
-<!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- Your Custom Stylesheet -->
-<link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
-<!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
+    <!-- Your Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 
-    /* Textarea Focus Style (from original keyboard.js) */
-    .text-input.focused {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
-    }
+    <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
+    <!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
 
-    /* Styles for consolidated labels above Tifinagh keys */
-    .key-group {
-        position: relative; /* Establish positioning context for labels */
-        padding-top: 35px; /* Make space for both labels above the button */
-        display: flex; /* Make key-group a flex container */
-        justify-content: center; /* Center button horizontally */
-        align-items: center; /* Center button vertically */
-        flex-grow: 1; /* Allow keys to grow to fill space */
-        flex-shrink: 1; /* Allow keys to shrink if needed */
-        flex-basis: 0; /* Base size for flex items, allows flex-grow to work effectively */
-        min-width: 55px; /* Minimum width for key groups */
-        max-width: 90px; /* Maximum width for key groups to prevent stretching too much */
-        box-sizing: border-box; /* Include padding/border in the element's total width and height */
-        text-align: center; /* Center labels */
-    }
-
-    .latin-label, .arabic-label {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 0.7em; /* Smaller font size */
-        color: var(--text-color-light); /* Assuming --text-color-light is defined */
-        pointer-events: none; /* Do not interfere with button clicks */
-        white-space: nowrap; /* Prevent labels from wrapping */
-        z-index: 10; /* Ensure labels are above the button */
-        width: 100%; /* Ensure labels occupy full width for centering text */
-    }
-
-    .latin-label {
-        top: 5px; /* Latin label higher */
-    }
-
-    .arabic-label {
-        top: 20px; /* Arabic label below Latin one */
-        font-family: 'Noto Naskh Arabic', sans-serif; /* Apply Arabic font */
-        direction: rtl; /* Ensure Arabic text is right-to-left within its span */
-    }
-
-    /* Adjust button height slightly if needed due to extra padding, or remove if existing button height is fine */
-    .keyboard-key {
-        height: 50px; /* Example, adjust to fit your design */
-        line-height: 50px;
-        width: 100%; /* Make button fill its key-group */
-        border-radius: var(--border-radius, 8px); /* Ensure consistent rounding */
-        display: flex; /* For centering content within the button */
-        justify-content: center;
-        align-items: center;
-        font-family: 'Noto Sans Tifinagh', sans-serif; /* Ensure Tifinagh font is applied */
-        font-size: 1.5em; /* Default font size for keys */
-        background-color: transparent; /* Changed to transparent background */
-        border: 2px solid var(--button-bg, #e0e0e0); /* Added border to define key shape */
-        color: var(--button-text-color, #333); /* Default text color */
-        cursor: pointer;
-        transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s, border-color 0.2s;
-        user-select: none;
-        box-sizing: border-box; /* Crucial for consistent sizing */
-    }
-
-    /* Active key highlight */
-    .keyboard-key.active {
-        background-color: var(--accent-color); /* Use your theme's accent color */
-        box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
-        border-color: var(--accent-color); /* Also change border color on active */
-    }
-
-    /* Hover effect for transparent keys */
-    .keyboard-key:not(.delete):hover {
-        background-color: rgba(var(--accent-rgb), 0.1); /* Light background on hover */
-        border-color: var(--accent-color);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-    body.dark-mode .keyboard-key:not(.delete):hover {
-        background-color: rgba(var(--accent-rgb), 0.2);
-    }
-
-
-    /* --- ADDED CSS FOR KEYBOARD LAYOUT & RESPONSIVENESS --- */
-    .keyboard-layout {
-        display: flex;
-        flex-direction: column; /* Stack rows vertically */
-        gap: 10px; /* Space between rows */
-        max-width: 1000px; /* Max width for the entire keyboard */
-        margin: 20px auto; /* Center the keyboard */
-        padding: 15px;
-        background-color: transparent; /* CHANGED: Removed the dark background */
-        border-radius: var(--border-radius, 8px);
-        /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Optional: Keep or remove box-shadow */
-    }
-
-    .keyboard-row {
-        display: flex;
-        flex-wrap: wrap; /* Allow keys to wrap to the next line on smaller screens */
-        justify-content: center; /* Center keys in the row */
-        gap: 10px; /* Space between keys */
-    }
-
-    /* Styles for the wide SPACE key (if still needed, adjusted for final row) */
-    .keyboard-key.wide {
-        flex-grow: 2; /* Make SPACE key wider relative to others in its row */
-        min-width: 150px; /* Minimum width for the space key */
-        max-width: 300px; /* Maximum width for the space key */
-    }
-    /* Specific styling for the final row with space/delete */
-    .keyboard-row.final-action-row {
-        justify-content: center; /* Center the two buttons */
-        margin-top: 20px; /* More space above this row */
-    }
-
-    .final-action-row .key-group {
-        flex-grow: 1; /* Allow them to grow */
-        flex-basis: auto; /* Revert to auto to allow width definitions below */
-        min-width: 120px; /* Ensure a decent size for Space/Del */
-        max-width: 200px; /* Limit their max size */
-        padding-top: 0; /* No labels above these, so no padding needed */
-    }
-    .final-action-row .keyboard-key {
-        border: none; /* No border for these specific buttons */
-        color: var(--button-text-color); /* Default text color for these */
-        font-size: 1.1em;
-        height: 50px;
-        line-height: 50px;
-    }
-    .final-action-row .keyboard-key.wide { /* Space button */
-        background-color: var(--button-bg, #4a5568); /* Explicit background for space */
-        color: var(--button-text-color, #e2e8f0);
-    }
-    .final-action-row .keyboard-key.delete { /* Delete button */
-        background-color: var(--delete-button-bg, #e74c3c); /* Explicit background for delete */
-        color: var(--delete-button-text-color, #fff);
-    }
-
-
-    /* Styles for the DELETE key */
-    .keyboard-key.delete {
-        background-color: var(--delete-button-bg, #e74c3c); /* Default red for delete */
-        color: var(--delete-button-text-color, #fff); /* Default white text */
-        font-size: 1.2em; /* Slightly smaller font for the icon */
-        flex-grow: 1; /* Allow delete key to grow */
-        min-width: 60px; /* Minimum width for delete key */
-        max-width: 100px; /* Maximum width for delete key */
-        border: none; /* No border for the delete button, it has a solid background */
-    }
-    .keyboard-key.delete i {
-        font-size: 1.5em; /* Adjust icon size within the delete button */
-    }
-
-    /* Hide labels for screen readers for SPACE and DELETE keys */
-    .key-group .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        padding: 0;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-    }
-
-    /* NEW: Styles for the single audio button */
-    .audio-input-controls {
-        display: flex;
-        justify-content: center;
-        margin: 20px auto;
-        max-width: 1000px;
-        padding: 0 15px;
-    }
-    #audioRecordToggle {
-        padding: 15px 25px;
-        border-radius: 50px; /* Pill shape */
-        font-size: 1.2em;
-        cursor: pointer;
-        transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
-        border: none;
-        color: white;
-        background-color: var(--accent-color, #007bff); /* Default blue */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    #audioRecordToggle:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    }
-    #audioRecordToggle.recording {
-        background-color: #dc3545; /* Red when recording */
-        animation: pulse 1.5s infinite;
-    }
-    #audioRecordToggle.recording:hover {
-        background-color: #c82333;
-    }
-    #audioRecordToggle:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-        box-shadow: none;
-    }
-    #audioRecordToggle i {
-        font-size: 1.5em; /* Larger icon */
-    }
-    #audioRecordToggle span {
-        font-weight: bold;
-    }
-
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
-        70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
-    }
-
-
-    /* Responsive adjustments for smaller screens */
-    @media (max-width: 768px) {
-        .keyboard-layout {
-            padding: 10px;
-            gap: 8px;
+        /* Textarea Focus Style (from original keyboard.js) */
+        .text-input.focused {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
         }
-        .keyboard-row {
-            gap: 8px;
-        }
+
+        /* Styles for consolidated labels above Tifinagh keys */
         .key-group {
-            min-width: 48px; /* Adjusted: slightly larger min-width */
-            max-width: 70px;
-            padding-top: 32px; /* Adjusted: more space for labels */
+            position: relative; /* Establish positioning context for labels */
+            padding-top: 35px; /* Make space for both labels above the button */
+            display: flex; /* Make key-group a flex container */
+            justify-content: center; /* Center button horizontally */
+            align-items: center; /* Center button vertically */
+            flex-grow: 1; /* Allow keys to grow to fill space */
+            flex-shrink: 1; /* Allow keys to shrink if needed */
+            flex-basis: 0; /* Base size for flex items, allows flex-grow to work effectively */
+            min-width: 55px; /* Minimum width for key groups */
+            max-width: 90px; /* Maximum width for key groups to prevent stretching too much */
+            box-sizing: border-box; /* Include padding/border in the element's total width and height */
+            text-align: center; /* Center labels */
         }
+
+        .latin-label, .arabic-label {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em; /* Smaller font size */
+            color: var(--text-color-light); /* Assuming --text-color-light is defined */
+            pointer-events: none; /* Do not interfere with button clicks */
+            white-space: nowrap; /* Prevent labels from wrapping */
+            z-index: 10; /* Ensure labels are above the button */
+            width: 100%; /* Ensure labels occupy full width for centering text */
+        }
+
         .latin-label {
-            font-size: 0.7em; /* Adjusted: slightly larger for readability */
-            top: 4px; /* Adjusted: fine-tune vertical position */
+            top: 5px; /* Latin label higher */
         }
+
         .arabic-label {
-            font-size: 0.65em; /* Adjusted: slightly larger for readability */
-            top: 20px; /* Adjusted: fine-tune vertical position */
+            top: 20px; /* Arabic label below Latin one */
+            font-family: 'Noto Naskh Arabic', sans-serif; /* Apply Arabic font */
+            direction: rtl; /* Ensure Arabic text is right-to-left within its span */
         }
+
+        /* Adjust button height slightly if needed due to extra padding, or remove if existing button height is fine */
         .keyboard-key {
-            height: 48px; /* Adjusted: slightly taller */
-            line-height: 48px;
-            font-size: 1.4em; /* Adjusted: slightly larger Tifinagh character */
+            height: 50px; /* Example, adjust to fit your design */
+            line-height: 50px;
+            width: 100%; /* Make button fill its key-group */
+            border-radius: var(--border-radius, 8px); /* Ensure consistent rounding */
+            display: flex; /* For centering content within the button */
+            justify-content: center;
+            align-items: center;
+            font-family: 'Noto Sans Tifinagh', sans-serif; /* Ensure Tifinagh font is applied */
+            font-size: 1.5em; /* Default font size for keys */
+            background-color: transparent; /* Changed to transparent background */
+            border: 2px solid var(--button-bg, #e0e0e0); /* Added border to define key shape */
+            color: var(--button-text-color, #333); /* Default text color */
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s, border-color 0.2s;
+            user-select: none;
+            box-sizing: border-box; /* Crucial for consistent sizing */
         }
+
+        /* Active key highlight */
+        .keyboard-key.active {
+            background-color: var(--accent-color); /* Use your theme's accent color */
+            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
+            border-color: var(--accent-color); /* Also change border color on active */
+        }
+
+        /* Hover effect for transparent keys */
+        .keyboard-key:not(.delete):hover {
+            background-color: rgba(var(--accent-rgb), 0.1); /* Light background on hover */
+            border-color: var(--accent-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        body.dark-mode .keyboard-key:not(.delete):hover {
+            background-color: rgba(var(--accent-rgb), 0.2);
+        }
+
+
+        /* --- ADDED CSS FOR KEYBOARD LAYOUT & RESPONSIVENESS --- */
+        .keyboard-layout {
+            display: flex;
+            flex-direction: column; /* Stack rows vertically */
+            gap: 10px; /* Space between rows */
+            max-width: 1000px; /* Max width for the entire keyboard */
+            margin: 20px auto; /* Center the keyboard */
+            padding: 15px;
+            background-color: transparent; /* CHANGED: Removed the dark background */
+            border-radius: var(--border-radius, 8px);
+            /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Optional: Keep or remove box-shadow */
+        }
+
+        .keyboard-row {
+            display: flex;
+            flex-wrap: wrap; /* Allow keys to wrap to the next line on smaller screens */
+            justify-content: center; /* Center keys in the row */
+            gap: 10px; /* Space between keys */
+        }
+
+        /* Styles for the wide SPACE key (if still needed, adjusted for final row) */
         .keyboard-key.wide {
-            min-width: 90px;
-            max-width: 180px;
+            flex-grow: 2; /* Make SPACE key wider relative to others in its row */
+            min-width: 150px; /* Minimum width for the space key */
+            max-width: 300px; /* Maximum width for the space key */
         }
-        .keyboard-key.delete {
-            min-width: 50px;
-            max-width: 80px;
+        /* Specific styling for the final row with space/delete */
+        .keyboard-row.final-action-row {
+            justify-content: center; /* Center the two buttons */
+            margin-top: 20px; /* More space above this row */
         }
-        .keyboard-key.delete i {
-            font-size: 1.3em;
-        }
+
         .final-action-row .key-group {
-            min-width: 100px;
-            max-width: 160px;
+            flex-grow: 1; /* Allow them to grow */
+            flex-basis: auto; /* Revert to auto to allow width definitions below */
+            min-width: 120px; /* Ensure a decent size for Space/Del */
+            max-width: 200px; /* Limit their max size */
+            padding-top: 0; /* No labels above these, so no padding needed */
         }
-        .audio-input-controls {
-            padding: 0 10px;
-            gap: 8px;
-        }
-        #audioRecordToggle {
-            padding: 12px 20px;
+        .final-action-row .keyboard-key {
+            border: none; /* No border for these specific buttons */
+            color: var(--button-text-color); /* Default text color for these */
             font-size: 1.1em;
-            gap: 8px;
+            height: 50px;
+            line-height: 50px;
         }
-        #audioRecordToggle i {
-            font-size: 1.3em;
+        .final-action-row .keyboard-key.wide { /* Space button */
+            background-color: var(--button-bg, #4a5568); /* Explicit background for space */
+            color: var(--button-text-color, #e2e8f0);
         }
-    }
+        .final-action-row .keyboard-key.delete { /* Delete button */
+            background-color: var(--delete-button-bg, #e74c3c); /* Explicit background for delete */
+            color: var(--delete-button-text-color, #fff);
+        }
 
-    @media (max-width: 480px) {
-        .keyboard-layout {
-            padding: 5px;
-            gap: 5px;
-        }
-        .keyboard-row {
-            gap: 5px;
-        }
-        .key-group {
-            min-width: 40px; /* Further adjust for mobile phones */
-            max-width: 60px;
-            padding-top: 28px; /* Adjusted: more space for labels */
-        }
-        .latin-label {
-            font-size: 0.65em; /* Adjusted: larger for readability */
-            top: 3px; /* Adjusted: fine-tune vertical position */
-        }
-        .arabic-label {
-            font-size: 0.6em; /* Adjusted: larger for readability */
-            top: 18px; /* Adjusted: fine-tune vertical position */
-        }
-        .keyboard-key {
-            height: 40px;
-            line-height: 40px;
-            font-size: 1.2em; /* Adjusted: slightly larger Tifinagh character */
-        }
-        .keyboard-key.wide {
-            min-width: 70px;
-            max-width: 140px;
-        }
+
+        /* Styles for the DELETE key */
         .keyboard-key.delete {
-            min-width: 45px;
-            max-width: 70px;
+            background-color: var(--delete-button-bg, #e74c3c); /* Default red for delete */
+            color: var(--delete-button-text-color, #fff); /* Default white text */
+            font-size: 1.2em; /* Slightly smaller font for the icon */
+            flex-grow: 1; /* Allow delete key to grow */
+            min-width: 60px; /* Minimum width for delete key */
+            max-width: 100px; /* Maximum width for delete key */
+            border: none; /* No border for the delete button, it has a solid background */
         }
         .keyboard-key.delete i {
-            font-size: 1.2em;
+            font-size: 1.5em; /* Adjust icon size within the delete button */
         }
-        .final-action-row .key-group {
-            min-width: 80px;
-            max-width: 130px;
+
+        /* Hide labels for screen readers for SPACE and DELETE keys */
+        .key-group .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
+
+        /* NEW: Styles for the single audio button */
         .audio-input-controls {
-            padding: 0 5px;
-            gap: 5px;
+            display: flex;
+            justify-content: center;
+            margin: 20px auto 10px auto; /* Adjusted margin-bottom to make space for status */
+            max-width: 1000px;
+            padding: 0 15px;
         }
         #audioRecordToggle {
-            padding: 10px 15px;
-            font-size: 1em;
-            gap: 5px;
+            padding: 15px 25px;
+            border-radius: 50px; /* Pill shape */
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+            border: none;
+            color: white;
+            background-color: var(--accent-color, #007bff); /* Default blue */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #audioRecordToggle:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        #audioRecordToggle.recording {
+            background-color: #dc3545; /* Red when recording */
+            animation: pulse 1.5s infinite;
+        }
+        #audioRecordToggle.recording:hover {
+            background-color: #c82333;
+        }
+        #audioRecordToggle:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
         }
         #audioRecordToggle i {
-            font-size: 1.2em;
+            font-size: 1.5em; /* Larger icon */
         }
-    }
+        #audioRecordToggle span {
+            font-weight: bold;
+        }
 
-</style>
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+
+        /* NEW: Styles for STT Feedback */
+        .stt-feedback {
+            text-align: center;
+            margin: 10px auto 20px auto;
+            max-width: 1000px;
+            padding: 0 15px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #sttStatus {
+            font-size: 1em;
+            font-weight: bold;
+            color: var(--text-color, #333); /* Adjust to your theme's text color */
+            margin-bottom: 5px;
+        }
+
+        body.dark-mode #sttStatus {
+            color: var(--text-color-dark-mode, #e2e8f0);
+        }
+
+        #debugOutput {
+            font-family: monospace;
+            font-size: 0.8em;
+            color: var(--text-color-light, #666); /* A lighter color for debug info */
+            background-color: var(--background-color-light, #f8f8f8);
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 20px; /* Ensure it's visible even if empty */
+            overflow-x: auto; /* For long debug messages */
+            text-align: left; /* Align debug text to left */
+        }
+        body.dark-mode #debugOutput {
+            background-color: var(--background-color-dark-mode, #2d3748);
+            color: var(--text-color-light-dark-mode, #a0aec0);
+        }
+
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .keyboard-layout {
+                padding: 10px;
+                gap: 8px;
+            }
+            .keyboard-row {
+                gap: 8px;
+            }
+            .key-group {
+                min-width: 48px; /* Adjusted: slightly larger min-width */
+                max-width: 70px;
+                padding-top: 32px; /* Adjusted: more space for labels */
+            }
+            .latin-label {
+                font-size: 0.7em; /* Adjusted: slightly larger for readability */
+                top: 4px; /* Adjusted: fine-tune vertical position */
+            }
+            .arabic-label {
+                font-size: 0.65em; /* Adjusted: slightly larger for readability */
+                top: 20px; /* Adjusted: fine-tune vertical position */
+            }
+            .keyboard-key {
+                height: 48px; /* Adjusted: slightly taller */
+                line-height: 48px;
+                font-size: 1.4em; /* Adjusted: slightly larger Tifinagh character */
+            }
+            .keyboard-key.wide {
+                min-width: 90px;
+                max-width: 180px;
+            }
+            .keyboard-key.delete {
+                min-width: 50px;
+                max-width: 80px;
+            }
+            .keyboard-key.delete i {
+                font-size: 1.3em;
+            }
+            .final-action-row .key-group {
+                min-width: 100px;
+                max-width: 160px;
+            }
+            .audio-input-controls {
+                padding: 0 10px;
+                gap: 8px;
+            }
+            #audioRecordToggle {
+                padding: 12px 20px;
+                font-size: 1.1em;
+                gap: 8px;
+            }
+            #audioRecordToggle i {
+                font-size: 1.3em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .keyboard-layout {
+                padding: 5px;
+                gap: 5px;
+            }
+            .keyboard-row {
+                gap: 5px;
+            }
+            .key-group {
+                min-width: 40px; /* Further adjust for mobile phones */
+                max-width: 60px;
+                padding-top: 28px; /* Adjusted: more space for labels */
+            }
+            .latin-label {
+                font-size: 0.65em; /* Adjusted: larger for readability */
+                top: 3px; /* Adjusted: fine-tune vertical position */
+            }
+            .arabic-label {
+                font-size: 0.6em; /* Adjusted: larger for readability */
+                top: 18px; /* Adjusted: fine-tune vertical position */
+            }
+            .keyboard-key {
+                height: 40px;
+                line-height: 40px;
+                font-size: 1.2em; /* Adjusted: slightly larger Tifinagh character */
+            }
+            .keyboard-key.wide {
+                min-width: 70px;
+                max-width: 140px;
+            }
+            .keyboard-key.delete {
+                min-width: 45px;
+                max-width: 70px;
+            }
+            .keyboard-key.delete i {
+                font-size: 1.2em;
+            }
+            .final-action-row .key-group {
+                min-width: 80px;
+                max-width: 130px;
+            }
+            .audio-input-controls {
+                padding: 0 5px;
+                gap: 5px;
+            }
+            #audioRecordToggle {
+                padding: 10px 15px;
+                font-size: 1em;
+                gap: 5px;
+            }
+            #audioRecordToggle i {
+                font-size: 1.2em;
+            }
+        }
+
+    </style>
 </head>
 <body>
 
@@ -382,6 +420,11 @@
                 <i class="fas fa-microphone"></i>
                 <span>Start Recording</span>
             </button>
+        </div>
+        <!-- Add STT Status and Debug Output here -->
+        <div class="stt-feedback">
+            <p id="sttStatus" aria-live="polite">Click 'Start Recording' to begin.</p>
+            <pre id="debugOutput" style="font-size: 0.8em; color: var(--text-color-light); white-space: pre-wrap; word-break: break-all; min-height: 1.5em;"></pre>
         </div>
         <!-- END NEW -->
 
