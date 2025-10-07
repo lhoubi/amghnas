@@ -113,9 +113,9 @@
         max-width: 1000px; /* Max width for the entire keyboard */
         margin: 20px auto; /* Center the keyboard */
         padding: 15px;
-        background-color: var(--secondary-bg, #2d3748); /* Default background for the whole keyboard section */
+        background-color: transparent; /* CHANGED: Removed the dark background */
         border-radius: var(--border-radius, 8px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Optional: Keep or remove box-shadow */
     }
 
     .keyboard-row {
@@ -197,21 +197,22 @@
             gap: 8px;
         }
         .key-group {
-            min-width: 45px; /* Adjust min width for tablets */
+            min-width: 48px; /* Adjusted: slightly larger min-width */
             max-width: 70px;
-            padding-top: 30px; /* Adjust padding for labels */
+            padding-top: 32px; /* Adjusted: more space for labels */
         }
-        .latin-label, .arabic-label {
-            font-size: 0.65em; /* Smaller labels */
-            top: 3px;
+        .latin-label {
+            font-size: 0.7em; /* Adjusted: slightly larger for readability */
+            top: 4px; /* Adjusted: fine-tune vertical position */
         }
         .arabic-label {
-            top: 18px;
+            font-size: 0.65em; /* Adjusted: slightly larger for readability */
+            top: 20px; /* Adjusted: fine-tune vertical position */
         }
         .keyboard-key {
-            height: 45px;
-            line-height: 45px;
-            font-size: 1.3em;
+            height: 48px; /* Adjusted: slightly taller */
+            line-height: 48px;
+            font-size: 1.4em; /* Adjusted: slightly larger Tifinagh character */
         }
         .keyboard-key.wide {
             min-width: 90px;
@@ -241,19 +242,20 @@
         .key-group {
             min-width: 40px; /* Further adjust for mobile phones */
             max-width: 60px;
-            padding-top: 25px;
+            padding-top: 28px; /* Adjusted: more space for labels */
         }
-        .latin-label, .arabic-label {
-            font-size: 0.6em;
-            top: 2px;
+        .latin-label {
+            font-size: 0.65em; /* Adjusted: larger for readability */
+            top: 3px; /* Adjusted: fine-tune vertical position */
         }
         .arabic-label {
-            top: 15px;
+            font-size: 0.6em; /* Adjusted: larger for readability */
+            top: 18px; /* Adjusted: fine-tune vertical position */
         }
         .keyboard-key {
             height: 40px;
             line-height: 40px;
-            font-size: 1.1em;
+            font-size: 1.2em; /* Adjusted: slightly larger Tifinagh character */
         }
         .keyboard-key.wide {
             min-width: 70px;
