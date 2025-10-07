@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let micStream = null;
     let sendIntervalId = null; // To manage our continuous audio sending
     let lastPartialTranscription = ""; // Stores the last known partial transcription (Latin)
-    let currentFullTranscriptionPrefix = ""; // Stores the confirmed transcription that precedes the current partial (Tifinagh)
+
+    // --- Configuration for Real STT Backend ---
+    const STT_API_ENDPOINT = 'http://localhost:5000/transcribe_chunk'; // IMPORTANT: Set your actual backend URL here
 
     // --- Browser Compatibility Check for MediaRecorder ---
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -27,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Latin to Tifinagh Mapping Function (Unchanged - IMPORTANT: keep this for display) ---
     function latinToTifinagh(latinText) {
-        // ... (Your existing latinToTifinagh function here) ...
         const complexMappings = {
             'kh': 'ⵅ', 'gh': 'ⵖ', 'ch': 'ⵛ', 'sh': 'ⵛ',
             'dj': 'ⴷⵊ', 'ts': 'ⵜⵙ',
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ', 's': 'ⵙ',
             't': 'ⵜ', 'v': 'ⵠ', 'y': 'ⵢ', 'z': 'ⵣ',
             'c': 'ⵄ', 'ɣ': 'ⵖ', 'ḥ': 'ⵃ', 'ɛ': 'ⵄ', 'č': 'ⵛ',
-            'ا': 'ⴰ', 'ب': 'ⴱ', 'د': 'ⴷ', 'ض': 'ⴹ', 'ف': 'ⴼ',
+            'ا': 'ⴰ', 'ب': 'ⴱ', 'ⴷ': 'ⴷ', 'ض': 'ⴹ', 'ف': 'ⴼ',
             'ڭ': 'ⴳ', 'ه': 'ⵀ', 'ح': 'ⵃ', 'إ': 'ⵉ', 'ج': 'ⵊ',
             'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ', 'پ': 'ⵒ',
             'ق': 'ⵇ', 'ر': 'ⵔ', 'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ',
@@ -89,55 +90,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return tifinaghText;
     }
 
+    // --- Send audio to REAL STT Backend (NEW FUNCTION) ---
+    async function sendAudioToRealSTT(audioBlob) {
+        sttStatus.textContent = "Sending audio to backend STT...";
+        debugOutput.textContent = `Sending ${audioBlob.size} bytes of audio...`;
+        console.log(`Sending audio blob of size: ${audioBlob.size}`);
 
-    // --- Simulate a Backend Tamazight STT Service for real-time (MODIFIED) ---
-    const mockResponsesPool = [
-        "azul fellawen", "manzaɣ immi", "nek d Amzigh", "tamaziɣt tuḍfi", "axam-inu",
-        "aman iggi", "afus afus", "tudert n tmaziɣt", "adrar n snu",
-        "azul fellam a yemma", "tassawit n wawal", "iẓlan imaziɣen",
-    ];
-    let selectedMockResponse = "";
-    let mockResponseCharIndex = 0; // Tracks how much of the selectedMockResponse has been "transcribed"
+        try {
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'audio.webm'); // 'audio' matches the backend's `request.files['audio']`
 
-    async function simulateTamazightSTT(audioBlob, isFinal = false) {
-        if (!selectedMockResponse) {
-            // Pick a new random response at the start of a recording session
-            selectedMockResponse = mockResponsesPool[Math.floor(Math.random() * mockResponsesPool.length)];
-            mockResponseCharIndex = 0; // Reset for new response
+            const response = await fetch(STT_API_ENDPOINT, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`STT API error: ${response.status} - ${errorText}`);
+            }
+
+            const data = await response.json();
+            const transcription = data.transcription || ""; // Expect 'transcription' key
+            
+            sttStatus.textContent = `STT Output: "${transcription}"`;
+            debugOutput.textContent = `STT Raw Output: "${transcription}"`;
+            console.log("Real STT output:", transcription);
+            return transcription; // This will be Latin text
+            
+        } catch (error) {
+            console.error("Error sending audio to real STT backend:", error);
+            sttStatus.textContent = "Error communicating with STT backend.";
+            debugOutput.textContent = "Error: " + error.message;
+            return ""; // Return empty string on error
         }
-
-        sttStatus.textContent = "Sending audio to backend STT (simulated)...";
-        debugOutput.textContent = `Simulating STT for ${audioBlob.size} bytes. IsFinal: ${isFinal}`;
-        console.log(`Simulating STT for audio blob of size: ${audioBlob.size}, isFinal: ${isFinal}`);
-
-        return new Promise(resolve => {
-            // Simulate network latency and processing time, but faster for real-time feel
-            setTimeout(() => {
-                let partialResult = "";
-                if (!isFinal) {
-                    // Simulate receiving partial results over time
-                    // Advance the index by a random amount (1-3 characters) to make it look dynamic
-                    mockResponseCharIndex = Math.min(mockResponseCharIndex + 1 + Math.floor(Math.random() * 3), selectedMockResponse.length);
-                    partialResult = selectedMockResponse.substring(0, mockResponseCharIndex);
-                } else {
-                    // When final, send the complete response
-                    partialResult = selectedMockResponse;
-                    selectedMockResponse = ""; // Reset for next recording
-                    mockResponseCharIndex = 0;
-                }
-
-                if (partialResult) {
-                    sttStatus.textContent = `Partial STT: "${partialResult}"`;
-                    debugOutput.textContent = `Simulated STT Output: "${partialResult}" (isFinal: ${isFinal})`;
-                    console.log(`Simulated STT output: "${partialResult}" (isFinal: ${isFinal})`);
-                } else {
-                    sttStatus.textContent = isFinal ? "No speech recognized." : "Waiting for speech...";
-                    debugOutput.textContent = "Simulated STT: No partial result yet.";
-                    console.log("Simulated STT: No partial result yet.");
-                }
-                resolve(partialResult);
-            }, 200 + Math.random() * 200); // Shorter delay for "instant" feel
-        });
     }
 
     // --- Helper function to reset UI state ---
@@ -159,9 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reset transcription states
         lastPartialTranscription = "";
-        currentFullTranscriptionPrefix = "";
-        selectedMockResponse = ""; // Reset mock response for the next recording
-        mockResponseCharIndex = 0;
+        // No need to reset selectedMockResponse or mockResponseCharIndex, as simulation is gone
     }
 
     // --- MediaRecorder Event Handlers ---
@@ -200,19 +184,17 @@ document.addEventListener('DOMContentLoaded', () => {
             audioChunks = []; // Clear chunks for next recording
             if (audioBlob.size > 0) {
                 try {
-                    const finalTamazightLatinOutput = await simulateTamazightSTT(audioBlob, true); // Mark as final
+                    const finalTamazightLatinOutput = await sendAudioToRealSTT(audioBlob); // Use real STT
                     if (finalTamazightLatinOutput) {
                         const tifinaghOutput = latinToTifinagh(finalTamazightLatinOutput);
                         
-                        // Remove the last partial (which was still based on the mock)
-                        // and append the full, final transcription.
+                        // Remove the last partial and append the full, final transcription.
                         let currentInputValue = keyboardInput.value;
                         if (lastPartialTranscription && currentInputValue.endsWith(latinToTifinagh(lastPartialTranscription))) {
                             currentInputValue = currentInputValue.slice(0, -latinToTifinagh(lastPartialTranscription).length);
                         }
                         
                         keyboardInput.value = currentInputValue + tifinaghOutput + ' '; // Add space after final word
-                        currentFullTranscriptionPrefix = currentInputValue + tifinaghOutput + ' '; // Update prefix
                         keyboardInput.scrollTop = keyboardInput.scrollHeight;
                         sttStatus.textContent = "Transcription complete.";
                         lastPartialTranscription = ""; // Clear for next round
@@ -264,18 +246,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Combine chunks and clear for the next interval
         const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
         audioChunks = []; // Clear chunks *after* creating blob for sending
 
         try {
-            const partialTamazightLatinOutput = await simulateTamazightSTT(audioBlob, false); // Mark as not final
+            // Use the real STT function
+            const partialTamazightLatinOutput = await sendAudioToRealSTT(audioBlob); // This is Latin text
+            
             if (partialTamazightLatinOutput) {
                 const tifinaghOutput = latinToTifinagh(partialTamazightLatinOutput);
 
-                // Update keyboardInput: remove previous partial, add new one
-                // Ensure we only modify the current 'partial' part of the input,
-                // leaving any previously confirmed text intact.
                 let currentInputValue = keyboardInput.value;
                 
                 // If there was a previous partial, remove its Tifinagh representation
@@ -289,6 +269,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyboardInput.value = currentInputValue + tifinaghOutput;
                 keyboardInput.scrollTop = keyboardInput.scrollHeight;
                 lastPartialTranscription = partialTamazightLatinOutput; // Store this partial for future replacement
+            } else {
+                // If STT returns empty (e.g., no speech detected in chunk), clear last partial
+                if (lastPartialTranscription) {
+                    let currentInputValue = keyboardInput.value;
+                    const lastPartialTifinagh = latinToTifinagh(lastPartialTranscription);
+                    if (currentInputValue.endsWith(lastPartialTifinagh)) {
+                        keyboardInput.value = currentInputValue.slice(0, -lastPartialTifinagh.length);
+                    }
+                    lastPartialTranscription = ""; // Clear the stored partial
+                }
             }
         } catch (error) {
             console.error("Error sending partial audio to STT:", error);
@@ -319,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mediaRecorder.start(500); // This creates chunks every 500ms
                 console.log("MediaRecorder.start(500) called. State:", mediaRecorder.state);
 
-                // Start sending chunks every 1 second (adjust as needed for responsiveness vs. simulated load)
+                // Start sending chunks every 1 second (adjust for responsiveness vs. backend load)
                 sendIntervalId = setInterval(sendAudioChunks, 1000);
                 console.log("Started continuous audio sending interval.");
 
