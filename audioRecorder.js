@@ -1,5 +1,3 @@
-// audioRecorder.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const audioRecordToggle = document.getElementById('audioRecordToggle');
     const keyboardInput = document.getElementById('keyboardInput');
@@ -146,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reset transcription states
         lastPartialTranscription = "";
-        // No need to reset selectedMockResponse or mockResponseCharIndex, as simulation is gone
     }
 
     // --- MediaRecorder Event Handlers ---
@@ -297,11 +294,16 @@ document.addEventListener('DOMContentLoaded', () => {
             sttStatus.textContent = "Requesting microphone access...";
             debugOutput.textContent = "";
             console.log("Attempting to get microphone access...");
-            audioRecordToggle.disabled = true; // Disable button *while* async mic request is pending
+            
+            // --- FIX APPLIED HERE: Disable button IMMEDIATELY before starting the async process ---
+            audioRecordToggle.disabled = true; 
 
             try {
                 micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 console.log("Microphone access granted.");
+
+                // --- FIX APPLIED HERE: Re-enable the button promptly after mic access is granted ---
+                audioRecordToggle.disabled = false; 
 
                 // IMPORTANT CHANGE HERE: Specify 'audio/wav' as the mimeType
                 mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/wav' }); // Changed from 'audio/webm'
@@ -318,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Started continuous audio sending interval.");
 
                 isRecording = true; // Update our state
-                audioRecordToggle.disabled = false; // Re-enable button
                 audioRecordToggle.classList.add('recording'); // Apply red style
                 icon.className = 'fas fa-stop-circle';
                 textSpan.textContent = "Stop Recording";
@@ -329,7 +330,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Microphone access denied or error:', err);
                 sttStatus.textContent = `Microphone access denied: ${err.name}. Please check permissions.`;
                 debugOutput.textContent = `Microphone Error: ${err.message}. Please enable microphone access for this site.`;
-                resetUI(); // Reset UI state on error
+                resetUI(); // Reset UI state on error, which will re-enable the button
+            } finally {
+                // --- FIX APPLIED HERE: Failsafe to ensure button is enabled if recording didn't start ---
+                if (!isRecording) { 
+                    audioRecordToggle.disabled = false;
+                }
             }
         } else {
             // Stop Recording flow
@@ -342,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.warn("Attempted to stop MediaRecorder when it was not in 'recording' state. Force resetting.");
                 debugOutput.textContent = "Recorder not active. Force resetting.";
-                resetUI(); // Force reset if state is unexpected
+                resetUI(); // Force reset if state is unexpected, which will re-enable the button
             }
         }
     });
