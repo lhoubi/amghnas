@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Mapping Definitions ---
 
     // Map Tifinagh characters to a standard Latin transliteration
+    // This map generally produces standard Latin, which then gets further processed for Talatint.
     const tifinaghToStandardLatinMap = {
         'ⴰ': 'a', 'ⴱ': 'b', 'ⴳ': 'g', 'ⴷ': 'd', 'ⴹ': 'ḍ', 'ⴻ': 'e', 'ⴼ': 'f',
         'ⴽ': 'k', 'ⵀ': 'h', 'ⵃ': 'ḥ', 'ⵄ': 'ɛ', 'ⵅ': 'x', 'ⵇ': 'q', 'ⵉ': 'i',
@@ -35,45 +36,55 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Map standard Latin letters (and common digraphs) to Tifinagh
+    // This map prioritizes longest matches for accurate digraph conversion
     const standardLatinToTifinaghMap = {
-        // Longest matches first for accurate digraph conversion
+        // Digraphs and Special Characters (must come before single letters if they share a prefix)
         'ch': 'ⵛ', 'ḍ': 'ⴹ', 'gh': 'ⵖ', 'ḥ': 'ⵃ', 'kh': 'ⵅ', 'ph': 'ⴼ', 'q': 'ⵇ',
         'sh': 'ⵛ', 'ṣ': 'ⵚ', 'ţ': 'ⵟ', 'ṭ': 'ⵟ', 'th': 'ⵝ', 'zh': 'ⵥ', 'ẓ': 'ⵥ',
         'ts': 'ⵜⵙ', 'dz': 'ⴷⵣ',
+        'ɛ': 'ⵄ', // Assuming 'ɛ' is mapped
 
+        // Single Latin characters
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⴽ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ',
         'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ',
         'o': 'ⵓ', 'p': 'ⵒ', 'r': 'ⵔ', 's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ',
-        'w': 'ⵡ', 'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ', 'ɛ': 'ⵄ', // Assuming 'ɛ' is mapped
+        'w': 'ⵡ', 'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
+
         ' ': ' ',
         '.': '.', ',': ',', ';': ';', ':': ':', '!': '!', '?': '?', '-': '-',
     };
 
-    // NEW: Map standard Latin input (e.g., 'gh') to extended Talatint characters (e.g., 'ɣ')
-    const latinToExtendedTalatintMap = {
-        'ch': 'č', // or 'č'
-        'ḍ': 'ḍ', // This is already extended, but for consistency if input allows 'd' then 'ḍ'
-        'gh': 'ɣ',
-        'ḥ': 'ḥ',
-        'kh': 'x', // or 'χ'
-        'ph': 'f',
-        'q': 'q',
-        'sh': 'š', // or 'š'
-        'ṣ': 'ṣ',
-        'ţ': 'ṭ',
-        'ṭ': 'ṭ',
-        'th': 'ţ', // or 'þ'
-        'zh': 'ž', // or 'ž'
-        'ẓ': 'ẓ',
-        'ts': 'ts',
-        'dz': 'dz',
 
-        // Single characters that might have an extended variant or are already fine
+    // NEW: Map standard Latin input (e.g., 'gh', 'dh') to extended Talatint characters (e.g., 'ɣ', 'ḍ')
+    // This map is crucial for the extended Talatint output.
+    const latinToExtendedTalatintMap = {
+        // --- Emphatic Consonants / Digraphs mapping to extended Latin characters ---
+        // Prioritize multi-character sequences for correct parsing.
+        // These conventions can be adjusted based on your preferred transliteration system.
+        'ch': 'č',     // Tifinagh ⵞ
+        'gh': 'ɣ',     // Tifinagh ⵖ
+        'kh': 'x',     // Tifinagh ⵅ (or χ if preferred)
+        'sh': 'š',     // Tifinagh ⵛ (or š if preferred)
+
+        // Common digraph conventions for dotted letters
+        'dh': 'ḍ',     // For emphatic D (Tifinagh ⴹ)
+        'th': 'ṭ',     // For emphatic T (Tifinagh ⵟ)
+        'rh': 'ṛ',     // For emphatic R (Tifinagh ⵕ)
+        'sx': 'ṣ',     // Common for emphatic S (Tifinagh ⵚ), used 'sx' to avoid conflict with 'sh'
+        'hh': 'ḥ',     // For emphatic H (Tifinagh ⵃ)
+        'zh': 'ẓ',     // For emphatic Z (Tifinagh ⵥ)
+
+        // If the user types the dotted character directly, preserve it
+        'ḍ': 'ḍ', 'ḥ': 'ḥ', 'ṛ': 'ṛ', 'ṣ': 'ṣ', 'ṭ': 'ṭ',
+        'ž': 'ž', 'ẓ': 'ẓ', 'č': 'č', 'š': 'š', 'ɣ': 'ɣ', 'ɛ': 'ɛ',
+
+        // --- Basic Latin characters (fallback if no special mapping) ---
+        // Ensure single characters are after their digraph counterparts if they share a letter.
+        // For example, 'd' comes after 'dh'.
         'a': 'a', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'e', 'f': 'f', 'g': 'g',
         'h': 'h', 'i': 'i', 'j': 'j', 'k': 'k', 'l': 'l', 'm': 'm', 'n': 'n',
         'o': 'o', 'p': 'p', 'r': 'r', 's': 's', 't': 't', 'u': 'u', 'v': 'v',
         'w': 'w', 'x': 'x', 'y': 'y', 'z': 'z',
-        'ɛ': 'ɛ', // Assuming 'ɛ' is mapped
 
         ' ': ' ',
         '.': '.', ',': ',', ';': ';', ':': ':', '!': '!', '?': '?', '-': '-',
@@ -99,13 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
         talatintText = talatintText.replace(/j/g, 'i'); // As per your original rule
         talatintText = talatintText
             .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "");
+            .replace(/[\u0300-\u036f]/g, ""); // Remove diacritics that might have come from Tifinagh map (e.g. if 'ḍ' became 'd' + diacritic)
 
         return talatintText;
     }
 
     /**
      * Converts Latin text to Tifinagh script.
+     * This uses the `standardLatinToTifinaghMap`.
      * @param {string} latinText - The input text in Latin script.
      * @returns {string} The converted text in Tifinagh.
      */
@@ -114,6 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let lowerCaseLatinText = latinText.toLowerCase();
         let i = 0;
 
+        // Sort keys by length in descending order to handle digraphs before single characters
+        // (e.g., 'sh' before 's' or 'h')
         const sortedKeys = Object.keys(standardLatinToTifinaghMap).sort((a, b) => b.length - a.length);
 
         while (i < lowerCaseLatinText.length) {
@@ -129,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!converted) {
+                // If no mapping, just append the original character (e.g., numbers, unmapped punctuation)
                 tifinaghResult += lowerCaseLatinText[i];
                 i++;
             }
@@ -137,7 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * NEW: Converts standard Latin text (e.g., 'gh') to Talatint with extended Latin characters (e.g., 'ɣ').
+     * NEW: Converts standard Latin text (e.g., 'gh', 'dh') to Talatint with extended Latin characters (e.g., 'ɣ', 'ḍ').
+     * This uses the `latinToExtendedTalatintMap`.
      * @param {string} latinText - The input text in standard Latin script.
      * @returns {string} The converted text in extended Talatint.
      */
@@ -162,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!converted) {
+                // If no mapping, just append the original character
                 extendedTalatintResult += lowerCaseLatinText[i];
                 i++;
             }
@@ -170,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- Event Listeners for Immediate Conversion (Physical Keyboard Input on index.html) ---
+    // --- Event Listeners for Immediate Conversion ---
 
-    // Tifinagh to Talatint
+    // Tifinagh to Talatint conversion
     if (tifinaghInput && talatintOutput) {
         tifinaghInput.addEventListener('input', () => {
             const tifinaghText = tifinaghInput.value;
@@ -180,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Latin to Tifinagh AND NEW Extended Talatint
+    // Latin to Tifinagh AND NEW Extended Talatint conversion
     if (latinInput && tifinaghLatinOutput && extendedTalatintOutput) {
         latinInput.addEventListener('input', () => {
             const latinText = latinInput.value;
