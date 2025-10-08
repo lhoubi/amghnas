@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'ⴹ': 'ḍ',     // For emphatic D (Tifinagh ⴹ)
         'ⵟ': 'ṭ',     // For emphatic T (Tifinagh ⵟ)
         'ⵕ': 'ṛ',     // For emphatic R (Tifinagh ⵕ)
-        'ⵚ': 'ṣ',     // Common for emphatic S (Tifinagh ⵚ), used 'sx' to avoid conflict with 'sh'
+        'ⵚ': 'ṣ',     // Common for emphatic S (Tifinagh ⵚ), used 'S' to avoid conflict with 'sh'
         'ⵃ': 'ḥ',     // For emphatic H (Tifinagh ⵃ)
         'ⵥ': 'ẓ',     // For emphatic Z (Tifinagh ⵥ)
 
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * NEW: Converts standard Latin text (e.g., 'gh', 'dh') to Talatint with extended Latin characters (e.g., 'ɣ', 'ḍ').
+     * NEW: Converts standard Latin text (e.g., 'gh', 'D') to Talatint with extended Latin characters (e.g., 'ɣ', 'ḍ').
      * This uses the `latinToExtendedTalatintMap`.
      * @param {string} latinText - The input text in standard Latin script.
      * @returns {string} The converted text in extended Talatint.
