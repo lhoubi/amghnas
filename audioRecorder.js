@@ -3,28 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const audioRecordToggle = document.getElementById('audioRecordToggle');
     const keyboardInput = document.getElementById('keyboardInput');
-    const icon = audioRecordToggle ? audioRecordToggle.querySelector('i') : null; // Safe access
-    const textSpan = audioRecordToggle ? audioRecordToggle.querySelector('span') : null; // Safe access
+    const icon = audioRecordToggle ? audioRecordToggle.querySelector('i') : null;
+    const textSpan = audioRecordToggle ? audioRecordToggle.querySelector('span') : null;
     const sttStatus = document.getElementById('sttStatus');
     const debugOutput = document.getElementById('debugOutput');
 
     // --- Check if elements were found ---
     if (!audioRecordToggle) {
         console.error("Error: audioRecordToggle element not found! Check your HTML ID.");
+        // Attempt to display error on page if possible
+        if (sttStatus) sttStatus.textContent = "Initialization Error: Recording button not found.";
         return; // Stop execution if the main button is missing
     }
-    if (!keyboardInput) {
-        console.error("Error: keyboardInput element not found! Check your HTML ID.");
-    }
-    if (!sttStatus) {
-        console.error("Error: sttStatus element not found! Check your HTML ID.");
-    }
-    if (!debugOutput) {
-        console.error("Error: debugOutput element not found! Check your HTML ID.");
-    }
-    if (!icon || !textSpan) {
-        console.error("Error: Icon or text span not found inside audioRecordToggle. Check your HTML structure.");
-    }
+    if (!keyboardInput) { console.error("Error: keyboardInput element not found! Check your HTML ID."); }
+    if (!sttStatus) { console.error("Error: sttStatus element not found! Check your HTML ID."); }
+    if (!debugOutput) { console.error("Error: debugOutput element not found! Check your HTML ID."); }
+    if (!icon || !textSpan) { console.warn("Warning: Icon or text span not found inside audioRecordToggle. UI updates might be incomplete."); }
 
 
     let mediaRecorder;
@@ -51,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const complexMappings = {
             'kh': 'ⵅ', 'gh': 'ⵖ', 'ch': 'ⵛ', 'sh': 'ⵛ',
             'dj': 'ⴷⵊ', 'ts': 'ⵜⵙ',
-            'tt': 'ⵜⵜ', 'kk': 'ⴽⴽ', 'll': 'ⵍⵍ', 'ⵏⵏ': 'nn', 'rr': 'ⵔⵔ', 'ss': 'ⵙⵙ', 'zz': 'ⵣⵣ', 'yy': 'ⵢⵢ',
+            'tt': 'ⵜⵜ', 'kk': 'ⴽⴽ', 'll': 'ⵍⵍ', 'nn': 'ⵏⵏ', 'rr': 'ⵔⵔ', 'ss': 'ⵙⵙ', 'zz': 'ⵣⵣ', 'yy': 'ⵢⵢ',
             'ḍ': 'ⴹ', 'ṭ': 'ⵟ', 'ṣ': 'ⵚ', 'ẓ': 'ⵥ', 'ṛ': 'ⵕ',
             'w': 'ⵡ', 'a': 'ⴰ', 'e': 'ⴻ', 'i': 'ⵉ', 'o': 'ⵓ', 'u': 'ⵓ',
             'b': 'ⴱ', 'd': 'ⴷ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ',
@@ -113,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function sendAudioToRealSTT(audioBlob) {
         if (sttStatus) sttStatus.textContent = "Sending audio to backend STT...";
         if (debugOutput) debugOutput.textContent = `Sending ${audioBlob.size} bytes of audio...`;
-        console.log(`Sending audio blob of size: ${audioBlob.size}`);
+        console.log(`[sendAudioToRealSTT] Sending audio blob of size: ${audioBlob.size}`);
 
         try {
             const formData = new FormData();
@@ -134,11 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (sttStatus) sttStatus.textContent = `STT Output: "${transcription}"`;
             if (debugOutput) debugOutput.textContent = `STT Raw Output: "${transcription}"`;
-            console.log("Real STT output:", transcription);
+            console.log("[sendAudioToRealSTT] Real STT output:", transcription);
             return transcription;
             
         } catch (error) {
-            console.error("Error sending audio to real STT backend:", error);
+            console.error("[sendAudioToRealSTT] Error sending audio to real STT backend:", error);
             if (sttStatus) sttStatus.textContent = "Error communicating with STT backend.";
             if (debugOutput) debugOutput.textContent = "Error: " + error.message;
             return "";
@@ -147,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Helper function to reset UI state ---
     function resetUI() {
-        console.log("resetUI called.");
+        console.log("[resetUI] called.");
         isRecording = false;
         audioRecordToggle.classList.remove('recording');
         if (icon) icon.className = 'fas fa-microphone';
@@ -155,36 +149,37 @@ document.addEventListener('DOMContentLoaded', () => {
         audioRecordToggle.disabled = false;
         if (sttStatus) sttStatus.textContent = "Ready to record.";
         if (debugOutput) debugOutput.textContent = "";
-        console.log("UI reset to 'Start Recording' state.");
+        console.log("[resetUI] UI reset to 'Start Recording' state.");
 
         if (sendIntervalId) {
             clearInterval(sendIntervalId);
             sendIntervalId = null;
+            console.log("[resetUI] Cleared continuous audio sending interval.");
         }
         lastPartialTranscription = "";
     }
 
     // --- MediaRecorder Event Handlers ---
     function onDataAvailable(event) {
+        console.log(`[onDataAvailable] Received audio data. Size: ${event.data.size}, State: ${mediaRecorder.state}`);
         if (event.data.size > 0) {
             audioChunks.push(event.data);
-            console.log("Audio data available, chunk size:", event.data.size);
         }
     }
 
     async function onStop() {
-        console.log("MediaRecorder onStop event fired. State:", mediaRecorder ? mediaRecorder.state : 'undefined');
+        console.log("[onStop] MediaRecorder onStop event fired. State:", mediaRecorder ? mediaRecorder.state : 'undefined');
 
         if (sendIntervalId) {
             clearInterval(sendIntervalId);
             sendIntervalId = null;
-            console.log("Stopped continuous audio sending interval.");
+            console.log("[onStop] Stopped continuous audio sending interval.");
         }
 
         if (micStream) {
             micStream.getTracks().forEach(track => {
                 track.stop();
-                console.log("Microphone track stopped.");
+                console.log("[onStop] Microphone track stopped.");
             });
             micStream = null;
         }
@@ -214,14 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (sttStatus) sttStatus.textContent = "No speech recognized during final pass.";
                     }
                 } catch (error) {
-                    console.error("Error during final STT process:", error);
+                    console.error("[onStop] Error during final STT process:", error);
                     if (sttStatus) sttStatus.textContent = "Error processing final speech.";
                     if (debugOutput) debugOutput.textContent = "Error: " + error.message;
                 }
             } else {
                 if (sttStatus) sttStatus.textContent = "No audio recorded (too short or silent).";
                 if (debugOutput) debugOutput.textContent = "No audio data was captured during the last recording.";
-                console.warn("No audio data captured.");
+                console.warn("[onStop] No audio data captured.");
             }
         } else {
             if (sttStatus) sttStatus.textContent = "No new audio chunks to finalize.";
@@ -231,19 +226,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function onMediaRecorderError(event) {
-        console.error('MediaRecorder error:', event.error);
+        console.error('[onMediaRecorderError] MediaRecorder error:', event.error);
         if (sttStatus) sttStatus.textContent = `Recording error: ${event.error.name}: ${event.error.message}`;
         if (debugOutput) debugOutput.textContent = `MediaRecorder Error: ${event.error.message}`;
 
         if (sendIntervalId) {
             clearInterval(sendIntervalId);
             sendIntervalId = null;
-            console.log("Stopped continuous audio sending interval due to error.");
+            console.log("[onMediaRecorderError] Stopped continuous audio sending interval due to error.");
         }
         if (micStream) {
             micStream.getTracks().forEach(track => {
                 track.stop();
-                console.log("Microphone track stopped due to error.");
+                console.log("[onMediaRecorderError] Microphone track stopped due to error.");
             });
             micStream = null;
         }
@@ -253,12 +248,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Function to send accumulated audio chunks to STT (for real-time) ---
     async function sendAudioChunks() {
         if (audioChunks.length === 0) {
-            if (debugOutput) debugOutput.textContent = "No audio chunks to send yet.";
+            // console.log("[sendAudioChunks] No audio chunks to send yet."); // Too verbose if uncommented
+            if (debugOutput && audioRecordToggle.classList.contains('recording')) { // Only show if recording
+                debugOutput.textContent = "No audio in current chunk.";
+            }
             return;
         }
+        if (debugOutput) debugOutput.textContent = `Sending ${audioChunks.length} chunks to STT...`;
+        console.log(`[sendAudioChunks] Preparing to send ${audioChunks.length} chunks.`);
 
         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        audioChunks = [];
+        audioChunks = []; // Clear chunks *after* creating blob for sending
 
         try {
             const partialTamazightLatinOutput = await sendAudioToRealSTT(audioBlob);
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } catch (error) {
-            console.error("Error sending partial audio to STT:", error);
+            console.error("[sendAudioChunks] Error sending partial audio to STT:", error);
             if (debugOutput) debugOutput.textContent = "Error sending partial audio: " + error.message;
         }
     }
@@ -297,34 +297,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Toggle Button Click Handler ---
     audioRecordToggle.addEventListener('click', async () => {
-        console.log("audioRecordToggle clicked. Current isRecording state:", isRecording);
+        console.log("[audioRecordToggle.click] Button clicked. Current isRecording state:", isRecording);
 
         if (!isRecording) {
             // Start Recording flow
             if (sttStatus) sttStatus.textContent = "Requesting microphone access...";
             if (debugOutput) debugOutput.textContent = "";
-            console.log("Attempting to get microphone access...");
+            console.log("[audioRecordToggle.click] Attempting to get microphone access...");
             
-            // --- FIX APPLIED HERE: Disable button IMMEDIATELY before starting the async process ---
             audioRecordToggle.disabled = true; 
 
             try {
                 micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                console.log("Microphone access granted.");
+                console.log("[audioRecordToggle.click] Microphone access granted. Stream:", micStream);
 
-                // --- FIX APPLIED HERE: Re-enable the button promptly after mic access is granted ---
                 audioRecordToggle.disabled = false; 
 
-                mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/wav' });
-                mediaRecorder.ondataavailable = onDataAvailable;
-                mediaRecorder.onstop = onStop;
-                mediaRecorder.onerror = onMediaRecorderError;
+                // IMPORTANT: Ensure MediaRecorder is not null if an error occurred previously
+                if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+                    mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/wav' });
+                    mediaRecorder.ondataavailable = onDataAvailable;
+                    mediaRecorder.onstop = onStop;
+                    mediaRecorder.onerror = onMediaRecorderError;
+                    console.log("[audioRecordToggle.click] MediaRecorder initialized. State:", mediaRecorder.state);
+                } else {
+                    console.warn("[audioRecordToggle.click] MediaRecorder already active or in an unexpected state:", mediaRecorder.state);
+                    // Attempt to stop gracefully if it was left in a bad state
+                    if (mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                    }
+                    // Reinitialize or return
+                    return; // Prevent starting a new recorder
+                }
 
-                mediaRecorder.start(500);
-                console.log("MediaRecorder.start(500) called. State:", mediaRecorder.state);
+                mediaRecorder.start(500); // This creates chunks every 500ms
+                console.log("[audioRecordToggle.click] MediaRecorder.start(500) called. Current state:", mediaRecorder.state);
+
+                // --- Verify state immediately after start ---
+                setTimeout(() => {
+                    if (mediaRecorder.state !== 'recording') {
+                        console.error("[audioRecordToggle.click] MediaRecorder failed to enter 'recording' state after start(). Current state:", mediaRecorder.state);
+                        if (sttStatus) sttStatus.textContent = "Error: Recorder failed to start.";
+                        if (debugOutput) debugOutput.textContent = "MediaRecorder state is not 'recording'.";
+                        resetUI(); // Force reset if it didn't start
+                        return;
+                    } else {
+                        console.log("[audioRecordToggle.click] MediaRecorder successfully started recording. State:", mediaRecorder.state);
+                    }
+                }, 100); // Check after a small delay
 
                 sendIntervalId = setInterval(sendAudioChunks, 1000);
-                console.log("Started continuous audio sending interval.");
+                console.log("[audioRecordToggle.click] Started continuous audio sending interval.");
 
                 isRecording = true;
                 audioRecordToggle.classList.add('recording');
@@ -334,25 +357,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (keyboardInput) keyboardInput.focus();
 
             } catch (err) {
-                console.error('Microphone access denied or error:', err);
+                console.error('[audioRecordToggle.click] Microphone access denied or error during start:', err);
                 if (sttStatus) sttStatus.textContent = `Microphone access denied: ${err.name}. Please check permissions.`;
                 if (debugOutput) debugOutput.textContent = `Microphone Error: ${err.message}. Please enable microphone access for this site.`;
-                resetUI(); // Reset UI state on error, which will re-enable the button
+                resetUI();
             } finally {
-                // --- FIX APPLIED HERE: Failsafe to ensure button is enabled if recording didn't start ---
                 if (!isRecording) { 
                     audioRecordToggle.disabled = false;
                 }
             }
         } else {
             // Stop Recording flow
-            console.log("Stop button clicked. MediaRecorder state:", mediaRecorder ? mediaRecorder.state : 'undefined');
+            console.log("[audioRecordToggle.click] Stop button clicked. MediaRecorder state:", mediaRecorder ? mediaRecorder.state : 'undefined');
             if (mediaRecorder && mediaRecorder.state === 'recording') {
-                audioRecordToggle.disabled = true; // Disable button during stop/processing
+                audioRecordToggle.disabled = true;
                 if (sttStatus) sttStatus.textContent = "Stopping recording...";
                 mediaRecorder.stop();
+                console.log("[audioRecordToggle.click] Called mediaRecorder.stop().");
             } else {
-                console.warn("Attempted to stop MediaRecorder when it was not in 'recording' state. Force resetting.");
+                console.warn("[audioRecordToggle.click] Attempted to stop MediaRecorder when it was not in 'recording' state. Force resetting.");
                 if (debugOutput) debugOutput.textContent = "Recorder not active. Force resetting.";
                 resetUI();
             }
