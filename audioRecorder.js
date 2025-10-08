@@ -1,10 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM Content Loaded. Initializing audio recorder script.");
+
     const audioRecordToggle = document.getElementById('audioRecordToggle');
     const keyboardInput = document.getElementById('keyboardInput');
-    const icon = audioRecordToggle.querySelector('i');
-    const textSpan = audioRecordToggle.querySelector('span');
+    const icon = audioRecordToggle ? audioRecordToggle.querySelector('i') : null; // Safe access
+    const textSpan = audioRecordToggle ? audioRecordToggle.querySelector('span') : null; // Safe access
     const sttStatus = document.getElementById('sttStatus');
     const debugOutput = document.getElementById('debugOutput');
+
+    // --- Check if elements were found ---
+    if (!audioRecordToggle) {
+        console.error("Error: audioRecordToggle element not found! Check your HTML ID.");
+        return; // Stop execution if the main button is missing
+    }
+    if (!keyboardInput) {
+        console.error("Error: keyboardInput element not found! Check your HTML ID.");
+    }
+    if (!sttStatus) {
+        console.error("Error: sttStatus element not found! Check your HTML ID.");
+    }
+    if (!debugOutput) {
+        console.error("Error: debugOutput element not found! Check your HTML ID.");
+    }
+    if (!icon || !textSpan) {
+        console.error("Error: Icon or text span not found inside audioRecordToggle. Check your HTML structure.");
+    }
+
 
     let mediaRecorder;
     let audioChunks = [];
@@ -19,18 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Browser Compatibility Check for MediaRecorder ---
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         audioRecordToggle.disabled = true;
-        textSpan.textContent = "Mic Not Supported";
-        sttStatus.textContent = "Your browser does not support audio recording. Please update or use a modern browser.";
+        if (textSpan) textSpan.textContent = "Mic Not Supported";
+        if (sttStatus) sttStatus.textContent = "Your browser does not support audio recording. Please update or use a modern browser.";
         console.error('MediaRecorder API not supported on this browser.');
         return; // Exit if not supported
     }
 
-    // --- Latin to Tifinagh Mapping Function (Unchanged - IMPORTANT: keep this for display) ---
+    // --- Latin to Tifinagh Mapping Function (Unchanged) ---
     function latinToTifinagh(latinText) {
         const complexMappings = {
             'kh': 'ⵅ', 'gh': 'ⵖ', 'ch': 'ⵛ', 'sh': 'ⵛ',
             'dj': 'ⴷⵊ', 'ts': 'ⵜⵙ',
-            'tt': 'ⵜⵜ', 'kk': 'ⴽⴽ', 'll': 'ⵍⵍ', 'nn': 'ⵏⵏ', 'rr': 'ⵔⵔ', 'ss': 'ⵙⵙ', 'zz': 'ⵣⵣ', 'yy': 'ⵢⵢ',
+            'tt': 'ⵜⵜ', 'kk': 'ⴽⴽ', 'll': 'ⵍⵍ', 'ⵏⵏ': 'nn', 'rr': 'ⵔⵔ', 'ss': 'ⵙⵙ', 'zz': 'ⵣⵣ', 'yy': 'ⵢⵢ',
             'ḍ': 'ⴹ', 'ṭ': 'ⵟ', 'ṣ': 'ⵚ', 'ẓ': 'ⵥ', 'ṛ': 'ⵕ',
             'w': 'ⵡ', 'a': 'ⴰ', 'e': 'ⴻ', 'i': 'ⵉ', 'o': 'ⵓ', 'u': 'ⵓ',
             'b': 'ⴱ', 'd': 'ⴷ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ',
@@ -90,14 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Send audio to REAL STT Backend (NEW FUNCTION) ---
     async function sendAudioToRealSTT(audioBlob) {
-        sttStatus.textContent = "Sending audio to backend STT...";
-        debugOutput.textContent = `Sending ${audioBlob.size} bytes of audio...`;
+        if (sttStatus) sttStatus.textContent = "Sending audio to backend STT...";
+        if (debugOutput) debugOutput.textContent = `Sending ${audioBlob.size} bytes of audio...`;
         console.log(`Sending audio blob of size: ${audioBlob.size}`);
 
         try {
             const formData = new FormData();
-            // IMPORTANT CHANGE HERE: Change the filename extension to match the blob type
-            formData.append('audio', audioBlob, 'audio.wav'); // Changed from 'audio.webm' to 'audio.wav'
+            formData.append('audio', audioBlob, 'audio.wav');
 
             const response = await fetch(STT_API_ENDPOINT, {
                 method: 'POST',
@@ -110,39 +130,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            const transcription = data.transcription || ""; // Expect 'transcription' key
+            const transcription = data.transcription || "";
             
-            sttStatus.textContent = `STT Output: "${transcription}"`;
-            debugOutput.textContent = `STT Raw Output: "${transcription}"`;
+            if (sttStatus) sttStatus.textContent = `STT Output: "${transcription}"`;
+            if (debugOutput) debugOutput.textContent = `STT Raw Output: "${transcription}"`;
             console.log("Real STT output:", transcription);
-            return transcription; // This will be Latin text
+            return transcription;
             
         } catch (error) {
             console.error("Error sending audio to real STT backend:", error);
-            sttStatus.textContent = "Error communicating with STT backend.";
-            debugOutput.textContent = "Error: " + error.message;
-            return ""; // Return empty string on error
+            if (sttStatus) sttStatus.textContent = "Error communicating with STT backend.";
+            if (debugOutput) debugOutput.textContent = "Error: " + error.message;
+            return "";
         }
     }
 
     // --- Helper function to reset UI state ---
     function resetUI() {
+        console.log("resetUI called.");
         isRecording = false;
         audioRecordToggle.classList.remove('recording');
-        icon.className = 'fas fa-microphone';
-        textSpan.textContent = "Start Recording";
-        audioRecordToggle.disabled = false; // Ensure button is re-enabled
-        sttStatus.textContent = "Ready to record."; // More professional initial status
-        debugOutput.textContent = ""; // Clear debug on reset
+        if (icon) icon.className = 'fas fa-microphone';
+        if (textSpan) textSpan.textContent = "Start Recording";
+        audioRecordToggle.disabled = false;
+        if (sttStatus) sttStatus.textContent = "Ready to record.";
+        if (debugOutput) debugOutput.textContent = "";
         console.log("UI reset to 'Start Recording' state.");
 
-        // Clear any pending send interval
         if (sendIntervalId) {
             clearInterval(sendIntervalId);
             sendIntervalId = null;
         }
-
-        // Reset transcription states
         lastPartialTranscription = "";
     }
 
@@ -157,14 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
     async function onStop() {
         console.log("MediaRecorder onStop event fired. State:", mediaRecorder ? mediaRecorder.state : 'undefined');
 
-        // Stop the continuous sending interval immediately
         if (sendIntervalId) {
             clearInterval(sendIntervalId);
             sendIntervalId = null;
             console.log("Stopped continuous audio sending interval.");
         }
 
-        // Stop all tracks in the stream
         if (micStream) {
             micStream.getTracks().forEach(track => {
                 track.stop();
@@ -173,56 +189,52 @@ document.addEventListener('DOMContentLoaded', () => {
             micStream = null;
         }
 
-        sttStatus.textContent = "Finalizing transcription...";
-        audioRecordToggle.disabled = true; // Disable during processing
+        if (sttStatus) sttStatus.textContent = "Finalizing transcription...";
+        audioRecordToggle.disabled = true;
 
-        // Send any remaining chunks as a final request
         if (audioChunks.length > 0) {
-            // IMPORTANT CHANGE HERE: Change the Blob type to audio/wav
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Changed from 'audio/webm'
-            audioChunks = []; // Clear chunks for next recording
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            audioChunks = [];
             if (audioBlob.size > 0) {
                 try {
-                    const finalTamazightLatinOutput = await sendAudioToRealSTT(audioBlob); // Use real STT
+                    const finalTamazightLatinOutput = await sendAudioToRealSTT(audioBlob);
                     if (finalTamazightLatinOutput) {
                         const tifinaghOutput = latinToTifinagh(finalTamazightLatinOutput);
                         
-                        // Remove the last partial and append the full, final transcription.
-                        let currentInputValue = keyboardInput.value;
+                        let currentInputValue = keyboardInput ? keyboardInput.value : '';
                         if (lastPartialTranscription && currentInputValue.endsWith(latinToTifinagh(lastPartialTranscription))) {
                             currentInputValue = currentInputValue.slice(0, -latinToTifinagh(lastPartialTranscription).length);
                         }
                         
-                        keyboardInput.value = currentInputValue + tifinaghOutput + ' '; // Add space after final word
-                        keyboardInput.scrollTop = keyboardInput.scrollHeight;
-                        sttStatus.textContent = "Transcription complete.";
-                        lastPartialTranscription = ""; // Clear for next round
+                        if (keyboardInput) keyboardInput.value = currentInputValue + tifinaghOutput + ' ';
+                        if (keyboardInput) keyboardInput.scrollTop = keyboardInput.scrollHeight;
+                        if (sttStatus) sttStatus.textContent = "Transcription complete.";
+                        lastPartialTranscription = "";
                     } else {
-                        sttStatus.textContent = "No speech recognized during final pass.";
+                        if (sttStatus) sttStatus.textContent = "No speech recognized during final pass.";
                     }
                 } catch (error) {
                     console.error("Error during final STT process:", error);
-                    sttStatus.textContent = "Error processing final speech.";
-                    debugOutput.textContent = "Error: " + error.message;
+                    if (sttStatus) sttStatus.textContent = "Error processing final speech.";
+                    if (debugOutput) debugOutput.textContent = "Error: " + error.message;
                 }
             } else {
-                sttStatus.textContent = "No audio recorded (too short or silent).";
-                debugOutput.textContent = "No audio data was captured during the last recording.";
+                if (sttStatus) sttStatus.textContent = "No audio recorded (too short or silent).";
+                if (debugOutput) debugOutput.textContent = "No audio data was captured during the last recording.";
                 console.warn("No audio data captured.");
             }
         } else {
-            sttStatus.textContent = "No new audio chunks to finalize.";
+            if (sttStatus) sttStatus.textContent = "No new audio chunks to finalize.";
         }
 
-        resetUI(); // Always reset UI after recording stops or processing finishes
+        resetUI();
     }
 
     function onMediaRecorderError(event) {
         console.error('MediaRecorder error:', event.error);
-        sttStatus.textContent = `Recording error: ${event.error.name}: ${event.error.message}`;
-        debugOutput.textContent = `MediaRecorder Error: ${event.error.message}`;
+        if (sttStatus) sttStatus.textContent = `Recording error: ${event.error.name}: ${event.error.message}`;
+        if (debugOutput) debugOutput.textContent = `MediaRecorder Error: ${event.error.message}`;
 
-        // Stop interval and mic stream on error
         if (sendIntervalId) {
             clearInterval(sendIntervalId);
             sendIntervalId = null;
@@ -235,30 +247,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             micStream = null;
         }
-        resetUI(); // Reset UI on error
+        resetUI();
     }
 
     // --- Function to send accumulated audio chunks to STT (for real-time) ---
     async function sendAudioChunks() {
         if (audioChunks.length === 0) {
-            debugOutput.textContent = "No audio chunks to send yet.";
+            if (debugOutput) debugOutput.textContent = "No audio chunks to send yet.";
             return;
         }
 
-        // IMPORTANT CHANGE HERE: Change the Blob type to audio/wav
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Changed from 'audio/webm'
-        audioChunks = []; // Clear chunks *after* creating blob for sending
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        audioChunks = [];
 
         try {
-            // Use the real STT function
-            const partialTamazightLatinOutput = await sendAudioToRealSTT(audioBlob); // This is Latin text
+            const partialTamazightLatinOutput = await sendAudioToRealSTT(audioBlob);
             
             if (partialTamazightLatinOutput) {
                 const tifinaghOutput = latinToTifinagh(partialTamazightLatinOutput);
 
-                let currentInputValue = keyboardInput.value;
+                let currentInputValue = keyboardInput ? keyboardInput.value : '';
                 
-                // If there was a previous partial, remove its Tifinagh representation
                 if (lastPartialTranscription) {
                     const lastPartialTifinagh = latinToTifinagh(lastPartialTranscription);
                     if (currentInputValue.endsWith(lastPartialTifinagh)) {
@@ -266,33 +275,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                keyboardInput.value = currentInputValue + tifinaghOutput;
-                keyboardInput.scrollTop = keyboardInput.scrollHeight;
-                lastPartialTranscription = partialTamazightLatinOutput; // Store this partial for future replacement
+                if (keyboardInput) keyboardInput.value = currentInputValue + tifinaghOutput;
+                if (keyboardInput) keyboardInput.scrollTop = keyboardInput.scrollHeight;
+                lastPartialTranscription = partialTamazightLatinOutput;
             } else {
-                // If STT returns empty (e.g., no speech detected in chunk), clear last partial
                 if (lastPartialTranscription) {
-                    let currentInputValue = keyboardInput.value;
+                    let currentInputValue = keyboardInput ? keyboardInput.value : '';
                     const lastPartialTifinagh = latinToTifinagh(lastPartialTranscription);
                     if (currentInputValue.endsWith(lastPartialTifinagh)) {
-                        keyboardInput.value = currentInputValue.slice(0, -lastPartialTifinagh.length);
+                        if (keyboardInput) keyboardInput.value = currentInputValue.slice(0, -lastPartialTifinagh.length);
                     }
-                    lastPartialTranscription = ""; // Clear the stored partial
+                    lastPartialTranscription = "";
                 }
             }
         } catch (error) {
             console.error("Error sending partial audio to STT:", error);
-            debugOutput.textContent = "Error sending partial audio: " + error.message;
+            if (debugOutput) debugOutput.textContent = "Error sending partial audio: " + error.message;
         }
     }
 
 
     // --- Toggle Button Click Handler ---
     audioRecordToggle.addEventListener('click', async () => {
+        console.log("audioRecordToggle clicked. Current isRecording state:", isRecording);
+
         if (!isRecording) {
             // Start Recording flow
-            sttStatus.textContent = "Requesting microphone access...";
-            debugOutput.textContent = "";
+            if (sttStatus) sttStatus.textContent = "Requesting microphone access...";
+            if (debugOutput) debugOutput.textContent = "";
             console.log("Attempting to get microphone access...");
             
             // --- FIX APPLIED HERE: Disable button IMMEDIATELY before starting the async process ---
@@ -305,31 +315,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 // --- FIX APPLIED HERE: Re-enable the button promptly after mic access is granted ---
                 audioRecordToggle.disabled = false; 
 
-                // IMPORTANT CHANGE HERE: Specify 'audio/wav' as the mimeType
-                mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/wav' }); // Changed from 'audio/webm'
+                mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/wav' });
                 mediaRecorder.ondataavailable = onDataAvailable;
                 mediaRecorder.onstop = onStop;
                 mediaRecorder.onerror = onMediaRecorderError;
 
-                // Start recording, requesting data every 500ms
-                mediaRecorder.start(500); // This creates chunks every 500ms
+                mediaRecorder.start(500);
                 console.log("MediaRecorder.start(500) called. State:", mediaRecorder.state);
 
-                // Start sending chunks every 1 second (adjust for responsiveness vs. backend load)
                 sendIntervalId = setInterval(sendAudioChunks, 1000);
                 console.log("Started continuous audio sending interval.");
 
-                isRecording = true; // Update our state
-                audioRecordToggle.classList.add('recording'); // Apply red style
-                icon.className = 'fas fa-stop-circle';
-                textSpan.textContent = "Stop Recording";
-                sttStatus.textContent = "Recording...";
-                keyboardInput.focus();
+                isRecording = true;
+                audioRecordToggle.classList.add('recording');
+                if (icon) icon.className = 'fas fa-stop-circle';
+                if (textSpan) textSpan.textContent = "Stop Recording";
+                if (sttStatus) sttStatus.textContent = "Recording...";
+                if (keyboardInput) keyboardInput.focus();
 
             } catch (err) {
                 console.error('Microphone access denied or error:', err);
-                sttStatus.textContent = `Microphone access denied: ${err.name}. Please check permissions.`;
-                debugOutput.textContent = `Microphone Error: ${err.message}. Please enable microphone access for this site.`;
+                if (sttStatus) sttStatus.textContent = `Microphone access denied: ${err.name}. Please check permissions.`;
+                if (debugOutput) debugOutput.textContent = `Microphone Error: ${err.message}. Please enable microphone access for this site.`;
                 resetUI(); // Reset UI state on error, which will re-enable the button
             } finally {
                 // --- FIX APPLIED HERE: Failsafe to ensure button is enabled if recording didn't start ---
@@ -342,17 +349,16 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Stop button clicked. MediaRecorder state:", mediaRecorder ? mediaRecorder.state : 'undefined');
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 audioRecordToggle.disabled = true; // Disable button during stop/processing
-                sttStatus.textContent = "Stopping recording...";
+                if (sttStatus) sttStatus.textContent = "Stopping recording...";
                 mediaRecorder.stop();
-                // onStop will handle further UI updates and re-enabling
             } else {
                 console.warn("Attempted to stop MediaRecorder when it was not in 'recording' state. Force resetting.");
-                debugOutput.textContent = "Recorder not active. Force resetting.";
-                resetUI(); // Force reset if state is unexpected, which will re-enable the button
+                if (debugOutput) debugOutput.textContent = "Recorder not active. Force resetting.";
+                resetUI();
             }
         }
     });
 
     // Initial status message
-    resetUI(); // Set initial state and status
+    resetUI();
 });
