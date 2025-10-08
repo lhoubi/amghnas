@@ -246,7 +246,8 @@
             flex-direction: column;
             gap: 10px;
             max-width: 1000px;
-            margin: 20px auto;
+            /* UPDATED: margin-top adjusted to bring keyboard closer */
+            margin: -40px auto 20px auto; /* Pull it up by 40px */
             padding: 15px;
             background-color: transparent;
             border-radius: var(--border-radius, 8px);
@@ -320,7 +321,8 @@
         .audio-input-controls {
             display: flex;
             justify-content: center;
-            margin: 20px auto 10px auto;
+            /* UPDATED: margin-bottom adjusted for spacing */
+            margin: 20px auto 70px auto; /* 70px below the button + button height approx 30px = ~100px gap */
             max-width: 1000px;
             padding: 0 15px;
         }
@@ -370,12 +372,15 @@
         /* NEW: Styles for STT Feedback */
         .stt-feedback {
             text-align: center;
-            margin: 10px auto 20px auto;
+            /* UPDATED: margin-top adjusted as the p#sttStatus is removed */
+            margin: 0 auto 20px auto; /* Reduced margin-top to 0 or a smaller value */
             max-width: 1000px;
             padding: 0 15px;
             font-family: 'Roboto', sans-serif;
         }
 
+        /* Removed #sttStatus styling as the element is gone */
+        /*
         #sttStatus {
             font-size: 1em;
             font-weight: bold;
@@ -386,6 +391,7 @@
         body.dark-mode #sttStatus {
             color: var(--text-color-dark-mode, #e2e8f0);
         }
+        */
 
         #debugOutput {
             font-family: monospace;
@@ -432,8 +438,7 @@
             .keyboard-key.delete { min-width: 45px; max-width: 70px; }
             .keyboard-key.delete i { font-size: 1.2em; }
             .final-action-row .key-group { min-width: 80px; max-width: 130px; }
-            .audio-input-controls { padding: 0 5px; gap: 5px; }
-            #audioRecordToggle { padding: 10px 15px; font-size: 1em; gap: 5px; }
+            .audio-input-controls { padding: 10px 15px; font-size: 1em; gap: 5px; }
             #audioRecordToggle i { font-size: 1.2em; }
         }
 
@@ -519,7 +524,7 @@
         </div>
         <!-- Add STT Status and Debug Output here -->
         <div class="stt-feedback">
-            <p id="sttStatus" aria-live="polite">Click 'Start Recording' to begin.</p>
+            <!-- Removed: <p id="sttStatus" aria-live="polite">Click 'Start Recording' to begin.</p> -->
             <pre id="debugOutput" style="font-size: 0.8em; color: var(--text-color-light); white-space: pre-wrap; word-break: break-all; min-height: 1.5em;"></pre>
         </div>
         <!-- END NEW -->
@@ -582,6 +587,7 @@
                         <span class="arabic-label visually-hidden">مسافة</span>
                         <button class="keyboard-key wide" data-key=" " data-arabic-key=" ">SPACE</button>
                     </div>
+                
                     <div class="key-group">
                         <span class="latin-label visually-hidden">Del</span>
                         <span class="arabic-label visually-hidden">حذف</span>
