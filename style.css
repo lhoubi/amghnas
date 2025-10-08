@@ -163,7 +163,9 @@ textarea {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 1.2rem; /* Larger text for readability */
-    font-family: 'Noto Sans Tifinagh', 'Roboto', sans-serif; /* Tifinagh first, then fallback */
+    /* ORIGINAL: font-family: 'Noto Sans Tifinagh', 'Roboto', sans-serif; */
+    /* MODIFIED: Default font for most textareas, prioritize Noto Sans (general) or Roboto for Latin */
+    font-family: 'Noto Sans', 'Roboto', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     resize: vertical; /* Allow vertical resizing only */
@@ -176,6 +178,14 @@ textarea:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus ring */
 }
+
+/* --- Specific Font for Tifinagh Output --- */
+/* This ensures the Tifinagh output always tries to use its dedicated font */
+#tifinaghLatinOutput,
+#tifinaghInputMain { /* Also apply to the Tifinagh input, as it might receive Tifinagh characters */
+    font-family: 'Noto Sans Tifinagh', 'Noto Sans', 'Roboto', sans-serif;
+}
+
 
 /* --- Converter Section Specific Styles (Buttons for Conversion) --- */
 .converter-section button { /* Target buttons directly within converter sections */
@@ -599,7 +609,9 @@ body.dark-mode h2 {
 
 body.dark-mode h3 {
     color: var(--dark-text-color);
-    /* Add to your existing style.css */
+}
+
+/* Add to your existing style.css */
 .mobile-keyboard-tip {
     background-color: #fff3cd; /* Light yellow background */
     border-left: 5px solid #ffc107; /* Yellow border for emphasis */
@@ -627,5 +639,4 @@ body.dark-mode .mobile-keyboard-tip {
 }
 body.dark-mode .mobile-keyboard-tip strong {
     color: #ffeeba;
-}
 }
