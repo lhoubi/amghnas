@@ -226,11 +226,33 @@
             box-sizing: border-box;
         }
 
-        .keyboard-key.active {
-            background-color: var(--accent-color);
-            box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
-            border-color: var(--accent-color);
+        /* Fire light effect */
+        .keyboard-key.fire-active {
+            animation: fireEffect 0.3s ease-out;
+            background-color: rgba(255, 69, 0, 0.7); /* Red-orange */
+            box-shadow: 0 0 15px 5px rgba(255, 69, 0, 0.8), 0 0 30px 10px rgba(255, 140, 0, 0.5); /* Glowing effect */
+            border-color: rgba(255, 69, 0, 0.9);
+            color: white;
         }
+
+        @keyframes fireEffect {
+            0% {
+                background-color: transparent;
+                box-shadow: none;
+                transform: scale(1);
+            }
+            50% {
+                background-color: rgba(255, 69, 0, 0.9);
+                box-shadow: 0 0 20px 7px rgba(255, 69, 0, 0.9), 0 0 40px 15px rgba(255, 140, 0, 0.7);
+                transform: scale(1.05);
+            }
+            100% {
+                background-color: transparent; /* Or a subtle glow if desired */
+                box-shadow: none;
+                transform: scale(1);
+            }
+        }
+
 
         .keyboard-key:not(.delete):hover {
             background-color: rgba(var(--accent-rgb), 0.1);
@@ -246,8 +268,7 @@
             flex-direction: column;
             gap: 10px;
             max-width: 1000px;
-            /* UPDATED: margin-top adjusted to bring keyboard closer */
-            margin: -40px auto 20px auto; /* Pull it up by 40px */
+            margin: -40px auto 20px auto;
             padding: 15px;
             background-color: transparent;
             border-radius: var(--border-radius, 8px);
@@ -317,82 +338,7 @@
             border: 0;
         }
 
-        /* NEW: Styles for the single audio button */
-        .audio-input-controls {
-            display: flex;
-            justify-content: center;
-            /* UPDATED: margin-bottom adjusted for spacing */
-            margin: 20px auto 70px auto; /* 70px below the button + button height approx 30px = ~100px gap */
-            max-width: 1000px;
-            padding: 0 15px;
-        }
-        #audioRecordToggle {
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
-            border: none;
-            color: white;
-            background-color: var(--accent-color, #007bff);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        #audioRecordToggle:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-        }
-        #audioRecordToggle.recording {
-            background-color: #dc3545;
-            animation: pulse 1.5s infinite;
-        }
-        #audioRecordToggle.recording:hover {
-            background-color: #c82333;
-        }
-        #audioRecordToggle:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        #audioRecordToggle i {
-            font-size: 1.5em;
-        }
-        #audioRecordToggle span {
-            font-weight: bold;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
-        }
-
-        /* NEW: Styles for STT Feedback */
-        .stt-feedback {
-            text-align: center;
-            /* UPDATED: margin-top adjusted as the p#sttStatus is removed */
-            margin: 0 auto 20px auto; /* Reduced margin-top to 0 or a smaller value */
-            max-width: 1000px;
-            padding: 0 15px;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* Removed #sttStatus styling as the element is gone */
-        /*
-        #sttStatus {
-            font-size: 1em;
-            font-weight: bold;
-            color: var(--text-color, #333);
-            margin-bottom: 5px;
-        }
-
-        body.dark-mode #sttStatus {
-            color: var(--text-color-dark-mode, #e2e8f0);
-        }
-        */
-
+        /* Removed audio-input-controls and stt-feedback sections */
         #debugOutput {
             font-family: monospace;
             font-size: 0.8em;
@@ -422,9 +368,6 @@
             .keyboard-key.delete { min-width: 50px; max-width: 80px; }
             .keyboard-key.delete i { font-size: 1.3em; }
             .final-action-row .key-group { min-width: 100px; max-width: 160px; }
-            .audio-input-controls { padding: 0 10px; gap: 8px; }
-            #audioRecordToggle { padding: 12px 20px; font-size: 1.1em; gap: 8px; }
-            #audioRecordToggle i { font-size: 1.3em; }
         }
 
         @media (max-width: 480px) {
@@ -438,8 +381,6 @@
             .keyboard-key.delete { min-width: 45px; max-width: 70px; }
             .keyboard-key.delete i { font-size: 1.2em; }
             .final-action-row .key-group { min-width: 80px; max-width: 130px; }
-            .audio-input-controls { padding: 10px 15px; font-size: 1em; gap: 5px; }
-            #audioRecordToggle i { font-size: 1.2em; }
         }
 
         .action-buttons {
@@ -515,20 +456,6 @@
             <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here..." lang="ber" inputmode="text"></textarea>
         </div>
 
-        <!-- NEW: Single Audio Input Control -->
-        <div class="audio-input-controls">
-            <button id="audioRecordToggle">
-                <i class="fas fa-microphone"></i>
-                <span>Start Recording</span>
-            </button>
-        </div>
-        <!-- Add STT Status and Debug Output here -->
-        <div class="stt-feedback">
-            <!-- Removed: <p id="sttStatus" aria-live="polite">Click 'Start Recording' to begin.</p> -->
-            <pre id="debugOutput" style="font-size: 0.8em; color: var(--text-color-light); white-space: pre-wrap; word-break: break-all; min-height: 1.5em;"></pre>
-        </div>
-        <!-- END NEW -->
-
         <!-- Virtual Keyboard Section -->
         <section class="keyboard-section">
             <div class="keyboard-layout">
@@ -603,4 +530,96 @@
         <!-- Action Buttons: Copy and Clear -->
         <div class="action-buttons">
             <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-            <button class
+            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>&copy; 2026 Tifinagh & Talatint Converter. All rights reserved.</p>
+            <p>Made with <i class="fas fa-heart" aria-hidden="true"></i> for Amazigh culture.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript files for keyboard functionality and theme toggle -->
+    <script src="keyboard.js"></script>
+    <script src="themeToggle.js"></script>
+    <!-- Removed audioRecorder.js as the audio button is deleted -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const keyboardInput = document.getElementById('keyboardInput');
+            const keyboardKeys = document.querySelectorAll('.keyboard-key');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+
+            // Function to add and remove the fire effect
+            function triggerFireEffect(keyElement) {
+                keyElement.classList.add('fire-active');
+                setTimeout(() => {
+                    keyElement.classList.remove('fire-active');
+                }, 300); // Duration of the animation
+            }
+
+            // Virtual keyboard click events
+            keyboardKeys.forEach(key => {
+                key.addEventListener('click', () => {
+                    const dataKey = key.dataset.key;
+                    
+                    if (dataKey === 'backspace') {
+                        keyboardInput.value = keyboardInput.value.slice(0, -1);
+                    } else {
+                        keyboardInput.value += dataKey;
+                    }
+                    keyboardInput.focus(); // Keep focus on the textarea
+                    triggerFireEffect(key); // Trigger fire effect on click
+                });
+            });
+
+            // Physical keyboard input events
+            keyboardInput.addEventListener('keydown', (e) => {
+                let matchingKey = null;
+
+                // Handle backspace specifically
+                if (e.key === 'Backspace') {
+                    matchingKey = document.querySelector('.keyboard-key.delete');
+                } else if (e.key === ' ') {
+                    matchingKey = document.querySelector('.keyboard-key.wide[data-key=" "]');
+                } else {
+                    // Try to find a direct match for data-key
+                    matchingKey = document.querySelector(`.keyboard-key[data-key="${e.key}"]`);
+                    // If not found, try to find a match for latin-label or arabic-label
+                    if (!matchingKey) {
+                        const allKeys = document.querySelectorAll('.key-group');
+                        for (const group of allKeys) {
+                            const latinLabel = group.querySelector('.latin-label');
+                            const arabicLabel = group.querySelector('.arabic-label');
+                            if ((latinLabel && latinLabel.textContent.toLowerCase() === e.key.toLowerCase()) ||
+                                (arabicLabel && arabicLabel.textContent === e.key)) {
+                                matchingKey = group.querySelector('.keyboard-key');
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if (matchingKey) {
+                    triggerFireEffect(matchingKey); // Trigger fire effect on physical key press
+                }
+            });
+
+            // Copy button functionality
+            copyBtn.addEventListener('click', () => {
+                keyboardInput.select();
+                document.execCommand('copy');
+                // Optional: Provide feedback to the user that text has been copied
+                alert('Text copied to clipboard!');
+            });
+
+            // Clear button functionality
+            clearBtn.addEventListener('click', () => {
+                keyboardInput.value = '';
+                keyboardInput.focus();
+            });
+        });
+    </script>
+</body>
+</html>
