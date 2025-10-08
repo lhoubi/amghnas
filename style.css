@@ -163,8 +163,7 @@ textarea {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 1.2rem; /* Larger text for readability */
-    /* ORIGINAL: font-family: 'Noto Sans Tifinagh', 'Roboto', sans-serif; */
-    /* MODIFIED: Default font for most textareas, prioritize Noto Sans (general) or Roboto for Latin */
+    /* IMPORTANT: Changed this default to prioritize Noto Sans (general) or Roboto for Latin characters */
     font-family: 'Noto Sans', 'Roboto', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
@@ -179,13 +178,14 @@ textarea:focus {
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Focus ring */
 }
 
-/* --- Specific Font for Tifinagh Output --- */
-/* This ensures the Tifinagh output always tries to use its dedicated font */
+/* --- Specific Font for Tifinagh Input/Output --- */
+/* This ensures the Tifinagh areas use their dedicated font, but only *after* the Latin input has been parsed.
+   By putting Noto Sans Tifinagh first here, it will be used for Tifinagh glyphs,
+   and fall back to Noto Sans/Roboto for any Latin characters it might encounter (e.g., in the input field). */
 #tifinaghLatinOutput,
-#tifinaghInputMain { /* Also apply to the Tifinagh input, as it might receive Tifinagh characters */
+#tifinaghInputMain {
     font-family: 'Noto Sans Tifinagh', 'Noto Sans', 'Roboto', sans-serif;
 }
-
 
 /* --- Converter Section Specific Styles (Buttons for Conversion) --- */
 .converter-section button { /* Target buttons directly within converter sections */
@@ -256,7 +256,7 @@ h3 {
     border: 1px solid var(--border-color);
     border-radius: 8px; /* Consistent rounded corners */
     font-size: 1.8rem; /* Large Tifinagh characters */
-    font-family: 'Noto Sans Tifinagh', sans-serif;
+    font-family: 'Noto Sans Tifinagh', sans-serif; /* Keyboard keys are specifically for Tifinagh */
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
