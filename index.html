@@ -49,7 +49,7 @@
             <!-- <button id="convertToTalatintBtn">
                 <i class="fas fa-arrow-right"></i> Convert to Talatint
             </button> -->
-            <h3>Talatint Output:</h3>
+            <h3>Talatint Output (Standard Latin):</h3>
             <textarea id="talatintOutput" readonly placeholder="Your converted Old Latin text will appear here..."></textarea>
         </div>
 
@@ -57,15 +57,19 @@
 
         <!-- Latin to Tifinagh Section -->
         <div class="converter-section">
-            <h2>Latin to Tifinagh</h2>
+            <h2>Latin to Tifinagh & Talatint (Extended Latin)</h2>
             <!-- Changed ID to 'latinInputMain' -->
-            <textarea id="latinInputMain" placeholder="Azul - Enter Latin text here..."></textarea>
+            <textarea id="latinInputMain" placeholder="Azul (e.g., amghnas) - Enter Latin text here..."></textarea>
             <!-- Original button will now be replaced by immediate conversion in converter.js -->
             <!-- <button id="convertToTifinaghBtn">
                 <i class="fas fa-arrow-left"></i> Convert to Tifinagh
             </button> -->
             <h3>Tifinagh Output:</h3>
             <textarea id="tifinaghLatinOutput" readonly placeholder="Your converted Tifinagh text will appear here..."></textarea>
+
+            <!-- NEW: Extended Talatint Output -->
+            <h3>Talatint Output (Extended Latin):</h3>
+            <textarea id="extendedTalatintOutput" readonly placeholder="Your converted text with extended Latin characters (e.g., amɣnas) will appear here..."></textarea>
         </div>
 
         <footer class="footer">
@@ -75,9 +79,9 @@
     </div>
 
     <!-- Your JavaScript file for dark mode toggle -->
-    <script src="themeToggle.js"></script> 
+    <script src="themeToggle.js"></script>
     <!-- Your JavaScript file for the converter logic -->
-    <script src="converter.js"></script> 
+    <script src="converter.js"></script>
     <!-- keyboard.js should only be on keyboard.html if it's a separate page -->
 </body>
 </html>
