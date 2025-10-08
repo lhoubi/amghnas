@@ -15,89 +15,225 @@
     <!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Your Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-
     <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
     <!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
 
-        /* Textarea Focus Style (from original keyboard.js) */
-        .text-input.focused {
+        :root {
+            --primary-color: #334155; /* Dark blue-gray for primary elements */
+            --secondary-color: #64748b; /* Lighter blue-gray for secondary elements */
+            --accent-color: #0d9488; /* Teal for accents and interactive elements */
+            --accent-rgb: 13, 148, 136; /* RGB for the accent color, for opacity */
+            --background-color: #f8fafc; /* Light gray for background */
+            --background-color-light: #e2e8f0; /* Even lighter for cards/sections */
+            --text-color: #1e293b; /* Dark text */
+            --text-color-light: #475569; /* Lighter text for secondary info */
+            --border-color: #cbd5e1; /* Light border */
+            --button-bg: #e2e8f0; /* Light button background */
+            --button-text-color: #334155; /* Dark text on buttons */
+            --delete-button-bg: #ef4444; /* Red for delete button */
+            --delete-button-text-color: #ffffff; /* White text on delete button */
+            --border-radius: 8px; /* Consistent border radius */
+        }
+
+        body.dark-mode {
+            --primary-color: #94a3b8;
+            --secondary-color: #64748b;
+            --accent-color: #2dd4bf;
+            --accent-rgb: 45, 212, 191;
+            --background-color: #1e293b;
+            --background-color-light: #334155;
+            --text-color: #f8fafc;
+            --text-color-light: #cbd5e1;
+            --border-color: #475569;
+            --button-bg: #334155;
+            --button-text-color: #cbd5e1;
+            --delete-button-bg: #dc2626;
+            --delete-button-text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: var(--background-color-light);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px; /* Space for footer */
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-button, #themeToggle {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .nav-button {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .nav-button:hover {
+            background-color: #475569;
+        }
+
+        #themeToggle {
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #themeToggle:hover {
+            background-color: var(--border-color);
+        }
+        body.dark-mode #themeToggle {
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8em;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        body.dark-mode h1 {
+            color: var(--text-color);
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--text-color-light);
+            margin-bottom: 30px;
+        }
+
+        .input-area-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .text-input {
+            width: 90%;
+            max-width: 800px;
+            height: 150px;
+            padding: 15px;
+            font-size: 1.5em;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
+            line-height: 1.6;
+            direction: ltr; /* Default for most typing, can be adjusted per language if needed */
+        }
+        .text-input:focus {
             border-color: var(--accent-color);
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
+        }
+        body.dark-mode .text-input {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-color: var(--border-color);
         }
 
         /* Styles for consolidated labels above Tifinagh keys */
         .key-group {
-            position: relative; /* Establish positioning context for labels */
-            padding-top: 35px; /* Make space for both labels above the button */
-            display: flex; /* Make key-group a flex container */
-            justify-content: center; /* Center button horizontally */
-            align-items: center; /* Center button vertically */
-            flex-grow: 1; /* Allow keys to grow to fill space */
-            flex-shrink: 1; /* Allow keys to shrink if needed */
-            flex-basis: 0; /* Base size for flex items, allows flex-grow to work effectively */
-            min-width: 55px; /* Minimum width for key groups */
-            max-width: 90px; /* Maximum width for key groups to prevent stretching too much */
-            box-sizing: border-box; /* Include padding/border in the element's total width and height */
-            text-align: center; /* Center labels */
+            position: relative;
+            padding-top: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 0;
+            min-width: 55px;
+            max-width: 90px;
+            box-sizing: border-box;
+            text-align: center;
         }
 
         .latin-label, .arabic-label {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.7em; /* Smaller font size */
-            color: var(--text-color-light); /* Assuming --text-color-light is defined */
-            pointer-events: none; /* Do not interfere with button clicks */
-            white-space: nowrap; /* Prevent labels from wrapping */
-            z-index: 10; /* Ensure labels are above the button */
-            width: 100%; /* Ensure labels occupy full width for centering text */
+            font-size: 0.7em;
+            color: var(--text-color-light);
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
+            width: 100%;
         }
 
         .latin-label {
-            top: 5px; /* Latin label higher */
+            top: 5px;
         }
 
         .arabic-label {
-            top: 20px; /* Arabic label below Latin one */
-            font-family: 'Noto Naskh Arabic', sans-serif; /* Apply Arabic font */
-            direction: rtl; /* Ensure Arabic text is right-to-left within its span */
+            top: 20px;
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            direction: rtl;
         }
 
-        /* Adjust button height slightly if needed due to extra padding, or remove if existing button height is fine */
         .keyboard-key {
-            height: 50px; /* Example, adjust to fit your design */
+            height: 50px;
             line-height: 50px;
-            width: 100%; /* Make button fill its key-group */
-            border-radius: var(--border-radius, 8px); /* Ensure consistent rounding */
-            display: flex; /* For centering content within the button */
+            width: 100%;
+            border-radius: var(--border-radius, 8px);
+            display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Noto Sans Tifinagh', sans-serif; /* Ensure Tifinagh font is applied */
-            font-size: 1.5em; /* Default font size for keys */
-            background-color: transparent; /* Changed to transparent background */
-            border: 2px solid var(--button-bg, #e0e0e0); /* Added border to define key shape */
-            color: var(--button-text-color, #333); /* Default text color */
+            font-family: 'Noto Sans Tifinagh', sans-serif;
+            font-size: 1.5em;
+            background-color: transparent;
+            border: 2px solid var(--button-bg, #e0e0e0);
+            color: var(--button-text-color, #333);
             cursor: pointer;
             transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s, border-color 0.2s;
             user-select: none;
-            box-sizing: border-box; /* Crucial for consistent sizing */
+            box-sizing: border-box;
         }
 
-        /* Active key highlight */
         .keyboard-key.active {
-            background-color: var(--accent-color); /* Use your theme's accent color */
+            background-color: var(--accent-color);
             box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
-            border-color: var(--accent-color); /* Also change border color on active */
+            border-color: var(--accent-color);
         }
 
-        /* Hover effect for transparent keys */
         .keyboard-key:not(.delete):hover {
-            background-color: rgba(var(--accent-rgb), 0.1); /* Light background on hover */
+            background-color: rgba(var(--accent-rgb), 0.1);
             border-color: var(--accent-color);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
@@ -105,78 +241,70 @@
             background-color: rgba(var(--accent-rgb), 0.2);
         }
 
-
-        /* --- ADDED CSS FOR KEYBOARD LAYOUT & RESPONSIVENESS --- */
         .keyboard-layout {
             display: flex;
-            flex-direction: column; /* Stack rows vertically */
-            gap: 10px; /* Space between rows */
-            max-width: 1000px; /* Max width for the entire keyboard */
-            margin: 20px auto; /* Center the keyboard */
+            flex-direction: column;
+            gap: 10px;
+            max-width: 1000px;
+            margin: 20px auto;
             padding: 15px;
-            background-color: transparent; /* CHANGED: Removed the dark background */
+            background-color: transparent;
             border-radius: var(--border-radius, 8px);
-            /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Optional: Keep or remove box-shadow */
         }
 
         .keyboard-row {
             display: flex;
-            flex-wrap: wrap; /* Allow keys to wrap to the next line on smaller screens */
-            justify-content: center; /* Center keys in the row */
-            gap: 10px; /* Space between keys */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
 
-        /* Styles for the wide SPACE key (if still needed, adjusted for final row) */
         .keyboard-key.wide {
-            flex-grow: 2; /* Make SPACE key wider relative to others in its row */
-            min-width: 150px; /* Minimum width for the space key */
-            max-width: 300px; /* Maximum width for the space key */
+            flex-grow: 2;
+            min-width: 150px;
+            max-width: 300px;
         }
-        /* Specific styling for the final row with space/delete */
         .keyboard-row.final-action-row {
-            justify-content: center; /* Center the two buttons */
-            margin-top: 20px; /* More space above this row */
+            justify-content: center;
+            margin-top: 20px;
         }
 
         .final-action-row .key-group {
-            flex-grow: 1; /* Allow them to grow */
-            flex-basis: auto; /* Revert to auto to allow width definitions below */
-            min-width: 120px; /* Ensure a decent size for Space/Del */
-            max-width: 200px; /* Limit their max size */
-            padding-top: 0; /* No labels above these, so no padding needed */
+            flex-grow: 1;
+            flex-basis: auto;
+            min-width: 120px;
+            max-width: 200px;
+            padding-top: 0;
         }
         .final-action-row .keyboard-key {
-            border: none; /* No border for these specific buttons */
-            color: var(--button-text-color); /* Default text color for these */
+            border: none;
+            color: var(--button-text-color);
             font-size: 1.1em;
             height: 50px;
             line-height: 50px;
         }
-        .final-action-row .keyboard-key.wide { /* Space button */
-            background-color: var(--button-bg, #4a5568); /* Explicit background for space */
+        .final-action-row .keyboard-key.wide {
+            background-color: var(--button-bg, #4a5568);
             color: var(--button-text-color, #e2e8f0);
         }
-        .final-action-row .keyboard-key.delete { /* Delete button */
-            background-color: var(--delete-button-bg, #e74c3c); /* Explicit background for delete */
+        .final-action-row .keyboard-key.delete {
+            background-color: var(--delete-button-bg, #e74c3c);
             color: var(--delete-button-text-color, #fff);
         }
 
-
-        /* Styles for the DELETE key */
         .keyboard-key.delete {
-            background-color: var(--delete-button-bg, #e74c3c); /* Default red for delete */
-            color: var(--delete-button-text-color, #fff); /* Default white text */
-            font-size: 1.2em; /* Slightly smaller font for the icon */
-            flex-grow: 1; /* Allow delete key to grow */
-            min-width: 60px; /* Minimum width for delete key */
-            max-width: 100px; /* Maximum width for delete key */
-            border: none; /* No border for the delete button, it has a solid background */
+            background-color: var(--delete-button-bg, #e74c3c);
+            color: var(--delete-button-text-color, #fff);
+            font-size: 1.2em;
+            flex-grow: 1;
+            min-width: 60px;
+            max-width: 100px;
+            border: none;
         }
         .keyboard-key.delete i {
-            font-size: 1.5em; /* Adjust icon size within the delete button */
+            font-size: 1.5em;
         }
 
-        /* Hide labels for screen readers for SPACE and DELETE keys */
         .key-group .visually-hidden {
             position: absolute;
             width: 1px;
@@ -192,19 +320,19 @@
         .audio-input-controls {
             display: flex;
             justify-content: center;
-            margin: 20px auto 10px auto; /* Adjusted margin-bottom to make space for status */
+            margin: 20px auto 10px auto;
             max-width: 1000px;
             padding: 0 15px;
         }
         #audioRecordToggle {
             padding: 15px 25px;
-            border-radius: 50px; /* Pill shape */
+            border-radius: 50px;
             font-size: 1.2em;
             cursor: pointer;
             transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
             border: none;
             color: white;
-            background-color: var(--accent-color, #007bff); /* Default blue */
+            background-color: var(--accent-color, #007bff);
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
@@ -215,7 +343,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         #audioRecordToggle.recording {
-            background-color: #dc3545; /* Red when recording */
+            background-color: #dc3545;
             animation: pulse 1.5s infinite;
         }
         #audioRecordToggle.recording:hover {
@@ -227,7 +355,7 @@
             box-shadow: none;
         }
         #audioRecordToggle i {
-            font-size: 1.5em; /* Larger icon */
+            font-size: 1.5em;
         }
         #audioRecordToggle span {
             font-weight: bold;
@@ -251,7 +379,7 @@
         #sttStatus {
             font-size: 1em;
             font-weight: bold;
-            color: var(--text-color, #333); /* Adjust to your theme's text color */
+            color: var(--text-color, #333);
             margin-bottom: 5px;
         }
 
@@ -262,132 +390,100 @@
         #debugOutput {
             font-family: monospace;
             font-size: 0.8em;
-            color: var(--text-color-light, #666); /* A lighter color for debug info */
+            color: var(--text-color-light, #666);
             background-color: var(--background-color-light, #f8f8f8);
             border-radius: 5px;
             padding: 10px;
             margin-top: 10px;
-            min-height: 20px; /* Ensure it's visible even if empty */
-            overflow-x: auto; /* For long debug messages */
-            text-align: left; /* Align debug text to left */
+            min-height: 20px;
+            overflow-x: auto;
+            text-align: left;
         }
         body.dark-mode #debugOutput {
             background-color: var(--background-color-dark-mode, #2d3748);
             color: var(--text-color-light-dark-mode, #a0aec0);
         }
 
-
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
-            .keyboard-layout {
-                padding: 10px;
-                gap: 8px;
-            }
-            .keyboard-row {
-                gap: 8px;
-            }
-            .key-group {
-                min-width: 48px; /* Adjusted: slightly larger min-width */
-                max-width: 70px;
-                padding-top: 32px; /* Adjusted: more space for labels */
-            }
-            .latin-label {
-                font-size: 0.7em; /* Adjusted: slightly larger for readability */
-                top: 4px; /* Adjusted: fine-tune vertical position */
-            }
-            .arabic-label {
-                font-size: 0.65em; /* Adjusted: slightly larger for readability */
-                top: 20px; /* Adjusted: fine-tune vertical position */
-            }
-            .keyboard-key {
-                height: 48px; /* Adjusted: slightly taller */
-                line-height: 48px;
-                font-size: 1.4em; /* Adjusted: slightly larger Tifinagh character */
-            }
-            .keyboard-key.wide {
-                min-width: 90px;
-                max-width: 180px;
-            }
-            .keyboard-key.delete {
-                min-width: 50px;
-                max-width: 80px;
-            }
-            .keyboard-key.delete i {
-                font-size: 1.3em;
-            }
-            .final-action-row .key-group {
-                min-width: 100px;
-                max-width: 160px;
-            }
-            .audio-input-controls {
-                padding: 0 10px;
-                gap: 8px;
-            }
-            #audioRecordToggle {
-                padding: 12px 20px;
-                font-size: 1.1em;
-                gap: 8px;
-            }
-            #audioRecordToggle i {
-                font-size: 1.3em;
-            }
+            .keyboard-layout { padding: 10px; gap: 8px; }
+            .keyboard-row { gap: 8px; }
+            .key-group { min-width: 48px; max-width: 70px; padding-top: 32px; }
+            .latin-label { font-size: 0.7em; top: 4px; }
+            .arabic-label { font-size: 0.65em; top: 20px; }
+            .keyboard-key { height: 48px; line-height: 48px; font-size: 1.4em; }
+            .keyboard-key.wide { min-width: 90px; max-width: 180px; }
+            .keyboard-key.delete { min-width: 50px; max-width: 80px; }
+            .keyboard-key.delete i { font-size: 1.3em; }
+            .final-action-row .key-group { min-width: 100px; max-width: 160px; }
+            .audio-input-controls { padding: 0 10px; gap: 8px; }
+            #audioRecordToggle { padding: 12px 20px; font-size: 1.1em; gap: 8px; }
+            #audioRecordToggle i { font-size: 1.3em; }
         }
 
         @media (max-width: 480px) {
-            .keyboard-layout {
-                padding: 5px;
-                gap: 5px;
-            }
-            .keyboard-row {
-                gap: 5px;
-            }
-            .key-group {
-                min-width: 40px; /* Further adjust for mobile phones */
-                max-width: 60px;
-                padding-top: 28px; /* Adjusted: more space for labels */
-            }
-            .latin-label {
-                font-size: 0.65em; /* Adjusted: larger for readability */
-                top: 3px; /* Adjusted: fine-tune vertical position */
-            }
-            .arabic-label {
-                font-size: 0.6em; /* Adjusted: larger for readability */
-                top: 18px; /* Adjusted: fine-tune vertical position */
-            }
-            .keyboard-key {
-                height: 40px;
-                line-height: 40px;
-                font-size: 1.2em; /* Adjusted: slightly larger Tifinagh character */
-            }
-            .keyboard-key.wide {
-                min-width: 70px;
-                max-width: 140px;
-            }
-            .keyboard-key.delete {
-                min-width: 45px;
-                max-width: 70px;
-            }
-            .keyboard-key.delete i {
-                font-size: 1.2em;
-            }
-            .final-action-row .key-group {
-                min-width: 80px;
-                max-width: 130px;
-            }
-            .audio-input-controls {
-                padding: 0 5px;
-                gap: 5px;
-            }
-            #audioRecordToggle {
-                padding: 10px 15px;
-                font-size: 1em;
-                gap: 5px;
-            }
-            #audioRecordToggle i {
-                font-size: 1.2em;
-            }
+            .keyboard-layout { padding: 5px; gap: 5px; }
+            .keyboard-row { gap: 5px; }
+            .key-group { min-width: 40px; max-width: 60px; padding-top: 28px; }
+            .latin-label { font-size: 0.65em; top: 3px; }
+            .arabic-label { font-size: 0.6em; top: 18px; }
+            .keyboard-key { height: 40px; line-height: 40px; font-size: 1.2em; }
+            .keyboard-key.wide { min-width: 70px; max-width: 140px; }
+            .keyboard-key.delete { min-width: 45px; max-width: 70px; }
+            .keyboard-key.delete i { font-size: 1.2em; }
+            .final-action-row .key-group { min-width: 80px; max-width: 130px; }
+            .audio-input-controls { padding: 0 5px; gap: 5px; }
+            #audioRecordToggle { padding: 10px 15px; font-size: 1em; gap: 5px; }
+            #audioRecordToggle i { font-size: 1.2em; }
         }
 
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-buttons button {
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .action-buttons .copy {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .action-buttons .copy:hover {
+            background-color: #0c7e75;
+        }
+
+        .action-buttons .clear {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .action-buttons .clear:hover {
+            background-color: #475569;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color-light);
+            font-size: 0.9em;
+        }
+        .footer i {
+            color: #e74c3c; /* A nice red heart */
+        }
     </style>
 </head>
 <body>
