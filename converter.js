@@ -67,12 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'sh': 'š',     // Tifinagh ⵛ (or š if preferred)
 
         // Common digraph conventions for dotted letters
-        'dh': 'ḍ',     // For emphatic D (Tifinagh ⴹ)
-        'th': 'ṭ',     // For emphatic T (Tifinagh ⵟ)
-        'rh': 'ṛ',     // For emphatic R (Tifinagh ⵕ)
-        'sx': 'ṣ',     // Common for emphatic S (Tifinagh ⵚ), used 'sx' to avoid conflict with 'sh'
-        'hh': 'ḥ',     // For emphatic H (Tifinagh ⵃ)
-        'zh': 'ẓ',     // For emphatic Z (Tifinagh ⵥ)
+        'ⴹ': 'ḍ',     // For emphatic D (Tifinagh ⴹ)
+        'ⵟ': 'ṭ',     // For emphatic T (Tifinagh ⵟ)
+        'ⵕ': 'ṛ',     // For emphatic R (Tifinagh ⵕ)
+        'ⵚ': 'ṣ',     // Common for emphatic S (Tifinagh ⵚ), used 'sx' to avoid conflict with 'sh'
+        'ⵃ': 'ḥ',     // For emphatic H (Tifinagh ⵃ)
+        'ⵥ': 'ẓ',     // For emphatic Z (Tifinagh ⵥ)
 
         // If the user types the dotted character directly, preserve it
         'ḍ': 'ḍ', 'ḥ': 'ḥ', 'ṛ': 'ṛ', 'ṣ': 'ṣ', 'ṭ': 'ṭ',
