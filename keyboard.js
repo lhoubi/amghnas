@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Shifted/Capitalized Tifinagh Mapping (for Latin input) ---
     const tifinaghShiftMap = {
         'A': 'ⵄ', 'G': 'ⵖ', 'H': 'ⵃ', 'D': 'ⴹ', 'T': 'ⵟ', 'R': 'ⵕ',
-        'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'Q': 'ⵇ', 'W': 'ⵯ',
+        'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'ⵇ': 'ⵇ', 'W': 'ⵯ', // Corrected Q to ⵇ
     };
 
     // --- Digraph Map (Longest matches first for Latin conversion logic) ---
@@ -34,30 +34,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Arabic to Tifinagh Mapping ---
-    // Adjusted some mappings for better common use
     const arabicToTifinaghMap = {
-        'ا': 'ⴰ', 'أ': 'ⴰ','آ': 'ⴰ', 'إ':'ⵉ', 'أُ':'ⵓ', // Alef variations
+        'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
         'د': 'ⴷ', 'ذ': 'ⴷ',
         'ر': 'ⵔ', 'ز': 'ⵣ',
-        'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ', // ض often ⴹ
-        'ط': 'ⵟ', 'ظ': 'ⵥ', // ظ often ⴹ depending on dialect
+        'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ',
+        'ط': 'ⵟ', 'ظ': 'ⵥ',
         'ع': 'ⵄ', 'غ': 'ⵖ',
         'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        'ة': 'ⴻ', 'ى': 'ⵉ', // Taa marbuta to E, Alef maqsuura to I
-        'ء': 'ⴻ', // Hamza can be mapped to ⴻ or empty, chose ⴻ for consistency
-        'ؤ': 'ⵓ', 'ئ': 'ⵉ', // Hamza on waw/yaa to U/I
+        'ة': 'ⴻ', 'ى': 'ⵉ',
+        'ء': 'ⴻ',
+        'ؤ': 'ⵓ', 'ئ': 'ⵉ',
 
-        // Punctuation and special characters
-        ' ': ' ', // Space
-        '\n': '\n', // Newline
-        'ـ': 'ـ', // Tatweel as a hyphen/elongation for Tifinagh 'ـ'
-        // Add common punctuation if you want them specifically mapped
-        // ',': ',', '.': '.', ';': ';', '/': '/', '?': '?', '!': '!', '(': '(', ')': ')',
-        // Common ligatures or combined characters that might be typed in Arabic and need a Tifinagh equivalent
-        'لا': 'ⵍⴰ', // lam-alef
+        ' ': ' ',
+        '\n': '\n',
+        'ـ': 'ـ',
+        'لا': 'ⵍⴰ',
         'لأ': 'ⵍⴰ',
         'لإ': 'ⵍⵉ',
         'لآ': 'ⵍⴰ'
@@ -70,12 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'ⵎ': 'ⵎ', 'ⵏ': 'ⵏ', 'ⵒ': 'ⵒ', 'ⵇ': 'ⵇ', 'ⵔ': 'ⵔ', 'ⵙ': 'ⵙ',
         'ⵜ': 'ⵜ', 'ⵓ': 'ⵓ', 'ⵠ': 'ⵠ', 'ⵡ': 'ⵡ', 'ⵅ': 'ⵅ', 'ⵢ': 'ⵢ',
         'ⵣ': 'ⵣ', 'ⵖ': 'ⵖ', 'ⴹ': 'ⴹ', 'ⵃ': 'ⵃ', 'ⵚ': 'ⵚ', 'ⵥ': 'ⵥ',
-        'ⵄ': 'ⵄ', 'ⵕ': 'ⵕ', 'ⵟ': 'ⵟ', 'ⵯ': 'ⵯ', 'ـ': 'ـ', // Tatweel
-        ' ': ' ', '\n': 'enter', 'backspace': 'backspace' // Keep special keys
+        'ⵄ': 'ⵄ', 'ⵕ': 'ⵕ', 'ⵟ': 'ⵟ', 'ⵯ': 'ⵯ', 'ـ': 'ـ',
+        ' ': ' ', '\n': 'enter', 'backspace': 'backspace'
     };
 
-    // Function to highlight a virtual key temporarily
-    // It takes the Tifinagh character that was *inserted* into the textarea.
     function highlightKey(tifinaghChar) {
         if (!tifinaghChar) return;
 
@@ -91,39 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Helper to detect if a character is Arabic ---
     function isArabicChar(char) {
         if (!char) return false;
-        // Basic Arabic script range
         return char.match(/[\u0600-\u06FF]/);
     }
 
-    // --- Helper to detect if a character is Latin ---
     function isLatinChar(char) {
         if (!char) return false;
         return char.match(/[a-zA-Z]/);
     }
 
-    // --- Helper to get the last character typed from a change in value ---
-    function getLastInputCharacter(oldValue, newValue, newCursorPos) {
-        if (newValue.length > oldValue.length) {
-            // A character was added
-            const addedText = newValue.substring(oldValue.length);
-            return addedText.length === 1 ? addedText : null; // Return if single char added
-        }
-        return null;
-    }
-
     // --- Core Conversion Logic for Physical Keyboard Input ---
-    // This function processes a *single* input character (Latin or Arabic)
-    // and returns its Tifinagh equivalent and the Tifinagh char itself for highlighting.
     function convertSingleCharToTifinagh(inputChar) {
-        let tifinaghEquivalent = inputChar; // Default: keep as is
-        let charForHighlight = inputChar; // Default for highlight
+        let tifinaghEquivalent = inputChar;
+        let charForHighlight = inputChar;
 
         if (isLatinChar(inputChar)) {
-            // Try digraphs first (physical typing can't easily do digraphs unless complex logic)
-            // For single char, focus on direct map
             let mappedChar = tifinaghShiftMap[inputChar];
             if (!mappedChar) {
                 mappedChar = tifinaghMap[inputChar.toLowerCase()];
@@ -138,19 +114,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 tifinaghEquivalent = mappedChar;
                 charForHighlight = mappedChar;
             }
-        }
-        // If it's a space or newline, ensure it maps to itself and highlights correctly
-        if (inputChar === ' ') {
+        } else if (inputChar === ' ') {
             tifinaghEquivalent = ' ';
             charForHighlight = ' ';
         } else if (inputChar === '\n') {
             tifinaghEquivalent = '\n';
-            charForHighlight = '\n'; // For highlight purposes
+            charForHighlight = '\n';
         }
 
         return { convertedChar: tifinaghEquivalent, charForHighlight: charForHighlight };
     }
-
 
     // --- Virtual Keyboard Key Clicks ---
     keyboardKeys.forEach(key => {
@@ -162,20 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
             let newValue = keyboardInput.value;
             let newCursorPos = start;
 
-            const keyValue = key.dataset.key; // Tifinagh char, or ' ' or 'backspace'
+            const keyValue = key.dataset.key;
             let charForHighlight = keyValue;
 
             if (keyValue === 'backspace') {
-                if (start === end) { // No text selected, delete preceding character
+                if (start === end) {
                     if (start > 0) {
                         newValue = newValue.substring(0, start - 1) + newValue.substring(end);
                         newCursorPos = start - 1;
                     }
-                } else { // Text is selected, delete selected text
+                } else {
                     newValue = newValue.substring(0, start) + newValue.substring(end);
                     newCursorPos = start;
                 }
-                charForHighlight = 'backspace'; // Special value for backspace highlight
+                charForHighlight = 'backspace';
             } else {
                 newValue = newValue.substring(0, start) + keyValue + newValue.substring(end);
                 newCursorPos = start + keyValue.length;
@@ -185,14 +158,41 @@ document.addEventListener('DOMContentLoaded', () => {
             keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
             keyboardInput.focus();
 
-            highlightKey(charForHighlight); // Highlight the Tifinagh key that was conceptually pressed/inserted
+            highlightKey(charForHighlight);
+            previousValue = keyboardInput.value; // Update previousValue after virtual key input
         });
     });
 
-
     // --- Real-time Conversion on Physical Keyboard Input ---
-    let previousValue = ''; // To track changes for physical keyboard input
-    let ignoreNextInput = false; // Flag to prevent re-entrancy during our own updates
+    let previousValue = '';
+    let ignoreNextInput = false;
+
+    // This function now correctly identifies the inserted character regardless of cursor position.
+    function findInsertedCharAndPosition(oldVal, newVal, oldCursorPos, newCursorPos) {
+        let insertedChar = null;
+        let insertionStart = -1;
+
+        if (newVal.length > oldVal.length) { // Something was inserted
+            // Find the point where oldVal and newVal start to differ
+            let commonPrefixLength = 0;
+            while (commonPrefixLength < oldVal.length && commonPrefixLength < newVal.length &&
+                   oldVal[commonPrefixLength] === newVal[commonPrefixLength]) {
+                commonPrefixLength++;
+            }
+
+            // The inserted part starts after the common prefix
+            insertionStart = commonPrefixLength;
+            insertedChar = newVal.substring(commonPrefixLength, commonPrefixLength + (newVal.length - oldVal.length));
+            
+            // If more than one character was inserted (e.g., paste), treat as a block.
+            // For single character conversion, we only care about the very first character if it's a block.
+            if (insertedChar.length > 1) {
+                // If it's a paste, we'll process the whole string.
+                return { insertedChar: null, insertionStart: -1 }; 
+            }
+        }
+        return { insertedChar: insertedChar, insertionStart: insertionStart };
+    }
 
     function processPhysicalInput() {
         if (ignoreNextInput) return;
@@ -200,40 +200,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentInput = keyboardInput.value;
         const currentCursorPos = keyboardInput.selectionStart;
 
-        // If content was selected and replaced, or a backspace/delete occurred
-        if (currentInput.length < previousValue.length && currentCursorPos <= previousValue.length) {
-            // It was a deletion (backspace or selection deletion)
-            highlightKey('backspace'); // Highlight backspace
+        // Check for deletion first
+        if (currentInput.length < previousValue.length) {
+            highlightKey('backspace'); // Assume a backspace/delete action
             previousValue = currentInput;
             return;
         }
 
-        // Determine what was *just typed* on the physical keyboard
-        const newlyTypedChar = getLastInputCharacter(previousValue, currentInput, currentCursorPos);
+        // Check for insertion
+        const { insertedChar, insertionStart } = findInsertedCharAndPosition(previousValue, currentInput, keyboardInput.selectionStart, currentCursorPos);
 
-        if (newlyTypedChar) {
-            const { convertedChar, charForHighlight } = convertSingleCharToTifinagh(newlyTypedChar);
+        if (insertedChar && insertedChar.length === 1) {
+            const { convertedChar, charForHighlight } = convertSingleCharToTifinagh(insertedChar);
 
-            if (convertedChar !== newlyTypedChar) { // If a conversion actually happened
-                ignoreNextInput = true; // Prevent re-triggering 'input' event
+            if (convertedChar !== insertedChar) { // If a conversion actually happened
+                ignoreNextInput = true;
 
-                const beforeCursor = currentInput.substring(0, currentCursorPos - newlyTypedChar.length);
-                const afterCursor = currentInput.substring(currentCursorPos);
+                // Reconstruct the value with the converted character
+                const beforeInsertion = currentInput.substring(0, insertionStart);
+                const afterInsertion = currentInput.substring(insertionStart + insertedChar.length);
+                
+                keyboardInput.value = beforeInsertion + convertedChar + afterInsertion;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = insertionStart + convertedChar.length;
 
-                keyboardInput.value = beforeCursor + convertedChar + afterCursor;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = beforeCursor.length + convertedChar.length;
-
-                ignoreNextInput = false; // Reset flag
-                highlightKey(charForHighlight); // Highlight the Tifinagh result
+                ignoreNextInput = false;
+                highlightKey(charForHighlight);
             } else {
-                // No conversion, just a regular character (e.g., punctuation, numbers)
-                // We can still try to highlight it if it happens to match a Tifinagh key
-                highlightKey(newlyTypedChar); // Try to highlight the literal char if it matches
+                // No conversion, but still a single character typed
+                highlightKey(insertedChar);
             }
-        } else if (currentInput !== previousValue && !newlyTypedChar) {
-            // This case handles pasting, or complex input where a single char couldn't be isolated.
-            // For simplicity, we'll re-process the whole string for conversion here.
-            // This might not give perfect per-char highlight, but ensures conversion.
+        } else if (currentInput !== previousValue) {
+            // This path handles pastes or multiple character insertions that `findInsertedCharAndPosition` might not catch as a single char.
+            // We re-process the whole string for conversion, but try to maintain cursor position.
             const { text: convertedText, cursorPos: newPos } = convertMixedInputToTifinagh(currentInput, currentCursorPos);
             if (keyboardInput.value !== convertedText) {
                 ignoreNextInput = true;
@@ -241,49 +239,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyboardInput.selectionStart = keyboardInput.selectionEnd = newPos;
                 ignoreNextInput = false;
             }
-            // Cannot reliably highlight a single key for a multi-character paste/complex input
         }
 
-        previousValue = keyboardInput.value; // Update previousValue for the next input event
+        previousValue = keyboardInput.value;
     }
 
-    // Helper to convert an entire string that might contain mixed Latin/Arabic/Tifinagh
-    // This is used as a fallback for complex inputs like pasting.
     function convertMixedInputToTifinagh(inputText, originalCursorPos) {
         let result = '';
-        let currentIdx = 0;
         let newCursorPos = 0;
+        let originalLengthBeforeCursor = 0;
 
-        while (currentIdx < inputText.length) {
-            const char = inputText[currentIdx];
-            const { convertedChar } = convertSingleCharToTifinagh(char); // Use our single char converter
+        // Determine the length of the string before the cursor in original text
+        if (originalCursorPos > 0) {
+            originalLengthBeforeCursor = inputText.substring(0, originalCursorPos).length;
+        }
+
+        for (let i = 0; i < inputText.length; i++) {
+            const char = inputText[i];
+            const { convertedChar } = convertSingleCharToTifinagh(char);
             result += convertedChar;
-            if (currentIdx < originalCursorPos) {
+            
+            // Adjust newCursorPos if we are still before or at the original cursor position
+            if (i < originalCursorPos) {
                 newCursorPos += convertedChar.length;
             }
-            currentIdx++;
         }
         return { text: result, cursorPos: newCursorPos };
     }
 
-
     keyboardInput.addEventListener('input', processPhysicalInput);
 
-    // --- Physical Keyboard Keydown (for specific key handling like Enter/Backspace) ---
-    // This is less about conversion, more about visual feedback or preventing default browser actions
     keyboardInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace') {
-            // The 'input' event will handle the deletion and calling highlightKey('backspace')
-            // No need to prevent default unless you want a very custom backspace behavior.
-        } else if (e.key === 'Enter') {
-            highlightKey('\n'); // Highlight Enter key if you have one on your virtual keyboard, or simply a newline concept
-            // Allow default browser Enter (newline insertion)
+        if (e.key === 'Enter') {
+            highlightKey('\n');
         }
-        // For other keys, 'input' event will capture the character.
     });
 
-
-    // --- Action Buttons: Copy and Clear ---
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
             keyboardInput.select();
@@ -297,7 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .catch(err => {
                         console.error('Failed to copy text using Clipboard API: ', err);
-                        // Fallback for older browsers
                         document.execCommand('copy');
                         copyBtn.textContent = 'Copied!';
                         setTimeout(() => {
@@ -305,7 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }, 1500);
                     });
             } else {
-                // Fallback for older browsers
                 document.execCommand('copy');
                 copyBtn.textContent = 'Copied!';
                 setTimeout(() => {
@@ -320,20 +309,17 @@ document.addEventListener('DOMContentLoaded', () => {
         clearBtn.addEventListener('click', () => {
             keyboardInput.value = '';
             keyboardInput.focus();
-            previousValue = ''; // Reset previous value for next input
-            // No highlight for clear, as nothing is inserted
+            previousValue = '';
         });
     }
 
-    // --- Optional: Visual Cue for Textarea Focus ---
     keyboardInput.addEventListener('focus', () => {
         keyboardInput.classList.add('focused');
-        previousValue = keyboardInput.value; // Initialize previousValue on focus
+        previousValue = keyboardInput.value;
     });
     keyboardInput.addEventListener('blur', () => {
         keyboardInput.classList.remove('focused');
     });
 
-    // Initialize previousValue on page load if there's pre-filled text
     previousValue = keyboardInput.value;
 });
