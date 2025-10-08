@@ -5,15 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Get DOM Elements (UPDATED IDs to match index.html) ---
     // Tifinagh to Talatint (Old Latin)
-    const tifinaghInput = document.getElementById('tifinaghInputMain'); // *** CHANGED ID ***
+    const tifinaghInput = document.getElementById('tifinaghInputMain');
     const talatintOutput = document.getElementById('talatintOutput');
 
     // Latin to Tifinagh
-    const latinInput = document.getElementById('latinInputMain');     // *** CHANGED ID ***
+    const latinInput = document.getElementById('latinInputMain');
     const tifinaghLatinOutput = document.getElementById('tifinaghLatinOutput');
+    // NEW: Output for Talatint with extended Latin characters
+    const extendedTalatintOutput = document.getElementById('extendedTalatintOutput');
 
     // --- Error Checking for essential elements ---
-    if (!tifinaghInput || !talatintOutput || !latinInput || !tifinaghLatinOutput) {
+    if (!tifinaghInput || !talatintOutput || !latinInput || !tifinaghLatinOutput || !extendedTalatintOutput) {
         console.error("Error: One or more essential input/output elements not found in index.html for converter.js.");
         // We'll proceed, but conversion won't work without these.
     }
@@ -47,6 +49,36 @@ document.addEventListener('DOMContentLoaded', () => {
         '.': '.', ',': ',', ';': ';', ':': ':', '!': '!', '?': '?', '-': '-',
     };
 
+    // NEW: Map standard Latin input (e.g., 'gh') to extended Talatint characters (e.g., 'ɣ')
+    const latinToExtendedTalatintMap = {
+        'ch': 'č', // or 'č'
+        'ḍ': 'ḍ', // This is already extended, but for consistency if input allows 'd' then 'ḍ'
+        'gh': 'ɣ',
+        'ḥ': 'ḥ',
+        'kh': 'x', // or 'χ'
+        'ph': 'f',
+        'q': 'q',
+        'sh': 'š', // or 'š'
+        'ṣ': 'ṣ',
+        'ţ': 'ṭ',
+        'ṭ': 'ṭ',
+        'th': 'ţ', // or 'þ'
+        'zh': 'ž', // or 'ž'
+        'ẓ': 'ẓ',
+        'ts': 'ts',
+        'dz': 'dz',
+
+        // Single characters that might have an extended variant or are already fine
+        'a': 'a', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'e', 'f': 'f', 'g': 'g',
+        'h': 'h', 'i': 'i', 'j': 'j', 'k': 'k', 'l': 'l', 'm': 'm', 'n': 'n',
+        'o': 'o', 'p': 'p', 'r': 'r', 's': 's', 't': 't', 'u': 'u', 'v': 'v',
+        'w': 'w', 'x': 'x', 'y': 'y', 'z': 'z',
+        'ɛ': 'ɛ', // Assuming 'ɛ' is mapped
+
+        ' ': ' ',
+        '.': '.', ',': ',', ';': ';', ':': ':', '!': '!', '?': '?', '-': '-',
+    };
+
 
     // --- Conversion Functions ---
 
@@ -64,17 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let talatintText = standardLatinTransliteration.toLowerCase(); // Ensure lowercase
-
-        // These rules are already handled by the initial mapping, or are identity transforms
-        // Rule 2: 'ⵓ' for 'u' (lowercase) - 'u' is already 'u' in the map, so this is redundant.
-        // talatintText = talatintText.replace(/u/g, 'u');
-        // Rule 3: 'i' for 'j' (lowercase) - You map 'j' to 'j' in tifinaghToStandardLatinMap, then convert 'j' to 'i' here.
-        // If you want 'ⵊ' -> 'i', change 'ⵊ': 'j' to 'ⵊ': 'i' in tifinaghToStandardLatinMap.
-        // For now, I'll keep your replace, but consider direct mapping.
-        talatintText = talatintText.replace(/j/g, 'i');
-
-
-        // Rule 4: Remove any common modern diacritics
+        talatintText = talatintText.replace(/j/g, 'i'); // As per your original rule
         talatintText = talatintText
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "");
@@ -92,8 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let lowerCaseLatinText = latinText.toLowerCase();
         let i = 0;
 
-        // Sort keys by length in descending order to handle digraphs before single characters
-        // (e.g., 'sh' before 's' or 'h')
         const sortedKeys = Object.keys(standardLatinToTifinaghMap).sort((a, b) => b.length - a.length);
 
         while (i < lowerCaseLatinText.length) {
@@ -109,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!converted) {
-                // If no mapping, just append the original character (e.g., numbers, unmapped punctuation)
                 tifinaghResult += lowerCaseLatinText[i];
                 i++;
             }
@@ -117,29 +136,57 @@ document.addEventListener('DOMContentLoaded', () => {
         return tifinaghResult;
     }
 
+    /**
+     * NEW: Converts standard Latin text (e.g., 'gh') to Talatint with extended Latin characters (e.g., 'ɣ').
+     * @param {string} latinText - The input text in standard Latin script.
+     * @returns {string} The converted text in extended Talatint.
+     */
+    function convertLatinToExtendedTalatint(latinText) {
+        let extendedTalatintResult = '';
+        let lowerCaseLatinText = latinText.toLowerCase();
+        let i = 0;
+
+        // Sort keys by length in descending order to handle digraphs before single characters
+        const sortedKeys = Object.keys(latinToExtendedTalatintMap).sort((a, b) => b.length - a.length);
+
+        while (i < lowerCaseLatinText.length) {
+            let converted = false;
+
+            for (const key of sortedKeys) {
+                if (lowerCaseLatinText.substring(i, i + key.length) === key) {
+                    extendedTalatintResult += latinToExtendedTalatintMap[key];
+                    i += key.length;
+                    converted = true;
+                    break;
+                }
+            }
+
+            if (!converted) {
+                extendedTalatintResult += lowerCaseLatinText[i];
+                i++;
+            }
+        }
+        return extendedTalatintResult;
+    }
+
 
     // --- Event Listeners for Immediate Conversion (Physical Keyboard Input on index.html) ---
 
     // Tifinagh to Talatint
     if (tifinaghInput && talatintOutput) {
-        tifinaghInput.addEventListener('input', () => { // *** CHANGED to 'input' event ***
+        tifinaghInput.addEventListener('input', () => {
             const tifinaghText = tifinaghInput.value;
             talatintOutput.value = convertTifinaghToTalatint(tifinaghText);
         });
     }
 
-    // Latin to Tifinagh
-    if (latinInput && tifinaghLatinOutput) {
-        latinInput.addEventListener('input', () => { // *** CHANGED to 'input' event ***
+    // Latin to Tifinagh AND NEW Extended Talatint
+    if (latinInput && tifinaghLatinOutput && extendedTalatintOutput) {
+        latinInput.addEventListener('input', () => {
             const latinText = latinInput.value;
             tifinaghLatinOutput.value = convertLatinToTifinagh(latinText);
+            extendedTalatintOutput.value = convertLatinToExtendedTalatint(latinText); // NEW conversion
         });
     }
 
-    // --- REMOVED: Old button click listeners ---
-    // Since we want immediate conversion, the buttons are no longer needed to trigger the main conversion.
-    // They are commented out in index.html too.
-
-    // --- REMOVED: Dark Mode Toggle Logic from here ---
-    // This logic now belongs solely in themeToggle.js
 }); // End of DOMContentLoaded
