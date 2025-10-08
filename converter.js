@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // This map prioritizes longest matches for accurate digraph conversion
     const standardLatinToTifinaghMap = {
         // Digraphs and Special Characters (must come before single letters if they share a prefix)
-        'ch': 'ⵛ', 'ḍ': 'ⴹ', 'gh': 'ⵖ', 'ḥ': 'ⵃ', 'kh': 'ⵅ', 'ph': 'ⴼ', 'q': 'ⵇ',
-        'sh': 'ⵛ', 'ṣ': 'ⵚ', 'ţ': 'ⵟ', 'ṭ': 'ⵟ', 'th': 'ⵝ', 'zh': 'ⵥ', 'ẓ': 'ⵥ',
+        'ch': 'ⵛ', 'ḍ': 'ⴹ', 'gh': 'ⵖ', 'H': 'ⵃ', 'kh': 'ⵅ', 'ph': 'ⴼ', 'q': 'ⵇ',
+        'sh': 'ⵛ', 'ṣ': 'ⵚ', 'T': 'ⵟ', 'ṭ': 'ⵟ', 'th': 'ⵝ', 'Z': 'ⵥ', 'ẓ': 'ⵥ',
         'ts': 'ⵜⵙ', 'dz': 'ⴷⵣ',
         'ɛ': 'ⵄ', // Assuming 'ɛ' is mapped
 
