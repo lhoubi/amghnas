@@ -98,7 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const formData = new FormData();
-            formData.append('audio', audioBlob, 'audio.webm'); // 'audio' matches the backend's `request.files['audio']`
+            // IMPORTANT CHANGE HERE: Change the filename extension to match the blob type
+            formData.append('audio', audioBlob, 'audio.wav'); // Changed from 'audio.webm' to 'audio.wav'
 
             const response = await fetch(STT_API_ENDPOINT, {
                 method: 'POST',
@@ -180,7 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Send any remaining chunks as a final request
         if (audioChunks.length > 0) {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            // IMPORTANT CHANGE HERE: Change the Blob type to audio/wav
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Changed from 'audio/webm'
             audioChunks = []; // Clear chunks for next recording
             if (audioBlob.size > 0) {
                 try {
@@ -246,7 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        // IMPORTANT CHANGE HERE: Change the Blob type to audio/wav
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Changed from 'audio/webm'
         audioChunks = []; // Clear chunks *after* creating blob for sending
 
         try {
@@ -300,7 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 console.log("Microphone access granted.");
 
-                mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/webm' }); // Explicitly set mimeType
+                // IMPORTANT CHANGE HERE: Specify 'audio/wav' as the mimeType
+                mediaRecorder = new MediaRecorder(micStream, { mimeType: 'audio/wav' }); // Changed from 'audio/webm'
                 mediaRecorder.ondataavailable = onDataAvailable;
                 mediaRecorder.onstop = onStop;
                 mediaRecorder.onerror = onMediaRecorderError;
