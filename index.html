@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="style.css">
 
     <script>
-      // Tailwind Config
       tailwind.config = {
         darkMode: 'class',
         theme: {
@@ -32,98 +31,89 @@
       }
     </script>
   </head>
+
   <body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <div class="min-h-screen">
-        <div class="relative isolate px-6 pt-6 lg:px-8">
-            <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-                <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 dark:opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+      <div class="relative isolate px-6 pt-6 lg:px-8">
+
+        <!-- HEADER -->
+        <header class="flex justify-between items-center py-4">
+          <div class="flex-1">
+            <a href="keyboard.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Berber Keyboard</a>
+          </div>
+          <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0">ⴰⵎⵖⵏⴰⵙ</h1>
+          <div class="flex-1 flex justify-end">
+            <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
+              <span class="moon-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </span>
+              <span class="sun-icon hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="mx-auto max-w-5xl py-12 sm:py-16">
+          <div class="text-center">
+            <h2 class="text-4xl font-bold tracking-tight sm:text-6xl font-serif">Tifinagh & Talatint</h2>
+            <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+              Journey between ancient Tifinagh and classical Latin scripts with ease.
+            </p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            
+            <!-- Tifinagh → Talatint -->
+            <div class="space-y-6 p-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
+              <h3 class="text-2xl font-semibold font-serif">Tifinagh to Talatint</h3>
+              <div>
+                <label for="tifinaghInputMain" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Input</label>
+                <textarea id="tifinaghInputMain" placeholder="ⴰⵣⵓⵍ (Azul)..." class="font-tifinagh text-2xl w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500"></textarea>
+              </div>
+              <div>
+                <label for="talatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output</label>
+                <textarea id="talatintOutput" readonly placeholder="Converted Latin text..." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border rounded-lg resize-none"></textarea>
+              </div>
             </div>
 
-            <header class="flex justify-between items-center py-4">
-                <div class="flex-1">
-                    <a href="keyboard.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Berber Keyboard</a>
-                </div>
-                <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0">
-                    ⴰⵎⵖⵏⴰⵙ
-                </h1>
-                <div class="flex-1 flex justify-end">
-                    <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-slate-800 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
-                        <span class="moon-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                            </svg>
-                        </span>
-                        <span class="sun-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                        </span>
-                    </button>
-                </div>
-            </header>
-            
-            <main class="mx-auto max-w-5xl py-12 sm:py-16">
-                <div class="text-center">
-                    <h2 class="text-4xl font-bold tracking-tight sm:text-6xl font-serif">Tifinagh & Talatint</h2>
-                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-                        Journey between ancient Tifinagh and classical Latin scripts with ease.
-                    </p>
-                </div>
-
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    <!-- Tifinagh to Talatint -->
-                    <div class="space-y-6 p-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
-                        <h3 class="text-2xl font-semibold font-serif">Tifinagh to Talatint</h3>
-                        <div>
-                            <label for="tifinaghInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Tifinagh Input
-                            </label>
-                            <textarea id="tifinaghInput" placeholder="ⴰⵣⵓⵍ (Azul)..." class="font-tifinagh text-2xl w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 dark:placeholder-gray-500"></textarea>
-                        </div>
-                        <div>
-                            <label for="talatintOutput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Talatint Output (Standard Latin)</label>
-                            <textarea id="talatintOutput" readonly placeholder="Your converted Latin text appears here..." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-transparent rounded-lg resize-none focus:outline-none text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-200"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Latin to Tifinagh -->
-                    <div class="space-y-6 p-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
-                        <h3 class="text-2xl font-semibold font-serif">Latin to Tifinagh & Talatint</h3>
-                        <div>
-                            <label for="latinInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Latin Input
-                            </label>
-                            <textarea id="latinInput" placeholder="amghnas, azul..." class="text-lg w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:border-indigo-500 transition-all duration-200 placeholder-gray-400 dark:placeholder-gray-500"></textarea>
-                        </div>
-                        <div>
-                            <label for="tifinaghLatinOutput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tifinagh Output</label>
-                            <textarea id="tifinaghLatinOutput" readonly placeholder="Your converted Tifinagh text appears here..." class="font-tifinagh text-2xl w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-transparent rounded-lg resize-none focus:outline-none text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-200"></textarea>
-                        </div>
-                        <div>
-                            <label for="extendedTalatintOutput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Talatint Output (Extended Latin)</label>
-                            <textarea id="extendedTalatintOutput" readonly placeholder="Converted text with extended characters (e.g., amɣnas)..." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-transparent rounded-lg resize-none focus:outline-none text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-200"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </main>
-
-            <footer class="text-center py-8 mt-12 border-t border-gray-200 dark:border-slate-800">
-                <p class="text-gray-500 dark:text-gray-400">&copy; <span id="copyright-year"></span> Tifinagh & Talatint Converter.</p>
-                <p class="text-gray-500 dark:text-gray-400 mt-2">
-                    Made with 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
-                    </svg>
-                    for Amazigh culture.
-                </p>
-            </footer>
-            
-            <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-                <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 dark:opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+            <!-- Latin → Tifinagh + Talatint -->
+            <div class="space-y-6 p-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
+              <h3 class="text-2xl font-semibold font-serif">Latin to Tifinagh & Talatint</h3>
+              <div>
+                <label for="latinInputMain" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Latin Input</label>
+                <textarea id="latinInputMain" placeholder="amɣnas, azul..." class="text-lg w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500"></textarea>
+              </div>
+              <div>
+                <label for="tifinaghLatinOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Output</label>
+                <textarea id="tifinaghLatinOutput" readonly class="font-tifinagh text-2xl w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border rounded-lg resize-none"></textarea>
+              </div>
+              <div>
+                <label for="extendedTalatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output (Extended Latin)</label>
+                <textarea id="extendedTalatintOutput" readonly class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border rounded-lg resize-none"></textarea>
+              </div>
             </div>
-        </div>
+
+          </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-8 mt-12 border-t border-gray-200 dark:border-slate-800">
+          <p class="text-gray-500 dark:text-gray-400">&copy; <span id="copyright-year"></span> Tifinagh & Talatint Converter.</p>
+          <p class="text-gray-500 dark:text-gray-400 mt-2">
+            Made with <span class="text-red-500">❤</span> for Amazigh culture.
+          </p>
+        </footer>
+      </div>
     </div>
+
     <script src="converter.js"></script>
     <script src="themeToggle.js"></script>
   </body>
 </html>
+
