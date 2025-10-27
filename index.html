@@ -18,13 +18,18 @@
 
     <script>
       tailwind.config = {
-        darkMode: 'class',
+        darkMode: 'class', 
         theme: {
           extend: {
             fontFamily: {
               'sans': ['Roboto', 'Noto Sans', 'sans-serif'],
               'serif': ['Playfair Display', 'serif'],
               'tifinagh': ['Noto Sans Tifinagh', 'sans-serif'],
+            },
+            // Custom colors for the logo gradient (if desired for the main logo too)
+            colors: {
+              'logo-start': '#00BCD4', // Cyan from the logo
+              'logo-end': '#673AB7',   // Deep Purple from the logo
             },
           },
         },
@@ -38,15 +43,13 @@
 
         <!-- HEADER -->
         <header class="flex justify-between items-center py-4">
-          <div class="flex-1 flex space-x-4">
-            <a href="converter.html" class="px-4 py-2 bg-indigo-600 text-white rounded-full text-sm font-semibold leading-6 hover:bg-indigo-700 transition-colors">Converter</a>
+          <div class="flex-1">
             <a href="keyboard.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Berber Keyboard</a>
           </div>
-          <h1 class="text-3xl font-bold font-serif text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-600 flex-shrink-0">
-            ⴰⵎⵖⵏⴰⵙ
+          <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0">
+            <span class="text-5xl md:text-6xl font-tifinagh text-purple-600 dark:text-purple-400">ⴰⵎⵖⵏⴰⵙ</span>
           </h1>
-          <div class="flex-1 flex justify-end items-center space-x-4">
-            <span class="text-gray-900 dark:text-gray-100 text-sm"></span>
+          <div class="flex-1 flex justify-end">
             <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
               <span class="moon-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -116,47 +119,8 @@
       </div>
     </div>
 
-    <!-- These scripts would need to be created if you want the functionality -->
-    <!-- <script src="converter.js"></script> -->
-    <!-- <script src="themeToggle.js"></script> -->
-    <script>
-      // Placeholder for theme toggle functionality
-      document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        const moonIcon = document.querySelector('.moon-icon');
-        const sunIcon = document.querySelector('.sun-icon');
-
-        function toggleTheme() {
-          if (html.classList.contains('dark')) {
-            html.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
-          } else {
-            html.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-          }
-        }
-
-        // Apply saved theme or default to dark
-        if (localStorage.getItem('theme') === 'light') {
-          html.classList.remove('dark');
-          moonIcon.classList.remove('hidden');
-          sunIcon.classList.add('hidden');
-        } else { // Default to dark if no theme or 'dark' is explicitly set
-          html.classList.add('dark');
-          moonIcon.classList.add('hidden');
-          sunIcon.classList.remove('hidden');
-        }
-
-        themeToggle.addEventListener('click', toggleTheme);
-
-        // Update copyright year
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-      });
-    </script>
+    <!-- Link to your separate JavaScript files -->
+    <script src="themeToggle.js"></script>
+    <script src="converter.js"></script>
   </body>
 </html>
