@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en"> <!-- Changed from class="dark" to no class for correct theme management -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -91,7 +91,8 @@
               <h3 class="text-2xl font-semibold font-serif text-indigo-600 dark:text-indigo-400">Tifinagh to Talatint</h3>
               <div>
                 <label for="tifinaghInputMain" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Input</label>
-                <textarea id="tifinaghInputMain" placeholder="ⴰⵣⵓⵍ (Azul)..." class="font-tifinagh text-2xl w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                <!-- Changed text-2xl to text-lg here -->
+                <textarea id="tifinaghInputMain" placeholder="ⴰⵣⵓⵍ (Azul)..." class="font-tifinagh text-lg w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500"></textarea>
               </div>
               <div>
                 <label for="talatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output</label>
@@ -118,7 +119,8 @@
               <div>
                 <label for="tifinaghLatinOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Output</label>
                 <div class="relative"> <!-- Wrapper for textarea and copy button -->
-                  <textarea id="tifinaghLatinOutput" readonly class="font-tifinagh text-2xl w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <!-- Changed text-2xl to text-lg here -->
+                  <textarea id="tifinaghLatinOutput" readonly class="font-tifinagh text-lg w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
                   <button onclick="copyToClipboard('tifinaghLatinOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy to clipboard">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
