@@ -35,6 +35,16 @@
         },
       }
     </script>
+    <style>
+      /* Optional: Add a subtle fade-in animation for the copy confirmation */
+      .fade-in {
+        animation: fadeIn 0.3s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
   </head>
 
   <body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -85,7 +95,16 @@
               </div>
               <div>
                 <label for="talatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output</label>
-                <textarea id="talatintOutput" readonly placeholder="Converted Latin text..." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                <div class="relative"> <!-- Wrapper for textarea and copy button -->
+                  <textarea id="talatintOutput" readonly placeholder="Converted Latin text..." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <button onclick="copyToClipboard('talatintOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy to clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
+                    </svg>
+                    <span class="sr-only">Copy</span>
+                  </button>
+                  <span id="talatintOutput-confirm" class="absolute top-2 right-10 text-xs text-green-600 dark:text-green-400 opacity-0 transition-opacity duration-300">Copied!</span>
+                </div>
               </div>
             </div>
 
@@ -98,11 +117,29 @@
               </div>
               <div>
                 <label for="tifinaghLatinOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Output</label>
-                <textarea id="tifinaghLatinOutput" readonly class="font-tifinagh text-2xl w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                <div class="relative"> <!-- Wrapper for textarea and copy button -->
+                  <textarea id="tifinaghLatinOutput" readonly class="font-tifinagh text-2xl w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <button onclick="copyToClipboard('tifinaghLatinOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy to clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
+                    </svg>
+                    <span class="sr-only">Copy</span>
+                  </button>
+                  <span id="tifinaghLatinOutput-confirm" class="absolute top-2 right-10 text-xs text-green-600 dark:text-green-400 opacity-0 transition-opacity duration-300">Copied!</span>
+                </div>
               </div>
               <div>
                 <label for="extendedTalatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output (Extended Latin)</label>
-                <textarea id="extendedTalatintOutput" readonly class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                <div class="relative"> <!-- Wrapper for textarea and copy button -->
+                  <textarea id="extendedTalatintOutput" readonly class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <button onclick="copyToClipboard('extendedTalatintOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy to clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
+                    </svg>
+                    <span class="sr-only">Copy</span>
+                  </button>
+                  <span id="extendedTalatintOutput-confirm" class="absolute top-2 right-10 text-xs text-green-600 dark:text-green-400 opacity-0 transition-opacity duration-300">Copied!</span>
+                </div>
               </div>
             </div>
 
@@ -122,5 +159,36 @@
     <!-- Link to your separate JavaScript files -->
     <script src="themeToggle.js"></script>
     <script src="converter.js"></script>
+
+    <script>
+      function copyToClipboard(elementId, buttonElement) {
+        const textarea = document.getElementById(elementId);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // For mobile devices
+
+        // Use the modern Clipboard API
+        navigator.clipboard.writeText(textarea.value)
+          .then(() => {
+            const confirmationSpan = document.getElementById(elementId + '-confirm');
+            confirmationSpan.classList.add('fade-in', 'opacity-100');
+            setTimeout(() => {
+              confirmationSpan.classList.remove('fade-in', 'opacity-100');
+            }, 1500); // Show "Copied!" for 1.5 seconds
+          })
+          .catch(err => {
+            console.error('Failed to copy text: ', err);
+            // Fallback for older browsers or if Clipboard API is not available/permitted
+            document.execCommand('copy');
+            const confirmationSpan = document.getElementById(elementId + '-confirm');
+            confirmationSpan.classList.add('fade-in', 'opacity-100');
+            setTimeout(() => {
+              confirmationSpan.classList.remove('fade-in', 'opacity-100');
+            }, 1500);
+          });
+      }
+
+      // Set current year in footer
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
