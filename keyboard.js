@@ -58,26 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
         'لآ': 'ⵍⴰ'
     };
 
-    // --- Mapping to highlight the correct virtual key based on the Tifinagh character inserted ---
-    // This map helps find a virtual key based on its Tifinagh character
-    const tifinaghCharToVirtualKeyMap = {
-        'ⴰ': 'ⴰ', 'ⴱ': 'ⴱ', 'ⵛ': 'ⵛ', 'ⴷ': 'ⴷ', 'ⴻ': 'ⴻ', 'ⴼ': 'ⴼ',
-        'ⴳ': 'ⴳ', 'ⵀ': 'ⵀ', 'ⵉ': 'ⵉ', 'ⵊ': 'ⵊ', 'ⴽ': 'ⴽ', 'ⵍ': 'ⵍ',
-        'ⵎ': 'ⵎ', 'ⵏ': 'ⵏ', 'ⵒ': 'ⵒ', 'ⵇ': 'ⵇ', 'ⵔ': 'ⵔ', 'ⵙ': 'ⵙ',
-        'ⵜ': 'ⵜ', 'ⵓ': 'ⵓ', 'ⵠ': 'ⵠ', 'ⵡ': 'ⵡ', 'ⵅ': 'ⵅ', 'ⵢ': 'ⵢ',
-        'ⵣ': 'ⵣ', 'ⵖ': 'ⵖ', 'ⴹ': 'ⴹ', 'ⵃ': 'ⵃ', 'ⵚ': 'ⵚ', 'ⵥ': 'ⵥ',
-        'ⵄ': 'ⵄ', 'ⵕ': 'ⵕ', 'ⵟ': 'ⵟ', 'ⵯ': 'ⵯ', 'ـ': 'ـ',
-        ' ': ' ', '\n': 'enter', 'backspace': 'backspace' // Map space and backspace as well
-    };
-
     /**
      * Activates the 'fire-active' animation on a given key element.
      * @param {HTMLElement} keyElement The virtual keyboard button to animate.
      */
     function activateKeyAnimation(keyElement) {
         if (keyElement) {
-            keyElement.classList.remove('fire-active'); // Ensure it resets for re-triggering animation
-            void keyElement.offsetWidth; // Trigger reflow to restart animation
+            // Remove and re-add class to ensure animation restarts
+            keyElement.classList.remove('fire-active');
+            void keyElement.offsetWidth; // Trigger reflow
             keyElement.classList.add('fire-active');
             setTimeout(() => {
                 keyElement.classList.remove('fire-active');
@@ -100,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Find by Latin label (case-insensitive)
             for (const key of keyboardKeys) {
                 const latinLabel = key.parentElement.querySelector('.latin-label');
+                // Check if label exists and text content matches searchKey (case-insensitive)
                 if (latinLabel && latinLabel.textContent.toLowerCase() === searchKey.toLowerCase()) {
                     return key;
                 }
@@ -108,13 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Find by Arabic label
             for (const key of keyboardKeys) {
                 const arabicLabel = key.parentElement.querySelector('.arabic-label');
+                // Check if label exists and text content matches searchKey
                 if (arabicLabel && arabicLabel.textContent === searchKey) {
                     return key;
                 }
             }
-        } else if (type === 'tifinagh') {
-             // Fallback to searching by data-key if not found by specific type
-             return document.querySelector(`.keyboard-key[data-key="${tifinaghCharToVirtualKeyMap[searchKey]}"]`);
         }
         return null;
     }
@@ -132,39 +120,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Conversion Logic for Physical Keyboard Input ---
     function convertSingleCharToTifinagh(inputChar) {
-        let tifinaghEquivalent = inputChar;
-        let charForHighlight = inputChar; // Default to inputChar for highlighting if not converted
-
+        let tifinaghEquivalent = inputChar; // Default to the input character itself
+        
         if (isLatinChar(inputChar)) {
-            let mappedChar = tifinaghShiftMap[inputChar];
+            let mappedChar = tifinaghShiftMap[inputChar]; // Try shifted/capital first
             if (!mappedChar) {
-                mappedChar = tifinaghMap[inputChar.toLowerCase()];
+                mappedChar = tifinaghMap[inputChar.toLowerCase()]; // Then try lowercase
             }
             if (mappedChar !== undefined) {
                 tifinaghEquivalent = mappedChar;
-                charForHighlight = mappedChar; // Highlight the Tifinagh character if converted
             }
         } else if (isArabicChar(inputChar)) {
             const mappedChar = arabicToTifinaghMap[inputChar];
             if (mappedChar !== undefined) {
                 tifinaghEquivalent = mappedChar;
-                charForHighlight = mappedChar; // Highlight the Tifinagh character if converted
             }
         } else if (inputChar === ' ') {
             tifinaghEquivalent = ' ';
-            charForHighlight = ' ';
         } else if (inputChar === '\n') {
             tifinaghEquivalent = '\n';
-            charForHighlight = '\n';
         }
 
-        return { convertedChar: tifinaghEquivalent, charForHighlight: charForHighlight };
+        return tifinaghEquivalent;
     }
 
     // --- Virtual Keyboard Key Clicks ---
     keyboardKeys.forEach(key => {
         key.addEventListener('click', (event) => {
-            event.preventDefault();
+            event.preventDefault(); // Prevent default button action
 
             const start = keyboardInput.selectionStart;
             const end = keyboardInput.selectionEnd;
@@ -172,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let newCursorPos = start;
 
             const keyValue = key.dataset.key; // Tifinagh character or 'backspace'/' '
-            let charToInsert = keyValue;
 
             if (keyValue === 'backspace') {
                 if (start === end) {
@@ -184,16 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     newValue = newValue.substring(0, start) + newValue.substring(end);
                     newCursorPos = start;
                 }
-            } else if (keyValue === 'enter') { // Handle 'enter' if you add a virtual enter key
-                charToInsert = '\n';
-                newValue = newValue.substring(0, start) + charToInsert + newValue.substring(end);
-                newCursorPos = start + charToInsert.length;
-            } else {
-                newValue = newValue.substring(0, start) + charToInsert + newValue.substring(end);
-                newCursorPos = start + charToInsert.length;
+            } else if (keyValue === 'enter') { // Assuming 'enter' key has data-key="enter"
+                newValue = newValue.substring(0, start) + '\n' + newValue.substring(end);
+                newCursorPos = start + 1;
+            } else { // Regular Tifinagh character or space
+                newValue = newValue.substring(0, start) + keyValue + newValue.substring(end);
+                newCursorPos = start + keyValue.length;
             }
 
-            ignoreNextPhysicalInput = true; // Set flag before updating value
+            // Update textarea value
+            ignoreNextPhysicalInput = true; // Set flag to prevent conversion by input event
             keyboardInput.value = newValue;
             keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
             keyboardInput.focus();
@@ -208,36 +190,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let previousValue = '';
     let ignoreNextPhysicalInput = false;
 
-    function findInsertedCharAndPosition(oldVal, newVal) {
-        let insertedChar = null;
-        let insertionStart = -1;
-
-        if (newVal.length > oldVal.length) {
-            let commonPrefixLength = 0;
-            while (commonPrefixLength < oldVal.length && commonPrefixLength < newVal.length &&
-                   oldPrefix[commonPrefixLength] === newPrefix[commonPrefixLength]) {
-                commonPrefixLength++;
-            }
-
-            insertionStart = commonPrefixLength;
-            insertedChar = newVal.substring(commonPrefixLength, commonPrefixLength + (newVal.length - oldVal.length));
-
-            if (insertedChar.length > 1) { // Potentially a paste or digraph
-                 // Check for digraphs if the user typed quickly
-                if (insertedChar.length === 2) {
-                    const digraph = insertedChar.toLowerCase();
-                    if (digraphMap[digraph]) {
-                        return { insertedChar: digraph, insertionStart: commonPrefixLength };
-                    }
-                }
-                return { insertedChar: null, insertionStart: -1 }; // Too complex for single char
-            }
+    // Helper to find inserted characters, robust for pastes and digraphs
+    function findInsertedCharsAndPosition(oldVal, newVal, oldCursorPos, newCursorPos) {
+        const minLength = Math.min(oldVal.length, newVal.length);
+        let commonPrefixLength = 0;
+        while (commonPrefixLength < minLength && oldVal[commonPrefixLength] === newVal[commonPrefixLength]) {
+            commonPrefixLength++;
         }
-        return { insertedChar: insertedChar, insertionStart: insertionStart };
+
+        let commonSuffixLength = 0;
+        while (commonSuffixLength < minLength - commonPrefixLength &&
+               oldVal[oldVal.length - 1 - commonSuffixLength] === newVal[newVal.length - 1 - commonSuffixLength]) {
+            commonSuffixLength++;
+        }
+
+        const insertionStart = commonPrefixLength;
+        const insertedChars = newVal.substring(insertionStart, newVal.length - commonSuffixLength);
+
+        return { insertedChars, insertionStart };
     }
 
-
-    keyboardInput.addEventListener('input', processPhysicalInput); // Ensure this is bound
 
     function processPhysicalInput() {
         if (ignoreNextPhysicalInput) {
@@ -249,100 +221,102 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentInput = keyboardInput.value;
         const currentCursorPos = keyboardInput.selectionStart;
 
-        // Handle Backspace visually first
+        // If characters were deleted (backspace/delete)
         if (currentInput.length < previousValue.length) {
-            const backspaceKey = findVirtualKeyElement('backspace');
-            if (backspaceKey) activateKeyAnimation(backspaceKey);
+            // Animation for backspace is handled by keydown now, no need to duplicate here
             previousValue = currentInput;
             return;
         }
 
-        const { insertedChar, insertionStart } = findInsertedCharAndPosition(previousValue, currentInput);
+        const { insertedChars, insertionStart } = findInsertedCharsAndPosition(
+            previousValue, currentInput, keyboardInput.selectionStart, keyboardInput.selectionEnd
+        );
 
-        if (insertedChar && insertedChar.length > 0) {
-            let charToConvert = insertedChar;
-            let convertedResult = { convertedChar: charToConvert, charForHighlight: charToConvert };
+        if (!insertedChars) { // No actual new char inserted (e.g., cursor move)
+            previousValue = currentInput;
+            return;
+        }
 
-            // Check for digraphs (e.g., 'gh', 'ch')
-            if (insertedChar.length === 2 && digraphMap[insertedChar.toLowerCase()]) {
-                convertedResult.convertedChar = digraphMap[insertedChar.toLowerCase()];
-                convertedResult.charForHighlight = convertedResult.convertedChar; // Highlight the Tifinagh char
-            } else if (insertedChar.length === 1) {
-                convertedResult = convertSingleCharToTifinagh(insertedChar);
+        let convertedInputPart = '';
+        let originalCharsProcessed = 0;
+        let newCursorOffset = 0; // Tracks how much the cursor position shifts due to conversion
+
+        // Special handling for digraphs (e.g., 'gh', 'ch') before single characters
+        // Only check if insertedChars is short and could be a digraph
+        if (insertedChars.length <= 2) {
+            const lowerInserted = insertedChars.toLowerCase();
+            if (digraphMap[lowerInserted]) {
+                convertedInputPart = digraphMap[lowerInserted];
+                originalCharsProcessed = insertedChars.length;
+
+                // Animate the keys that formed the digraph, or the resulting Tifinagh char
+                let keyToAnimate = findVirtualKeyElement(insertedChars, 'latin'); // Try to animate 'g' then 'h'
+                if (!keyToAnimate) keyToAnimate = findVirtualKeyElement(convertedInputPart, 'tifinagh');
+                if (keyToAnimate) activateKeyAnimation(keyToAnimate);
+
             }
+        }
 
-            // Find the virtual key for the *original* physical input to highlight it
-            let keyToHighlight = findVirtualKeyElement(insertedChar, isLatinChar(insertedChar) ? 'latin' : (isArabicChar(insertedChar) ? 'arabic' : 'tifinagh'));
+        if (convertedInputPart === '') { // If not a digraph, process character by character
+             for (let i = 0; i < insertedChars.length; i++) {
+                const char = insertedChars[i];
+                convertedInputPart += convertSingleCharToTifinagh(char);
+                originalCharsProcessed++;
 
-            // If a Tifinagh conversion happened, try to highlight that Tifinagh key
-            if (convertedResult.convertedChar !== charToConvert && convertedResult.charForHighlight) {
-                keyToHighlight = findVirtualKeyElement(convertedResult.charForHighlight, 'tifinagh') || keyToHighlight;
+                // Animate the key corresponding to the *physical* character pressed
+                let keyToAnimate = findVirtualKeyElement(char, isLatinChar(char) ? 'latin' : (isArabicChar(char) ? 'arabic' : 'tifinagh'));
+                if (keyToAnimate) activateKeyAnimation(keyToAnimate);
+                else { // If direct match not found for Latin/Arabic, try to animate resulting Tifinagh
+                     keyToAnimate = findVirtualKeyElement(convertSingleCharToTifinagh(char), 'tifinagh');
+                     if(keyToAnimate) activateKeyAnimation(keyToAnimate);
+                }
             }
-
-            if (keyToHighlight) {
-                activateKeyAnimation(keyToHighlight);
-            }
+        }
 
 
-            if (convertedResult.convertedChar !== charToConvert) { // Only update if a conversion actually happened
-                const beforeInsertion = currentInput.substring(0, insertionStart);
-                const afterInsertion = currentInput.substring(insertionStart + insertedChar.length);
+        if (convertedInputPart !== insertedChars) { // Only update if conversion actually occurred
+            const beforeInsertion = currentInput.substring(0, insertionStart);
+            const afterInsertion = currentInput.substring(insertionStart + originalCharsProcessed);
 
-                ignoreNextPhysicalInput = true;
-                keyboardInput.value = beforeInsertion + convertedResult.convertedChar + afterInsertion;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = insertionStart + convertedResult.convertedChar.length;
-                ignoreNextPhysicalInput = false;
-            }
-        } else if (currentInput !== previousValue) {
-            // Fallback for complex inputs (like pastes, or cases not caught by insertedChar logic)
-            // Re-process the whole input, but this won't trigger key highlights per char
-            const { text: convertedText, cursorPos: newPos } = convertMixedInputToTifinagh(currentInput, currentCursorPos);
-            if (keyboardInput.value !== convertedText) {
-                ignoreNextPhysicalInput = true;
-                keyboardInput.value = convertedText;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = newPos;
-                ignoreNextPhysicalInput = false;
-            }
+            const finalNewValue = beforeInsertion + convertedInputPart + afterInsertion;
+            const newFinalCursorPos = insertionStart + convertedInputPart.length;
+
+            ignoreNextPhysicalInput = true;
+            keyboardInput.value = finalNewValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = newFinalCursorPos;
+            // No need to set ignoreNextPhysicalInput to false immediately, the 'input' event will fire again.
+            // We just need to make sure the *next* 'input' event (triggered by our programmatic change) is ignored.
         }
 
         previousValue = keyboardInput.value;
     }
 
-    function convertMixedInputToTifinagh(inputText, originalCursorPos) {
-        let result = '';
-        let newCursorPos = 0;
+    // --- Input event listener for real-time conversion ---
+    keyboardInput.addEventListener('input', processPhysicalInput);
 
-        for (let i = 0; i < inputText.length; i++) {
-            const char = inputText[i];
-            const { convertedChar } = convertSingleCharToTifinagh(char);
-            result += convertedChar;
-
-            if (i < originalCursorPos) {
-                newCursorPos += convertedChar.length;
-            }
-        }
-        return { text: result, cursorPos: newCursorPos };
-    }
-
-    // Physical keydown event to catch specific keys like Enter, Backspace for animation
+    // --- Keydown event listener for animations only (no conversion logic here) ---
     keyboardInput.addEventListener('keydown', (e) => {
+        // Only animate, do NOT prevent default here for character keys
+        let keyToAnimate = null;
+
         if (e.key === 'Enter') {
-            const enterKey = findVirtualKeyElement('enter'); // Assuming you have an 'enter' data-key
-            if (enterKey) activateKeyAnimation(enterKey);
-        } else if (e.key === 'Backspace' || e.key === 'Delete') {
-            const backspaceKey = findVirtualKeyElement('backspace');
-            if (backspaceKey) activateKeyAnimation(backspaceKey);
+            keyToAnimate = findVirtualKeyElement('enter');
+        } else if (e.key === 'Backspace') {
+            keyToAnimate = findVirtualKeyElement('backspace');
         } else if (e.key === ' ') {
-            const spaceKey = findVirtualKeyElement(' ', 'tifinagh'); // Space has data-key=" "
-            if (spaceKey) activateKeyAnimation(spaceKey);
+            keyToAnimate = findVirtualKeyElement(' ', 'tifinagh'); // Space has data-key=" "
         } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
             // For regular character keys, try to find by Latin label
-            const charKey = findVirtualKeyElement(e.key, 'latin');
-            if (charKey) activateKeyAnimation(charKey);
+            // We do NOT preventDefault() here, allowing the browser to insert the char first.
+            keyToAnimate = findVirtualKeyElement(e.key, 'latin');
+        }
+
+        if (keyToAnimate) {
+            activateKeyAnimation(keyToAnimate);
         }
     });
 
-
+    // --- Copy and Clear button functionality ---
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
             keyboardInput.select();
@@ -356,16 +330,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .catch(err => {
                         console.error('Failed to copy text using Clipboard API: ', err);
-                        // Fallback to execCommand if Clipboard API fails (e.g., old browser, HTTP)
-                        document.execCommand('copy');
+                        document.execCommand('copy'); // Fallback
                         copyBtn.textContent = 'Copied!';
                         setTimeout(() => {
                             copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
                         }, 1500);
                     });
             } else {
-                // Fallback for browsers that don't support Clipboard API (older browsers, non-HTTPS)
-                document.execCommand('copy');
+                document.execCommand('copy'); // Fallback for older browsers/HTTP
                 copyBtn.textContent = 'Copied!';
                 setTimeout(() => {
                     copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
@@ -383,6 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Focus and Blur handling ---
     keyboardInput.addEventListener('focus', () => {
         keyboardInput.classList.add('focused');
         previousValue = keyboardInput.value; // Ensure previousValue is updated on focus
