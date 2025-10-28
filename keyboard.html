@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berber/Tifinagh Virtual Keyboard</title>
+    <!-- UPDATED: More descriptive and keyword-rich Title Tag -->
+    <title>Online Tifinagh Keyboard | Type Tamazight & Amazigh Script with Latin/Arabic Input | amghnas.com</title>
+
+    <!-- NEW: Meta Description for SEO -->
+    <meta name="description" content="Use our free online Tifinagh keyboard to type Tamazight/Amazigh script. Easily convert Latin or Arabic input to Tifinagh characters. Perfect for learning and writing." />
+    
+    <!-- NEW: Meta Keywords (less critical now, but still good practice for some engines) -->
+    <meta name="keywords" content="Tifinagh keyboard, online Tifinagh, Tamazight keyboard, Amazigh keyboard, Berber keyboard, type Tifinagh, Latin to Tifinagh, Arabic to Tifinagh, Tifinagh script, virtual keyboard" />
 
     <!-- Favicon -->
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png"> <!-- Recommended for iOS devices -->
 
     <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -448,9 +456,9 @@
     <div class="container">
         <!-- Header Controls for Navigation & Dark Mode Toggle -->
         <div class="header-controls">
-            <!-- Navigation link back to the main converter page -->
+            <!-- Navigation link back to the main converter page - improved anchor text -->
             <a href="index.html" class="nav-button">
-                <i class="fas fa-arrow-left"></i> Converter
+                <i class="fas fa-arrow-left"></i> Tifinagh Converter
             </a>
             <!-- Dark Mode Toggle Button -->
             <button id="themeToggle" aria-label="Toggle light and dark mode">
@@ -460,19 +468,20 @@
             </button>
         </div>
 
-        <!-- Main Title for the Keyboard Page -->
-        <h1>Berber/Tifinagh Virtual Keyboard</h1>
-        <p class="tagline">Type directly in Tifinagh using this virtual keyboard, or your physical keyboard with Latin/Arabic input.</p>
+        <!-- Main Title for the Keyboard Page - improved with more keywords and `sr-only` -->
+        <h1>Online Tifinagh Keyboard <span class="visually-hidden">for Tamazight and Amazigh Script</span></h1>
+        <p class="tagline">Type directly in Tifinagh using this virtual keyboard, or your physical keyboard with Latin/Arabic input. This tool helps you write Tamazight and Amazigh characters easily.</p>
 
         <!-- The input area should be centered within its available width -->
         <div class="input-area-wrapper">
-            <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here..." lang="ber" inputmode="text"></textarea>
+            <!-- Improved placeholder text with keywords -->
+            <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here to generate Tifinagh text..." lang="ber" inputmode="text"></textarea>
         </div>
 
         <!-- Action Buttons: Copy and Clear (MOVED HERE to be between input and keyboard) -->
         <div class="action-buttons">
-            <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+            <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy Tifinagh Text</button>
+            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear Text</button>
         </div>
 
         <!-- Virtual Keyboard Section -->
@@ -549,15 +558,8 @@
         <!-- Footer Section -->
         <footer class="footer">
             <p>&copy; 2026 Tifinagh & Talatint Converter. All rights reserved.</p>
-            <p>Made with <i class="fas fa-heart" aria-hidden="true"></i> for Amazigh culture.</p>
-        </footer>
-    </div>
-
-    <!-- JavaScript files for keyboard functionality and theme toggle -->
-    <!-- Make sure your keyboard.js file contains the updated code I provided earlier -->
-    <script src="keyboard.js"></script>
-    <script src="themeToggle.js"></script>
-    <!-- Removed audioRecorder.js as the audio button is deleted -->
-    <!-- REMOVED THE INLINE SCRIPT BLOCK HERE -->
-</body>
-</html>
+            <p>Made with <i class="fas fa-heart" aria-hidden="true"></i> for Amazigh culture.
+                <br> <!-- NEW: Line break for cleaner presentation -->
+                By: Anaruz Elhabib <!-- NEW: Requested credit line -->
+            </p>
+            <!-- NEW: Internal link back to the main
