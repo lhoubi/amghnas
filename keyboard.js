@@ -191,19 +191,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let ignoreNextPhysicalInput = false;
 
     // Helper to find inserted characters, robust for pastes and digraphs
-    function findInsertedCharsAndPosition(oldVal, newVal, oldCursorPos, newCursorPos) {
-        const minLength = Math.min(oldVal.length, newVal.length);
+    // This helper now uses the actual old and new values to determine insertion
+    function findInsertedCharsAndPosition(oldVal, newVal) {
+        if (newVal.length <= oldVal.length) {
+            return { insertedChars: '', insertionStart: -1 };
+        }
+
         let commonPrefixLength = 0;
-        while (commonPrefixLength < minLength && oldVal[commonPrefixLength] === newVal[commonPrefixLength]) {
+        while (commonPrefixLength < oldVal.length && oldVal[commonPrefixLength] === newVal[commonPrefixLength]) {
             commonPrefixLength++;
         }
 
         let commonSuffixLength = 0;
-        while (commonSuffixLength < minLength - commonPrefixLength &&
-               oldVal[oldVal.length - 1 - commonSuffixLength] === newVal[newVal.length - 1 - commonSuffixLength]) {
-            commonSuffixLength++;
+        const newSuffixStart = newVal.length - (oldVal.length - commonPrefixLength);
+        if (newSuffixStart < newVal.length) { // Ensure there's a suffix to check
+            while (commonSuffixLength < oldVal.length - commonPrefixLength &&
+                   oldVal[oldVal.length - 1 - commonSuffixLength] === newVal[newVal.length - 1 - commonSuffixLength]) {
+                commonSuffixLength++;
+            }
         }
-
+       
         const insertionStart = commonPrefixLength;
         const insertedChars = newVal.substring(insertionStart, newVal.length - commonSuffixLength);
 
@@ -212,83 +219,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function processPhysicalInput() {
+        // If this input event was triggered by our own script updating keyboardInput.value
+        // then we should ignore it to prevent infinite loops or incorrect conversions.
         if (ignoreNextPhysicalInput) {
-            ignoreNextPhysicalInput = false;
-            previousValue = keyboardInput.value;
+            ignoreNextPhysicalInput = false; // Reset the flag for the next *user* input
+            previousValue = keyboardInput.value; // Keep previousValue updated
             return;
         }
 
         const currentInput = keyboardInput.value;
         const currentCursorPos = keyboardInput.selectionStart;
 
-        // If characters were deleted (backspace/delete)
+        // Handle Backspace/Delete key presses. The animation is in keydown.
         if (currentInput.length < previousValue.length) {
-            // Animation for backspace is handled by keydown now, no need to duplicate here
             previousValue = currentInput;
             return;
         }
 
-        const { insertedChars, insertionStart } = findInsertedCharsAndPosition(
-            previousValue, currentInput, keyboardInput.selectionStart, keyboardInput.selectionEnd
-        );
+        const { insertedChars, insertionStart } = findInsertedCharsAndPosition(previousValue, currentInput);
 
-        if (!insertedChars) { // No actual new char inserted (e.g., cursor move)
-            previousValue = currentInput;
+        if (!insertedChars || insertedChars.length === 0) {
+            previousValue = currentInput; // No new chars, possibly just a cursor move
             return;
         }
 
-        let convertedInputPart = '';
-        let originalCharsProcessed = 0;
-        let newCursorOffset = 0; // Tracks how much the cursor position shifts due to conversion
+        let convertedTextPart = '';
+        let charsToProcess = insertedChars;
 
-        // Special handling for digraphs (e.g., 'gh', 'ch') before single characters
-        // Only check if insertedChars is short and could be a digraph
-        if (insertedChars.length <= 2) {
-            const lowerInserted = insertedChars.toLowerCase();
-            if (digraphMap[lowerInserted]) {
-                convertedInputPart = digraphMap[lowerInserted];
-                originalCharsProcessed = insertedChars.length;
-
-                // Animate the keys that formed the digraph, or the resulting Tifinagh char
-                let keyToAnimate = findVirtualKeyElement(insertedChars, 'latin'); // Try to animate 'g' then 'h'
-                if (!keyToAnimate) keyToAnimate = findVirtualKeyElement(convertedInputPart, 'tifinagh');
+        // Attempt Digraph conversion first (e.g., 'gh' to 'ⵖ')
+        // Only if two chars were inserted
+        if (charsToProcess.length === 2) {
+            const digraphResult = digraphMap[charsToProcess.toLowerCase()];
+            if (digraphResult) {
+                convertedTextPart = digraphResult;
+                // Animate the result of the digraph (e.g., 'ⵖ')
+                let keyToAnimate = findVirtualKeyElement(digraphResult, 'tifinagh');
                 if (keyToAnimate) activateKeyAnimation(keyToAnimate);
-
+                charsToProcess = ''; // Mark as processed
             }
         }
 
-        if (convertedInputPart === '') { // If not a digraph, process character by character
-             for (let i = 0; i < insertedChars.length; i++) {
-                const char = insertedChars[i];
-                convertedInputPart += convertSingleCharToTifinagh(char);
-                originalCharsProcessed++;
+        // If not a digraph or if only one char inserted, process character by character
+        if (charsToProcess.length > 0) {
+            for (let i = 0; i < charsToProcess.length; i++) {
+                const char = charsToProcess[i];
+                const convertedChar = convertSingleCharToTifinagh(char);
+                convertedTextPart += convertedChar;
 
-                // Animate the key corresponding to the *physical* character pressed
+                // Animate the key corresponding to the *physical* character pressed, if possible
                 let keyToAnimate = findVirtualKeyElement(char, isLatinChar(char) ? 'latin' : (isArabicChar(char) ? 'arabic' : 'tifinagh'));
                 if (keyToAnimate) activateKeyAnimation(keyToAnimate);
-                else { // If direct match not found for Latin/Arabic, try to animate resulting Tifinagh
-                     keyToAnimate = findVirtualKeyElement(convertSingleCharToTifinagh(char), 'tifinagh');
+                else { // If no direct Latin/Arabic key match, animate the resulting Tifinagh char
+                     keyToAnimate = findVirtualKeyElement(convertedChar, 'tifinagh');
                      if(keyToAnimate) activateKeyAnimation(keyToAnimate);
                 }
             }
         }
 
 
-        if (convertedInputPart !== insertedChars) { // Only update if conversion actually occurred
+        // Only update the textarea if something actually converted
+        if (convertedTextPart !== insertedChars) {
             const beforeInsertion = currentInput.substring(0, insertionStart);
-            const afterInsertion = currentInput.substring(insertionStart + originalCharsProcessed);
+            const afterInsertion = currentInput.substring(insertionStart + insertedChars.length); // Remove original inserted chars
 
-            const finalNewValue = beforeInsertion + convertedInputPart + afterInsertion;
-            const newFinalCursorPos = insertionStart + convertedInputPart.length;
+            const finalNewValue = beforeInsertion + convertedTextPart + afterInsertion;
+            const newFinalCursorPos = insertionStart + convertedTextPart.length;
 
-            ignoreNextPhysicalInput = true;
+            ignoreNextPhysicalInput = true; // Set flag to ignore the next 'input' event from our update
             keyboardInput.value = finalNewValue;
             keyboardInput.selectionStart = keyboardInput.selectionEnd = newFinalCursorPos;
-            // No need to set ignoreNextPhysicalInput to false immediately, the 'input' event will fire again.
-            // We just need to make sure the *next* 'input' event (triggered by our programmatic change) is ignored.
+            // The flag will be reset at the start of the *next* user-triggered input event.
         }
 
-        previousValue = keyboardInput.value;
+        previousValue = keyboardInput.value; // Update previousValue regardless for consistency
     }
 
     // --- Input event listener for real-time conversion ---
@@ -307,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
             keyToAnimate = findVirtualKeyElement(' ', 'tifinagh'); // Space has data-key=" "
         } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
             // For regular character keys, try to find by Latin label
-            // We do NOT preventDefault() here, allowing the browser to insert the char first.
             keyToAnimate = findVirtualKeyElement(e.key, 'latin');
         }
 
@@ -341,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 copyBtn.textContent = 'Copied!';
                 setTimeout(() => {
                     copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                }, 1500);
+                        }, 1500);
             }
             keyboardInput.focus();
         });
@@ -364,5 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboardInput.classList.remove('focused');
     });
 
-    previousValue = keyboardInput.value; // Initialize previousValue on page load
+    // Initialize previousValue on page load after all setup
+    previousValue = keyboardInput.value;
 });
