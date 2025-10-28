@@ -9,36 +9,47 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- Tifinagh Mapping (for Latin input) ---
-    // Ensure all common Latin letters have a base Tifinagh mapping
+    // --- Tifinagh Mapping (for Latin input - all lowercase base characters) ---
+    // This map should contain the base Tifinagh for standard lowercase Latin letters.
     const tifinaghMap = {
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
         'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
         'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
         's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ',
         'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
-        ' ': ' ', // Space key
-        '\n': '\n' // Enter key (newline) - not really part of map for individual chars, but good to have
+        ' ': ' ' // Space key
     };
 
-    // --- Shifted/Capitalized Tifinagh Mapping (for Latin input) ---
-    // These are for specific capital letters or shifted keys that produce a distinct Tifinagh char
+    // --- Shifted/Capitalized Tifinagh Mapping (for distinct shifted outputs) ---
+    // Only put capital letters here if they map to a *different* Tifinagh character than their lowercase.
+    // E.g., 'A' -> 'ⵄ' (different from 'a' -> 'ⴰ')
     const tifinaghShiftMap = {
-        'A': 'ⵄ', 'G': 'ⵖ', 'H': 'ⵃ', 'D': 'ⴹ', 'T': 'ⵟ', 'R': 'ⵕ',
-        'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'Q': 'ⵇ', 'W': 'ⵯ',
-        // Add more if needed, e.g., for digits or symbols that map to Tifinagh
+        'A': 'ⵄ', // as per HTML
+        'G': 'ⵖ', // assuming G might also be gh
+        'H': 'ⵃ', // as per HTML for ḥ
+        'D': 'ⴹ', // as per HTML for ḍ
+        'T': 'ⵟ', // as per HTML for ṭ
+        'R': 'ⵕ', // as per HTML for Ṛ
+        'S': 'ⵚ', // as per HTML for ṣ
+        'Z': 'ⵥ', // as per HTML for ẓ
+        'X': 'ⵅ', // if X is intended for kh
+        'C': 'ⵛ', // as per HTML
+        'Q': 'ⵇ', // if Q is intended for q
+        'W': 'ⵯ', // as per HTML for ʷ
+        // The HTML for L and C in row 1 and 3 are just labels, not necessarily unique mappings.
+        // We ensure 'l' maps to 'ⵍ' and 'c' maps to 'ⵛ' in tifinaghMap.
     };
 
     // --- Digraph Map (Longest matches first for Latin conversion logic) ---
-    // Order matters for matching
+    // Ensure these are all lowercase for consistent matching.
     const digraphMap = {
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ',
         'dh': 'ⴹ', 'th': 'ⵜ', 'ts': 'ⵚ',
-        // Ensure no single char in tifinaghMap conflicts with start of digraph if a common key.
-        // E.g., if 's' maps to 'ⵙ' and 'sh' maps to 'ⵛ', 's' should be handled for 's' and 'sh' for 'sh'.
+        // Add more if needed, e.g., 'zh' for 'ⵥ' if applicable
     };
 
     // --- Arabic to Tifinagh Mapping ---
+    // Ensure completeness based on your HTML labels.
     const arabicToTifinaghMap = {
         'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
@@ -46,21 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
         'د': 'ⴷ', 'ذ': 'ⴷ',
         'ر': 'ⵔ', 'ز': 'ⵣ',
         'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ',
-        'ط': 'ⵟ', 'ظ': 'ⵥ',
+        'ط': 'ⵟ', 'ظ': 'ⵥ', // assuming ظ -> ⵥ as per common mapping
         'ع': 'ⵄ', 'غ': 'ⵖ',
-        'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
+        'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ', // Default 'ك' to 'ⴽ'
+        'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        'ة': 'ⴻ', 'ى': 'ⵉ',
-        'ء': 'ⴻ',
+        'ة': 'ⴻ', 'ى': 'ⵉ', // These map to vowels
+        'ء': 'ⴻ', // Assuming ء maps to a neutral vowel 'ⴻ'
         'ؤ': 'ⵓ', 'ئ': 'ⵉ',
 
         ' ': ' ',
         '\n': '\n',
-        'ـ': 'ـ', // Arabic Tatweel
-        'لا': 'ⵍⴰ', // Ligatures (should be handled carefully, might need specific logic)
-        'لأ': 'ⵍⴰ',
-        'لإ': 'ⵍⵉ',
-        'لآ': 'ⵍⴰ'
+        'ـ': 'ـ', // Arabic Tatweel for ʷ
+        'ڤ': 'ⵠ', // Added for 'v'
+        'ڭ': 'ⴳ', // Added for 'g'
+        // Specific 'ك' mapping for ⵛ, as seen in HTML
+        // This is tricky. If 'ك' can be 'ⴽ' OR 'ⵛ', you need a rule.
+        // For now, I'll assume standard 'ك' -> 'ⴽ', and 'C' key maps explicitly to 'ⵛ'.
+        // If an Arabic 'ك' should sometimes be 'ⵛ', it might need a shifted Arabic input or context.
+        // Based on your HTML: <span class="arabic-label">ك</span> <button class="keyboard-key" data-key="ⵛ">
+        // This implies 'ك' can also map to 'ⵛ'. Let's add it carefully.
+        'ك_for_C': 'ⵛ' // Special temporary entry, handled in convertCharToTifinagh
     };
 
     /**
@@ -70,11 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function activateKeyAnimation(keyElement) {
         if (keyElement) {
             keyElement.classList.remove('fire-active');
-            void keyElement.offsetWidth; // Trigger reflow
+            void keyElement.offsetWidth;
             keyElement.classList.add('fire-active');
             setTimeout(() => {
                 keyElement.classList.remove('fire-active');
-            }, 300); // Matches the animation duration in CSS (0.3s)
+            }, 300);
         }
     }
 
@@ -98,8 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (type === 'arabic') {
             for (const key of keyboardKeys) {
                 const arabicLabel = key.parentElement.querySelector('.arabic-label');
+                // Check if label exists and text content matches searchKey
                 if (arabicLabel && arabicLabel.textContent === searchKey) {
-                    return key;
+                    // Special handling for the 'ك' that maps to 'ⵛ'
+                    if (searchKey === 'ك' && key.dataset.key === 'ⵛ') {
+                        return key;
+                    }
+                    // For general Arabic mapping
+                    if (key.dataset.key === arabicToTifinaghMap[searchKey]) {
+                        return key;
+                    }
                 }
             }
         }
@@ -108,30 +133,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isArabicChar(char) {
         if (!char) return false;
-        return char.match(/[\u0600-\u06FF]/);
+        // Extend to cover more specific Arabic diacritics if necessary.
+        return char.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/);
     }
 
     function isLatinChar(char) {
         if (!char) return false;
-        return char.match(/[a-zA-Z]/);
+        // Basic Latin alphabet, including some common extended Latin characters if needed
+        return char.match(/[a-zA-Z\u00C0-\u017F]/);
     }
 
     // --- Core Conversion Logic for Physical Keyboard Input ---
-    // This function will now be called directly with the input character
-    // and is expected to return the Tifinagh equivalent or null/undefined if no direct conversion.
     function convertCharToTifinagh(inputChar) {
-        // Try shifted/capital Latin first
+        // 1. Try exact match in shifted Latin (e.g., 'A' -> 'ⵄ')
         if (tifinaghShiftMap[inputChar] !== undefined) {
             return tifinaghShiftMap[inputChar];
         }
-        // Then try lowercase Latin
-        if (tifinaghMap[inputChar.toLowerCase()] !== undefined) {
-            return tifinaghMap[inputChar.toLowerCase()];
+        // 2. Try exact match for Arabic (e.g., 'ا' -> 'ⴰ')
+        if (isArabicChar(inputChar)) {
+             // Handle 'ك' specifically if it should map to 'ⵛ' in certain contexts
+             if (inputChar === 'ك' && arabicToTifinaghMap['ك_for_C'] !== undefined) {
+                 // This is a heuristic. In a real scenario, you might need a modifier key for this.
+                 // For now, if 'ك' is typed, we can prioritize the 'ⵛ' if it's explicitly desired.
+                 // Or, if it's meant to be default 'ⴽ', then don't put 'ك_for_C' in map.
+                 // Given your HTML for C -> ⵛ, it means if Arabic 'ك' is typed, it should yield ⵛ.
+                 return arabicToTifinaghMap['ك_for_C'];
+             }
+            if (arabicToTifinaghMap[inputChar] !== undefined) {
+                return arabicToTifinaghMap[inputChar];
+            }
         }
-        // Then try Arabic
-        if (arabicToTifinaghMap[inputChar] !== undefined) {
-            return arabicToTifinaghMap[inputChar];
+        // 3. Try lowercase Latin (e.g., 'a' -> 'ⴰ', 'L' -> 'ⵍ')
+        if (isLatinChar(inputChar)) {
+            const lowerChar = inputChar.toLowerCase();
+            if (tifinaghMap[lowerChar] !== undefined) {
+                return tifinaghMap[lowerChar];
+            }
         }
+        // 4. Handle space and newline directly if they somehow bypass other maps
+        if (inputChar === ' ') return ' ';
+        if (inputChar === '\n') return '\n';
+
         // If no direct conversion found, return null
         return null;
     }
@@ -158,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 textarea.selectionStart = textarea.selectionEnd = start - length;
             }
         } else {
-            // If there's a selection, delete the selection
             textarea.value = value.substring(0, start) + value.substring(end);
             textarea.selectionStart = textarea.selectionEnd = start;
         }
@@ -172,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const keyValue = key.dataset.key;
 
             if (keyValue === 'backspace') {
-                deleteAtCursor(keyboardInput, 1); // Delete one character backwards
+                deleteAtCursor(keyboardInput, 1);
             } else if (keyValue === 'enter') {
                 insertAtCursor(keyboardInput, '\n');
             } else {
@@ -188,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Keydown event listener for animations and conversion logic ---
     keyboardInput.addEventListener('keydown', (e) => {
-        // --- Animate virtual key (this part remains largely the same) ---
+        // --- Animate virtual key ---
         let keyToAnimate = null;
         if (e.key === 'Enter') {
             keyToAnimate = findVirtualKeyElement('enter');
@@ -197,9 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (e.key === ' ') {
             keyToAnimate = findVirtualKeyElement(' ', 'tifinagh');
         } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-            keyToAnimate = findVirtualKeyElement(e.key, 'latin'); // Try to animate Latin key
+            // First try to animate the Latin/Arabic source key
+            keyToAnimate = findVirtualKeyElement(e.key, isLatinChar(e.key) ? 'latin' : 'arabic');
             if (!keyToAnimate) {
-                // If no specific Latin key, try to animate the resulting Tifinagh char for immediate feedback
+                // If no direct source key, try to animate the resulting Tifinagh char
                 const potentialTifinagh = convertCharToTifinagh(e.key);
                 if (potentialTifinagh) {
                     keyToAnimate = findVirtualKeyElement(potentialTifinagh, 'tifinagh');
@@ -213,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Core conversion logic for physical character keys ---
         if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
             const inputChar = e.key;
-            let charHandled = false; // Flag to indicate if the character was converted/digraph handled
+            let charHandled = false;
 
             // 1. Digraph Handling: Check if the current char completes a pending digraph
             if (pendingDigraphChar) {
@@ -224,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     deleteAtCursor(keyboardInput, 1); // Delete the temporarily inserted pendingDigraphChar
                     insertAtCursor(keyboardInput, digraphResult); // Insert the Tifinagh digraph
                     charHandled = true;
-                    pendingDigraphChar = ''; // Reset after successful digraph
+                    pendingDigraphChar = '';
                     // Animate the resulting Tifinagh digraph character
                     let digraphKey = findVirtualKeyElement(digraphResult, 'tifinagh');
                     if (digraphKey) activateKeyAnimation(digraphKey);
@@ -241,8 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (convertedChar) { // If a Tifinagh equivalent was found
                     // Check if this character could START a digraph.
-                    // If it can, we store it and allow the browser to insert it temporarily.
-                    // We will replace it if the next key completes a digraph.
                     let couldStartDigraph = false;
                     for (const digraphPrefix in digraphMap) {
                         if (digraphPrefix.startsWith(inputChar.toLowerCase()) && digraphPrefix.length > 1) {
@@ -253,32 +293,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (couldStartDigraph) {
                         pendingDigraphChar = inputChar;
-                        // Allow browser to insert the character temporarily. No e.preventDefault() here.
-                        // The 'input' event will fire, and if we let it go, the 'g' will appear.
-                        // We rely on the digraph logic to delete and replace it if 'h' comes next.
+                        // Allow browser to insert the character temporarily. No e.preventDefault().
                     } else {
                         e.preventDefault(); // Prevent the browser from inserting the original char
                         insertAtCursor(keyboardInput, convertedChar); // Insert the Tifinagh char
-                        // Animate the resulting Tifinagh character (already done at the beginning of keydown)
-                        pendingDigraphChar = ''; // Clear any pending digraph char
+                        pendingDigraphChar = '';
                     }
                 } else {
-                    // No Tifinagh conversion found. Allow browser default (e.g., numbers, symbols, unrecognized Latin/Arabic)
-                    pendingDigraphChar = ''; // Clear pendingDigraphChar if no conversion occurred
+                    // No Tifinagh conversion found. Allow browser default (e.g., numbers, symbols, unmapped chars)
+                    pendingDigraphChar = '';
                 }
             }
         } else {
-            // For non-character keys (e.g., Space, Enter, Tab, Ctrl, Alt), clear pending digraph state
+            // For non-character keys, clear pending digraph state
             pendingDigraphChar = '';
         }
     });
 
-    // The 'input' event listener is now truly passive for physical keyboard character inputs,
-    // only updating previousValue for cases like paste or other programmatic changes.
+    // The 'input' event listener is truly passive for physical keyboard character inputs.
     keyboardInput.addEventListener('input', () => {
-        // If this input was triggered by our own script (e.g., virtual keyboard click), ignore for conversion.
-        // This flag is set by virtual keyboard actions to prevent double processing.
-        // It's also critical to ensure `previousValue` is always correctly synced with the actual content.
+        // This is primarily for non-keydown inputs (like paste) or to ensure `previousValue` is current.
         previousValue = keyboardInput.value;
     });
 
@@ -317,19 +351,19 @@ document.addEventListener('DOMContentLoaded', () => {
         clearBtn.addEventListener('click', () => {
             keyboardInput.value = '';
             keyboardInput.focus();
-            previousValue = ''; // Reset previousValue on clear
-            pendingDigraphChar = ''; // Reset pending digraph on clear
+            previousValue = '';
+            pendingDigraphChar = '';
         });
     }
 
     // --- Focus and Blur handling ---
     keyboardInput.addEventListener('focus', () => {
         keyboardInput.classList.add('focused');
-        previousValue = keyboardInput.value; // Ensure previousValue is updated on focus
+        previousValue = keyboardInput.value;
     });
     keyboardInput.addEventListener('blur', () => {
         keyboardInput.classList.remove('focused');
-        pendingDigraphChar = ''; // Clear pending digraph on blur
+        pendingDigraphChar = '';
     });
 
     // Initialize previousValue on page load after all setup
