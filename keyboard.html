@@ -38,7 +38,8 @@
             --border-radius: 8px; /* Consistent border radius */
         }
 
-        body.dark-mode {
+        /* --- IMPORTANT: CHANGED TO html.dark --- */
+        html.dark {
             --primary-color: #94a3b8;
             --secondary-color: #64748b;
             --accent-color: #2dd4bf;
@@ -113,7 +114,8 @@
         #themeToggle:hover {
             background-color: var(--border-color);
         }
-        body.dark-mode #themeToggle {
+        /* --- IMPORTANT: CHANGED TO html.dark #themeToggle --- */
+        html.dark #themeToggle {
             background-color: var(--button-bg);
             color: var(--button-text-color);
         }
@@ -125,7 +127,8 @@
             color: var(--primary-color);
             margin-bottom: 10px;
         }
-        body.dark-mode h1 {
+        /* --- IMPORTANT: CHANGED TO html.dark h1 --- */
+        html.dark h1 {
             color: var(--text-color);
         }
 
@@ -139,8 +142,7 @@
         .input-area-wrapper {
             display: flex;
             justify-content: center;
-            /* Added margin-bottom to create distance from keyboard */
-            margin-bottom: 50px; /* Increased distance */
+            /* Removed margin-bottom here, `action-buttons` will provide separation */
         }
 
         .text-input {
@@ -164,7 +166,8 @@
             border-color: var(--accent-color);
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
         }
-        body.dark-mode .text-input {
+        /* --- IMPORTANT: CHANGED TO html.dark .text-input --- */
+        html.dark .text-input {
             background-color: var(--primary-color);
             color: var(--text-color);
             border-color: var(--border-color);
@@ -260,7 +263,8 @@
             border-color: var(--accent-color);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        body.dark-mode .keyboard-key:not(.delete):hover {
+        /* --- IMPORTANT: CHANGED TO html.dark .keyboard-key:not(.delete):hover --- */
+        html.dark .keyboard-key:not(.delete):hover {
             background-color: rgba(var(--accent-rgb), 0.2);
         }
 
@@ -269,7 +273,7 @@
             flex-direction: column;
             gap: 10px;
             max-width: 1000px;
-            margin: 0 auto 20px auto; /* Adjusted top margin as input-area-wrapper handles separation */
+            margin: 30px auto 20px auto; /* Added top margin for separation from action buttons */
             padding: 15px;
             background-color: transparent;
             border-radius: var(--border-radius, 8px);
@@ -354,15 +358,16 @@
             overflow-x: auto;
             text-align: left;
         }
-        body.dark-mode #debugOutput {
+        /* --- IMPORTANT: CHANGED TO html.dark #debugOutput --- */
+        html.dark #debugOutput {
             background-color: var(--background-color-dark-mode, #2d3748);
             color: var(--text-color-light-dark-mode, #a0aec0);
         }
 
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
-            .input-area-wrapper { margin-bottom: 30px; } /* Adjust for smaller screens */
-            .keyboard-layout { padding: 10px; gap: 8px; }
+            /* .input-area-wrapper { margin-bottom: 30px; } Removed this, action-buttons will provide separation */
+            .keyboard-layout { padding: 10px; gap: 8px; margin-top: 20px;} /* Adjusted top margin */
             .keyboard-row { gap: 8px; }
             .key-group { min-width: 48px; max-width: 70px; padding-top: 32px; }
             .latin-label { font-size: 0.7em; top: 4px; }
@@ -375,8 +380,8 @@
         }
 
         @media (max-width: 480px) {
-            .input-area-wrapper { margin-bottom: 20px; } /* Adjust for even smaller screens */
-            .keyboard-layout { padding: 5px; gap: 5px; }
+            /* .input-area-wrapper { margin-bottom: 20px; } Removed this, action-buttons will provide separation */
+            .keyboard-layout { padding: 5px; gap: 5px; margin-top: 15px;} /* Adjusted top margin */
             .keyboard-row { gap: 5px; }
             .key-group { min-width: 40px; max-width: 60px; padding-top: 28px; }
             .latin-label { font-size: 0.65em; top: 3px; }
@@ -392,7 +397,8 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 30px; /* Space between input area and action buttons */
+            margin-bottom: 30px; /* Space between action buttons and keyboard */
         }
 
         .action-buttons button {
@@ -448,7 +454,9 @@
             </a>
             <!-- Dark Mode Toggle Button -->
             <button id="themeToggle" aria-label="Toggle light and dark mode">
-                <i class="fas fa-moon"></i> Toggle Dark Mode
+                <i class="fas fa-moon moon-icon"></i> <!-- Moon icon for light mode, shown by default -->
+                <i class="fas fa-sun sun-icon hidden"></i> <!-- Sun icon for dark mode, hidden by default -->
+                Toggle Dark Mode
             </button>
         </div>
 
@@ -459,6 +467,12 @@
         <!-- The input area should be centered within its available width -->
         <div class="input-area-wrapper">
             <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here..." lang="ber" inputmode="text"></textarea>
+        </div>
+
+        <!-- Action Buttons: Copy and Clear (MOVED HERE to be between input and keyboard) -->
+        <div class="action-buttons">
+            <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
+            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
         </div>
 
         <!-- Virtual Keyboard Section -->
@@ -532,12 +546,6 @@
             </div>
         </section>
 
-        <!-- Action Buttons: Copy and Clear -->
-        <div class="action-buttons">
-            <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
-        </div>
-
         <!-- Footer Section -->
         <footer class="footer">
             <p>&copy; 2026 Tifinagh & Talatint Converter. All rights reserved.</p>
@@ -546,85 +554,10 @@
     </div>
 
     <!-- JavaScript files for keyboard functionality and theme toggle -->
+    <!-- Make sure your keyboard.js file contains the updated code I provided earlier -->
     <script src="keyboard.js"></script>
     <script src="themeToggle.js"></script>
     <!-- Removed audioRecorder.js as the audio button is deleted -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const keyboardInput = document.getElementById('keyboardInput');
-            const keyboardKeys = document.querySelectorAll('.keyboard-key');
-            const copyBtn = document.getElementById('copyBtn');
-            const clearBtn = document.getElementById('clearBtn');
-
-            // Function to add and remove the fire effect
-            function triggerFireEffect(keyElement) {
-                keyElement.classList.add('fire-active');
-                setTimeout(() => {
-                    keyElement.classList.remove('fire-active');
-                }, 300); // Duration of the animation
-            }
-
-            // Virtual keyboard click events
-            keyboardKeys.forEach(key => {
-                key.addEventListener('click', () => {
-                    const dataKey = key.dataset.key;
-                    
-                    if (dataKey === 'backspace') {
-                        keyboardInput.value = keyboardInput.value.slice(0, -1);
-                    } else {
-                        keyboardInput.value += dataKey;
-                    }
-                    keyboardInput.focus(); // Keep focus on the textarea
-                    triggerFireEffect(key); // Trigger fire effect on click
-                });
-            });
-
-            // Physical keyboard input events
-            keyboardInput.addEventListener('keydown', (e) => {
-                let matchingKey = null;
-
-                // Handle backspace specifically
-                if (e.key === 'Backspace') {
-                    matchingKey = document.querySelector('.keyboard-key.delete');
-                } else if (e.key === ' ') {
-                    matchingKey = document.querySelector('.keyboard-key.wide[data-key=" "]');
-                } else {
-                    // Try to find a direct match for data-key
-                    matchingKey = document.querySelector(`.keyboard-key[data-key="${e.key}"]`);
-                    // If not found, try to find a match for latin-label or arabic-label
-                    if (!matchingKey) {
-                        const allKeys = document.querySelectorAll('.key-group');
-                        for (const group of allKeys) {
-                            const latinLabel = group.querySelector('.latin-label');
-                            const arabicLabel = group.querySelector('.arabic-label');
-                            if ((latinLabel && latinLabel.textContent.toLowerCase() === e.key.toLowerCase()) ||
-                                (arabicLabel && arabicLabel.textContent === e.key)) {
-                                matchingKey = group.querySelector('.keyboard-key');
-                                break;
-                            }
-                        }
-                    }
-                }
-                
-                if (matchingKey) {
-                    triggerFireEffect(matchingKey); // Trigger fire effect on physical key press
-                }
-            });
-
-            // Copy button functionality
-            copyBtn.addEventListener('click', () => {
-                keyboardInput.select();
-                document.execCommand('copy');
-                // Optional: Provide feedback to the user that text has been copied
-                alert('Text copied to clipboard!');
-            });
-
-            // Clear button functionality
-            clearBtn.addEventListener('click', () => {
-                keyboardInput.value = '';
-                keyboardInput.focus();
-            });
-        });
-    </script>
+    <!-- REMOVED THE INLINE SCRIPT BLOCK HERE -->
 </body>
 </html>
