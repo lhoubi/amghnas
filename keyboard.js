@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Shifted/Capitalized Tifinagh Mapping (for Latin input) ---
     const tifinaghShiftMap = {
         'A': 'ⵄ', 'G': 'ⵖ', 'H': 'ⵃ', 'D': 'ⴹ', 'T': 'ⵟ', 'R': 'ⵕ',
-        'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'ⵇ': 'ⵇ', 'W': 'ⵯ', // Corrected Q to ⵇ
+        'S': 'ⵚ', 'Z': 'ⵥ', 'X': 'ⵅ', 'C': 'ⵛ', 'Q': 'ⵇ', 'W': 'ⵯ',
     };
 
     // --- Digraph Map (Longest matches first for Latin conversion logic) ---
@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let newCursorPos = start;
 
             const keyValue = key.dataset.key;
+            let charToInsert = keyValue;
             let charForHighlight = keyValue;
 
             if (keyValue === 'backspace') {
@@ -149,95 +150,92 @@ document.addEventListener('DOMContentLoaded', () => {
                     newCursorPos = start;
                 }
                 charForHighlight = 'backspace';
+            } else if (keyValue === 'enter') {
+                charToInsert = '\n';
+                newValue = newValue.substring(0, start) + charToInsert + newValue.substring(end);
+                newCursorPos = start + charToInsert.length;
+                charForHighlight = '\n';
             } else {
-                newValue = newValue.substring(0, start) + keyValue + newValue.substring(end);
-                newCursorPos = start + keyValue.length;
+                newValue = newValue.substring(0, start) + charToInsert + newValue.substring(end);
+                newCursorPos = start + charToInsert.length;
             }
 
+            ignoreNextPhysicalInput = true; // Set flag before updating value
             keyboardInput.value = newValue;
             keyboardInput.selectionStart = keyboardInput.selectionEnd = newCursorPos;
             keyboardInput.focus();
 
             highlightKey(charForHighlight);
-            previousValue = keyboardInput.value; // Update previousValue after virtual key input
+            previousValue = keyboardInput.value;
         });
     });
 
     // --- Real-time Conversion on Physical Keyboard Input ---
     let previousValue = '';
-    let ignoreNextInput = false;
+    let ignoreNextPhysicalInput = false;
 
-    // This function now correctly identifies the inserted character regardless of cursor position.
-    function findInsertedCharAndPosition(oldVal, newVal, oldCursorPos, newCursorPos) {
+    function findInsertedCharAndPosition(oldVal, newVal) {
         let insertedChar = null;
         let insertionStart = -1;
 
-        if (newVal.length > oldVal.length) { // Something was inserted
-            // Find the point where oldVal and newVal start to differ
+        if (newVal.length > oldVal.length) {
             let commonPrefixLength = 0;
             while (commonPrefixLength < oldVal.length && commonPrefixLength < newVal.length &&
                    oldVal[commonPrefixLength] === newVal[commonPrefixLength]) {
                 commonPrefixLength++;
             }
 
-            // The inserted part starts after the common prefix
             insertionStart = commonPrefixLength;
             insertedChar = newVal.substring(commonPrefixLength, commonPrefixLength + (newVal.length - oldVal.length));
-            
-            // If more than one character was inserted (e.g., paste), treat as a block.
-            // For single character conversion, we only care about the very first character if it's a block.
+
             if (insertedChar.length > 1) {
-                // If it's a paste, we'll process the whole string.
-                return { insertedChar: null, insertionStart: -1 }; 
+                return { insertedChar: null, insertionStart: -1 };
             }
         }
         return { insertedChar: insertedChar, insertionStart: insertionStart };
     }
 
     function processPhysicalInput() {
-        if (ignoreNextInput) return;
+        if (ignoreNextPhysicalInput) {
+            ignoreNextPhysicalInput = false;
+            previousValue = keyboardInput.value;
+            return;
+        }
 
         const currentInput = keyboardInput.value;
         const currentCursorPos = keyboardInput.selectionStart;
 
-        // Check for deletion first
         if (currentInput.length < previousValue.length) {
-            highlightKey('backspace'); // Assume a backspace/delete action
+            highlightKey('backspace');
             previousValue = currentInput;
             return;
         }
 
-        // Check for insertion
-        const { insertedChar, insertionStart } = findInsertedCharAndPosition(previousValue, currentInput, keyboardInput.selectionStart, currentCursorPos);
+        const { insertedChar, insertionStart } = findInsertedCharAndPosition(previousValue, currentInput);
 
         if (insertedChar && insertedChar.length === 1) {
             const { convertedChar, charForHighlight } = convertSingleCharToTifinagh(insertedChar);
 
-            if (convertedChar !== insertedChar) { // If a conversion actually happened
-                ignoreNextInput = true;
-
-                // Reconstruct the value with the converted character
+            if (convertedChar !== insertedChar) {
                 const beforeInsertion = currentInput.substring(0, insertionStart);
                 const afterInsertion = currentInput.substring(insertionStart + insertedChar.length);
-                
+
+                ignoreNextPhysicalInput = true;
                 keyboardInput.value = beforeInsertion + convertedChar + afterInsertion;
                 keyboardInput.selectionStart = keyboardInput.selectionEnd = insertionStart + convertedChar.length;
+                ignoreNextPhysicalInput = false;
 
-                ignoreNextInput = false;
                 highlightKey(charForHighlight);
             } else {
-                // No conversion, but still a single character typed
                 highlightKey(insertedChar);
             }
         } else if (currentInput !== previousValue) {
-            // This path handles pastes or multiple character insertions that `findInsertedCharAndPosition` might not catch as a single char.
-            // We re-process the whole string for conversion, but try to maintain cursor position.
             const { text: convertedText, cursorPos: newPos } = convertMixedInputToTifinagh(currentInput, currentCursorPos);
             if (keyboardInput.value !== convertedText) {
-                ignoreNextInput = true;
+                ignoreNextPhysicalInput = true;
                 keyboardInput.value = convertedText;
                 keyboardInput.selectionStart = keyboardInput.selectionEnd = newPos;
-                ignoreNextInput = false;
+                ignoreNextPhysicalInput = false;
             }
         }
 
@@ -247,19 +245,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function convertMixedInputToTifinagh(inputText, originalCursorPos) {
         let result = '';
         let newCursorPos = 0;
-        let originalLengthBeforeCursor = 0;
-
-        // Determine the length of the string before the cursor in original text
-        if (originalCursorPos > 0) {
-            originalLengthBeforeCursor = inputText.substring(0, originalCursorPos).length;
-        }
 
         for (let i = 0; i < inputText.length; i++) {
             const char = inputText[i];
             const { convertedChar } = convertSingleCharToTifinagh(char);
             result += convertedChar;
-            
-            // Adjust newCursorPos if we are still before or at the original cursor position
+
             if (i < originalCursorPos) {
                 newCursorPos += convertedChar.length;
             }
@@ -272,6 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
     keyboardInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             highlightKey('\n');
+        } else if (e.key === 'Backspace' || e.key === 'Delete') {
+            highlightKey('backspace');
         }
     });
 
@@ -321,5 +314,5 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboardInput.classList.remove('focused');
     });
 
-    previousValue = keyboardInput.value;
+    previousValue = keyboardInput.value; // Initialize previousValue
 });
