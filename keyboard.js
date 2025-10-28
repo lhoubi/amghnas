@@ -44,8 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ensure these are all lowercase for consistent matching.
     const digraphMap = {
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ',
-        'dh': 'ⴹ', 'th': 'ⵜ', 'ts': 'ⵚ',
-        // Add more if needed, e.g., 'zh' for 'ⵥ' if applicable
+        'dh': 'ⴹ',
+        'th': 'ⵜ', // 'th' maps to 'ⵜ' as per request
+        'ts': 'ⵚ', // 'ts' maps to 'ⵚ' as per request (though typically for ṭs or similar)
+        // 't' alone should give 'ⵜ' and 'T' alone should give 'ⵟ'
+        // 's' alone should give 'ⵙ' and 'S' alone should give 'ⵚ'
+        // 'd' alone should give 'ⴷ' and 'D' alone should give 'ⴹ'
+        // 'c', 'C', 'ch', 'sh' should give 'ⵛ'
+        // 'g' alone should give 'ⴳ'
+        // 'G', 'gh' should give 'ⵖ'
     };
 
     // --- Arabic to Tifinagh Mapping ---
@@ -145,6 +152,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Conversion Logic for Physical Keyboard Input ---
     function convertCharToTifinagh(inputChar) {
+        // Apply specific rules first based on your request
+        if (inputChar === 't') return 'ⵜ';
+        if (inputChar === 'T') return 'ⵟ';
+        if (inputChar === 's') return 'ⵙ';
+        if (inputChar === 'S') return 'ⵚ';
+        if (inputChar === 'd') return 'ⴷ';
+        if (inputChar === 'D') return 'ⴹ';
+        if (inputChar === 'c' || inputChar === 'C') return 'ⵛ'; // c and C give ⵛ
+        if (inputChar === 'g') return 'ⴳ';
+        if (inputChar === 'G') return 'ⵖ'; // G and gh give ⵖ
+
         // 1. Try exact match in shifted Latin (e.g., 'A' -> 'ⵄ')
         if (tifinaghShiftMap[inputChar] !== undefined) {
             return tifinaghShiftMap[inputChar];
@@ -226,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let pendingDigraphChar = ''; // Stores the first char of a potential digraph
+    let previousValue = ''; // Keep track of the previous textarea value
 
     // --- Keydown event listener for animations and conversion logic ---
     keyboardInput.addEventListener('keydown', (e) => {
@@ -258,47 +277,32 @@ document.addEventListener('DOMContentLoaded', () => {
             let charHandled = false;
 
             // 1. Digraph Handling: Check if the current char completes a pending digraph
-            if (pendingDigraphChar) {
-                const potentialDigraph = (pendingDigraphChar + inputChar).toLowerCase();
-                const digraphResult = digraphMap[potentialDigraph];
-                if (digraphResult) {
-                    e.preventDefault(); // Prevent current char from being inserted
-                    deleteAtCursor(keyboardInput, 1); // Delete the temporarily inserted pendingDigraphChar
-                    insertAtCursor(keyboardInput, digraphResult); // Insert the Tifinagh digraph
-                    charHandled = true;
-                    pendingDigraphChar = '';
-                    // Animate the resulting Tifinagh digraph character
-                    let digraphKey = findVirtualKeyElement(digraphResult, 'tifinagh');
-                    if (digraphKey) activateKeyAnimation(digraphKey);
-                } else {
-                    // If current char doesn't form a digraph, the pendingChar stays as a single char (already inserted).
-                    // We just clear pendingDigraphChar so it doesn't try to form digraphs with subsequent chars.
-                    pendingDigraphChar = '';
-                }
-            }
+            // We need to check the *last character* of the current input field for digraphs
+            // This approach is more robust for sequences like 'a' then 'gh' rather than 'ag'
+            const currentInputValue = keyboardInput.value;
+            const lastChar = currentInputValue.slice(-1);
 
-            // 2. Single Character Conversion: If not handled by digraph, try single char conversion
-            if (!charHandled) {
+            // Temporarily combine `lastChar` with `inputChar` to check for digraph
+            const potentialDigraph = (lastChar + inputChar).toLowerCase();
+            
+            if (digraphMap[potentialDigraph]) {
+                e.preventDefault(); // Prevent current char from being inserted
+                // Delete the last char (which formed the first part of the digraph)
+                deleteAtCursor(keyboardInput, 1);
+                insertAtCursor(keyboardInput, digraphMap[potentialDigraph]); // Insert the Tifinagh digraph
+                charHandled = true;
+                pendingDigraphChar = ''; // Clear pending, as a full digraph was formed
+                // Animate the resulting Tifinagh digraph character
+                let digraphKey = findVirtualKeyElement(digraphMap[potentialDigraph], 'tifinagh');
+                if (digraphKey) activateKeyAnimation(digraphKey);
+            } else {
+                // If no digraph, process as a single character
                 const convertedChar = convertCharToTifinagh(inputChar);
 
                 if (convertedChar) { // If a Tifinagh equivalent was found
-                    // Check if this character could START a digraph.
-                    let couldStartDigraph = false;
-                    for (const digraphPrefix in digraphMap) {
-                        if (digraphPrefix.startsWith(inputChar.toLowerCase()) && digraphPrefix.length > 1) {
-                            couldStartDigraph = true;
-                            break;
-                        }
-                    }
-
-                    if (couldStartDigraph) {
-                        pendingDigraphChar = inputChar;
-                        // Allow browser to insert the character temporarily. No e.preventDefault().
-                    } else {
-                        e.preventDefault(); // Prevent the browser from inserting the original char
-                        insertAtCursor(keyboardInput, convertedChar); // Insert the Tifinagh char
-                        pendingDigraphChar = '';
-                    }
+                    e.preventDefault(); // Prevent the browser from inserting the original char
+                    insertAtCursor(keyboardInput, convertedChar); // Insert the Tifinagh char
+                    pendingDigraphChar = ''; // Clear pending if any
                 } else {
                     // No Tifinagh conversion found. Allow browser default (e.g., numbers, symbols, unmapped chars)
                     pendingDigraphChar = '';
