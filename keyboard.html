@@ -30,233 +30,278 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
-:root {
-  --primary-color: #334155;
-  --secondary-color: #64748b;
-  --accent-color: #0d9488;
-  --accent-rgb: 13, 148, 136;
-  --background-color: #f8fafc;
-  --background-color-light: #e2e8f0;
-  --text-color: #1e293b;
-  --text-color-light: #475569;
-  --border-color: #cbd5e1;
-  --button-bg: #e2e8f0;
-  --button-text-color: #334155;
-  --delete-button-bg: #ef4444;
-  --delete-button-text-color: #ffffff;
-  --border-radius: 10px;
+:root{
+  --primary-color:#334155;
+  --secondary-color:#64748b;
+  --accent-color:#0d9488;
+  --accent-rgb:13,148,136;
+  --background-color:#f8fafc;
+  --background-color-light:#e2e8f0;
+  --text-color:#1e293b;
+  --text-color-light:#475569;
+  --border-color:#cbd5e1;
+  --button-bg:#f1f5f9;
+  --button-text-color:#334155;
+  --delete-button-bg:#ef4444;
+  --delete-button-text-color:#ffffff;
+  --border-radius:10px;
 }
 
-html.dark {
-  --primary-color: #94a3b8;
-  --secondary-color: #64748b;
-  --accent-color: #2dd4bf;
-  --accent-rgb: 45, 212, 191;
-  --background-color: #1e293b;
-  --background-color-light: #334155;
-  --text-color: #f8fafc;
-  --text-color-light: #cbd5e1;
-  --border-color: #475569;
-  --button-bg: #334155;
-  --button-text-color: #cbd5e1;
-  --delete-button-bg: #dc2626;
-  --delete-button-text-color: #ffffff;
+/* dark theme variables kept for parity */
+html.dark{
+  --primary-color:#94a3b8;
+  --secondary-color:#64748b;
+  --accent-color:#2dd4bf;
+  --accent-rgb:45,212,191;
+  --background-color:#1e293b;
+  --background-color-light:#334155;
+  --text-color:#f8fafc;
+  --text-color-light:#cbd5e1;
+  --border-color:#475569;
+  --button-bg:#3b4a5e;
+  --button-text-color:#f1f5f9;
+  --delete-button-bg:#dc2626;
+  --delete-button-text-color:#ffffff;
 }
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
+*{box-sizing:border-box}
+body{
+  font-family:'Roboto',sans-serif;
+  background-color:var(--background-color);
+  color:var(--text-color);
+  margin:0;
+  padding:20px;
+  display:flex;
+  justify-content:center;
 }
 
-.container {
-  max-width: 1000px;
-  width: 100%;
-  background-color: var(--background-color-light);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  padding: 30px;
+.container{
+  max-width:1000px;
+  width:100%;
+  background-color:var(--background-color-light);
+  border-radius:var(--border-radius);
+  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+  padding:30px;
 }
 
-/* Header */
-.header-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+/* header / controls */
+.header-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.nav-button, #themeToggle{
+  padding:10px 15px;
+  border-radius:8px;
+  border:2px solid var(--border-color);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  transition:all .25s ease;
+  box-shadow:0 2px 4px rgba(0,0,0,.08);
+}
+.nav-button{ background-color:var(--secondary-color); color:#fff; border-color:var(--secondary-color); }
+#themeToggle{ background-color:var(--button-bg); color:var(--button-text-color); }
+
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:2.5em;
+  text-align:center;
+  color:var(--primary-color);
+  margin:25px 0 10px;
+}
+.tagline{
+  text-align:center;
+  font-size:1.1em;
+  color:var(--text-color-light);
+  margin-bottom:30px;
 }
 
-.nav-button, #themeToggle {
-  padding: 10px 15px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 1em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.nav-button {
-  background-color: var(--secondary-color);
-  color: #fff;
-}
-.nav-button:hover { background-color: #475569; }
-
-#themeToggle {
-  background-color: var(--button-bg);
-  color: var(--button-text-color);
-}
-#themeToggle:hover { background-color: var(--border-color); }
-
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5em;
-  text-align: center;
-  color: var(--primary-color);
-  margin: 25px 0 10px;
-}
-
-.tagline {
-  text-align: center;
-  font-size: 1.1em;
-  color: var(--text-color-light);
-  margin-bottom: 30px;
-}
-
-/* Input area */
-.input-area-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.text-input {
-  width: 100%;
-  max-width: 800px;
-  height: 150px;
-  padding: 15px;
-  font-size: 1.4em;
-  border: 2px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
-  line-height: 1.6;
-  resize: vertical;
+/* input */
+.input-area-wrapper{ display:flex; justify-content:center; }
+.text-input{
+  width:100%;
+  max-width:800px;
+  height:150px;
+  padding:15px;
+  font-size:1.4em;
+  border:2px solid var(--border-color);
+  border-radius:var(--border-radius);
+  background-color:var(--background-color);
+  color:var(--text-color);
+  font-family:'Noto Sans Tifinagh','Noto Naskh Arabic','Roboto',sans-serif;
+  line-height:1.6;
+  resize:vertical;
 }
 
 /* Action buttons */
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
-  flex-wrap: wrap;
+.action-buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin:25px 0;
+  flex-wrap:wrap;
+}
+.action-buttons button{
+  padding:12px 22px;
+  border-radius:var(--border-radius);
+  border:2px solid var(--border-color);
+  font-size:1.05em;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:all .25s ease;
+  box-shadow:0 3px 6px rgba(0,0,0,.12);
+}
+.copy{ background-color:var(--accent-color); color:#fff; border-color:var(--accent-color); }
+.clear{ background-color:var(--secondary-color); color:#fff; border-color:var(--secondary-color); }
+
+/* ---------------------
+   KEYBOARD LAYOUT + LABEL FIX
+   --------------------- */
+
+/* main layout */
+.keyboard-layout{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:10px;
 }
 
-.action-buttons button {
-  padding: 12px 22px;
-  border-radius: var(--border-radius);
-  border: none;
-  font-size: 1.05em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.3s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* keyboard rows center and keep consistent spacing */
+.keyboard-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
 }
 
-.copy {
-  background-color: var(--accent-color);
-  color: #fff;
-}
-.copy:hover { background-color: #0c7e75; }
-
-.clear {
-  background-color: var(--secondary-color);
-  color: #fff;
-}
-.clear:hover { background-color: #475569; }
-
-/* Keyboard Layout */
-.keyboard-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+/* IMPORTANT: change how key-group is structured:
+   - Use column layout so labels sit above the key
+   - Keep a fixed visual box width so labels align correctly
+*/
+.key-group{
+  display:flex;
+  flex-direction:column;       /* stack: latin label -> arabic label -> button */
+  align-items:center;
+  gap:6px;
+  width:76px;                  /* fixed visual column width to match screenshot spacing */
+  min-width:76px;
+  max-width:76px;
+  padding-top:6px;             /* create slight vertical offset like in screenshot */
+  box-sizing:border-box;
+  text-align:center;
 }
 
-.keyboard-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+/* Latin label (small, centered) */
+.latin-label{
+  display:block;
+  font-size:0.72rem;
+  color:var(--text-color-light);
+  line-height:1;
+  letter-spacing:0.6px;
+  text-transform:lowercase;
+  white-space:nowrap;
+  pointer-events:none;
+  width:100%;
+  text-align:center;
 }
 
-.key-group {
-  text-align: center;
-  position: relative;
-  flex: 1 1 55px;
-  min-width: 50px;
-  max-width: 85px;
+/* Arabic label (small, centered under latin label)
+   Use Arabic font and rtl direction but centered visually */
+.arabic-label{
+  display:block;
+  font-size:0.65rem;
+  color:var(--text-color-light);
+  line-height:1;
+  font-family:'Noto Naskh Arabic',sans-serif;
+  direction:rtl;
+  white-space:nowrap;
+  pointer-events:none;
+  width:100%;
+  text-align:center;
+  margin-top:-2px; /* slight overlap to match screenshot spacing */
 }
 
-.latin-label, .arabic-label {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75em;
-  color: var(--text-color-light);
-  width: 100%;
-  pointer-events: none;
+/* the visible key button */
+.keyboard-key{
+  height:56px;
+  width:100%;
+  border-radius:12px;
+  border:2px solid var(--border-color);
+  background-color:var(--button-bg);
+  color:var(--button-text-color);
+  font-size:1.6rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:all .15s ease;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  user-select:none;
 }
 
-.latin-label { top: 5px; }
-.arabic-label { top: 20px; font-family: 'Noto Naskh Arabic', sans-serif; direction: rtl; }
+/* hover / active affordances */
+.keyboard-key:hover{ transform:translateY(-3px); border-color:var(--accent-color); background-color:rgba(var(--accent-rgb),0.08); }
+.keyboard-key:active{ transform:translateY(0); box-shadow:0 1px 3px rgba(0,0,0,.06); }
 
-.keyboard-key {
-  height: 50px;
-  width: 100%;
-  font-size: 1.4em;
-  border-radius: var(--border-radius);
-  border: 2px solid var(--button-bg);
-  color: var(--button-text-color);
-  background-color: transparent;
-  cursor: pointer;
-  transition: 0.2s;
+/* delete key styling */
+.keyboard-key.delete{
+  background-color:var(--delete-button-bg);
+  color:var(--delete-button-text-color);
+  border-color:var(--delete-button-bg);
+  box-shadow:0 3px 8px rgba(239,68,68,0.18);
 }
 
-.keyboard-key:hover {
-  background-color: rgba(var(--accent-rgb), 0.1);
-  border-color: var(--accent-color);
+/* adjust wide / space keys */
+.keyboard-key.wide{ height:56px; font-size:1.15rem; }
+
+/* footer */
+.footer{
+  text-align:center;
+  margin-top:50px;
+  padding-top:20px;
+  border-top:1px solid var(--border-color);
+  color:var(--text-color-light);
+  font-size:0.9em;
 }
 
-.keyboard-key.delete {
-  background-color: var(--delete-button-bg);
-  color: #fff;
-  border: none;
+/* ---------------------
+   Responsiveness — keep exact desktop look but tidy mobile
+   --------------------- */
+@media (max-width: 1024px){
+  .key-group{ width:72px; min-width:72px; max-width:72px; }
+  .keyboard-key{ height:54px; font-size:1.4rem; }
 }
-.keyboard-key.delete i { font-size: 1.4em; }
 
-/* Footer */
-.footer {
-  text-align: center;
-  margin-top: 50px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-color);
-  color: var(--text-color-light);
-  font-size: 0.9em;
+@media (max-width: 768px){
+  .container{ padding:20px; }
+  h1{ font-size:2em; }
+  .tagline{ font-size:1em; margin-bottom:20px; }
+  .text-input{ height:130px; font-size:1.2em; }
+  .key-group{ width:66px; min-width:66px; max-width:66px; gap:4px; }
+  .latin-label{ font-size:0.68rem; }
+  .arabic-label{ font-size:0.62rem; margin-top:-1px; }
+  .keyboard-key{ height:48px; font-size:1.2rem; border-radius:10px; }
+}
+
+@media (max-width: 480px){
+  body{ padding:10px; }
+  .container{ padding:15px; }
+  h1{ font-size:1.7em; }
+  .tagline{ font-size:0.95em; }
+  .text-input{ height:120px; font-size:1.1em; }
+  .key-group{ width:60px; min-width:60px; max-width:60px; }
+  .latin-label{ font-size:0.64rem; }
+  .arabic-label{ font-size:0.58rem; }
+  .keyboard-key{ height:42px; font-size:1.05rem; border-radius:10px; }
 }
 </style>
-
 
 
 </head>
