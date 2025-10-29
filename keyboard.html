@@ -25,431 +25,263 @@
 
     <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
     <!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap'); /* Corrected 'd/isplay' to 'display' */
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
-        :root {
-            --primary-color: #334155; /* Dark blue-gray for primary elements */
-            --secondary-color: #64748b; /* Lighter blue-gray for secondary elements */
-            --accent-color: #0d9488; /* Teal for accents and interactive elements */
-            --accent-rgb: 13, 148, 136; /* RGB for the accent color, for opacity */
-            --background-color: #f8fafc; /* Light gray for background */
-            --background-color-light: #e2e8f0; /* Even lighter for cards/sections */
-            --text-color: #1e293b; /* Dark text */
-            --text-color-light: #475569; /* Lighter text for secondary info */
-            --border-color: #cbd5e1; /* Light border */
-            --button-bg: #e2e8f0; /* Light button background */
-            --button-text-color: #334155; /* Dark text on buttons */
-            --delete-button-bg: #ef4444; /* Red for delete button */
-            --delete-button-text-color: #ffffff; /* White text on delete button */
-            --border-radius: 8px; /* Consistent border radius */
-        }
+:root {
+  --primary-color: #334155;
+  --secondary-color: #64748b;
+  --accent-color: #0d9488;
+  --accent-rgb: 13, 148, 136;
+  --background-color: #f8fafc;
+  --background-color-light: #e2e8f0;
+  --text-color: #1e293b;
+  --text-color-light: #475569;
+  --border-color: #cbd5e1;
+  --button-bg: #e2e8f0;
+  --button-text-color: #334155;
+  --delete-button-bg: #ef4444;
+  --delete-button-text-color: #ffffff;
+  --border-radius: 10px;
+}
 
-        /* --- IMPORTANT: CHANGED TO html.dark --- */
-        html.dark {
-            --primary-color: #94a3b8;
-            --secondary-color: #64748b;
-            --accent-color: #2dd4bf;
-            --accent-rgb: 45, 212, 191;
-            --background-color: #1e293b;
-            --background-color-light: #334155;
-            --text-color: #f8fafc;
-            --text-color-light: #cbd5e1;
-            --border-color: #475569;
-            --button-bg: #334155;
-            --button-text-color: #cbd5e1;
-            --delete-button-bg: #dc2626;
-            --delete-button-text-color: #ffffff;
-        }
+html.dark {
+  --primary-color: #94a3b8;
+  --secondary-color: #64748b;
+  --accent-color: #2dd4bf;
+  --accent-rgb: 45, 212, 191;
+  --background-color: #1e293b;
+  --background-color-light: #334155;
+  --text-color: #f8fafc;
+  --text-color-light: #cbd5e1;
+  --border-color: #475569;
+  --button-bg: #334155;
+  --button-text-color: #cbd5e1;
+  --delete-button-bg: #dc2626;
+  --delete-button-text-color: #ffffff;
+}
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
-        }
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
 
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            background-color: var(--background-color-light);
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 20px; /* Space for footer */
-        }
+.container {
+  max-width: 1000px;
+  width: 100%;
+  background-color: var(--background-color-light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+}
 
-        .header-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+/* Header */
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-        .nav-button, #themeToggle {
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
+.nav-button, #themeToggle {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
 
-        .nav-button {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        .nav-button:hover {
-            background-color: #475569;
-        }
+.nav-button {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+.nav-button:hover { background-color: #475569; }
 
-        #themeToggle {
-            background-color: var(--button-bg);
-            color: var(--button-text-color);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        #themeToggle:hover {
-            background-color: var(--border-color);
-        }
-        /* --- IMPORTANT: CHANGED TO html.dark #themeToggle --- */
-        html.dark #themeToggle {
-            background-color: var(--button-bg);
-            color: var(--button-text-color);
-        }
+#themeToggle {
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+}
+#themeToggle:hover { background-color: var(--border-color); }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8em;
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-        /* --- IMPORTANT: CHANGED TO html.dark h1 --- */
-        html.dark h1 {
-            color: var(--text-color);
-        }
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4em;
+  text-align: center;
+  color: var(--primary-color);
+  margin: 25px 0 10px;
+}
 
-        .tagline {
-            text-align: center;
-            font-size: 1.1em;
-            color: var(--text-color-light);
-            margin-bottom: 30px;
-        }
+.tagline {
+  text-align: center;
+  font-size: 1.05em;
+  color: var(--text-color-light);
+  margin-bottom: 25px;
+  padding: 0 10px;
+}
 
-        .input-area-wrapper {
-            display: flex;
-            justify-content: center;
-            /* Removed margin-bottom here, `action-buttons` will provide separation */
-        }
+/* Input area */
+.input-area-wrapper {
+  display: flex;
+  justify-content: center;
+}
 
-        .text-input {
-            width: 90%;
-            max-width: 800px;
-            height: 150px;
-            padding: 15px;
-            font-size: 1.5em;
-            border: 2px solid var(--border-color);
-            border-radius: var(--border-radius);
-            background-color: var(--background-color);
-            color: var(--text-color);
-            resize: vertical;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
-            line-height: 1.6;
-            direction: ltr; /* Default for most typing, can be adjusted per language if needed */
-        }
-        .text-input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
-        }
-        /* --- IMPORTANT: CHANGED TO html.dark .text-input --- */
-        html.dark .text-input {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border-color: var(--border-color);
-        }
+.text-input {
+  width: 100%;
+  max-width: 800px;
+  height: 160px;
+  padding: 15px;
+  font-size: 1.4em;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
+  line-height: 1.6;
+  resize: vertical;
+}
 
-        /* Styles for consolidated labels above Tifinagh keys */
-        .key-group {
-            position: relative;
-            padding-top: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            flex-shrink: 1;
-            flex-basis: 0;
-            min-width: 55px;
-            max-width: 90px;
-            box-sizing: border-box;
-            text-align: center;
-        }
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
 
-        .latin-label, .arabic-label {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.7em;
-            color: var(--text-color-light);
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: 10;
-            width: 100%;
-        }
+.action-buttons button {
+  padding: 12px 22px;
+  border-radius: var(--border-radius);
+  border: none;
+  font-size: 1.05em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
 
-        .latin-label {
-            top: 5px;
-        }
+.copy {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+.copy:hover { background-color: #0c7e75; }
 
-        .arabic-label {
-            top: 20px;
-            font-family: 'Noto Naskh Arabic', sans-serif;
-            direction: rtl;
-        }
+.clear {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+.clear:hover { background-color: #475569; }
 
-        .keyboard-key {
-            height: 50px;
-            line-height: 50px;
-            width: 100%;
-            border-radius: var(--border-radius, 8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Noto Sans Tifinagh', sans-serif;
-            font-size: 1.5em;
-            background-color: transparent;
-            border: 2px solid var(--button-bg, #e0e0e0);
-            color: var(--button-text-color, #333);
-            cursor: pointer;
-            transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s, border-color 0.2s;
-            user-select: none;
-            box-sizing: border-box;
-        }
+/* Keyboard Layout */
+.keyboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
 
-        /* Fire light effect */
-        .keyboard-key.fire-active {
-            animation: fireEffect 0.3s ease-out;
-            background-color: rgba(255, 69, 0, 0.7); /* Red-orange */
-            box-shadow: 0 0 15px 5px rgba(255, 69, 0, 0.8), 0 0 30px 10px rgba(255, 140, 0, 0.5); /* Glowing effect */
-            border-color: rgba(255, 69, 0, 0.9);
-            color: white;
-        }
+.keyboard-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
 
-        @keyframes fireEffect {
-            0% {
-                background-color: transparent;
-                box-shadow: none;
-                transform: scale(1);
-            }
-            50% {
-                background-color: rgba(255, 69, 0, 0.9);
-                box-shadow: 0 0 20px 7px rgba(255, 69, 0, 0.9), 0 0 40px 15px rgba(255, 140, 0, 0.7);
-                transform: scale(1.05);
-            }
-            100% {
-                background-color: transparent; /* Or a subtle glow if desired */
-                box-shadow: none;
-                transform: scale(1);
-            }
-        }
+.key-group {
+  text-align: center;
+  position: relative;
+  flex: 1 1 55px;
+  min-width: 50px;
+  max-width: 85px;
+}
 
+.latin-label, .arabic-label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75em;
+  color: var(--text-color-light);
+  width: 100%;
+  pointer-events: none;
+}
 
-        .keyboard-key:not(.delete):hover {
-            background-color: rgba(var(--accent-rgb), 0.1);
-            border-color: var(--accent-color);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        /* --- IMPORTANT: CHANGED TO html.dark .keyboard-key:not(.delete):hover --- */
-        html.dark .keyboard-key:not(.delete):hover {
-            background-color: rgba(var(--accent-rgb), 0.2);
-        }
+.latin-label { top: 5px; }
+.arabic-label { top: 20px; font-family: 'Noto Naskh Arabic', sans-serif; direction: rtl; }
 
-        .keyboard-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 1000px;
-            margin: 30px auto 20px auto; /* Added top margin for separation from action buttons */
-            padding: 15px;
-            background-color: transparent;
-            border-radius: var(--border-radius, 8px);
-        }
+.keyboard-key {
+  height: 50px;
+  width: 100%;
+  font-size: 1.4em;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--button-bg);
+  color: var(--button-text-color);
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-        .keyboard-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
+.keyboard-key:hover {
+  background-color: rgba(var(--accent-rgb), 0.1);
+  border-color: var(--accent-color);
+}
 
-        .keyboard-key.wide {
-            flex-grow: 2;
-            min-width: 150px;
-            max-width: 300px;
-        }
-        .keyboard-row.final-action-row {
-            justify-content: center;
-            margin-top: 20px;
-        }
+.keyboard-key.delete {
+  background-color: var(--delete-button-bg);
+  color: #fff;
+  border: none;
+}
+.keyboard-key.delete i { font-size: 1.4em; }
 
-        .final-action-row .key-group {
-            flex-grow: 1;
-            flex-basis: auto;
-            min-width: 120px;
-            max-width: 200px;
-            padding-top: 0;
-        }
-        .final-action-row .keyboard-key {
-            border: 2px solid var(--button-bg, #e0e0e0); /* Added border back for consistency */
-            color: var(--button-text-color);
-            font-size: 1.1em;
-            height: 50px;
-            line-height: 50px;
-        }
-        .final-action-row .keyboard-key.wide {
-            background-color: var(--button-bg, #4a5568);
-            color: var(--button-text-color, #e2e8f0);
-            /* Ensure spacebar also has a subtle border */
-            border: 2px solid var(--border-color); 
-        }
-        .final-action-row .keyboard-key.delete {
-            background-color: var(--delete-button-bg, #e74c3c);
-            color: var(--delete-button-text-color, #fff);
-        }
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color-light);
+  font-size: 0.9em;
+}
 
-        .keyboard-key.delete {
-            background-color: var(--delete-button-bg, #e74c3c);
-            color: var(--delete-button-text-color, #fff);
-            font-size: 1.2em;
-            flex-grow: 1;
-            min-width: 60px;
-            max-width: 100px;
-            border: none;
-        }
-        .keyboard-key.delete i {
-            font-size: 1.5em;
-        }
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  h1 { font-size: 1.9em; }
+  .tagline { font-size: 1em; }
+  .text-input { height: 140px; font-size: 1.2em; }
+  .keyboard-key { height: 45px; font-size: 1.3em; }
+  .key-group { min-width: 45px; max-width: 70px; }
+  .action-buttons button { font-size: 1em; padding: 10px 18px; }
+}
 
-        .key-group .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            margin: -1px;
-            padding: 0;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
+@media (max-width: 480px) {
+  body { padding: 10px; }
+  .container { padding: 18px; }
+  h1 { font-size: 1.6em; }
+  .tagline { font-size: 0.95em; }
+  .text-input { height: 130px; font-size: 1.1em; }
+  .keyboard-layout { gap: 6px; }
+  .keyboard-key { height: 42px; font-size: 1.2em; }
+  .key-group { min-width: 40px; max-width: 60px; }
+  .action-buttons { gap: 10px; }
+  .action-buttons button { font-size: 0.95em; padding: 10px 15px; }
+}
+</style>
 
-        /* Removed audio-input-controls and stt-feedback sections */
-        #debugOutput {
-            font-family: monospace;
-            font-size: 0.8em;
-            color: var(--text-color-light, #666);
-            background-color: var(--background-color-light, #f8f8f8);
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-            min-height: 20px;
-            overflow-x: auto;
-            text-align: left;
-        }
-        /* --- IMPORTANT: CHANGED TO html.dark #debugOutput --- */
-        html.dark #debugOutput {
-            background-color: var(--background-color-dark-mode, #2d3748);
-            color: var(--text-color-light-dark-mode, #a0aec0);
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 768px) {
-            /* .input-area-wrapper { margin-bottom: 30px; } Removed this, action-buttons will provide separation */
-            .keyboard-layout { padding: 10px; gap: 8px; margin-top: 20px;} /* Adjusted top margin */
-            .keyboard-row { gap: 8px; }
-            .key-group { min-width: 48px; max-width: 70px; padding-top: 32px; }
-            .latin-label { font-size: 0.7em; top: 4px; }
-            .arabic-label { font-size: 0.65em; top: 20px; }
-            .keyboard-key { height: 48px; line-height: 48px; font-size: 1.4em; }
-            .keyboard-key.wide { min-width: 90px; max-width: 180px; }
-            .keyboard-key.delete { min-width: 50px; max-width: 80px; }
-            .keyboard-key.delete i { font-size: 1.3em; }
-            .final-action-row .key-group { min-width: 100px; max-width: 160px; }
-        }
-
-        @media (max-width: 480px) {
-            /* .input-area-wrapper { margin-bottom: 20px; } Removed this, action-buttons will provide separation */
-            .keyboard-layout { padding: 5px; gap: 5px; margin-top: 15px;} /* Adjusted top margin */
-            .keyboard-row { gap: 5px; }
-            .key-group { min-width: 40px; max-width: 60px; padding-top: 28px; }
-            .latin-label { font-size: 0.65em; top: 3px; }
-            .arabic-label { font-size: 0.6em; top: 18px; }
-            .keyboard-key { height: 40px; line-height: 40px; font-size: 1.2em; }
-            .keyboard-key.wide { min-width: 70px; max-width: 140px; }
-            .keyboard-key.delete { min-width: 45px; max-width: 70px; }
-            .keyboard-key.delete i { font-size: 1.2em; }
-            .final-action-row .key-group { min-width: 80px; max-width: 130px; }
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px; /* Space between input area and action buttons */
-            margin-bottom: 30px; /* Space between action buttons and keyboard */
-        }
-
-        .action-buttons button {
-            padding: 12px 25px;
-            border-radius: var(--border-radius);
-            border: none;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background-color 0.2s, box-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .action-buttons .copy {
-            background-color: var(--accent-color);
-            color: white;
-        }
-        .action-buttons .copy:hover {
-            background-color: #0c7e75;
-        }
-
-        .action-buttons .clear {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        .action-buttons .clear:hover {
-            background-color: #475569;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-color-light);
-            font-size: 0.9em;
-        }
-        .footer i {
-            color: #e74c3c; /* A nice red heart */
-        }
-    </style>
 </head>
 <body>
 
