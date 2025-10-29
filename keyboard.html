@@ -25,7 +25,7 @@
 
     <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
     <!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
- <style>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
@@ -40,7 +40,7 @@
   --text-color: #1e293b;
   --text-color-light: #475569;
   --border-color: #cbd5e1;
-  --button-bg: #f1f5f9;
+  --button-bg: #e2e8f0;
   --button-text-color: #334155;
   --delete-button-bg: #ef4444;
   --delete-button-text-color: #ffffff;
@@ -57,8 +57,8 @@ html.dark {
   --text-color: #f8fafc;
   --text-color-light: #cbd5e1;
   --border-color: #475569;
-  --button-bg: #3b4a5e;
-  --button-text-color: #f1f5f9;
+  --button-bg: #334155;
+  --button-text-color: #cbd5e1;
   --delete-button-bg: #dc2626;
   --delete-button-text-color: #ffffff;
 }
@@ -94,35 +94,27 @@ body {
 .nav-button, #themeToggle {
   padding: 10px 15px;
   border-radius: 8px;
-  border: 2px solid var(--border-color);
+  border: none;
   cursor: pointer;
   font-size: 1em;
   display: flex;
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
 }
 
 .nav-button {
   background-color: var(--secondary-color);
   color: #fff;
-  border-color: var(--secondary-color);
 }
-.nav-button:hover {
-  background-color: #475569;
-  transform: translateY(-2px);
-}
+.nav-button:hover { background-color: #475569; }
 
 #themeToggle {
   background-color: var(--button-bg);
   color: var(--button-text-color);
 }
-#themeToggle:hover {
-  background-color: var(--border-color);
-  transform: translateY(-2px);
-}
+#themeToggle:hover { background-color: var(--border-color); }
 
 h1 {
   font-family: 'Playfair Display', serif;
@@ -172,35 +164,27 @@ h1 {
 .action-buttons button {
   padding: 12px 22px;
   border-radius: var(--border-radius);
-  border: 2px solid var(--border-color);
+  border: none;
   font-size: 1.05em;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+  transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .copy {
   background-color: var(--accent-color);
   color: #fff;
-  border-color: var(--accent-color);
 }
-.copy:hover {
-  background-color: #0c7e75;
-  transform: translateY(-2px);
-}
+.copy:hover { background-color: #0c7e75; }
 
 .clear {
   background-color: var(--secondary-color);
   color: #fff;
-  border-color: var(--secondary-color);
 }
-.clear:hover {
-  background-color: #475569;
-  transform: translateY(-2px);
-}
+.clear:hover { background-color: #475569; }
 
 /* Keyboard Layout */
 .keyboard-layout {
@@ -236,44 +220,31 @@ h1 {
 }
 
 .latin-label { top: 5px; }
-.arabic-label {
-  top: 20px;
-  font-family: 'Noto Naskh Arabic', sans-serif;
-  direction: rtl;
-}
+.arabic-label { top: 20px; font-family: 'Noto Naskh Arabic', sans-serif; direction: rtl; }
 
 .keyboard-key {
   height: 50px;
   width: 100%;
   font-size: 1.4em;
   border-radius: var(--border-radius);
-  border: 2px solid var(--border-color);
-  background-color: var(--button-bg);
+  border: 2px solid var(--button-bg);
   color: var(--button-text-color);
+  background-color: transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: 0.2s;
 }
 
 .keyboard-key:hover {
-  background-color: rgba(var(--accent-rgb), 0.15);
+  background-color: rgba(var(--accent-rgb), 0.1);
   border-color: var(--accent-color);
-  transform: translateY(-2px);
 }
 
 .keyboard-key.delete {
   background-color: var(--delete-button-bg);
   color: #fff;
-  border-color: var(--delete-button-bg);
-  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+  border: none;
 }
-.keyboard-key.delete:hover {
-  background-color: #c53030;
-}
-
-.keyboard-key.delete i {
-  font-size: 1.4em;
-}
+.keyboard-key.delete i { font-size: 1.4em; }
 
 /* Footer */
 .footer {
@@ -284,28 +255,8 @@ h1 {
   color: var(--text-color-light);
   font-size: 0.9em;
 }
-
-/* ✅ Responsive - minor adjustments */
-@media (max-width: 768px) {
-  .container { padding: 20px; }
-  h1 { font-size: 2em; }
-  .tagline { font-size: 1em; margin-bottom: 20px; }
-  .text-input { height: 130px; font-size: 1.2em; }
-  .keyboard-key { height: 45px; font-size: 1.3em; }
-  .key-group { min-width: 45px; max-width: 70px; }
-}
-
-@media (max-width: 480px) {
-  body { padding: 10px; }
-  .container { padding: 15px; }
-  h1 { font-size: 1.7em; }
-  .tagline { font-size: 0.95em; }
-  .text-input { height: 120px; font-size: 1.1em; }
-  .keyboard-key { height: 42px; font-size: 1.2em; }
-  .key-group { min-width: 40px; max-width: 60px; }
-  .action-buttons button { font-size: 0.95em; padding: 10px 15px; }
-}
 </style>
+
 
 
 </head>
