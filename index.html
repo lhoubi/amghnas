@@ -8,7 +8,7 @@
     <meta name="description" content="Convert Tifinagh to Latin (Talatint) and Latin to Tifinagh instantly. Your free online tool for Amazigh/Tamazight script conversion. Includes a link to our Tifinagh keyboard." />
     <meta name="keywords" content="Tifinagh converter, Latin to Tifinagh, Tifinagh to Latin, Talatint, Tamazight script, Amazigh script, Berber language, online keyboard, Tifinagh translator, free converter" />
 
-    <!-- NEW: Favicon links -->
+    <!-- Favicon links -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png"> <!-- For iOS/Safari -->
 
@@ -20,9 +20,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&family=Noto+Sans:wght@300;400;700&family=Noto+Sans+Tifinagh&display=swap" rel="stylesheet">
     
-    <!-- Custom Stylesheet (if any, as provided in the original request) -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
-
     <script>
       tailwind.config = {
         darkMode: 'class', 
@@ -33,10 +30,9 @@
               'serif': ['Playfair Display', 'serif'],
               'tifinagh': ['Noto Sans Tifinagh', 'sans-serif'],
             },
-            // Custom colors for the logo gradient (if desired for the main logo too)
             colors: {
-              'logo-start': '#00BCD4', // Cyan from the logo
-              'logo-end': '#673AB7',   // Deep Purple from the logo
+              'logo-start': '#00BCD4',
+              'logo-end': '#673AB7',
             },
           },
         },
@@ -59,16 +55,15 @@
       <div class="relative isolate px-6 pt-6 lg:px-8">
 
         <!-- HEADER -->
-        <header class="flex justify-between items-center py-4">
-          <div class="flex-1">
-            <!-- Anchor text descriptive for SEO -->
+        <header class="flex flex-col sm:flex-row justify-center sm:justify-between items-center py-4 sm:py-6 gap-3 sm:gap-0">
+          <div class="flex-1 text-center sm:text-left order-2 sm:order-1">
             <a href="keyboard.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Online Tifinagh Keyboard</a>
           </div>
-          <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0">
-            <span class="text-5xl md:text-6xl font-tifinagh text-purple-600 dark:text-purple-400">ⴰⵎⵖⵏⴰⵙ</span>
-            <span class="sr-only">amghnas - Tifinagh Talatint Converter</span> <!-- Accessible text for screen readers and SEO -->
+          <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0 order-1 sm:order-2">
+            <span class="text-4xl sm:text-5xl md:text-6xl font-tifinagh text-purple-600 dark:text-purple-400">ⴰⵎⵖⵏⴰⵙ</span>
+            <span class="sr-only">amghnas - Tifinagh Talatint Converter</span>
           </h1>
-          <div class="flex-1 flex justify-end">
+          <div class="flex-1 flex justify-center sm:justify-end order-3 sm:order-3">
             <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
               <span class="moon-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -85,30 +80,28 @@
         </header>
 
         <!-- MAIN -->
-        <main class="mx-auto max-w-5xl py-12 sm:py-16">
+        <main class="mx-auto max-w-5xl py-8 sm:py-12">
           <div class="text-center">
-            <!-- H2 with keywords -->
-            <h2 class="text-4xl font-bold tracking-tight sm:text-6xl font-serif">Tifinagh & Talatint Script Converter</h2>
-            <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-5xl font-serif">Tifinagh & Talatint Script Converter</h2>
+            <p class="mt-4 text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Journey between ancient Tifinagh and classical Latin scripts with ease.
               Convert Tamazight/Amazigh text effortlessly.
             </p>
           </div>
 
-          <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             
             <!-- Tifinagh → Talatint -->
-            <div class="space-y-6 p-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
-              <!-- H3 with keywords -->
-              <h3 class="text-2xl font-semibold font-serif text-indigo-600 dark:text-indigo-400">Tifinagh to Talatint (Latin) Converter</h3>
+            <div class="space-y-5 p-5 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
+              <h3 class="text-xl font-semibold font-serif text-indigo-600 dark:text-indigo-400">Tifinagh to Talatint (Latin) Converter</h3>
               <div>
                 <label for="tifinaghInputMain" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Input</label>
-                <textarea id="tifinaghInputMain" placeholder="ⴰⵣⵓⵍ (Azul)... Enter Tifinagh text here to convert to Latin." class="font-tifinagh text-lg w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                <textarea id="tifinaghInputMain" placeholder="ⴰⵣⵓⵍ (Azul)... Enter Tifinagh text here to convert to Latin." class="font-tifinagh text-lg w-full min-h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-y focus:ring-2 focus:ring-indigo-500"></textarea>
               </div>
               <div>
                 <label for="talatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output</label>
                 <div class="relative">
-                  <textarea id="talatintOutput" readonly placeholder="Converted Latin text will appear here." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <textarea id="talatintOutput" readonly placeholder="Converted Latin text will appear here." class="w-full min-h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-y"></textarea>
                   <button onclick="copyToClipboard('talatintOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy Tifinagh to Latin conversion">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
@@ -121,17 +114,16 @@
             </div>
 
             <!-- Latin → Tifinagh + Talatint -->
-            <div class="space-y-6 p-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
-              <!-- H3 with keywords -->
-              <h3 class="text-2xl font-semibold font-serif text-indigo-600 dark:text-indigo-400">Latin to Tifinagh & Talatint Converter</h3>
+            <div class="space-y-5 p-5 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-slate-700/50">
+              <h3 class="text-xl font-semibold font-serif text-indigo-600 dark:text-indigo-400">Latin to Tifinagh & Talatint Converter</h3>
               <div>
                 <label for="latinInputMain" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Latin Input</label>
-                <textarea id="latinInputMain" placeholder="amɣnas, azul... Enter Latin text here to convert to Tifinagh and Talatint." class="text-lg w-full h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                <textarea id="latinInputMain" placeholder="amɣnas, azul... Enter Latin text here to convert to Tifinagh and Talatint." class="text-lg w-full min-h-40 p-3 bg-white dark:bg-slate-900/70 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-y focus:ring-2 focus:ring-indigo-500"></textarea>
               </div>
               <div>
                 <label for="tifinaghLatinOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Tifinagh Output</label>
                 <div class="relative">
-                  <textarea id="tifinaghLatinOutput" readonly placeholder="Converted Tifinagh text will appear here." class="font-tifinagh text-lg w-full h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <textarea id="tifinaghLatinOutput" readonly placeholder="Converted Tifinagh text will appear here." class="font-tifinagh text-lg w-full min-h-32 p-3 bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-y"></textarea>
                   <button onclick="copyToClipboard('tifinaghLatinOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy Latin to Tifinagh conversion">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
@@ -144,7 +136,7 @@
               <div>
                 <label for="extendedTalatintOutput" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Talatint Output (Extended Latin)</label>
                 <div class="relative">
-                  <textarea id="extendedTalatintOutput" readonly placeholder="Converted Talatint (Extended Latin) text will appear here." class="w-full h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-none"></textarea>
+                  <textarea id="extendedTalatintOutput" readonly placeholder="Converted Talatint (Extended Latin) text will appear here." class="w-full min-h-32 p-3 text-lg bg-gray-100 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 rounded-lg resize-y"></textarea>
                   <button onclick="copyToClipboard('extendedTalatintOutput', this)" class="absolute top-2 right-2 p-1.5 rounded-md bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Copy Extended Talatint conversion">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
@@ -160,15 +152,14 @@
         </main>
 
         <!-- FOOTER -->
-        <footer class="text-center py-8 mt-12 border-t border-gray-200 dark:border-slate-800">
-          <p class="text-gray-500 dark:text-gray-400">&copy; <span id="copyright-year">2024</span> Tifinagh & Talatint Converter.</p>
-          <p class="text-gray-500 dark:text-gray-400 mt-2">
+        <footer class="text-center py-6 sm:py-8 mt-10 border-t border-gray-200 dark:border-slate-800">
+          <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">&copy; <span id="copyright-year">2024</span> Tifinagh & Talatint Converter.</p>
+          <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
             Made with <span class="text-red-500">❤</span> for Amazigh culture.
-            <br> <!-- NEW: Line break for cleaner presentation -->
-            By: Anaruz Elhabib <!-- NEW: Requested credit line -->
+            <br>
+            By: Anaruz Elhabib
           </p>
-          <!-- NEW: Small text with internal link to keyboard and keywords for SEO -->
-          <p class="text-gray-500 dark:text-gray-400 mt-2">
+          <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
             Explore our <a href="keyboard.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">online Tifinagh keyboard</a> for easy Tamazight typing.
           </p>
         </footer>
@@ -185,18 +176,16 @@
         textarea.select();
         textarea.setSelectionRange(0, 99999); // For mobile devices
 
-        // Use the modern Clipboard API
         navigator.clipboard.writeText(textarea.value)
           .then(() => {
             const confirmationSpan = document.getElementById(elementId + '-confirm');
             confirmationSpan.classList.add('fade-in', 'opacity-100');
             setTimeout(() => {
               confirmationSpan.classList.remove('fade-in', 'opacity-100');
-            }, 1500); // Show "Copied!" for 1.5 seconds
+            }, 1500);
           })
           .catch(err => {
             console.error('Failed to copy text: ', err);
-            // Fallback for older browsers or if Clipboard API is not available/permitted
             document.execCommand('copy');
             const confirmationSpan = document.getElementById(elementId + '-confirm');
             confirmationSpan.classList.add('fade-in', 'opacity-100');
@@ -206,7 +195,6 @@
           });
       }
 
-      // Set current year in footer
       document.getElementById('copyright-year').textContent = new Date().getFullYear();
     </script>
   </body>
