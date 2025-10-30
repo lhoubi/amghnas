@@ -3,384 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- UPDATED: More descriptive and keyword-rich Title Tag -->
     <title>Online Tifinagh Keyboard | Type Tamazight & Amazigh Script with Latin/Arabic Input | amghnas.com</title>
-
-    <!-- NEW: Meta Description for SEO -->
     <meta name="description" content="Use our free online Tifinagh keyboard to type Tamazight/Amazigh script. Easily convert Latin or Arabic input to Tifinagh characters. Perfect for learning and writing." />
-    
-    <!-- NEW: Meta Keywords (less critical now, but still good practice for some engines) -->
     <meta name="keywords" content="Tifinagh keyboard, online Tifinagh, Tamazight keyboard, Amazigh keyboard, Berber keyboard, type Tifinagh, Latin to Tifinagh, Arabic to Tifinagh, Tifinagh script, virtual keyboard" />
-
-    <!-- Favicon -->
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="favicon.png"> <!-- Recommended for iOS devices -->
-
-    <!-- Google Fonts: Using Roboto for general text and Playfair Display for main titles -->
+    <link rel="apple-touch-icon" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome for Icons (used in buttons like backspace, copy, clear) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
-    <!-- Noto Sans Tifinagh font: Crucial for displaying Tifinagh characters correctly -->
-    <!-- Noto Naskh Arabic font: For displaying Arabic characters correctly -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+        :root {
+            --primary-color: #334155;
+            --secondary-color: #64748b;
+            --accent-color: #0d9488;
+            --accent-rgb: 13, 148, 136;
+            --background-color: #f8fafc;
+            --background-color-light: #e2e8f0;
+            --text-color: #1e293b;
+            --text-color-light: #475569;
+            --border-color: #cbd5e1;
+            --button-bg: #f1f5f9;
+            --button-text-color: #334155;
+            --delete-button-bg: #ef4444;
+            --delete-button-text-color: #ffffff;
+            --border-radius: 10px;
+        }
 
-:root{
-  --primary-color:#334155;
-  --secondary-color:#64748b;
-  --accent-color:#0d9488;
-  --accent-rgb:13,148,136;
-  --background-color:#f8fafc;
-  --background-color-light:#e2e8f0;
-  --text-color:#1e293b;
-  --text-color-light:#475569;
-  --border-color:#cbd5e1;
-  --button-bg:#f1f5f9;
-  --button-text-color:#334155;
-  --delete-button-bg:#ef4444;
-  --delete-button-text-color:#ffffff;
-  --border-radius:10px;
-}
+        html.dark {
+            --primary-color: #94a3b8;
+            --secondary-color: #64748b;
+            --accent-color: #2dd4bf;
+            --accent-rgb: 45, 212, 191;
+            --background-color: #1e293b;
+            --background-color-light: #334155;
+            --text-color: #f8fafc;
+            --text-color-light: #cbd5e1;
+            --border-color: #475569;
+            --button-bg: #3b4a5e;
+            --button-text-color: #f1f5f9;
+            --delete-button-bg: #dc2626;
+            --delete-button-text-color: #ffffff;
+        }
 
-/* dark theme variables kept for parity */
-html.dark{
-  --primary-color:#94a3b8;
-  --secondary-color:#64748b;
-  --accent-color:#2dd4bf;
-  --accent-rgb:45,212,191;
-  --background-color:#1e293b;
-  --background-color-light:#334155;
-  --text-color:#f8fafc;
-  --text-color-light:#cbd5e1;
-  --border-color:#475569;
-  --button-bg:#3b4a5e;
-  --button-text-color:#f1f5f9;
-  --delete-button-bg:#dc2626;
-  --delete-button-text-color:#ffffff;
-}
+        * {
+            box-sizing: border-box
+        }
 
-*{box-sizing:border-box}
-body{
-  font-family:'Roboto',sans-serif;
-  background-color:var(--background-color);
-  color:var(--text-color);
-  margin:0;
-  padding:20px;
-  display:flex;
-  justify-content:center;
-}
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
 
-.container{
-  max-width:1000px;
-  width:100%;
-  background-color:var(--background-color-light);
-  border-radius:var(--border-radius);
-  box-shadow:0 4px 20px rgba(0,0,0,0.08);
-  padding:30px;
-}
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: var(--background-color-light);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
 
-/* header / controls */
-.header-controls{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.nav-button, #themeToggle{
-  padding:10px 15px;
-  border-radius:8px;
-  border:2px solid var(--border-color);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  text-decoration:none;
-  transition:all .25s ease;
-  box-shadow:0 2px 4px rgba(0,0,0,.08);
-}
-.nav-button{ background-color:var(--secondary-color); color:#fff; border-color:var(--secondary-color); }
-#themeToggle{ background-color:var(--button-bg); color:var(--button-text-color); }
+        /* header / controls */
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative; /* Added for absolute positioning of logo */
+        }
 
-h1{
-  font-family:'Playfair Display',serif;
-  font-size:2.5em;
-  text-align:center;
-  color:var(--primary-color);
-  margin:25px 0 10px;
-}
-.tagline{
-  text-align:center;
-  font-size:1.1em;
-  color:var(--text-color-light);
-  margin-bottom:30px;
-}
+        .nav-button,
+        #themeToggle {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all .25s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+            background-color: var(--button-bg); /* Made consistent */
+            color: var(--button-text-color); /* Made consistent */
+        }
 
-/* input */
-.input-area-wrapper{ display:flex; justify-content:center; }
-.text-input{
-  width:100%;
-  max-width:800px;
-  height:150px;
-  padding:15px;
-  font-size:1.4em;
-  border:2px solid var(--border-color);
-  border-radius:var(--border-radius);
-  background-color:var(--background-color);
-  color:var(--text-color);
-  font-family:'Noto Sans Tifinagh','Noto Naskh Arabic','Roboto',sans-serif;
-  line-height:1.6;
-  resize:vertical;
-}
-
-/* Action buttons */
-.action-buttons{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin:25px 0;
-  flex-wrap:wrap;
-}
-.action-buttons button{
-  padding:12px 22px;
-  border-radius:var(--border-radius);
-  border:2px solid var(--border-color);
-  font-size:1.05em;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  transition:all .25s ease;
-  box-shadow:0 3px 6px rgba(0,0,0,.12);
-}
-.copy{ background-color:var(--accent-color); color:#fff; border-color:var(--accent-color); }
-.clear{ background-color:var(--secondary-color); color:#fff; border-color:var(--secondary-color); }
-
-/* ---------------------
-   KEYBOARD LAYOUT + LABEL FIX
-   --------------------- */
-
-/* main layout */
-.keyboard-layout{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  padding:10px;
-}
-
-/* keyboard rows center and keep consistent spacing */
-.keyboard-row{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-}
-
-/* IMPORTANT: change how key-group is structured:
-   - Use column layout so labels sit above the key
-   - Keep a fixed visual box width so labels align correctly
-*/
-.key-group{
-  display:flex;
-  flex-direction:column;       /* stack: labels -> button */
-  align-items:center;
-  gap:6px;
-  width:76px;                  /* fixed visual column width to match screenshot spacing */
-  min-width:76px;
-  max-width:76px;
-  padding-top:6px;             /* create slight vertical offset like in screenshot */
-  box-sizing:border-box;
-  text-align:center;
-}
-
-/* Container for Latin and Arabic labels to put them side-by-side */
-.label-container {
-    display: flex;
-    justify-content: center; /* Center the pair of labels */
-    gap: 4px; /* Space between Latin and Arabic */
-    width: 100%; /* Ensure container takes full width of key-group for centering */
-    line-height: 1; /* Keep line height tight */
-    margin-bottom: -2px; /* Pull labels slightly closer to the button */
-}
-
-/* Latin label (small, centered) */
-.latin-label{
-  font-size:0.72rem;
-  color:var(--text-color-light);
-  line-height:1;
-  letter-spacing:0.6px;
-  text-transform:lowercase;
-  white-space:nowrap;
-  pointer-events:none;
-}
-
-/* Arabic label (small, centered under latin label)
-   Use Arabic font and rtl direction but centered visually */
-.arabic-label{
-  font-size:0.65rem;
-  color:var(--text-color-light);
-  line-height:1;
-  font-family:'Noto Naskh Arabic',sans-serif;
-  direction:rtl;
-  white-space:nowrap;
-  pointer-events:none;
-}
-
-/* the visible key button */
-.keyboard-key{
-  height:56px;
-  width:100%;
-  border-radius:12px;
-  border:2px solid var(--border-color);
-  background-color:var(--button-bg);
-  color:var(--button-text-color);
-  font-size:1.6rem;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:all .15s ease;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-  user-select:none;
-}
-
-/* hover / active affordances */
-.keyboard-key:hover{ transform:translateY(-3px); border-color:var(--accent-color); background-color:rgba(var(--accent-rgb),0.08); }
-.keyboard-key:active{ transform:translateY(0); box-shadow:0 1px 3px rgba(0,0,0,.06); }
-
-/* delete key styling */
-.keyboard-key.delete{
-  background-color:var(--delete-button-bg);
-  color:var(--delete-button-text-color);
-  border-color:var(--delete-button-bg);
-  box-shadow:0 3px 8px rgba(239,68,68,0.18);
-}
-
-/* adjust wide / space keys */
-.keyboard-key.wide{ height:56px; font-size:1.15rem; }
-
-/* footer */
-.footer{
-  text-align:center;
-  margin-top:50px;
-  padding-top:20px;
-  border-top:1px solid var(--border-color);
-  color:var(--text-color-light);
-  font-size:0.9em;
-}
-
-/* ---------------------
-   Responsiveness — keep exact desktop look but tidy mobile
-   --------------------- */
-@media (max-width: 1024px){
-  .key-group{ width:72px; min-width:72px; max-width:72px; }
-  .keyboard-key{ height:54px; font-size:1.4rem; }
-  .label-container { gap: 3px; }
-  .latin-label{ font-size:0.7rem; }
-  .arabic-label{ font-size:0.6rem; }
-}
-
-@media (max-width: 768px){
-  .container{ padding:20px; }
-  h1{ font-size:2em; }
-  .tagline{ font-size:1em; margin-bottom:20px; }
-  .text-input{ height:130px; font-size:1.2em; }
-  .key-group{ width:66px; min-width:66px; max-width:66px; gap:4px; }
-  .label-container { gap: 3px; }
-  .latin-label{ font-size:0.68rem; }
-  .arabic-label{ font-size:0.62rem; }
-  .keyboard-key{ height:48px; font-size:1.2rem; border-radius:10px; }
-}
-
-@media (max-width: 480px){
-  body{ padding:10px; }
-  .container{ padding:15px; }
-  h1{ font-size:1.7em; }
-  .tagline{ font-size:0.95em; }
-  .text-input{ height:120px; font-size:1.1em; }
-  .key-group{ width:60px; min-width:60px; max-width:60px; }
-  .label-container { gap: 2px; }
-  .latin-label{ font-size:0.64rem; }
-  .arabic-label{ font-size:0.58rem; }
-  .keyboard-key{ height:42px; font-size:1.05rem; border-radius:10px; }
-}
-
-/* Red Fire Glow Effect for active keys */
-.keyboard-key.key-active {
-  animation: fireGlow 0.15s forwards; /* Short animation for a quick glow */
-}
-
-@keyframes fireGlow {
-  0% {
-    box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7); /* Start with no glow */
-    border-color: var(--accent-color); /* Keep original border color */
-    transform: translateY(0); /* Ensure it doesn't move on activation */
-  }
-  50% {
-    box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7), /* Red glow */
-                0 0 20px 10px rgba(255, 140, 0, 0.5); /* Orange secondary glow */
-    border-color: #ff4500; /* Red border */
-    background-color: #ff6347; /* Lighter red background */
-    color: #fff; /* White text for contrast */
-  }
-  100% {
-    box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7); /* Fade out glow */
-    border-color: var(--border-color); /* Return to normal border */
-    background-color: var(--button-bg); /* Return to normal background */
-    color: var(--button-text-color); /* Return to normal text color */
-  }
-}
-
-/* Optional: Adjust hover for delete button when active */
-.keyboard-key.delete.key-active {
-  animation: fireGlowDelete 0.15s forwards;
-}
-
-@keyframes fireGlowDelete {
-  0% {
-    box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
-    border-color: var(--delete-button-bg);
-    transform: translateY(0);
-  }
-  50% {
-    box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
-                0 0 20px 10px rgba(255, 140, 0, 0.5);
-    border-color: #ff4500;
-    background-color: #ff6347;
-    color: #fff;
-  }
-  100% {
-    box-shadow: 0 3px 8px rgba(239,68,68,0.18); /* Revert to normal delete shadow */
-    border-color: var(--delete-button-bg);
-    background-color: var(--delete-button-bg);
-    color: var(--delete-button-text-color);
-  }
-}
-
-/* Visually hidden utility class */
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-/* Ensure the sun icon is hidden by default if moon is shown by default */
-.sun-icon.hidden { display: none; }
-.moon-icon.hidden { display: none; }
-
-</style>
+        /* Specific styling for nav-button to match toggle */
+        .nav-button {
+            border-radius: 8px; /* Ensure same border-radius */
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+        }
+        
+        /* amghnas logo styling */
+        .amghnas-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50%; /* Adjust as needed for vertical alignment */
+            font-family: 'Noto Sans Tifinagh', sans-serif; /* Use Tifinagh font */
+            font-size: 2.5em; /* Adjust size as needed */
+            color: #8A2BE2; /* Purple color from image */
+            text-decoration: none;
+            line-height: 1;
+            white-space: nowrap;
+        }
 
 
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            text-align: center;
+            color: var(--primary-color);
+            margin: 25px 0 10px;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--text-color-light);
+            margin-bottom: 30px;
+        }
+
+        /* input */
+        .input-area-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .text-input {
+            width: 100%;
+            max-width: 800px;
+            height: 150px;
+            padding: 15px;
+            font-size: 1.4em;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
+            padding: 12px 22px;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border-color);
+            font-size: 1.05em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .25s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .12);
+        }
+
+        .copy {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
+
+        .clear {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border-color: var(--secondary-color);
+        }
+
+        /* ---------------------
+           KEYBOARD LAYOUT + LABEL FIX
+           --------------------- */
+
+        /* main layout */
+        .keyboard-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px;
+        }
+
+        /* keyboard rows center and keep consistent spacing */
+        .keyboard-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        /* IMPORTANT: change how key-group is structured:
+           - Use column layout so labels sit above the key
+           - Keep a fixed visual box width so labels align correctly
+        */
+        .key-group {
+            display: flex;
+            flex-direction: column;
+            /* stack: labels -> button */
+            align-items: center;
+            gap: 6px;
+            width: 76px;
+            /* fixed visual column width to match screenshot spacing */
+            min-width: 76px;
+            max-width: 76px;
+            padding-top: 6px;
+            /* create slight vertical offset like in screenshot */
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Container for Latin and Arabic labels to put them side-by-side */
+        .label-container {
+            display: flex;
+            justify-content: center;
+            /* Center the pair of labels */
+            gap: 4px;
+            /* Space between Latin and Arabic */
+            width: 100%;
+            /* Ensure container takes full width of key-group for centering */
+            line-height: 1;
+            /* Keep line height tight */
+            margin-bottom: -2px;
+            /* Pull labels slightly closer to the button */
+        }
+
+        /* Latin label (small, centered) */
+        .latin-label {
+            font-size: 0.72rem;
+            color: var(--text-color-light);
+            line-height: 1;
+            letter-spacing: 0.6px;
+            text-transform: lowercase;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* Arabic label (small, centered under latin label)
+           Use Arabic font and rtl direction but centered visually */
+        .arabic-label {
+            font-size: 0.65rem;
+            color: var(--text-color-light);
+            line-height: 1;
+            font-family: 'Noto Naskh Arabic', sans-serif;
+            direction: rtl;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* the visible key button */
+        .keyboard-key {
+            height: 56px;
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .15s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+            user-select: none;
+        }
+
+        /* hover / active affordances */
+        .keyboard-key:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+            background-color: rgba(var(--accent-rgb), 0.08);
+        }
+
+        .keyboard-key:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+        }
+
+        /* delete key styling */
+        .keyboard-key.delete {
+            background-color: var(--delete-button-bg);
+            color: var(--delete-button-text-color);
+            border-color: var(--delete-button-bg);
+            box-shadow: 0 3px 8px rgba(239, 68, 68, 0.18);
+        }
+
+        /* adjust wide / space keys */
+        .keyboard-key.wide {
+            height: 56px;
+            font-size: 1.15rem;
+        }
+
+        /* footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color-light);
+            font-size: 0.9em;
+        }
+
+        /* ---------------------
+           Responsiveness — keep exact desktop look but tidy mobile
+           --------------------- */
+        @media (max-width: 1024px) {
+            .key-group {
+                width: 72px;
+                min-width: 72px;
+                max-width: 72px;
+            }
+
+            .keyboard-key {
+                height: 54px;
+                font-size: 1.4rem;
+            }
+
+            .label-container {
+                gap: 3px;
+            }
+
+            .latin-label {
+                font-size: 0.7rem;
+            }
+
+            .arabic-label {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .tagline {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+
+            .text-input {
+                height: 130px;
+                font-size: 1.2em;
+            }
+
+            .key-group {
+                width: 66px;
+                min-width: 66px;
+                max-width: 66px;
+                gap: 4px;
+            }
+
+            .label-container {
+                gap: 3px;
+            }
+
+            .latin-label {
+                font-size: 0.68rem;
+            }
+
+            .arabic-label {
+                font-size: 0.62rem;
+            }
+
+            .keyboard-key {
+                height: 48px;
+                font-size: 1.2rem;
+                border-radius: 10px;
+            }
+
+            .amghnas-logo {
+                font-size: 2em; /* Adjust for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.7em;
+            }
+
+            .tagline {
+                font-size: 0.95em;
+            }
+
+            .text-input {
+                height: 120px;
+                font-size: 1.1em;
+            }
+
+            .key-group {
+                width: 60px;
+                min-width: 60px;
+                max-width: 60px;
+            }
+
+            .label-container {
+                gap: 2px;
+            }
+
+            .latin-label {
+                font-size: 0.64rem;
+            }
+
+            .arabic-label {
+                font-size: 0.58rem;
+            }
+
+            .keyboard-key {
+                height: 42px;
+                font-size: 1.05rem;
+                border-radius: 10px;
+            }
+
+            .amghnas-logo {
+                font-size: 1.5em; /* Further adjust for mobile */
+            }
+        }
+
+        /* Red Fire Glow Effect for active keys */
+        .keyboard-key.key-active {
+            animation: fireGlow 0.15s forwards;
+            /* Short animation for a quick glow */
+        }
+
+        @keyframes fireGlow {
+            0% {
+                box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
+                /* Start with no glow */
+                border-color: var(--accent-color);
+                /* Keep original border color */
+                transform: translateY(0);
+                /* Ensure it doesn't move on activation */
+            }
+
+            50% {
+                box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
+                    /* Red glow */
+                    0 0 20px 10px rgba(255, 140, 0, 0.5);
+                /* Orange secondary glow */
+                border-color: #ff4500;
+                /* Red border */
+                background-color: #ff6347;
+                /* Lighter red background */
+                color: #fff;
+                /* White text for contrast */
+            }
+
+            100% {
+                box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
+                /* Fade out glow */
+                border-color: var(--border-color);
+                /* Return to normal border */
+                background-color: var(--button-bg);
+                /* Return to normal background */
+                color: var(--button-text-color);
+                /* Return to normal text color */
+            }
+        }
+
+        /* Optional: Adjust hover for delete button when active */
+        .keyboard-key.delete.key-active {
+            animation: fireGlowDelete 0.15s forwards;
+        }
+
+        @keyframes fireGlowDelete {
+            0% {
+                box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
+                border-color: var(--delete-button-bg);
+                transform: translateY(0);
+            }
+
+            50% {
+                box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
+                    0 0 20px 10px rgba(255, 140, 0, 0.5);
+                border-color: #ff4500;
+                background-color: #ff6347;
+                color: #fff;
+            }
+
+            100% {
+                box-shadow: 0 3px 8px rgba(239, 68, 68, 0.18);
+                /* Revert to normal delete shadow */
+                border-color: var(--delete-button-bg);
+                background-color: var(--delete-button-bg);
+                color: var(--delete-button-text-color);
+            }
+        }
+
+        /* Visually hidden utility class */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Ensure the sun icon is hidden by default if moon is shown by default */
+        .sun-icon.hidden {
+            display: none;
+        }
+
+        .moon-icon.hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -391,10 +551,14 @@ h1{
             <a href="index.html" class="nav-button">
                 <i class="fas fa-arrow-left"></i> Tifinagh Converter
             </a>
+
+            <!-- amghnas logo -->
+            <a href="#" class="amghnas-logo">ⴰⵎⵖⵏⴰⵙ</a>
+
             <!-- Dark Mode Toggle Button -->
-            <button id="themeToggle" aria-label="Toggle light and dark mode">
-                <i class="fas fa-moon moon-icon"></i> <!-- Moon icon for light mode, shown by default -->
-                <i class="fas fa-sun sun-icon hidden"></i> <!-- Sun icon for dark mode, hidden by default -->
+            <button id="themeToggle" class="nav-button" aria-label="Toggle light and dark mode">
+                <i class="fas fa-moon moon-icon"></i>
+                <i class="fas fa-sun sun-icon hidden"></i>
                 Toggle Dark Mode
             </button>
         </div>
@@ -415,50 +579,109 @@ h1{
             <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear Text</button>
         </div>
 
-    <div class="keyboard-layout">
+        <div class="keyboard-layout">
 
-                <!-- ROW 1 (10 Keys) -->
-                <div class="keyboard-row">
-                    <div class="key-group" data-latin="a" data-arabic="ا"> <div class="label-container"><span class="latin-label">a</span><span class="arabic-label">ا- الفتحة</span></div> <button class="keyboard-key" data-key="ⴰ">ⴰ</button> </div>
-                    <div class="key-group" data-latin="b" data-arabic="ب"> <div class="label-container"><span class="latin-label">b</span><span class="arabic-label">ب</span></div> <button class="keyboard-key" data-key="ⴱ">ⴱ</button> </div>
-                    <div class="key-group" data-latin="d" data-arabic="د"> <div class="label-container"><span class="latin-label">d</span><span class="arabic-label">د</span></div> <button class="keyboard-key" data-key="ⴷ">ⴷ</button> </div>
-                    <div class="key-group" data-latin="ḍ" data-arabic="ض"> <div class="label-container"><span class="latin-label">ḍ</span><span class="arabic-label">ض</span></div> <button class="keyboard-key" data-key="ⴹ">ⴹ</button> </div>
-                    <div class="key-group" data-latin="e" data-arabic=""> <div class="label-container"><span class="latin-label">e</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⴻ">ⴻ</button> </div>
-                    <div class="key-group" data-latin="f" data-arabic="ف"> <div class="label-container"><span class="latin-label">f</span><span class="arabic-label">ف</span></div> <button class="keyboard-key" data-key="ⴼ">ⴼ</button> </div>
-                    <div class="key-group" data-latin="g" data-arabic="ڭ"> <div class="label-container"><span class="latin-label">g</span><span class="arabic-label">ڭ</span></div> <button class="keyboard-key" data-key="ⴳ">ⴳ</button> </div>
-                    <div class="key-group" data-latin="h" data-arabic="ه"> <div class="label-container"><span class="latin-label">h</span><span class="arabic-label">ه</span></div> <button class="keyboard-key" data-key="ⵀ">ⵀ</button> </div>
-                    <div class="key-group" data-latin="ḥ" data-arabic="ح"> <div class="label-container"><span class="latin-label">ḥ</span><span class="arabic-label">ح</span></div> <button class="keyboard-key" data-key="ⵃ">ⵃ</button> </div>
-                    <div class="key-group" data-latin="i" data-arabic="إ"> <div class="label-container"><span class="latin-label">i</span><span class="arabic-label">إ-الكسرة</span></div> <button class="keyboard-key" data-key="ⵉ">ⵉ</button> </div>
+            <!-- ROW 1 (10 Keys) -->
+            <div class="keyboard-row">
+                <div class="key-group" data-latin="a" data-arabic="ا">
+                    <div class="label-container"><span class="latin-label">a</span><span class="arabic-label">ا- الفتحة</span></div> <button class="keyboard-key" data-key="ⴰ">ⴰ</button>
                 </div>
-
-                <!-- ROW 2 (10 Keys) -->
-                <div class="keyboard-row">
-                    <div class="key-group" data-latin="j" data-arabic="ج"> <div class="label-container"><span class="latin-label">j</span><span class="arabic-label">ج</span></div> <button class="keyboard-key" data-key="ⵊ">ⵊ</button> </div>
-                    <div class="key-group" data-latin="k" data-arabic="ك"> <div class="label-container"><span class="latin-label">k</span><span class="arabic-label">ك</span></div> <button class="keyboard-key" data-key="ⴽ">ⴽ</button> </div>
-                    <div class="key-group" data-latin="l" data-arabic="ل"> <div class="label-container"><span class="latin-label">L</span><span class="arabic-label">ل</span></div> <button class="keyboard-key" data-key="ⵍ">ⵍ</button> </div>
-                    <div class="key-group" data-latin="m" data-arabic="م"> <div class="label-container"><span class="latin-label">m</span><span class="arabic-label">م</span></div> <button class="keyboard-key" data-key="ⵎ">ⵎ</button> </div>
-                    <div class="key-group" data-latin="n" data-arabic="ن"> <div class="label-container"><span class="latin-label">n</span><span class="arabic-label">ن</span></div> <button class="keyboard-key" data-key="ⵏ">ⵏ</button> </div>
-                    <div class="key-group" data-latin="p" data-arabic="پ"> <div class="label-container"><span class="latin-label">p</span><span class="arabic-label">پ</span></div> <button class="keyboard-key" data-key="ⵒ">ⵒ</button> </div>
-                    <div class="key-group" data-latin="q" data-arabic="ق"> <div class="label-container"><span class="latin-label">q</span><span class="arabic-label">ق</span></div> <button class="keyboard-key" data-key="ⵇ">ⵇ</button> </div>
-                    <div class="key-group" data-latin="r" data-arabic="ر"> <div class="label-container"><span class="latin-label">r</span><span class="arabic-label">ر</span></div> <button class="keyboard-key" data-key="ⵔ">ⵔ</button> </div>
-                    <div class="key-group" data-latin="ṛ" data-arabic=""> <div class="label-container"><span class="latin-label">Ṛ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵕ">ⵕ</button> </div>
-                    <div class="key-group" data-latin="s" data-arabic="س"> <div class="label-container"><span class="latin-label">s</span><span class="arabic-label">س</span></div> <button class="keyboard-key" data-key="ⵙ">ⵙ</button> </div>
+                <div class="key-group" data-latin="b" data-arabic="ب">
+                    <div class="label-container"><span class="latin-label">b</span><span class="arabic-label">ب</span></div> <button class="keyboard-key" data-key="ⴱ">ⴱ</button>
                 </div>
-
-                <!-- ROW 3 (10 Keys) -->
-                <div class="keyboard-row">
-                    <div class="key-group" data-latin="sh" data-arabic="ش"> <div class="label-container"><span class="latin-label">sh</span><span class="arabic-label">ش</span></div><button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
-                    <div class="key-group" data-latin="ṣ" data-arabic="ص"> <div class="label-container"><span class="latin-label">ṣ</span><span class="arabic-label">ص</span></div> <button class="keyboard-key" data-key="ⵚ">ⵚ</button> </div>
-                    <div class="key-group" data-latin="t" data-arabic="ت"> <div class="label-container"><span class="latin-label">t</span><span class="arabic-label">ت</span></div> <button class="keyboard-key" data-key="ⵜ">ⵜ</button> </div>
-                    <div class="key-group" data-latin="ṭ" data-arabic="ط"> <div class="label-container"><span class="latin-label">ṭ</span><span class="arabic-label">ط</span></div> <button class="keyboard-key" data-key="ⵟ">ⵟ</button> </div>
-                    <div class="key-group" data-latin="u" data-arabic="أُ"> <div class="label-container"><span class="latin-label">u</span><span class="arabic-label">أُ-الضمة</span></div> <button class="keyboard-key" data-key="ⵓ">ⵓ</button> </div>
-                    <div class="key-group" data-latin="v" data-arabic="ڤ"> <div class="label-container"><span class="latin-label">v</span><span class="arabic-label">ڤ</span></div> <button class="keyboard-key" data-key="ⵠ">ⵠ</button> </div>
-                    <div class="key-group" data-latin="w" data-arabic="و"> <div class="label-container"><span class="latin-label">w</span><span class="arabic-label">و</span></div> <button class="keyboard-key" data-key="ⵡ">ⵡ</button> </div>
-                    <div class="key-group" data-latin="kh" data-arabic="خ"> <div class="label-container"><span class="latin-label">kh</span><span class="arabic-label">خ</span></div> <button class="keyboard-key" data-key="ⵅ">ⵅ</button> </div>
-                    <div class="key-group" data-latin="y" data-arabic="ي"> <div class="label-container"><span class="latin-label">y</span><span class="arabic-label">ي</span></div> <button class="keyboard-key" data-key="ⵢ">ⵢ</button> </div>
-                    <div class="key-group" data-latin="z" data-arabic="ز"> <div class="label-container"><span class="latin-label">z</span><span class="arabic-label">ز</span></div> <button class="keyboard-key" data-key="ⵣ">ⵣ</button> </div>
+                <div class="key-group" data-latin="d" data-arabic="د">
+                    <div class="label-container"><span class="latin-label">d</span><span class="arabic-label">د</span></div> <button class="keyboard-key" data-key="ⴷ">ⴷ</button>
                 </div>
+                <div class="key-group" data-latin="ḍ" data-arabic="ض">
+                    <div class="label-container"><span class="latin-label">ḍ</span><span class="arabic-label">ض</span></div> <button class="keyboard-key" data-key="ⴹ">ⴹ</button>
+                </div>
+                <div class="key-group" data-latin="e" data-arabic="">
+                    <div class="label-container"><span class="latin-label">e</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⴻ">ⴻ</button>
+                </div>
+                <div class="key-group" data-latin="f" data-arabic="ف">
+                    <div class="label-container"><span class="latin-label">f</span><span class="arabic-label">ف</span></div> <button class="keyboard-key" data-key="ⴼ">ⴼ</button>
+                </div>
+                <div class="key-group" data-latin="g" data-arabic="ڭ">
+                    <div class="label-container"><span class="latin-label">g</span><span class="arabic-label">ڭ</span></div> <button class="keyboard-key" data-key="ⴳ">ⴳ</button>
+                </div>
+                <div class="key-group" data-latin="h" data-arabic="ه">
+                    <div class="label-container"><span class="latin-label">h</span><span class="arabic-label">ه</span></div> <button class="keyboard-key" data-key="ⵀ">ⵀ</button>
+                </div>
+                <div class="key-group" data-latin="ḥ" data-arabic="ح">
+                    <div class="label-container"><span class="latin-label">ḥ</span><span class="arabic-label">ح</span></div> <button class="keyboard-key" data-key="ⵃ">ⵃ</button>
+                </div>
+                <div class="key-group" data-latin="i" data-arabic="إ">
+                    <div class="label-container"><span class="latin-label">i</span><span class="arabic-label">إ-الكسرة</span></div> <button class="keyboard-key" data-key="ⵉ">ⵉ</button>
+                </div>
+            </div>
 
+            <!-- ROW 2 (10 Keys) -->
+            <div class="keyboard-row">
+                <div class="key-group" data-latin="j" data-arabic="ج">
+                    <div class="label-container"><span class="latin-label">j</span><span class="arabic-label">ج</span></div> <button class="keyboard-key" data-key="ⵊ">ⵊ</button>
+                </div>
+                <div class="key-group" data-latin="k" data-arabic="ك">
+                    <div class="label-container"><span class="latin-label">k</span><span class="arabic-label">ك</span></div> <button class="keyboard-key" data-key="ⴽ">ⴽ</button>
+                </div>
+                <div class="key-group" data-latin="l" data-arabic="ل">
+                    <div class="label-container"><span class="latin-label">L</span><span class="arabic-label">ل</span></div> <button class="keyboard-key" data-key="ⵍ">ⵍ</button>
+                </div>
+                <div class="key-group" data-latin="m" data-arabic="م">
+                    <div class="label-container"><span class="latin-label">m</span><span class="arabic-label">م</span></div> <button class="keyboard-key" data-key="ⵎ">ⵎ</button>
+                </div>
+                <div class="key-group" data-latin="n" data-arabic="ن">
+                    <div class="label-container"><span class="latin-label">n</span><span class="arabic-label">ن</span></div> <button class="keyboard-key" data-key="ⵏ">ⵏ</button>
+                </div>
+                <div class="key-group" data-latin="p" data-arabic="پ">
+                    <div class="label-container"><span class="latin-label">p</span><span class="arabic-label">پ</span></div> <button class="keyboard-key" data-key="ⵒ">ⵒ</button>
+                </div>
+                <div class="key-group" data-latin="q" data-arabic="ق">
+                    <div class="label-container"><span class="latin-label">q</span><span class="arabic-label">ق</span></div> <button class="keyboard-key" data-key="ⵇ">ⵇ</button>
+                </div>
+                <div class="key-group" data-latin="r" data-arabic="ر">
+                    <div class="label-container"><span class="latin-label">r</span><span class="arabic-label">ر</span></div> <button class="keyboard-key" data-key="ⵔ">ⵔ</button>
+                </div>
+                <div class="key-group" data-latin="ṛ" data-arabic="">
+                    <div class="label-container"><span class="latin-label">Ṛ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵕ">ⵕ</button>
+                </div>
+                <div class="key-group" data-latin="s" data-arabic="س">
+                    <div class="label-container"><span class="latin-label">s</span><span class="arabic-label">س</span></div> <button class="keyboard-key" data-key="ⵙ">ⵙ</button>
+                </div>
+            </div>
+
+            <!-- ROW 3 (10 Keys) -->
+            <div class="keyboard-row">
+                <div class="key-group" data-latin="sh" data-arabic="ش">
+                    <div class="label-container"><span class="latin-label">sh</span><span class="arabic-label">ش</span></div><button class="keyboard-key" data-key="ⵛ">ⵛ</button>
+                </div>
+                <div class="key-group" data-latin="ṣ" data-arabic="ص">
+                    <div class="label-container"><span class="latin-label">ṣ</span><span class="arabic-label">ص</span></div> <button class="keyboard-key" data-key="ⵚ">ⵚ</button>
+                </div>
+                <div class="key-group" data-latin="t" data-arabic="ت">
+                    <div class="label-container"><span class="latin-label">t</span><span class="arabic-label">ت</span></div> <button class="keyboard-key" data-key="ⵜ">ⵜ</button>
+                </div>
+                <div class="key-group" data-latin="ṭ" data-arabic="ط">
+                    <div class="label-container"><span class="latin-label">ṭ</span><span class="arabic-label">ط</span></div> <button class="keyboard-key" data-key="ⵟ">ⵟ</button>
+                </div>
+                <div class="key-group" data-latin="u" data-arabic="أُ">
+                    <div class="label-container"><span class="latin-label">u</span><span class="arabic-label">أُ-الضمة</span></div> <button class="keyboard-key" data-key="ⵓ">ⵓ</button>
+                </div>
+                <div class="key-group" data-latin="v" data-arabic="ڤ">
+                    <div class="label-container"><span class="latin-label">v</span><span class="arabic-label">ڤ</span></div> <button class="keyboard-key" data-key="ⵠ">ⵠ</button>
+                </div>
+                <div class="key-group" data-latin="w" data-arabic="و">
+                    <div class="label-container"><span class="latin-label">w</span><span class="arabic-label">و</span></div> <button class="keyboard-key" data-key="ⵡ">ⵡ</button>
+                </div>
+                <div class="key-group" data-latin="kh" data-arabic="خ">
+                    <div class="label-container"><span class="latin-label">kh</span><span class="arabic-label">خ</span></div> <button class="keyboard-key" data-key="ⵅ">ⵅ</button>
+                </div>
+                <div class="key-group" data-latin="y" data-arabic="ي">
+                    <div class="label-container"><span class="latin-label">y</span><span class="arabic-label">ي</span></div> <button class="keyboard-key" data-key="ⵢ">ⵢ</button>
+                </div>
+                <div class="key-group" data-latin="z" data-arabic="ز">
+                    <div class="label-container"><span class="latin-label">z</span><span class="arabic-label">ز</span></div> <button class="keyboard-key" data-key="ⵣ">ⵣ</button>
+                </div>
+            </div>
                 <!-- ROW 4 (10 Keys) -->
                 <div class="keyboard-row">
                     <div class="key-group" data-latin="ẓ" data-arabic=""> <div class="label-container"><span class="latin-label">ẓ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
