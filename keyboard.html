@@ -187,7 +187,7 @@ h1{
 */
 .key-group{
   display:flex;
-  flex-direction:column;       /* stack: latin label -> arabic label -> button */
+  flex-direction:column;       /* stack: labels -> button */
   align-items:center;
   gap:6px;
   width:76px;                  /* fixed visual column width to match screenshot spacing */
@@ -198,9 +198,18 @@ h1{
   text-align:center;
 }
 
+/* Container for Latin and Arabic labels to put them side-by-side */
+.label-container {
+    display: flex;
+    justify-content: center; /* Center the pair of labels */
+    gap: 4px; /* Space between Latin and Arabic */
+    width: 100%; /* Ensure container takes full width of key-group for centering */
+    line-height: 1; /* Keep line height tight */
+    margin-bottom: -2px; /* Pull labels slightly closer to the button */
+}
+
 /* Latin label (small, centered) */
 .latin-label{
-  display:block;
   font-size:0.72rem;
   color:var(--text-color-light);
   line-height:1;
@@ -208,14 +217,11 @@ h1{
   text-transform:lowercase;
   white-space:nowrap;
   pointer-events:none;
-  width:100%;
-  text-align:center;
 }
 
 /* Arabic label (small, centered under latin label)
    Use Arabic font and rtl direction but centered visually */
 .arabic-label{
-  display:block;
   font-size:0.65rem;
   color:var(--text-color-light);
   line-height:1;
@@ -223,9 +229,6 @@ h1{
   direction:rtl;
   white-space:nowrap;
   pointer-events:none;
-  width:100%;
-  text-align:center;
-  margin-top:-2px; /* slight overlap to match screenshot spacing */
 }
 
 /* the visible key button */
@@ -277,6 +280,9 @@ h1{
 @media (max-width: 1024px){
   .key-group{ width:72px; min-width:72px; max-width:72px; }
   .keyboard-key{ height:54px; font-size:1.4rem; }
+  .label-container { gap: 3px; }
+  .latin-label{ font-size:0.7rem; }
+  .arabic-label{ font-size:0.6rem; }
 }
 
 @media (max-width: 768px){
@@ -285,8 +291,9 @@ h1{
   .tagline{ font-size:1em; margin-bottom:20px; }
   .text-input{ height:130px; font-size:1.2em; }
   .key-group{ width:66px; min-width:66px; max-width:66px; gap:4px; }
+  .label-container { gap: 3px; }
   .latin-label{ font-size:0.68rem; }
-  .arabic-label{ font-size:0.62rem; margin-top:-1px; }
+  .arabic-label{ font-size:0.62rem; }
   .keyboard-key{ height:48px; font-size:1.2rem; border-radius:10px; }
 }
 
@@ -297,6 +304,7 @@ h1{
   .tagline{ font-size:0.95em; }
   .text-input{ height:120px; font-size:1.1em; }
   .key-group{ width:60px; min-width:60px; max-width:60px; }
+  .label-container { gap: 2px; }
   .latin-label{ font-size:0.64rem; }
   .arabic-label{ font-size:0.58rem; }
   .keyboard-key{ height:42px; font-size:1.05rem; border-radius:10px; }
@@ -413,48 +421,48 @@ h1{
 
                 <!-- Keyboard Row 1 -->
                 <div class="keyboard-row">
-                    <div class="key-group" data-latin="a" data-arabic="ا"> <span class="latin-label">a</span><span class="arabic-label">ا- الفتحة</span> <button class="keyboard-key" data-key="ⴰ">ⴰ</button> </div>
-                    <div class="key-group" data-latin="b" data-arabic="ب"> <span class="latin-label">b</span><span class="arabic-label">ب</span> <button class="keyboard-key" data-key="ⴱ">ⴱ</button> </div>
-                    <div class="key-group" data-latin="d" data-arabic="د"> <span class="latin-label">d</span><span class="arabic-label">د</span> <button class="keyboard-key" data-key="ⴷ">ⴷ</button> </div>
-                    <div class="key-group" data-latin="ḍ" data-arabic="ض"> <span class="latin-label">ḍ</span><span class="arabic-label">ض</span> <button class="keyboard-key" data-key="ⴹ">ⴹ</button> </div>
-                    <div class="key-group" data-latin="e" data-arabic=""> <span class="latin-label">e</span><span class="arabic-label"></span> <button class="keyboard-key" data-key="ⴻ">ⴻ</button> </div>
-                    <div class="key-group" data-latin="f" data-arabic="ف"> <span class="latin-label">f</span><span class="arabic-label">ف</span> <button class="keyboard-key" data-key="ⴼ">ⴼ</button> </div>
-                    <div class="key-group" data-latin="g" data-arabic="ڭ"> <span class="latin-label">g</span><span class="arabic-label">ڭ</span> <button class="keyboard-key" data-key="ⴳ">ⴳ</button> </div>
-                    <div class="key-group" data-latin="h" data-arabic="ه"> <span class="latin-label">h</span><span class="arabic-label">ه</span> <button class="keyboard-key" data-key="ⵀ">ⵀ</button> </div>
-                    <div class="key-group" data-latin="ḥ" data-arabic="ح"> <span class="latin-label">ḥ</span><span class="arabic-label">ح</span> <button class="keyboard-key" data-key="ⵃ">ⵃ</button> </div>
-                    <div class="key-group" data-latin="i" data-arabic="إ"> <span class="latin-label">i</span><span class="arabic-label">إ-الكسرة</span> <button class="keyboard-key" data-key="ⵉ">ⵉ</button> </div>
-                    <div class="key-group" data-latin="j" data-arabic="ج"> <span class="latin-label">j</span><span class="arabic-label">ج</span> <button class="keyboard-key" data-key="ⵊ">ⵊ</button> </div>
-                    <div class="key-group" data-latin="k" data-arabic="ك"> <span class="latin-label">k</span><span class="arabic-label">ك</span> <button class="keyboard-key" data-key="ⴽ">ⴽ</button> </div>
-                    <div class="key-group" data-latin="l" data-arabic="ل"> <span class="latin-label">L</span><span class="arabic-label">ل</span> <button class="keyboard-key" data-key="ⵍ">ⵍ</button> </div>
+                    <div class="key-group" data-latin="a" data-arabic="ا"> <div class="label-container"><span class="latin-label">a</span><span class="arabic-label">ا- الفتحة</span></div> <button class="keyboard-key" data-key="ⴰ">ⴰ</button> </div>
+                    <div class="key-group" data-latin="b" data-arabic="ب"> <div class="label-container"><span class="latin-label">b</span><span class="arabic-label">ب</span></div> <button class="keyboard-key" data-key="ⴱ">ⴱ</button> </div>
+                    <div class="key-group" data-latin="d" data-arabic="د"> <div class="label-container"><span class="latin-label">d</span><span class="arabic-label">د</span></div> <button class="keyboard-key" data-key="ⴷ">ⴷ</button> </div>
+                    <div class="key-group" data-latin="ḍ" data-arabic="ض"> <div class="label-container"><span class="latin-label">ḍ</span><span class="arabic-label">ض</span></div> <button class="keyboard-key" data-key="ⴹ">ⴹ</button> </div>
+                    <div class="key-group" data-latin="e" data-arabic=""> <div class="label-container"><span class="latin-label">e</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⴻ">ⴻ</button> </div>
+                    <div class="key-group" data-latin="f" data-arabic="ف"> <div class="label-container"><span class="latin-label">f</span><span class="arabic-label">ف</span></div> <button class="keyboard-key" data-key="ⴼ">ⴼ</button> </div>
+                    <div class="key-group" data-latin="g" data-arabic="ڭ"> <div class="label-container"><span class="latin-label">g</span><span class="arabic-label">ڭ</span></div> <button class="keyboard-key" data-key="ⴳ">ⴳ</button> </div>
+                    <div class="key-group" data-latin="h" data-arabic="ه"> <div class="label-container"><span class="latin-label">h</span><span class="arabic-label">ه</span></div> <button class="keyboard-key" data-key="ⵀ">ⵀ</button> </div>
+                    <div class="key-group" data-latin="ḥ" data-arabic="ح"> <div class="label-container"><span class="latin-label">ḥ</span><span class="arabic-label">ح</span></div> <button class="keyboard-key" data-key="ⵃ">ⵃ</button> </div>
+                    <div class="key-group" data-latin="i" data-arabic="إ"> <div class="label-container"><span class="latin-label">i</span><span class="arabic-label">إ-الكسرة</span></div> <button class="keyboard-key" data-key="ⵉ">ⵉ</button> </div>
+                    <div class="key-group" data-latin="j" data-arabic="ج"> <div class="label-container"><span class="latin-label">j</span><span class="arabic-label">ج</span></div> <button class="keyboard-key" data-key="ⵊ">ⵊ</button> </div>
+                    <div class="key-group" data-latin="k" data-arabic="ك"> <div class="label-container"><span class="latin-label">k</span><span class="arabic-label">ك</span></div> <button class="keyboard-key" data-key="ⴽ">ⴽ</button> </div>
+                    <div class="key-group" data-latin="l" data-arabic="ل"> <div class="label-container"><span class="latin-label">L</span><span class="arabic-label">ل</span></div> <button class="keyboard-key" data-key="ⵍ">ⵍ</button> </div>
                 </div>
 
                 <!-- Keyboard Row 2 -->
                 <div class="keyboard-row">
-                    <div class="key-group" data-latin="m" data-arabic="م"> <span class="latin-label">m</span><span class="arabic-label">م</span> <button class="keyboard-key" data-key="ⵎ">ⵎ</button> </div>
-                    <div class="key-group" data-latin="n" data-arabic="ن"> <span class="latin-label">n</span><span class="arabic-label">ن</span> <button class="keyboard-key" data-key="ⵏ">ⵏ</button> </div>
-                    <div class="key-group" data-latin="p" data-arabic="پ"> <span class="latin-label">p</span><span class="arabic-label">پ</span> <button class="keyboard-key" data-key="ⵒ">ⵒ</button> </div>
-                    <div class="key-group" data-latin="q" data-arabic="ق"> <span class="latin-label">q</span><span class="arabic-label">ق</span> <button class="keyboard-key" data-key="ⵇ">ⵇ</button> </div>
-                    <div class="key-group" data-latin="r" data-arabic="ر"> <span class="latin-label">r</span><span class="arabic-label">ر</span> <button class="keyboard-key" data-key="ⵔ">ⵔ</button> </div>
-                    <div class="key-group" data-latin="ṛ" data-arabic=""> <span class="latin-label">Ṛ</span><span class="arabic-label"></span> <button class="keyboard-key" data-key="ⵕ">ⵕ</button> </div>
-                    <div class="key-group" data-latin="s" data-arabic="س"> <span class="latin-label">s</span><span class="arabic-label">س</span> <button class="keyboard-key" data-key="ⵙ">ⵙ</button> </div>
-                    <div class="key-group" data-latin="sh" data-arabic="ش"> <span class="latin-label">sh</span><span class="arabic-label">ش</span><button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
-                    <div class="key-group" data-latin="ṣ" data-arabic="ص"> <span class="latin-label">ṣ</span><span class="arabic-label">ص</span> <button class="keyboard-key" data-key="ⵚ">ⵚ</button> </div>
-                    <div class="key-group" data-latin="t" data-arabic="ت"> <span class="latin-label">t</span><span class="arabic-label">ت</span> <button class="keyboard-key" data-key="ⵜ">ⵜ</button> </div>
-                    <div class="key-group" data-latin="ṭ" data-arabic="ط"> <span class="latin-label">ṭ</span><span class="arabic-label">ط</span> <button class="keyboard-key" data-key="ⵟ">ⵟ</button> </div>
-                    <div class="key-group" data-latin="u" data-arabic="أُ"> <span class="latin-label">u</span><span class="arabic-label">أُ-الضمة</span> <button class="keyboard-key" data-key="ⵓ">ⵓ</button> </div>
-                    <div class="key-group" data-latin="v" data-arabic="ڤ"> <span class="latin-label">v</span><span class="arabic-label">ڤ</span> <button class="keyboard-key" data-key="ⵠ">ⵠ</button> </div>
+                    <div class="key-group" data-latin="m" data-arabic="م"> <div class="label-container"><span class="latin-label">m</span><span class="arabic-label">م</span></div> <button class="keyboard-key" data-key="ⵎ">ⵎ</button> </div>
+                    <div class="key-group" data-latin="n" data-arabic="ن"> <div class="label-container"><span class="latin-label">n</span><span class="arabic-label">ن</span></div> <button class="keyboard-key" data-key="ⵏ">ⵏ</button> </div>
+                    <div class="key-group" data-latin="p" data-arabic="پ"> <div class="label-container"><span class="latin-label">p</span><span class="arabic-label">پ</span></div> <button class="keyboard-key" data-key="ⵒ">ⵒ</button> </div>
+                    <div class="key-group" data-latin="q" data-arabic="ق"> <div class="label-container"><span class="latin-label">q</span><span class="arabic-label">ق</span></div> <button class="keyboard-key" data-key="ⵇ">ⵇ</button> </div>
+                    <div class="key-group" data-latin="r" data-arabic="ر"> <div class="label-container"><span class="latin-label">r</span><span class="arabic-label">ر</span></div> <button class="keyboard-key" data-key="ⵔ">ⵔ</button> </div>
+                    <div class="key-group" data-latin="ṛ" data-arabic=""> <div class="label-container"><span class="latin-label">Ṛ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵕ">ⵕ</button> </div>
+                    <div class="key-group" data-latin="s" data-arabic="س"> <div class="label-container"><span class="latin-label">s</span><span class="arabic-label">س</span></div> <button class="keyboard-key" data-key="ⵙ">ⵙ</button> </div>
+                    <div class="key-group" data-latin="sh" data-arabic="ش"> <div class="label-container"><span class="latin-label">sh</span><span class="arabic-label">ش</span></div><button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
+                    <div class="key-group" data-latin="ṣ" data-arabic="ص"> <div class="label-container"><span class="latin-label">ṣ</span><span class="arabic-label">ص</span></div> <button class="keyboard-key" data-key="ⵚ">ⵚ</button> </div>
+                    <div class="key-group" data-latin="t" data-arabic="ت"> <div class="label-container"><span class="latin-label">t</span><span class="arabic-label">ت</span></div> <button class="keyboard-key" data-key="ⵜ">ⵜ</button> </div>
+                    <div class="key-group" data-latin="ṭ" data-arabic="ط"> <div class="label-container"><span class="latin-label">ṭ</span><span class="arabic-label">ط</span></div> <button class="keyboard-key" data-key="ⵟ">ⵟ</button> </div>
+                    <div class="key-group" data-latin="u" data-arabic="أُ"> <div class="label-container"><span class="latin-label">u</span><span class="arabic-label">أُ-الضمة</span></div> <button class="keyboard-key" data-key="ⵓ">ⵓ</button> </div>
+                    <div class="key-group" data-latin="v" data-arabic="ڤ"> <div class="label-container"><span class="latin-label">v</span><span class="arabic-label">ڤ</span></div> <button class="keyboard-key" data-key="ⵠ">ⵠ</button> </div>
                 </div>
 
                 <!-- Keyboard Row 3 -->
                 <div class="keyboard-row">
-                    <div class="key-group" data-latin="w" data-arabic="و"> <span class="latin-label">w</span><span class="arabic-label">و</span> <button class="keyboard-key" data-key="ⵡ">ⵡ</button> </div>
-                    <div class="key-group" data-latin="kh" data-arabic="خ"> <span class="latin-label">kh</span><span class="arabic-label">خ</span> <button class="keyboard-key" data-key="ⵅ">ⵅ</button> </div>
-                    <div class="key-group" data-latin="y" data-arabic="ي"> <span class="latin-label">y</span><span class="arabic-label">ي</span> <button class="keyboard-key" data-key="ⵢ">ⵢ</button> </div>
-                    <div class="key-group" data-latin="z" data-arabic="ز"> <span class="latin-label">z</span><span class="arabic-label">ز</span> <button class="keyboard-key" data-key="ⵣ">ⵣ</button> </div>
-                    <div class="key-group" data-latin="ẓ" data-arabic=""> <span class="latin-label">ẓ</span><span class="arabic-label"></span> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
-                    <div class="key-group" data-latin="ʷ" data-arabic="ـ"> <span class="latin-label">ʷ</span><span class="arabic-label">ـ</span> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div>
-                    <div class="key-group" data-latin="ⵄ" data-arabic="ع"> <span class="latin-label">A</span><span class="arabic-label">ع</span> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
-                    <div class="key-group" data-latin="C" data-arabic="ش"> <span class="latin-label">C</span><span class="arabic-label">ش</span> <button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
+                    <div class="key-group" data-latin="w" data-arabic="و"> <div class="label-container"><span class="latin-label">w</span><span class="arabic-label">و</span></div> <button class="keyboard-key" data-key="ⵡ">ⵡ</button> </div>
+                    <div class="key-group" data-latin="kh" data-arabic="خ"> <div class="label-container"><span class="latin-label">kh</span><span class="arabic-label">خ</span></div> <button class="keyboard-key" data-key="ⵅ">ⵅ</button> </div>
+                    <div class="key-group" data-latin="y" data-arabic="ي"> <div class="label-container"><span class="latin-label">y</span><span class="arabic-label">ي</span></div> <button class="keyboard-key" data-key="ⵢ">ⵢ</button> </div>
+                    <div class="key-group" data-latin="z" data-arabic="ز"> <div class="label-container"><span class="latin-label">z</span><span class="arabic-label">ز</span></div> <button class="keyboard-key" data-key="ⵣ">ⵣ</button> </div>
+                    <div class="key-group" data-latin="ẓ" data-arabic=""> <div class="label-container"><span class="latin-label">ẓ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
+                    <div class="key-group" data-latin="ʷ" data-arabic="ـ"> <div class="label-container"><span class="latin-label">ʷ</span><span class="arabic-label">ـ</span></div> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div>
+                    <div class="key-group" data-latin="ⵄ" data-arabic="ع"> <div class="label-container"><span class="latin-label">A</span><span class="arabic-label">ع</span></div> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
+                    <div class="key-group" data-latin="C" data-arabic="ش"> <div class="label-container"><span class="latin-label">C</span><span class="arabic-label">ش</span></div> <button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
                     <!-- Additional unique keys could go here, if any more are identified -->
                 </div>
 
