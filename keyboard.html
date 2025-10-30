@@ -301,6 +301,75 @@ h1{
   .arabic-label{ font-size:0.58rem; }
   .keyboard-key{ height:42px; font-size:1.05rem; border-radius:10px; }
 }
+
+/* Red Fire Glow Effect for active keys */
+.keyboard-key.key-active {
+  animation: fireGlow 0.15s forwards; /* Short animation for a quick glow */
+}
+
+@keyframes fireGlow {
+  0% {
+    box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7); /* Start with no glow */
+    border-color: var(--accent-color); /* Keep original border color */
+    transform: translateY(0); /* Ensure it doesn't move on activation */
+  }
+  50% {
+    box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7), /* Red glow */
+                0 0 20px 10px rgba(255, 140, 0, 0.5); /* Orange secondary glow */
+    border-color: #ff4500; /* Red border */
+    background-color: #ff6347; /* Lighter red background */
+    color: #fff; /* White text for contrast */
+  }
+  100% {
+    box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7); /* Fade out glow */
+    border-color: var(--border-color); /* Return to normal border */
+    background-color: var(--button-bg); /* Return to normal background */
+    color: var(--button-text-color); /* Return to normal text color */
+  }
+}
+
+/* Optional: Adjust hover for delete button when active */
+.keyboard-key.delete.key-active {
+  animation: fireGlowDelete 0.15s forwards;
+}
+
+@keyframes fireGlowDelete {
+  0% {
+    box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
+    border-color: var(--delete-button-bg);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
+                0 0 20px 10px rgba(255, 140, 0, 0.5);
+    border-color: #ff4500;
+    background-color: #ff6347;
+    color: #fff;
+  }
+  100% {
+    box-shadow: 0 3px 8px rgba(239,68,68,0.18); /* Revert to normal delete shadow */
+    border-color: var(--delete-button-bg);
+    background-color: var(--delete-button-bg);
+    color: var(--delete-button-text-color);
+  }
+}
+
+/* Visually hidden utility class */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Ensure the sun icon is hidden by default if moon is shown by default */
+.sun-icon.hidden { display: none; }
+.moon-icon.hidden { display: none; }
+
 </style>
 
 
@@ -416,4 +485,226 @@ h1{
                 <br> <!-- NEW: Line break for cleaner presentation -->
                 By: Anaruz Elhabib <!-- NEW: Requested credit line -->
             </p>
-            <!-- NEW: Internal link back to the main
+            <!-- NEW: Internal link back to the main -->
+    </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const keyboardInput = document.getElementById('keyboardInput');
+        const keyboardKeys = document.querySelectorAll('.keyboard-key');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.querySelector('.moon-icon');
+        const sunIcon = document.querySelector('.sun-icon');
+
+        let isDarkMode = false; // Keep track of theme state
+
+        // --- Theme Toggle Functionality ---
+        // Load theme preference from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            isDarkMode = true;
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            isDarkMode = false;
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            isDarkMode = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+
+            moonIcon.classList.toggle('hidden', isDarkMode);
+            sunIcon.classList.toggle('hidden', !isDarkMode);
+        });
+
+        // --- Virtual Keyboard Input ---
+        keyboardKeys.forEach(key => {
+            key.addEventListener('click', () => {
+                const keyValue = key.dataset.key;
+                handleInput(keyValue);
+                applyClickEffect(key); // Apply the visual click effect
+            });
+        });
+
+        function handleInput(keyValue) {
+            let start = keyboardInput.selectionStart;
+            let end = keyboardInput.selectionEnd;
+            let currentValue = keyboardInput.value;
+
+            if (keyValue === 'backspace') {
+                if (start > 0) {
+                    let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
+                    keyboardInput.value = newValue;
+                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
+                }
+            } else if (keyValue === ' ') { // Handle space explicitly
+                let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
+                keyboardInput.value = newValue;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
+            } else {
+                let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
+                keyboardInput.value = newValue;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
+            }
+            keyboardInput.focus(); // Keep focus on the textarea
+        }
+
+        // --- Physical Keyboard Mapping ---
+        // Map common Latin/Arabic keys to Tifinagh characters
+        const keyMap = {
+            'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'D': 'ⴹ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'H': 'ⵃ',
+            'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ',
+            'r': 'ⵔ', 'R': 'ⵕ', 's': 'ⵙ', 'S': 'ⵚ', 't': 'ⵜ', 'T': 'ⵟ', 'u': 'ⵓ', 'v': 'ⵠ',
+            'w': 'ⵡ', 'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ', 'Z': 'ⵥ',
+            // Arabic to Tifinagh mappings (can be expanded)
+            'ا': 'ⴰ', 'ب': 'ⴱ', 'د': 'ⴷ', 'ض': 'ⴹ', 'ف': 'ⴼ', 'ڭ': 'ⴳ', 'ه': 'ⵀ', 'ح': 'ⵃ',
+            'إ': 'ⵉ', 'ج': 'ⵊ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ', 'پ': 'ⵒ', 'ق': 'ⵇ',
+            'ر': 'ⵔ', 'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ت': 'ⵜ', 'ط': 'ⵟ', 'و': 'ⵡ', 'خ': 'ⵅ',
+            'ي': 'ⵢ', 'ز': 'ⵣ',
+            // Special cases
+            ' ': ' ', // Space bar
+            'Backspace': 'backspace',
+            // For 'sh' sound, often 'ch' or 'sh' in Latin, map to 'ⵛ'
+            // For 'kh' sound, often 'kh' or 'x' in Latin, map to 'ⵅ'
+            // Consider multi-key input later if needed, but for now single key is easier.
+        };
+
+        // Improved mapping for common Latin ligatures/digraphs often used for Tifinagh sounds
+        const latinToTifinaghMap = {
+            'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ',
+            'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
+            's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ', 'y': 'ⵢ', 'z': 'ⵣ',
+            // Specific Tifinagh characters with Latin equivalents
+            'c': 'ⵛ', // Often used for 'sh'
+            'ch': 'ⵛ', // sh
+            'x': 'ⵅ', // kh
+            'kh': 'ⵅ', // kh
+            'gh': 'ⵖ', // gh (if you add it)
+            'dj': 'ⵊ', // dj
+            'ts': 'ⵜⵙ', // ts (ligature)
+            'dz': 'ⴷⵣ', // dz (ligature)
+            // Tifinagh characters that might be typed with specific Latin keys (e.g., with diacritics)
+            'd.': 'ⴹ', // d with dot (ḍ)
+            'h.': 'ⵃ', // h with dot (ḥ)
+            'r.': 'ⵕ', // r with dot (ṛ)
+            's.': 'ⵚ', // s with dot (ṣ)
+            't.': 'ⵟ', // t with dot (ṭ)
+            'z.': 'ⵥ', // z with dot (ẓ)
+            // For the 'ʷ' character (labialization mark)
+            'o': 'ⵓ', // Can be used for U
+            '0': 'ⵓ', // Can be used for U
+            '6': 'ⵡ', // Or a similar number that makes sense
+        };
+
+        document.addEventListener('keydown', (e) => {
+            // Only process if the textarea is focused
+            if (document.activeElement === keyboardInput) {
+                const key = e.key;
+
+                // Handle backspace directly for physical keyboard
+                if (key === 'Backspace') {
+                    e.preventDefault(); // Prevent default browser back action
+                    handleInput('backspace');
+                    // Find and apply effect to the delete button
+                    const deleteKeyBtn = document.querySelector('.keyboard-key.delete');
+                    if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+                    return;
+                }
+
+                // Handle space directly for physical keyboard
+                if (key === ' ') {
+                    e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
+                    handleInput(' ');
+                    // Find and apply effect to the space button
+                    const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
+                    if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
+                    return;
+                }
+
+                // Try to find a direct mapping
+                let tifinaghChar = keyMap[key.toLowerCase()];
+                if (tifinaghChar) {
+                    e.preventDefault(); // Prevent default Latin character from appearing
+                    handleInput(tifinaghChar);
+                    // Find the corresponding virtual key and apply effect
+                    const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
+                    if (virtualKey) applyClickEffect(virtualKey);
+                    return;
+                }
+                
+                // Handle multi-key input for Latin digraphs (e.g., 'sh' -> 'ⵛ')
+                // This is more complex and usually involves buffering input.
+                // For now, let's stick to single key mappings and direct Tifinagh entry for physical keyboard.
+                // If the user types 'sh' on a physical keyboard, they'd get 's' then 'h'.
+                // A full "transliteration engine" would be needed for complex mapping.
+                // You could consider mapping 'shift+s' to 'ṣ' etc. for advanced physical keyboard use.
+            }
+        });
+
+
+        // --- Action Buttons (Copy/Clear) ---
+        copyBtn.addEventListener('click', () => {
+            keyboardInput.select();
+            // For modern browsers, use navigator.clipboard
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(keyboardInput.value)
+                    .then(() => {
+                        console.log('Tifinagh text copied to clipboard!');
+                        // Optional: Show a temporary "Copied!" message
+                        const originalText = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalText;
+                        }, 1500);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy text: ', err);
+                        fallbackCopyTextToClipboard(keyboardInput.value); // Fallback for older browsers
+                    });
+            } else {
+                fallbackCopyTextToClipboard(keyboardInput.value);
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            keyboardInput.value = '';
+            keyboardInput.focus();
+        });
+
+        // Fallback for copying text (older browsers)
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; // Avoid scrolling to bottom
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                console.log('Fallback: Tifinagh text copied to clipboard!');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 1500);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // --- Click Effect Function (Red Fire) ---
+        function applyClickEffect(element) {
+            element.classList.add('key-active');
+            setTimeout(() => {
+                element.classList.remove('key-active');
+            }, 150); // Duration of the glow effect
+        }
+    });
+</script>
