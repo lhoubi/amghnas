@@ -509,6 +509,7 @@ h1{
     </div>
 
   <script>
+   <script>
     document.addEventListener('DOMContentLoaded', () => {
         const keyboardInput = document.getElementById('keyboardInput');
         const keyboardKeys = document.querySelectorAll('.keyboard-key');
@@ -628,13 +629,9 @@ h1{
                 const key = e.key;
 
                 // Handle Backspace and Delete directly for physical keyboard
-                if (key === 'Backspace' || key === 'Delete') { // Added 'Delete'
+                if (key === 'Backspace' || key === 'Delete') {
                     e.preventDefault(); // Prevent default browser back/delete action
-                    // The handleInput('backspace') function already correctly handles deletion
-                    // based on selection or removing the last character.
-                    handleInput('backspace'); 
-                    
-                    // Find and apply effect to the virtual delete button
+                    handleInput('backspace');
                     const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
                     if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
                     return;
@@ -644,15 +641,10 @@ h1{
                 if (key === ' ') {
                     e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
                     handleInput(' ');
-                    // Find and apply effect to the space button
                     const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
                     if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
                     return;
                 }
-                
-                // ... rest of your keydown handler ...
-            }
-        });
 
                 // Try to find a direct mapping
                 let tifinaghChar = keyMap[key.toLowerCase()];
@@ -733,5 +725,5 @@ h1{
                 element.classList.remove('key-active');
             }, 150); // Duration of the glow effect
         }
-    });
+    }); // Closing for DOMContentLoaded
 </script>
