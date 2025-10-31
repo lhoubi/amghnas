@@ -364,22 +364,8 @@
             font-size: 1.15rem;
         }
 
-        /* footer (now uses Tailwind for dark mode, but keeps original structure) */
-        .footer {
-            @apply text-center py-6 sm:py-8 mt-10 border-t border-gray-200 dark:border-slate-800;
-            color: var(--text-color-light); /* Keep original variable for specific text */
-            font-size: 0.9em;
-        }
-        html.dark .footer { /* Explicit dark mode for footer text if needed */
-            color: var(--text-color-light); /* Or apply a specific dark color */
-        }
-        .footer p {
-            @apply text-gray-500 dark:text-gray-400 text-sm sm:text-base;
-        }
-        .footer a {
-            @apply text-indigo-600 dark:text-indigo-400 hover:underline;
-        }
-
+       /* No custom CSS needed for footer, Tailwind classes handle it */
+        /* Retaining this block for clarity but it will be empty if only Tailwind is used */
 
         /* ---------------------
            Responsiveness — keep exact desktop look but tidy mobile (Original styles maintained)
