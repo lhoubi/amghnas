@@ -112,6 +112,45 @@
             margin-bottom: 30px;
             @apply dark:text-gray-400; /* Add dark mode text color from first page */
         }
+        /* Custom styling for the keyboard page's main title to match index.html's h2 */
+        .container > h1.font-serif.text-center.mt-8,
+        .container > p.tagline {
+            /* These styles are removed because we are applying Tailwind directly to the elements below */
+            /* However, if you explicitly want to override or ensure specific font-size/family, you can add here */
+        }
+
+        /* Specific styles for the keyboard page's main title */
+        .container > h1.font-serif.text-center.mt-8.dark\:text-gray-200 {
+            /* Override to match index.html's H2 for text-3xl sm:text-5xl */
+            font-size: 1.875rem; /* text-3xl */
+            line-height: 2.25rem; /* leading-9 */
+            /* For sm:text-5xl (768px and up) */
+            @media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
+                font-size: 3rem; /* text-5xl */
+                line-height: 1; /* leading-none */
+            }
+            /* You already have font-family: 'Playfair Display', serif; in the general h1 rule */
+            /* You already have text-align: center; in the general h1 rule */
+            /* You already have @apply dark:text-gray-200; in the general h1 rule */
+            /* Keep margin as is or adjust to match index.html's h2 margin-top and margin-bottom */
+            margin-top: 2rem; /* mt-8 in Tailwind is 2rem */
+            margin-bottom: 1rem; /* Adjust if needed, index.html's h2 doesn't have explicit mb */
+            font-weight: 700; /* font-bold */
+        }
+
+        /* Specific styles for the keyboard page's tagline */
+        .container > p.tagline {
+            /* Override to match index.html's p */
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem; /* leading-7 */
+            /* For sm:text-lg (768px and up) */
+            @media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
+                font-size: 1.125rem; /* text-lg */
+                line-height: 1.75rem; /* leading-7 */
+            }
+            margin-top: 1rem; /* mt-4 in Tailwind is 1rem */
+            margin-bottom: 2.5rem; /* mb-10 in Tailwind is 2.5rem (adjust if needed) */
+        }
 
         /* input */
         .input-area-wrapper {
