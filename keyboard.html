@@ -9,13 +9,37 @@
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Tailwind CSS (for header, footer, dark mode transition) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&family=Noto+Sans:wght@300;400;700&family=Noto+Sans+Tifinagh&family=Noto+Naskh+Arabic&display=swap" rel="stylesheet">
+    
+    <script>
+      // Tailwind config must be present for dark mode to work on body/html
+      tailwind.config = {
+        darkMode: 'class', 
+        theme: {
+          extend: {
+            fontFamily: {
+              'sans': ['Roboto', 'Noto Sans', 'sans-serif'],
+              'serif': ['Playfair Display', 'serif'],
+              'tifinagh': ['Noto Sans Tifinagh', 'sans-serif'],
+              'arabic': ['Noto Naskh Arabic', 'serif'],
+            },
+            colors: {
+              'logo-start': '#00BCD4', // Not used in this specific file but kept for consistency with config
+              'logo-end': '#673AB7',   // Not used in this specific file but kept for consistency with config
+            },
+          },
+        },
+      }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
-
+        /* Original CSS variables and dark mode definitions */
         :root {
             --primary-color: #334155;
             --secondary-color: #64748b;
@@ -53,86 +77,40 @@
             box-sizing: border-box
         }
 
+        /* Body and container now use Tailwind's dark mode classes and original padding */
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            @apply bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
             margin: 0;
-            padding: 20px;
+            padding: 20px; /* Keep original padding */
             display: flex;
             justify-content: center;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1000px; /* Original max-width */
             width: 100%;
-            background-color: var(--background-color-light);
+            background-color: var(--background-color-light); /* Keep original variable */
             border-radius: var(--border-radius);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 30px;
         }
 
-        /* header / controls */
-        .header-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            position: relative; /* Added for absolute positioning of logo */
-        }
-
-        .nav-button,
-        #themeToggle {
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 2px solid var(--border-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: all .25s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
-            background-color: var(--button-bg); /* Made consistent */
-            color: var(--button-text-color); /* Made consistent */
-        }
-
-        /* Specific styling for nav-button to match toggle */
-        .nav-button {
-            border-radius: 8px; /* Ensure same border-radius */
-            background-color: var(--button-bg);
-            color: var(--button-text-color);
-        }
-        
-        /* amghnas logo styling */
-        .amghnas-logo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 50%; /* Adjust as needed for vertical alignment */
-            font-family: 'Noto Sans Tifinagh', sans-serif; /* Use Tifinagh font */
-            font-size: 2.5em; /* Adjust size as needed */
-            color: #8A2BE2; /* Purple color from image */
-            text-decoration: none;
-            line-height: 1;
-            white-space: nowrap;
-        }
-
-
+        /* Original H1 and Tagline styles (adjusted to use Tailwind for dark mode) */
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5em;
             text-align: center;
-            color: var(--primary-color);
+            color: var(--primary-color); /* Keep original variable */
             margin: 25px 0 10px;
+            @apply dark:text-gray-200; /* Add dark mode text color from first page */
         }
 
         .tagline {
             text-align: center;
             font-size: 1.1em;
-            color: var(--text-color-light);
+            color: var(--text-color-light); /* Keep original variable */
             margin-bottom: 30px;
+            @apply dark:text-gray-400; /* Add dark mode text color from first page */
         }
 
         /* input */
@@ -154,7 +132,25 @@
             font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
             line-height: 1.6;
             resize: vertical;
+            /* Focus ring from first page */
+            outline: none; /* Remove default focus outline */
+            transition: border-color 0.2s, box-shadow 0.2s; /* Smooth transition */
         }
+        .text-input:focus {
+            border-color: #6366f1; /* Tailwind indigo-500 */
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5); /* Tailwind indigo-500 with opacity */
+        }
+        /* Dark mode for text-input */
+        html.dark .text-input {
+            background-color: var(--background-color-light); /* Darker background in dark mode */
+            border-color: var(--border-color); /* Dark mode border color */
+            color: var(--text-color); /* Dark mode text color */
+        }
+        html.dark .text-input:focus {
+            border-color: #818cf8; /* Tailwind indigo-400 in dark mode */
+            box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.5); /* Dark mode focus shadow */
+        }
+
 
         /* Action buttons */
         .action-buttons {
@@ -176,6 +172,18 @@
             gap: 8px;
             transition: all .25s ease;
             box-shadow: 0 3px 6px rgba(0, 0, 0, .12);
+            /* Focus ring from first page's buttons */
+            outline: none; /* Remove default focus outline */
+            position: relative; /* For the focus ring */
+        }
+        .action-buttons button:focus {
+            z-index: 10;
+            border-color: #6366f1; /* Tailwind indigo-500 */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Tailwind indigo-500 with opacity */
+        }
+        html.dark .action-buttons button:focus {
+            border-color: #818cf8; /* Tailwind indigo-400 */
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.5); /* Dark mode focus shadow */
         }
 
         .copy {
@@ -183,18 +191,43 @@
             color: #fff;
             border-color: var(--accent-color);
         }
+        .copy:hover { /* Added hover effect to match first page buttons */
+            background-color: #0c8a7e; /* Slightly darker accent */
+            border-color: #0c8a7e;
+        }
+        html.dark .copy {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        html.dark .copy:hover {
+            background-color: #26b1a0; /* Slightly darker accent for dark mode */
+            border-color: #26b1a0;
+        }
+
 
         .clear {
             background-color: var(--secondary-color);
             color: #fff;
             border-color: var(--secondary-color);
         }
+        .clear:hover { /* Added hover effect */
+            background-color: #5a6b7d; /* Slightly darker secondary */
+            border-color: #5a6b7d;
+        }
+        html.dark .clear {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        html.dark .clear:hover {
+            background-color: #5a6b7d; /* Slightly darker secondary for dark mode */
+            border-color: #5a6b7d;
+        }
+
 
         /* ---------------------
-           KEYBOARD LAYOUT + LABEL FIX
+           KEYBOARD LAYOUT + LABEL FIX (Original styles maintained)
            --------------------- */
 
-        /* main layout */
         .keyboard-layout {
             display: flex;
             flex-direction: column;
@@ -202,7 +235,6 @@
             padding: 10px;
         }
 
-        /* keyboard rows center and keep consistent spacing */
         .keyboard-row {
             display: flex;
             flex-wrap: wrap;
@@ -210,42 +242,28 @@
             gap: 12px;
         }
 
-        /* IMPORTANT: change how key-group is structured:
-           - Use column layout so labels sit above the key
-           - Keep a fixed visual box width so labels align correctly
-        */
         .key-group {
             display: flex;
             flex-direction: column;
-            /* stack: labels -> button */
             align-items: center;
             gap: 6px;
             width: 76px;
-            /* fixed visual column width to match screenshot spacing */
             min-width: 76px;
             max-width: 76px;
             padding-top: 6px;
-            /* create slight vertical offset like in screenshot */
             box-sizing: border-box;
             text-align: center;
         }
 
-        /* Container for Latin and Arabic labels to put them side-by-side */
         .label-container {
             display: flex;
             justify-content: center;
-            /* Center the pair of labels */
             gap: 4px;
-            /* Space between Latin and Arabic */
             width: 100%;
-            /* Ensure container takes full width of key-group for centering */
             line-height: 1;
-            /* Keep line height tight */
             margin-bottom: -2px;
-            /* Pull labels slightly closer to the button */
         }
 
-        /* Latin label (small, centered) */
         .latin-label {
             font-size: 0.72rem;
             color: var(--text-color-light);
@@ -256,8 +274,6 @@
             pointer-events: none;
         }
 
-        /* Arabic label (small, centered under latin label)
-           Use Arabic font and rtl direction but centered visually */
         .arabic-label {
             font-size: 0.65rem;
             color: var(--text-color-light);
@@ -268,7 +284,6 @@
             pointer-events: none;
         }
 
-        /* the visible key button */
         .keyboard-key {
             height: 56px;
             width: 100%;
@@ -284,9 +299,9 @@
             transition: all .15s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
             user-select: none;
+            font-family: 'Noto Sans Tifinagh', sans-serif; /* Ensure Tifinagh font */
         }
 
-        /* hover / active affordances */
         .keyboard-key:hover {
             transform: translateY(-3px);
             border-color: var(--accent-color);
@@ -298,7 +313,6 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
         }
 
-        /* delete key styling */
         .keyboard-key.delete {
             background-color: var(--delete-button-bg);
             color: var(--delete-button-text-color);
@@ -306,24 +320,30 @@
             box-shadow: 0 3px 8px rgba(239, 68, 68, 0.18);
         }
 
-        /* adjust wide / space keys */
         .keyboard-key.wide {
             height: 56px;
             font-size: 1.15rem;
         }
 
-        /* footer */
+        /* footer (now uses Tailwind for dark mode, but keeps original structure) */
         .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-color-light);
+            @apply text-center py-6 sm:py-8 mt-10 border-t border-gray-200 dark:border-slate-800;
+            color: var(--text-color-light); /* Keep original variable for specific text */
             font-size: 0.9em;
         }
+        html.dark .footer { /* Explicit dark mode for footer text if needed */
+            color: var(--text-color-light); /* Or apply a specific dark color */
+        }
+        .footer p {
+            @apply text-gray-500 dark:text-gray-400 text-sm sm:text-base;
+        }
+        .footer a {
+            @apply text-indigo-600 dark:text-indigo-400 hover:underline;
+        }
+
 
         /* ---------------------
-           Responsiveness — keep exact desktop look but tidy mobile
+           Responsiveness — keep exact desktop look but tidy mobile (Original styles maintained)
            --------------------- */
         @media (max-width: 1024px) {
             .key-group {
@@ -393,9 +413,9 @@
                 font-size: 1.2rem;
                 border-radius: 10px;
             }
-
-            .amghnas-logo {
-                font-size: 2em; /* Adjust for smaller screens */
+            /* amghnas-logo responsive size */
+            .amghnas-logo span {
+                font-size: 2.5em; /* Adjusted to match prior 2.5em on medium screens */
             }
         }
 
@@ -444,50 +464,38 @@
                 font-size: 1.05rem;
                 border-radius: 10px;
             }
-
-            .amghnas-logo {
-                font-size: 1.5em; /* Further adjust for mobile */
+            /* amghnas-logo responsive size */
+            .amghnas-logo span {
+                font-size: 2em; /* Adjusted to match prior 2em on small screens */
             }
         }
 
-        /* Red Fire Glow Effect for active keys */
+
+        /* Red Fire Glow Effect for active keys (Original styles maintained) */
         .keyboard-key.key-active {
             animation: fireGlow 0.15s forwards;
-            /* Short animation for a quick glow */
         }
 
         @keyframes fireGlow {
             0% {
                 box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
-                /* Start with no glow */
                 border-color: var(--accent-color);
-                /* Keep original border color */
                 transform: translateY(0);
-                /* Ensure it doesn't move on activation */
             }
 
             50% {
                 box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
-                    /* Red glow */
                     0 0 20px 10px rgba(255, 140, 0, 0.5);
-                /* Orange secondary glow */
                 border-color: #ff4500;
-                /* Red border */
                 background-color: #ff6347;
-                /* Lighter red background */
                 color: #fff;
-                /* White text for contrast */
             }
 
             100% {
                 box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
-                /* Fade out glow */
                 border-color: var(--border-color);
-                /* Return to normal border */
                 background-color: var(--button-bg);
-                /* Return to normal background */
                 color: var(--button-text-color);
-                /* Return to normal text color */
             }
         }
 
@@ -513,7 +521,6 @@
 
             100% {
                 box-shadow: 0 3px 8px rgba(239, 68, 68, 0.18);
-                /* Revert to normal delete shadow */
                 border-color: var(--delete-button-bg);
                 background-color: var(--delete-button-bg);
                 color: var(--delete-button-text-color);
@@ -542,29 +549,42 @@
         }
     </style>
 </head>
-<body>
 
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <div class="container">
-        <!-- Header Controls for Navigation & Dark Mode Toggle -->
-        <div class="header-controls">
-            <!-- Navigation link back to the main converter page - improved anchor text -->
-            <a href="index.html" class="nav-button">
-                <i class="fas fa-arrow-left"></i> Tifinagh Converter
+        <!-- HEADER (copied directly from your index.html and adjusted slightly for keyboard page content) -->
+        <header class="flex flex-col sm:flex-row justify-center sm:justify-between items-center py-4 sm:py-6 gap-3 sm:gap-0">
+          <div class="flex-1 text-center sm:text-left order-2 sm:order-1">
+            <a href="index.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Tifinagh Converter
             </a>
-
-            <!-- amghnas logo -->
-            <a href="#" class="amghnas-logo">ⴰⵎⵖⵏⴰⵙ</a>
-
-            <!-- Dark Mode Toggle Button -->
-            <button id="themeToggle" class="nav-button" aria-label="Toggle light and dark mode">
-                <i class="fas fa-moon moon-icon"></i>
-                <i class="fas fa-sun sun-icon hidden"></i>
-                Toggle Dark Mode
+          </div>
+          <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0 order-1 sm:order-2">
+            <span class="text-4xl sm:text-5xl md:text-6xl font-tifinagh text-purple-600 dark:text-purple-400">ⴰⵎⵖⵏⴰⵙ</span>
+            <span class="sr-only">amghnas - Online Tifinagh Keyboard</span>
+          </h1>
+          <div class="flex-1 flex justify-center sm:justify-end order-3 sm:order-3">
+            <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
+              <span class="moon-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </span>
+              <span class="sun-icon hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </span>
             </button>
-        </div>
+          </div>
+        </header>
 
-        <!-- Main Title for the Keyboard Page - improved with more keywords and `sr-only` -->
-        <h1>Online Tifinagh Keyboard <span class="visually-hidden">for Tamazight and Amazigh Script</span></h1>
+
+        <!-- Main Title for the Keyboard Page (reverted to original h1, not h2 as before) -->
+        <h1 class="font-serif text-center mt-8 dark:text-gray-200">Online Tifinagh Keyboard <span class="visually-hidden">for Tamazight and Amazigh Script</span></h1>
         <p class="tagline">Type directly in Tifinagh using this virtual keyboard, or your physical keyboard with Latin/Arabic input. This tool helps you write Tamazight and Amazigh characters easily.</p>
 
         <!-- The input area should be centered within its available width -->
@@ -573,10 +593,20 @@
             <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here to generate Tifinagh text..." lang="ber" inputmode="text"></textarea>
         </div>
 
-        <!-- Action Buttons: Copy and Clear (MOVED HERE to be between input and keyboard) -->
+        <!-- Action Buttons: Copy and Clear -->
         <div class="action-buttons">
-            <button class="copy" id="copyBtn"><i class="fas fa-copy"></i> Copy Tifinagh Text</button>
-            <button class="clear" id="clearBtn"><i class="fas fa-eraser"></i> Clear Text</button>
+            <button class="copy" id="copyBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
+                </svg>
+                Copy Tifinagh Text
+            </button>
+            <button class="clear" id="clearBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Clear Text
+            </button>
         </div>
 
         <div class="keyboard-layout">
