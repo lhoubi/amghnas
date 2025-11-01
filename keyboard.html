@@ -81,9 +81,8 @@
         body {
             @apply bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
             margin: 0;
-            padding: 20px; /* Keep original padding */
-            display: flex;
-            justify-content: center;
+            /* Remove fixed padding, let the wrapper handle it */
+            /* Removed display: flex; justify-content: center; */
         }
 
         .container {
@@ -93,6 +92,8 @@
             border-radius: var(--border-radius);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 30px;
+            margin-left: auto; /* Center the container */
+            margin-right: auto; /* Center the container */
         }
 
         /* Original H1 and Tagline styles (adjusted to use Tailwind for dark mode) */
@@ -576,65 +577,65 @@
 </head>
 
 <body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-   <div class="container">
-        <!-- HEADER (copied directly from your index.html and adjusted slightly for keyboard page content) -->
-        <header class="flex flex-col sm:flex-row justify-center sm:justify-between items-center py-4 sm:py-6 gap-3 sm:gap-0">
-          <div class="flex-1 text-center sm:text-left order-2 sm:order-1">
-            <a href="index.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Tifinagh Converter
-            </a>
-          </div>
-          <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0 order-1 sm:order-2">
-            <span class="text-4xl sm:text-5xl md:text-6xl font-tifinagh text-purple-600 dark:text-purple-400">ⴰⵎⵖⵏⴰⵙ</span>
-            <span class="sr-only">amghnas - Online Tifinagh Keyboard</span>
-          </h1>
-          <div class="flex-1 flex justify-center sm:justify-end order-3 sm:order-3">
-            <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
-              <span class="moon-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              </span>
-              <span class="sun-icon hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </span>
-            </button>
-          </div>
-        </header>
+   <div class="min-h-screen flex flex-col"> <!-- Added min-h-screen and flex-col for sticky footer -->
+      <div class="relative isolate px-6 pt-6 lg:px-8 flex-grow"> <!-- flex-grow to push footer down -->
+        <div class="container">
+            <!-- HEADER (copied directly from your index.html and adjusted slightly for keyboard page content) -->
+            <header class="flex flex-col sm:flex-row justify-center sm:justify-between items-center py-4 sm:py-6 gap-3 sm:gap-0">
+            <div class="flex-1 text-center sm:text-left order-2 sm:order-1">
+                <a href="index.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Tifinagh Converter
+                </a>
+            </div>
+            <h1 class="text-3xl font-bold font-serif text-center text-gray-800 dark:text-gray-200 flex-shrink-0 order-1 sm:order-2">
+                <span class="text-4xl sm:text-5xl md:text-6xl font-tifinagh text-purple-600 dark:text-purple-400">ⴰⵎⵖⵏⴰⵙ</span>
+                <span class="sr-only">amghnas - Online Tifinagh Keyboard</span>
+            </h1>
+            <div class="flex-1 flex justify-center sm:justify-end order-3 sm:order-3">
+                <button id="themeToggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200" aria-label="Toggle theme">
+                <span class="moon-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </span>
+                <span class="sun-icon hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </span>
+                </button>
+            </div>
+            </header>
 
 
-        <!-- Main Title for the Keyboard Page (reverted to original h1, not h2 as before) -->
-        <h1 class="font-serif text-center mt-8 dark:text-gray-200">Online Tifinagh Keyboard <span class="visually-hidden">for Tamazight and Amazigh Script</span></h1>
-        <p class="tagline">Type directly in Tifinagh using this virtual keyboard, or your physical keyboard with Latin/Arabic input. This tool helps you write Tamazight and Amazigh characters easily.</p>
+            <!-- Main Title for the Keyboard Page (reverted to original h1, not h2 as before) -->
+            <h1 class="font-serif text-center mt-8 dark:text-gray-200">Online Tifinagh Keyboard <span class="visually-hidden">for Tamazight and Amazigh Script</span></h1>
+            <p class="tagline">Type directly in Tifinagh using this virtual keyboard, or your physical keyboard with Latin/Arabic input. This tool helps you write Tamazight and Amazigh characters easily.</p>
 
-        <!-- The input area should be centered within its available width -->
-        <div class="input-area-wrapper">
-            <!-- Improved placeholder text with keywords -->
-            <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here to generate Tifinagh text..." lang="ber" inputmode="text"></textarea>
-        </div>
+            <!-- The input area should be centered within its available width -->
+            <div class="input-area-wrapper">
+                <!-- Improved placeholder text with keywords -->
+                <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here to generate Tifinagh text..." lang="ber" inputmode="text"></textarea>
+            </div>
 
-        <!-- Action Buttons: Copy and Clear -->
-        <div class="action-buttons">
-            <button class="copy" id="copyBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
-                </svg>
-                Copy Tifinagh Text
-            </button>
-            <button class="clear" id="clearBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-                Clear Text
-            </button>
-        </div>
-
-        <div class="keyboard-layout">
+            <!-- Action Buttons: Copy and Clear -->
+            <div class="action-buttons">
+                <button class="copy" id="copyBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10M9 20l3-3m0 0l3 3m-3-3v8" />
+                    </svg>
+                    Copy Tifinagh Text
+                </button>
+                <button class="clear" id="clearBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Clear Text
+                </button>
+            </div>
 
             <!-- ROW 1 (10 Keys) -->
             <div class="keyboard-row">
@@ -748,259 +749,267 @@
                     <div class="key-group" data-latin="gh" data-arabic="غ"> <div class="label-container"><span class="latin-label">gh</span><span class="arabic-label">غ</span></div> <button class="keyboard-key" data-key="ⵖ">ⵖ</button> </div>
                     
 
-                <!-- ROW 5 (SPACE and DELETE - adjust flex-grow for layout) -->
+                <!-- ROW 4 (SPACE and DELETE - adjust flex-grow for layout) -->
                 <div class="keyboard-row">
                     <!-- SPACE Button - Made wider to fill remaining space -->
-                    <div class="key-group" style="flex-grow: 8; max-width: unset; min-width: 250px;" data-latin=" " data-arabic=" ">
-                        <span class="latin-label visually-hidden">Space</span>
-                        <span class="arabic-label visually-hidden">مسافة</span>
-                        <button class="keyboard-key wide" data-key=" ">SPACE</button>
-                    </div>
-                
-                    <!-- DELETE Button -->
-                    <div class="key-group" style="flex-grow: 1; max-width: unset; min-width: 100px;">
-                        <span class="latin-label visually-hidden">Del</span>
-                        <span class="arabic-label visually-hidden">حذف</span>
-                        <button class="keyboard-key delete" data-key="backspace" title="Backspace">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
+    <div class="key-group" style="flex-grow: 8; max-width: unset; min-width: 250px;" data-latin=" " data-arabic=" ">
+        <span class="latin-label visually-hidden">Space</span>
+        <span class="arabic-label visually-hidden">مسافة</span>
+        <button class="keyboard-key wide" data-key=" ">SPACE</button>
+    </div>
 
-            </div>
-        </main>
-            
-            <!-- FOOTER -->
-            <footer class="text-center py-6 sm:py-8 mt-10 border-t border-gray-200 dark:border-slate-800">
-              <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">&copy; <span id="copyright-year">2025</span> Tifinagh & Talatint Converter.</p>
-              <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
-                Made with <span class="text-red-500">❤</span> for Amazigh culture.
-                <br>
-                By: Anaruz Elhabib
-              </p>
-              <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
-                Explore our <a href="index.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">Tifinagh & Talatint converter</a> for easy Tamazight script conversion.
-              </p>
-            </footer>
-          </div>
-        </div>
+    <!-- DELETE Button -->
+    <div class="key-group" style="flex-grow: 1; max-width: unset; min-width: 100px;">
+        <span class="latin-label visually-hidden">Del</span>
+        <span class="arabic-label visually-hidden">حذف</span>
+        <button class="keyboard-key delete" data-key="backspace" title="Backspace">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
 
-  <script>
-   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const keyboardInput = document.getElementById('keyboardInput');
-        const keyboardKeys = document.querySelectorAll('.keyboard-key');
-        const copyBtn = document.getElementById('copyBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const themeToggle = document.getElementById('themeToggle');
-        const moonIcon = document.querySelector('.moon-icon');
-        const sunIcon = document.querySelector('.sun-icon');
+</div>
+</div> <!-- Closing the .container div -->
+</div> <!-- Closing the relative isolate px-6 pt-6 lg:px-8 flex-grow div -->
 
-        let isDarkMode = false; // Keep track of theme state
+<!-- FOOTER -->
+<footer class="text-center py-6 sm:py-8 mt-10 border-t border-gray-200 dark:border-slate-800">
+  <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">&copy; <span id="copyright-year">2025</span> Tifinagh & Talatint Converter.</p>
+  <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
+    Made with <span class="text-red-500">❤</span> for Amazigh culture.
+    <br>
+    By: Anaruz Elhabib
+  </p>
+  <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
+    Explore our <a href="index.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">Tifinagh & Talatint converter</a> for easy Tamazight script conversion.
+  </p>
+</footer>
+</div> <!-- Closing the min-h-screen flex flex-col div -->
 
-        // --- Theme Toggle Functionality ---
-        // Load theme preference from localStorage
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-            isDarkMode = true;
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
+<!-- Link to your separate JavaScript files -->
+<script src="themeToggle.js"></script>
+<script src="converter.js"></script> <!-- Ensure converter.js exists if it's referenced -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const keyboardInput = document.getElementById('keyboardInput');
+    const keyboardKeys = document.querySelectorAll('.keyboard-key');
+    const copyBtn = document.getElementById('copyBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const moonIcon = document.querySelector('.moon-icon');
+    const sunIcon = document.querySelector('.sun-icon');
+
+    let isDarkMode = false; // Keep track of theme state
+
+    // --- Theme Toggle Functionality ---
+    // Load theme preference from localStorage
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+        isDarkMode = true;
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+    } else {
+        document.documentElement.classList.remove('dark');
+        isDarkMode = false;
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        isDarkMode = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+
+        moonIcon.classList.toggle('hidden', isDarkMode);
+        sunIcon.classList.toggle('hidden', !isDarkMode);
+    });
+
+    // --- Virtual Keyboard Input ---
+    keyboardKeys.forEach(key => {
+        key.addEventListener('click', () => {
+            const keyValue = key.dataset.key;
+            handleInput(keyValue);
+            applyClickEffect(key); // Apply the visual click effect
+        });
+    });
+
+    function handleInput(keyValue) {
+        let start = keyboardInput.selectionStart;
+        let end = keyboardInput.selectionEnd;
+        let currentValue = keyboardInput.value;
+
+        if (keyValue === 'backspace') {
+            if (start > 0) {
+                let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
+                keyboardInput.value = newValue;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
+            }
+        } else if (keyValue === ' ') { // Handle space explicitly
+            let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
         } else {
-            document.documentElement.classList.remove('dark');
-            isDarkMode = false;
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
+            let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
         }
+        keyboardInput.focus(); // Keep focus on the textarea
+    }
 
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            isDarkMode = document.documentElement.classList.contains('dark');
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    // --- Physical Keyboard Mapping ---
+    // Map common Latin/Arabic keys to Tifinagh characters
+    const keyMap = {
+        'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'D': 'ⴹ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'H': 'ⵃ',
+        'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ',
+        'r': 'ⵔ', 'R': 'ⵕ', 's': 'ⵙ', 'S': 'ⵚ', 't': 'ⵜ', 'T': 'ⵟ', 'u': 'ⵓ', 'v': 'ⵠ',
+        'w': 'ⵡ', 'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ', 'Z': 'ⵥ',
+        // Arabic to Tifinagh mappings (can be expanded)
+        'ا': 'ⴰ', 'ب': 'ⴱ', 'د': 'ⴷ', 'ض': 'ⴹ', 'ف': 'ⴼ', 'ڭ': 'ⴳ', 'ه': 'ⵀ', 'ح': 'ⵃ',
+        'إ': 'ⵉ', 'ج': 'ⵊ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ', 'پ': 'ⵒ', 'ق': 'ⵇ',
+        'ر': 'ⵔ', 'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ت': 'ⵜ', 'ط': 'ⵟ', 'و': 'ⵡ', 'خ': 'ⵅ',
+        'ي': 'ⵢ', 'ز': 'ⵣ',
+        // Special cases
+        ' ': ' ', // Space bar
+        'Backspace': 'backspace',
+        // For 'sh' sound, often 'ch' or 'sh' in Latin, map to 'ⵛ'
+        // For 'kh' sound, often 'kh' or 'x' in Latin, map to 'ⵅ'
+        // Consider multi-key input later if needed, but for now single key is easier.
+    };
 
-            moonIcon.classList.toggle('hidden', isDarkMode);
-            sunIcon.classList.toggle('hidden', !isDarkMode);
-        });
+    // Improved mapping for common Latin ligatures/digraphs often used for Tifinagh sounds
+    const latinToTifinaghMap = {
+        'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ',
+        'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
+        's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ', 'y': 'ⵢ', 'z': 'ⵣ',
+        // Specific Tifinagh characters with Latin equivalents
+        'c': 'ⵛ', // Often used for 'sh'
+        'ch': 'ⵛ', // sh
+        'x': 'ⵅ', // kh
+        'kh': 'ⵅ', // kh
+        'gh': 'ⵖ', // gh (if you add it)
+        'dj': 'ⵊ', // dj
+        'ts': 'ⵜⵙ', // ts (ligature)
+        'dz': 'ⴷⵣ', // dz (ligature)
+        // Tifinagh characters that might be typed with specific Latin keys (e.g., with diacritics)
+        'd.': 'ⴹ', // d with dot (ḍ)
+        'h.': 'ⵃ', // h with dot (ḥ)
+        'r.': 'ⵕ', // r with dot (ṛ)
+        's.': 'ⵚ', // s with dot (ṣ)
+        't.': 'ⵟ', // t with dot (ṭ)
+        'z.': 'ⵥ', // z with dot (ẓ)
+        // For the 'ʷ' character (labialization mark)
+        'o': 'ⵓ', // Can be used for U
+        '0': 'ⵓ', // Can be used for U
+        '6': 'ⵡ', // Or a similar number that makes sense
+    };
 
-        // --- Virtual Keyboard Input ---
-        keyboardKeys.forEach(key => {
-            key.addEventListener('click', () => {
-                const keyValue = key.dataset.key;
-                handleInput(keyValue);
-                applyClickEffect(key); // Apply the visual click effect
-            });
-        });
+    document.addEventListener('keydown', (e) => {
+        // Only process if the textarea is focused
+        if (document.activeElement === keyboardInput) {
+            const key = e.key;
 
-        function handleInput(keyValue) {
-            let start = keyboardInput.selectionStart;
-            let end = keyboardInput.selectionEnd;
-            let currentValue = keyboardInput.value;
-
-            if (keyValue === 'backspace') {
-                if (start > 0) {
-                    let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
-                    keyboardInput.value = newValue;
-                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
-                }
-            } else if (keyValue === ' ') { // Handle space explicitly
-                let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
-            } else {
-                let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
+            // Handle Backspace and Delete directly for physical keyboard
+            if (key === 'Backspace' || key === 'Delete') {
+                e.preventDefault(); // Prevent default browser back/delete action
+                handleInput('backspace');
+                const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+                if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+                return;
             }
-            keyboardInput.focus(); // Keep focus on the textarea
+
+            // Handle space directly for physical keyboard
+            if (key === ' ') {
+                e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
+                handleInput(' ');
+                const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
+                if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
+                return;
+            }
+
+            // Try to find a direct mapping
+            let tifinaghChar = keyMap[key.toLowerCase()];
+            if (tifinaghChar) {
+                e.preventDefault(); // Prevent default Latin character from appearing
+                handleInput(tifinaghChar);
+                // Find the corresponding virtual key and apply effect
+                const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
+                if (virtualKey) applyClickEffect(virtualKey);
+                return;
+            }
+            
+            // Handle multi-key input for Latin digraphs (e.g., 'sh' -> 'ⵛ')
+            // This is more complex and usually involves buffering input.
+            // For now, let's stick to single key mappings and direct Tifinagh entry for physical keyboard.
+            // If the user types 'sh' on a physical keyboard, they'd get 's' then 'h'.
+            // A full "transliteration engine" would be needed for complex mapping.
+            // You could consider mapping 'shift+s' to 'ṣ' etc. for advanced physical keyboard use.
         }
-
-        // --- Physical Keyboard Mapping ---
-        // Map common Latin/Arabic keys to Tifinagh characters
-        const keyMap = {
-            'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'D': 'ⴹ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'H': 'ⵃ',
-            'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ',
-            'r': 'ⵔ', 'R': 'ⵕ', 's': 'ⵙ', 'S': 'ⵚ', 't': 'ⵜ', 'T': 'ⵟ', 'u': 'ⵓ', 'v': 'ⵠ',
-            'w': 'ⵡ', 'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ', 'Z': 'ⵥ',
-            // Arabic to Tifinagh mappings (can be expanded)
-            'ا': 'ⴰ', 'ب': 'ⴱ', 'د': 'ⴷ', 'ض': 'ⴹ', 'ف': 'ⴼ', 'ڭ': 'ⴳ', 'ه': 'ⵀ', 'ح': 'ⵃ',
-            'إ': 'ⵉ', 'ج': 'ⵊ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ', 'پ': 'ⵒ', 'ق': 'ⵇ',
-            'ر': 'ⵔ', 'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ت': 'ⵜ', 'ط': 'ⵟ', 'و': 'ⵡ', 'خ': 'ⵅ',
-            'ي': 'ⵢ', 'ز': 'ⵣ',
-            // Special cases
-            ' ': ' ', // Space bar
-            'Backspace': 'backspace',
-            // For 'sh' sound, often 'ch' or 'sh' in Latin, map to 'ⵛ'
-            // For 'kh' sound, often 'kh' or 'x' in Latin, map to 'ⵅ'
-            // Consider multi-key input later if needed, but for now single key is easier.
-        };
-
-        // Improved mapping for common Latin ligatures/digraphs often used for Tifinagh sounds
-        const latinToTifinaghMap = {
-            'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ',
-            'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
-            's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ', 'y': 'ⵢ', 'z': 'ⵣ',
-            // Specific Tifinagh characters with Latin equivalents
-            'c': 'ⵛ', // Often used for 'sh'
-            'ch': 'ⵛ', // sh
-            'x': 'ⵅ', // kh
-            'kh': 'ⵅ', // kh
-            'gh': 'ⵖ', // gh (if you add it)
-            'dj': 'ⵊ', // dj
-            'ts': 'ⵜⵙ', // ts (ligature)
-            'dz': 'ⴷⵣ', // dz (ligature)
-            // Tifinagh characters that might be typed with specific Latin keys (e.g., with diacritics)
-            'd.': 'ⴹ', // d with dot (ḍ)
-            'h.': 'ⵃ', // h with dot (ḥ)
-            'r.': 'ⵕ', // r with dot (ṛ)
-            's.': 'ⵚ', // s with dot (ṣ)
-            't.': 'ⵟ', // t with dot (ṭ)
-            'z.': 'ⵥ', // z with dot (ẓ)
-            // For the 'ʷ' character (labialization mark)
-            'o': 'ⵓ', // Can be used for U
-            '0': 'ⵓ', // Can be used for U
-            '6': 'ⵡ', // Or a similar number that makes sense
-        };
-
-        document.addEventListener('keydown', (e) => {
-            // Only process if the textarea is focused
-            if (document.activeElement === keyboardInput) {
-                const key = e.key;
-
-                // Handle Backspace and Delete directly for physical keyboard
-                if (key === 'Backspace' || key === 'Delete') {
-                    e.preventDefault(); // Prevent default browser back/delete action
-                    handleInput('backspace');
-                    const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-                    if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-                    return;
-                }
-
-                // Handle space directly for physical keyboard
-                if (key === ' ') {
-                    e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
-                    handleInput(' ');
-                    const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
-                    if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
-                    return;
-                }
-
-                // Try to find a direct mapping
-                let tifinaghChar = keyMap[key.toLowerCase()];
-                if (tifinaghChar) {
-                    e.preventDefault(); // Prevent default Latin character from appearing
-                    handleInput(tifinaghChar);
-                    // Find the corresponding virtual key and apply effect
-                    const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
-                    if (virtualKey) applyClickEffect(virtualKey);
-                    return;
-                }
-                
-                // Handle multi-key input for Latin digraphs (e.g., 'sh' -> 'ⵛ')
-                // This is more complex and usually involves buffering input.
-                // For now, let's stick to single key mappings and direct Tifinagh entry for physical keyboard.
-                // If the user types 'sh' on a physical keyboard, they'd get 's' then 'h'.
-                // A full "transliteration engine" would be needed for complex mapping.
-                // You could consider mapping 'shift+s' to 'ṣ' etc. for advanced physical keyboard use.
-            }
-        });
+    });
 
 
-        // --- Action Buttons (Copy/Clear) ---
-        copyBtn.addEventListener('click', () => {
-            keyboardInput.select();
-            // For modern browsers, use navigator.clipboard
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(keyboardInput.value)
-                    .then(() => {
-                        console.log('Tifinagh text copied to clipboard!');
-                        // Optional: Show a temporary "Copied!" message
-                        const originalText = copyBtn.innerHTML;
-                        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        setTimeout(() => {
-                            copyBtn.innerHTML = originalText;
-                        }, 1500);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy text: ', err);
-                        fallbackCopyTextToClipboard(keyboardInput.value); // Fallback for older browsers
-                    });
-            } else {
-                fallbackCopyTextToClipboard(keyboardInput.value);
-            }
-        });
-
-        clearBtn.addEventListener('click', () => {
-            keyboardInput.value = '';
-            keyboardInput.focus();
-        });
-
-        // Fallback for copying text (older browsers)
-        function fallbackCopyTextToClipboard(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed"; // Avoid scrolling to bottom
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                console.log('Fallback: Tifinagh text copied to clipboard!');
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                }, 1500);
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-            document.body.removeChild(textArea);
+    // --- Action Buttons (Copy/Clear) ---
+    copyBtn.addEventListener('click', () => {
+        keyboardInput.select();
+        // For modern browsers, use navigator.clipboard
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(keyboardInput.value)
+                .then(() => {
+                    console.log('Tifinagh text copied to clipboard!');
+                    // Optional: Show a temporary "Copied!" message
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                    }, 1500);
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    fallbackCopyTextToClipboard(keyboardInput.value); // Fallback for older browsers
+                });
+        } else {
+            fallbackCopyTextToClipboard(keyboardInput.value);
         }
+    });
 
-        // --- Click Effect Function (Red Fire) ---
-        function applyClickEffect(element) {
-            element.classList.add('key-active');
+    clearBtn.addEventListener('click', () => {
+        keyboardInput.value = '';
+        keyboardInput.focus();
+    });
+
+    // Fallback for copying text (older browsers)
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // Avoid scrolling to bottom
+        textArea.style.left = "-9999px"; // Hide it from view
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            console.log('Fallback: Tifinagh text copied to clipboard!');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
             setTimeout(() => {
-                element.classList.remove('key-active');
-            }, 150); // Duration of the glow effect
+                copyBtn.innerHTML = originalText;
+            }, 1500);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
         }
-    }); // Closing for DOMContentLoaded
+        document.body.removeChild(textArea);
+    }
+
+    // --- Click Effect Function (Red Fire) ---
+    function applyClickEffect(element) {
+        element.classList.add('key-active');
+        setTimeout(() => {
+            element.classList.remove('key-active');
+        }, 150); // Duration of the glow effect
+    }
+
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+}); // Closing for DOMContentLoaded
 </script>
+</body>
+</html>
