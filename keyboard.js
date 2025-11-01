@@ -37,13 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); // Save preference
     });
 
-    // --- Virtual Keyboard Input ---
+    // --- Virtual Keyboard Input (Rest of your existing code) ---
     keyboardKeys.forEach(key => {
         key.addEventListener('click', () => {
             const keyValue = key.dataset.key;
             handleInput(keyValue);
             applyClickEffect(key); // Apply the visual click effect
-            keyboardInput.focus(); // Ensure focus remains on textarea after virtual key click
         });
     });
 
@@ -53,20 +52,24 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentValue = keyboardInput.value;
 
         if (keyValue === 'backspace') {
-            if (start > 0 || start !== end) { // Only delete if there's a selection or cursor is not at start
-                let newValue = currentValue.substring(0, start - (start === end ? 1 : 0)) + currentValue.substring(end);
+            if (start > 0) {
+                let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
                 keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start - (start === end ? 1 : 0);
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
             }
-        } else { // Handles regular keys and ' ' (space)
+        } else if (keyValue === ' ') { // Handle space explicitly
+            let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
+        } else {
             let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
             keyboardInput.value = newValue;
             keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
         }
-        // No need for keyboardInput.focus() here, as it's added after `applyClickEffect` in the `forEach` loop.
+        keyboardInput.focus(); // Keep focus on the textarea
     }
 
-    // --- Physical Keyboard Mapping (No Changes Here, per your request) ---
+    // --- Physical Keyboard Mapping ---
     const keyMap = {
         // Latin to Tifinagh (lowercase for default lookup)
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Latin to Tifinagh (uppercase for *distinct* Tifinagh characters)
         'A': 'ⵄ', 'D': 'ⴹ', 'G': 'ⵖ', 'H': 'ⵃ', 'R': 'ⵕ', 'S': 'ⵚ', 'T': 'ⵟ', 'W': 'ⵯ', 'Z': 'ⵥ',
 
-        // Arabic to Tifinagh (from your provided list)
+        // Arabic to Tifinagh (from your provided list, **excluding 'ة' and 'لا'**)
         'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
@@ -86,16 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
         'ر': 'ⵔ', 'ز': 'ⵣ',
         'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ',
         'ط': 'ⵟ', 'ظ': 'ⵥ',
-        'ع': 'ⵄ', 'غ': 'ⵖ',
+       'ع': 'ⵄ', 'غ': 'ⵖ',
         'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ',
         'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        'ة': 'ⴻ', 'ى': 'ⵉ',
+        // 'ة': 'ⴻ', // Removed as per request
+        'ى': 'ⵉ',
         'ء': 'ⴻ',
         'ؤ': 'ⵓ', 'ئ': 'ⵉ',
         'ڤ': 'ⵠ',
         'ڭ': 'ⴳ',
         'ـ': 'ⵯ', // Special character from arabicToTifinaghMap
+        // 'لا': 'ⵍⴰ', // Removed as per request
 
         // Digraphs (e.g., 'gh' -> 'ⵖ').
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ', 'dh': 'ⴹ', 'ts': 'ⵚ', 'gl': 'ⴳⵍ',
@@ -103,107 +108,100 @@ document.addEventListener('DOMContentLoaded', () => {
         'Backspace': 'backspace',
     };
 
-    document.addEventListener('keydown', (e) => {
-        // Only process if the textarea is focused
-        if (document.activeElement === keyboardInput) {
-            const key = e.key;
+   document.addEventListener('keydown', (e) => {
+    // Only process if the textarea is focused
+    if (document.activeElement === keyboardInput) {
+        const key = e.key;
+
+        // Handle Ctrl/Cmd + A (Select All)
+        if ((e.ctrlKey || e.metaKey) && key === 'a') {
+            e.preventDefault(); // Prevent browser's default select all
+            keyboardInput.select();
+            return; // Stop further processing after handling Select All
+        }
+
+        // Handle Backspace
+        if (key === 'Backspace') {
+            e.preventDefault(); // Prevent default browser back action
+            handleInput('backspace');
+            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+            return;
+        }
+
+        // --- MODIFIED LOGIC for Delete key ---
+        if (key === 'Delete') {
+            e.preventDefault(); // Prevent default browser delete action
             let start = keyboardInput.selectionStart;
             let end = keyboardInput.selectionEnd;
             let currentValue = keyboardInput.value;
 
-            // Handle Ctrl/Cmd + A (Select All)
-            if ((e.ctrlKey || e.metaKey) && key === 'a') {
-                e.preventDefault();
-                keyboardInput.select();
-                return;
+            // If text is selected (start != end), delete the selection
+            if (start !== end) {
+                let newValue = currentValue.substring(0, start) + currentValue.substring(end);
+                keyboardInput.value = newValue;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
+            } else if (end < currentValue.length) { // If no text selected, delete character to the right
+                let newValue = currentValue.substring(0, start) + currentValue.substring(end + 1);
+                keyboardInput.value = newValue;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
             }
-
-            // Handle Backspace
-            if (key === 'Backspace') {
-                e.preventDefault();
-                handleInput('backspace');
-                const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-                if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-                return;
-            }
-
-            // Handle physical Delete key for selection and character to the right
-            if (key === 'Delete') {
-                e.preventDefault();
-                if (start < end) { // If text is selected, delete the selection
-                    let newValue = currentValue.substring(0, start) + currentValue.substring(end);
-                    keyboardInput.value = newValue;
-                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
-                } else if (end < currentValue.length) { // If no text selected, delete character to the right
-                    let newValue = currentValue.substring(0, start) + currentValue.substring(end + 1);
-                    keyboardInput.value = newValue;
-                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
-                }
-                const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-                if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-                return;
-            }
-
-            // Handle space directly for physical keyboard
-            if (key === ' ') {
-                e.preventDefault();
-                handleInput(' ');
-                const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
-                if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
-                return;
-            }
-
-            // --- Digraph Handling ---
-            let handledAsDigraph = false;
-            if (key.length === 1 && /[a-zA-Z]/.test(key)) {
-                const textBeforeCursor = currentValue.substring(0, start);
-                let longestDigraphMatch = null;
-                let matchedDigraphKey = null;
-
-                for (const digraph in keyMap) {
-                    if (digraph.length > 1 && textBeforeCursor.length >= digraph.length - 1) {
-                        const potentialInput = textBeforeCursor.slice(-(digraph.length - 1)) + key.toLowerCase();
-                        if (potentialInput === digraph) {
-                            if (!longestDigraphMatch || digraph.length > longestDigraphMatch.length) {
-                                longestDigraphMatch = keyMap[digraph];
-                                matchedDigraphKey = digraph;
-                            }
-                        }
-                    }
-                }
-
-                if (longestDigraphMatch && matchedDigraphKey) {
-                    e.preventDefault();
-                    let newValue = currentValue.substring(0, start - (matchedDigraphKey.length - 1)) + longestDigraphMatch + currentValue.substring(end);
-                    keyboardInput.value = newValue;
-                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start - (matchedDigraphKey.length - 1) + longestDigraphMatch.length;
-                    keyboardInput.focus();
-                    const virtualKey = document.querySelector(`.keyboard-key[data-key="${longestDigraphMatch}"]`);
-                    if (virtualKey) applyClickEffect(virtualKey);
-                    handledAsDigraph = true;
-                    return;
-                }
-            }
-            // --- End Digraph Handling ---
-
-            // Try to find a direct mapping for other keys (Latin, Arabic, etc.)
-            let tifinaghChar = keyMap[key.toLowerCase()];
-            if (!tifinaghChar && key.length === 1 && /[A-Z]/.test(key)) {
-                tifinaghChar = keyMap[key];
-            }
-            if (!tifinaghChar && keyMap[key]) {
-                 tifinaghChar = keyMap[key];
-            }
-
-            if (tifinaghChar && !handledAsDigraph) {
-                e.preventDefault();
-                handleInput(tifinaghChar);
-                const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
-                if (virtualKey) applyClickEffect(virtualKey);
-                return;
-            }
+            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]'); // Still activate virtual backspace button for visual feedback
+            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+            return;
         }
-    });
+        // --- END MODIFIED LOGIC ---
+
+        // Handle space directly for physical keyboard
+        if (key === ' ') {
+            e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
+            handleInput(' ');
+            const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
+            if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
+            return;
+        }
+
+        // --- NEW LOGIC TO BLOCK 'ة' and 'لا' ---
+        // If the pressed key is 'ة' or if 'لا' is formed, prevent any output
+        if (key === 'ة') {
+            e.preventDefault(); // Prevent the 'ة' from being typed
+            return; // Stop further processing, no output
+        }
+
+        if (key === 'ا' && keyboardInput.value.endsWith('ل')) {
+            e.preventDefault(); // Prevent the 'ا' from being typed (which would complete 'لا')
+            // Optionally, you might want to remove the 'ل' if the user's intention was to form 'لا' and get no output.
+            // For now, it will just block the 'ا' part of 'لا'.
+            // If you want to delete the 'ل' as well:
+            // keyboardInput.value = keyboardInput.value.slice(0, -1);
+            return; // Stop further processing, no output
+        }
+        // --- END NEW LOGIC ---
+
+
+        // --- ORIGINAL LOGIC FOR OTHER KEY MAPPING ---
+        let tifinaghChar;
+
+        // 1. Try to find an exact match for the key (e.g., 'A' for 'ⵄ')
+        if (keyMap[key]) {
+            tifinaghChar = keyMap[key];
+        }
+        // 2. If no exact match, try the lowercase version (e.g., 'b' for 'ⴱ')
+        else if (keyMap[key.toLowerCase()]) {
+            tifinaghChar = keyMap[key.toLowerCase()];
+        }
+
+        if (tifinaghChar) {
+            e.preventDefault(); // Prevent default Latin character from appearing
+            handleInput(tifinaghChar);
+            // Find the corresponding virtual key and apply effect
+            const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
+            if (virtualKey) applyClickEffect(virtualKey);
+            return;
+        }
+        // --- END ORIGINAL LOGIC ---
+    }
+});
 
 
     // --- Action Buttons (Copy/Clear) ---
@@ -226,8 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             fallbackCopyTextToClipboard(keyboardInput.value);
         }
-        window.getSelection().removeAllRanges(); // Deselect text
-        keyboardInput.focus();
     });
 
     clearBtn.addEventListener('click', () => {
@@ -250,8 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = copyBtn.innerHTML;
             copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
             setTimeout(() => {
-                copyBtn.innerHTML = originalText;
-            }, 1500);
+                        copyBtn.innerHTML = originalText;
+                    }, 1500);
         } catch (err) {
             console.error('Fallback: Oops, unable to copy', err);
         }
