@@ -9,6 +9,7 @@
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="shortcut icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Tailwind CSS (for header, footer, dark mode transition) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -286,11 +287,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            justify-content: flex-start;
             width: 76px;
             min-width: 76px;
             max-width: 76px;
-            padding-top: 6px;
+            /* REMOVED: padding-top: 6px; */ /* This was causing inconsistent visual height */
             box-sizing: border-box;
             text-align: center;
         }
@@ -300,8 +301,10 @@
             justify-content: center;
             gap: 4px;
             width: 100%;
-            line-height: 1;
-            margin-bottom: -2px;
+            line-height: 0.9;
+            margin-bottom: -5px;
+           /* ADDED: */
+            min-height: 1.2rem; /* This value is estimated based on your label font-sizes (0.72rem, 0.65rem) + line-height. Adjust if needed. */
         }
 
         .latin-label {
@@ -368,11 +371,35 @@
        /* No custom CSS needed for footer, Tailwind classes handle it */
         /* Retaining this block for clarity but it will be empty if only Tailwind is used */
 
+        /* ADDED: New rules for space-key and delete-key */
+        .key-group.space-key {
+            flex-grow: 1; /* Allow it to expand */
+            min-width: 150px; /* Minimum width for space key */
+            max-width: 350px; /* Max width for space key */
+            width: auto; /* Let flex-grow handle its width */
+        }
+
+        .key-group.delete-key {
+            width: 76px; /* Match standard key width */
+            min-width: 76px;
+            max-width: 76px;
+        }
+
+        .delete-key .keyboard-key i { /* Ensure the delete icon is sized correctly */
+            font-size: 1.6rem;
+        }
+
         /* ---------------------
            Responsiveness — keep exact desktop look but tidy mobile (Original styles maintained)
            --------------------- */
         @media (max-width: 1024px) {
             .key-group {
+                width: 72px;
+                min-width: 72px;
+                max-width: 72px;
+            }
+            /* ADDED for consistency */
+            .key-group.delete-key {
                 width: 72px;
                 min-width: 72px;
                 max-width: 72px;
@@ -420,6 +447,17 @@
                 min-width: 66px;
                 max-width: 66px;
                 gap: 4px;
+            }
+            /* ADDED for consistency */
+            .key-group.delete-key {
+                width: 66px;
+                min-width: 66px;
+                max-width: 66px;
+            }
+            /* ADJUSTED for responsiveness */
+            .key-group.space-key {
+                min-width: 120px;
+                max-width: 250px;
             }
 
             .label-container {
@@ -471,6 +509,17 @@
                 width: 60px;
                 min-width: 60px;
                 max-width: 60px;
+            }
+            /* ADDED for consistency */
+            .key-group.delete-key {
+                width: 60px;
+                min-width: 60px;
+                max-width: 60px;
+            }
+            /* ADJUSTED for responsiveness */
+            .key-group.space-key {
+                min-width: 80px;
+                max-width: 200px;
             }
 
             .label-container {
@@ -572,7 +621,41 @@
 
         .moon-icon.hidden {
             display: none;
+/* Ensure the sun icon is hidden by default if moon is shown by default */
+        .sun-icon.hidden {
+            display: none;
         }
+
+        .moon-icon.hidden {
+            display: none;
+        }
+
+        /* --- New CSS for Keyboard Layout Fixes --- */
+        .keyboard-row {
+            /* Ensure items stretch if needed, and distribute space */
+            justify-content: flex-start; /* Align to start, let keys manage gap */
+        }
+
+        /* Styles for the space bar key group */
+        .key-group.space-key {
+            flex-grow: 1; /* Allow it to take available space */
+            min-width: 150px; /* Minimum width for space key */
+            max-width: 300px; /* Max width for space key */
+        }
+
+        /* Styles for the delete key group */
+        .key-group.delete-key {
+            width: 76px; /* Match standard key width */
+            min-width: 76px;
+            max-width: 76px;
+        }
+
+        .keyboard-key.delete i {
+            font-size: 1.6rem; /* Ensure the icon size matches Tifinagh characters */
+            color: inherit; /* Inherit color from the button */
+        }
+        /* --- End of New CSS for Keyboard Layout Fixes --- */
+
     </style>
 </head>
 
@@ -639,8 +722,8 @@
 
             <!-- ROW 1 (10 Keys) -->
             <div class="keyboard-row">
-                <div class="key-group" data-latin="a" data-arabic="ا">
-                    <div class="label-container"><span class="latin-label">a</span><span class="arabic-label">ا- الفتحة</span></div> <button class="keyboard-key" data-key="ⴰ">ⴰ</button>
+                <div class="key-group" data-latin="a" data-arabic="أَ">
+                    <div class="label-container"><span class="latin-label">a</span><span class="arabic-label">أَ- الفتحة</span></div> <button class="keyboard-key" data-key="ⴰ">ⴰ</button>
                 </div>
                 <div class="key-group" data-latin="b" data-arabic="ب">
                     <div class="label-container"><span class="latin-label">b</span><span class="arabic-label">ب</span></div> <button class="keyboard-key" data-key="ⴱ">ⴱ</button>
@@ -666,8 +749,8 @@
                 <div class="key-group" data-latin="ḥ" data-arabic="ح">
                     <div class="label-container"><span class="latin-label">ḥ</span><span class="arabic-label">ح</span></div> <button class="keyboard-key" data-key="ⵃ">ⵃ</button>
                 </div>
-                <div class="key-group" data-latin="i" data-arabic="إ">
-                    <div class="label-container"><span class="latin-label">i</span><span class="arabic-label">إ-الكسرة</span></div> <button class="keyboard-key" data-key="ⵉ">ⵉ</button>
+                <div class="key-group" data-latin="i" data-arabic="إِ">
+                    <div class="label-container"><span class="latin-label">i</span><span class="arabic-label">إِ-الكسرة</span></div> <button class="keyboard-key" data-key="ⵉ">ⵉ</button>
                 </div>
             </div>
 
@@ -679,7 +762,7 @@
                 <div class="key-group" data-latin="k" data-arabic="ك">
                     <div class="label-container"><span class="latin-label">k</span><span class="arabic-label">ك</span></div> <button class="keyboard-key" data-key="ⴽ">ⴽ</button>
                 </div>
-                <div class="key-group" data-latin="l" data-arabic="ل">
+                <div class="key-group" data-latin="L" data-arabic="ل">
                     <div class="label-container"><span class="latin-label">L</span><span class="arabic-label">ل</span></div> <button class="keyboard-key" data-key="ⵍ">ⵍ</button>
                 </div>
                 <div class="key-group" data-latin="m" data-arabic="م">
@@ -738,34 +821,31 @@
                     <div class="label-container"><span class="latin-label">z</span><span class="arabic-label">ز</span></div> <button class="keyboard-key" data-key="ⵣ">ⵣ</button>
                 </div>
             </div>
-                <!-- ROW 4 (10 Keys) -->
+                <!-- ROW 4 (6 Keys) -->
                 <div class="keyboard-row">
                     <div class="key-group" data-latin="ẓ" data-arabic=""> <div class="label-container"><span class="latin-label">ẓ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
-                    <div class="key-group" data-latin="ʷ" data-arabic="ـ"> <div class="label-container"><span class="latin-label">ʷ</span><span class="arabic-label">ـ</span></div> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div>
-                    <div class="key-group" data-latin="ⵄ" data-arabic="ع"> <div class="label-container"><span class="latin-label">A</span><span class="arabic-label">ع</span></div> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
-                    <div class="key-group" data-latin="C" data-arabic="ش"> <div class="label-container"><span class="latin-label">C</span><span class="arabic-label">ش</span></div> <button class="keyboard-key" data-key="ⵛ">ⵛ</button> </div>
-                    <!-- Filler/Additional keys to make 10 -->
-                    <!-- I'm adding placeholder keys here. You might want to use actual Tifinagh characters -->
+                    <div class="key-group" data-latin="ʷ" data-arabic="ـ"> <div class="label-container"><span class="latin-label">ʷ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div>
+                    <div class="key-group" data-latin="A" data-arabic="ع"> <div class="label-container"><span class="latin-label">A</span><span class="arabic-label">ع</span></div> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
                     <div class="key-group" data-latin="gh" data-arabic="غ"> <div class="label-container"><span class="latin-label">gh</span><span class="arabic-label">غ</span></div> <button class="keyboard-key" data-key="ⵖ">ⵖ</button> </div>
                     
-
-                <!-- ROW 4 (SPACE and DELETE - adjust flex-grow for layout) -->
-                <div class="keyboard-row">
-                    <!-- SPACE Button - Made wider to fill remaining space -->
-    <div class="key-group" style="flex-grow: 8; max-width: unset; min-width: 250px;" data-latin=" " data-arabic=" ">
+        <!-- SPACE Button - Use a specific class for width -->
+<div class="key-group space-key" data-latin=" " data-arabic=" ">
+    <div class="label-container">
         <span class="latin-label visually-hidden">Space</span>
         <span class="arabic-label visually-hidden">مسافة</span>
-        <button class="keyboard-key wide" data-key=" ">SPACE</button>
     </div>
+    <button class="keyboard-key wide" data-key=" ">SPACE</button>
+</div>
 
-    <!-- DELETE Button -->
-    <div class="key-group" style="flex-grow: 1; max-width: unset; min-width: 100px;">
+<!-- DELETE Button - Keep it simple -->
+<div class="key-group delete-key" data-latin="Del" data-arabic="حذف">
+    <div class="label-container">
         <span class="latin-label visually-hidden">Del</span>
         <span class="arabic-label visually-hidden">حذف</span>
-        <button class="keyboard-key delete" data-key="backspace" title="Backspace">
-            <i class="fas fa-times"></i>
-        </button>
     </div>
+    <button class="keyboard-key delete" data-key="backspace" title="Backspace">
+        <i class="fas fa-backspace"></i>
+    </button>
 </div>
 
 </div>
@@ -789,227 +869,3 @@
 <!-- Link to your separate JavaScript files -->
 <script src="themeToggle.js"></script>
 <script src="converter.js"></script> <!-- Ensure converter.js exists if it's referenced -->
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const keyboardInput = document.getElementById('keyboardInput');
-    const keyboardKeys = document.querySelectorAll('.keyboard-key');
-    const copyBtn = document.getElementById('copyBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const themeToggle = document.getElementById('themeToggle');
-    const moonIcon = document.querySelector('.moon-icon');
-    const sunIcon = document.querySelector('.sun-icon');
-
-    let isDarkMode = false; // Keep track of theme state
-
-    // --- Theme Toggle Functionality ---
-    // Load theme preference from localStorage
-    if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-        isDarkMode = true;
-        moonIcon.classList.add('hidden');
-        sunIcon.classList.remove('hidden');
-    } else {
-        document.documentElement.classList.remove('dark');
-        isDarkMode = false;
-        moonIcon.classList.remove('hidden');
-        sunIcon.classList.add('hidden');
-    }
-
-    themeToggle.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-        isDarkMode = document.documentElement.classList.contains('dark');
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-
-        moonIcon.classList.toggle('hidden', isDarkMode);
-        sunIcon.classList.toggle('hidden', !isDarkMode);
-    });
-
-    // --- Virtual Keyboard Input ---
-    keyboardKeys.forEach(key => {
-        key.addEventListener('click', () => {
-            const keyValue = key.dataset.key;
-            handleInput(keyValue);
-            applyClickEffect(key); // Apply the visual click effect
-        });
-    });
-
-    function handleInput(keyValue) {
-        let start = keyboardInput.selectionStart;
-        let end = keyboardInput.selectionEnd;
-        let currentValue = keyboardInput.value;
-
-        if (keyValue === 'backspace') {
-            if (start > 0) {
-                let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
-            }
-        } else if (keyValue === ' ') { // Handle space explicitly
-            let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
-            keyboardInput.value = newValue;
-            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
-        } else {
-            let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
-            keyboardInput.value = newValue;
-            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
-        }
-        keyboardInput.focus(); // Keep focus on the textarea
-    }
-
-    // --- Physical Keyboard Mapping ---
-    // Map common Latin/Arabic keys to Tifinagh characters
-    const keyMap = {
-        'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'D': 'ⴹ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'H': 'ⵃ',
-        'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ',
-        'r': 'ⵔ', 'R': 'ⵕ', 's': 'ⵙ', 'S': 'ⵚ', 't': 'ⵜ', 'T': 'ⵟ', 'u': 'ⵓ', 'v': 'ⵠ',
-        'w': 'ⵡ', 'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ', 'Z': 'ⵥ',
-        // Arabic to Tifinagh mappings (can be expanded)
-        'ا': 'ⴰ', 'ب': 'ⴱ', 'د': 'ⴷ', 'ض': 'ⴹ', 'ف': 'ⴼ', 'ڭ': 'ⴳ', 'ه': 'ⵀ', 'ح': 'ⵃ',
-        'إ': 'ⵉ', 'ج': 'ⵊ', 'ك': 'ⴽ', 'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ', 'پ': 'ⵒ', 'ق': 'ⵇ',
-        'ر': 'ⵔ', 'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ت': 'ⵜ', 'ط': 'ⵟ', 'و': 'ⵡ', 'خ': 'ⵅ',
-        'ي': 'ⵢ', 'ز': 'ⵣ',
-        // Special cases
-        ' ': ' ', // Space bar
-        'Backspace': 'backspace',
-        // For 'sh' sound, often 'ch' or 'sh' in Latin, map to 'ⵛ'
-        // For 'kh' sound, often 'kh' or 'x' in Latin, map to 'ⵅ'
-        // Consider multi-key input later if needed, but for now single key is easier.
-    };
-
-    // Improved mapping for common Latin ligatures/digraphs often used for Tifinagh sounds
-    const latinToTifinaghMap = {
-        'a': 'ⴰ', 'b': 'ⴱ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ', 'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ',
-        'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ', 'm': 'ⵎ', 'n': 'ⵏ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
-        's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ', 'y': 'ⵢ', 'z': 'ⵣ',
-        // Specific Tifinagh characters with Latin equivalents
-        'c': 'ⵛ', // Often used for 'sh'
-        'ch': 'ⵛ', // sh
-        'x': 'ⵅ', // kh
-        'kh': 'ⵅ', // kh
-        'gh': 'ⵖ', // gh (if you add it)
-        'dj': 'ⵊ', // dj
-        'ts': 'ⵜⵙ', // ts (ligature)
-        'dz': 'ⴷⵣ', // dz (ligature)
-        // Tifinagh characters that might be typed with specific Latin keys (e.g., with diacritics)
-        'd.': 'ⴹ', // d with dot (ḍ)
-        'h.': 'ⵃ', // h with dot (ḥ)
-        'r.': 'ⵕ', // r with dot (ṛ)
-        's.': 'ⵚ', // s with dot (ṣ)
-        't.': 'ⵟ', // t with dot (ṭ)
-        'z.': 'ⵥ', // z with dot (ẓ)
-        // For the 'ʷ' character (labialization mark)
-        'o': 'ⵓ', // Can be used for U
-        '0': 'ⵓ', // Can be used for U
-        '6': 'ⵡ', // Or a similar number that makes sense
-    };
-
-    document.addEventListener('keydown', (e) => {
-        // Only process if the textarea is focused
-        if (document.activeElement === keyboardInput) {
-            const key = e.key;
-
-            // Handle Backspace and Delete directly for physical keyboard
-            if (key === 'Backspace' || key === 'Delete') {
-                e.preventDefault(); // Prevent default browser back/delete action
-                handleInput('backspace');
-                const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-                if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-                return;
-            }
-
-            // Handle space directly for physical keyboard
-            if (key === ' ') {
-                e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
-                handleInput(' ');
-                const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
-                if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
-                return;
-            }
-
-            // Try to find a direct mapping
-            let tifinaghChar = keyMap[key.toLowerCase()];
-            if (tifinaghChar) {
-                e.preventDefault(); // Prevent default Latin character from appearing
-                handleInput(tifinaghChar);
-                // Find the corresponding virtual key and apply effect
-                const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
-                if (virtualKey) applyClickEffect(virtualKey);
-                return;
-            }
-            
-            // Handle multi-key input for Latin digraphs (e.g., 'sh' -> 'ⵛ')
-            // This is more complex and usually involves buffering input.
-            // For now, let's stick to single key mappings and direct Tifinagh entry for physical keyboard.
-            // If the user types 'sh' on a physical keyboard, they'd get 's' then 'h'.
-            // A full "transliteration engine" would be needed for complex mapping.
-            // You could consider mapping 'shift+s' to 'ṣ' etc. for advanced physical keyboard use.
-        }
-    });
-
-
-    // --- Action Buttons (Copy/Clear) ---
-    copyBtn.addEventListener('click', () => {
-        keyboardInput.select();
-        // For modern browsers, use navigator.clipboard
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(keyboardInput.value)
-                .then(() => {
-                    console.log('Tifinagh text copied to clipboard!');
-                    // Optional: Show a temporary "Copied!" message
-                    const originalText = copyBtn.innerHTML;
-                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    setTimeout(() => {
-                        copyBtn.innerHTML = originalText;
-                    }, 1500);
-                })
-                .catch(err => {
-                    console.error('Failed to copy text: ', err);
-                    fallbackCopyTextToClipboard(keyboardInput.value); // Fallback for older browsers
-                });
-        } else {
-            fallbackCopyTextToClipboard(keyboardInput.value);
-        }
-    });
-
-    clearBtn.addEventListener('click', () => {
-        keyboardInput.value = '';
-        keyboardInput.focus();
-    });
-
-    // Fallback for copying text (older browsers)
-    function fallbackCopyTextToClipboard(text) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed"; // Avoid scrolling to bottom
-        textArea.style.left = "-9999px"; // Hide it from view
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            console.log('Fallback: Tifinagh text copied to clipboard!');
-            const originalText = copyBtn.innerHTML;
-            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            setTimeout(() => {
-                copyBtn.innerHTML = originalText;
-            }, 1500);
-        } catch (err) {
-            console.error('Fallback: Oops, unable to copy', err);
-        }
-        document.body.removeChild(textArea);
-    }
-
-    // --- Click Effect Function (Red Fire) ---
-    function applyClickEffect(element) {
-        element.classList.add('key-active');
-        setTimeout(() => {
-            element.classList.remove('key-active');
-        }, 150); // Duration of the glow effect
-    }
-
-    document.getElementById('copyright-year').textContent = new Date().getFullYear();
-}); // Closing for DOMContentLoaded
-</script>
-</body>
-</html>
