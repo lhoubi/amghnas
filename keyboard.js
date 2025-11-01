@@ -219,10 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         copyBtn.innerHTML = originalText;
                     }, 1500);
                 })
-                .catch(err => { // <--- THIS WAS MISSING THE CLOSING CURLY BRACE '}'
+                .catch(err => {
                     console.error('Failed to copy text: ', err);
                     fallbackCopyTextToClipboard(keyboardInput.value);
-                }); // <--- Syntax error fixed here
+                });
         } else {
             fallbackCopyTextToClipboard(keyboardInput.value);
         }
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboardInput.focus();
     });
 
-    clearBtn.addEventListener('click', () => { // <--- THIS WAS MISSING CURLY BRACES '{' '}'
+    clearBtn.addEventListener('click', () => {
         keyboardInput.value = '';
         keyboardInput.focus();
     });
