@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Latin to Tifinagh (uppercase for *distinct* Tifinagh characters)
         'A': 'ⵄ', 'D': 'ⴹ', 'G': 'ⵖ', 'H': 'ⵃ', 'R': 'ⵕ', 'S': 'ⵚ', 'T': 'ⵟ', 'W': 'ⵯ', 'Z': 'ⵥ',
 
-        // Arabic to Tifinagh (from your provided list, **excluding 'ة' and 'لا'**)
+        // Arabic to Tifinagh (from your provided list)
         'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
@@ -93,14 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
         'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ',
         'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        // 'ة': 'ⴻ', // Removed as per request
-        'ى': 'ⵉ',
+        'ة': 'ⴻ', 'ى': 'ⵉ',
         'ء': 'ⴻ',
         'ؤ': 'ⵓ', 'ئ': 'ⵉ',
         'ڤ': 'ⵠ',
         'ڭ': 'ⴳ',
         'ـ': 'ⵯ', // Special character from arabicToTifinaghMap
-        // 'لا': 'ⵍⴰ', // Removed as per request
+        'لا': 'ⵍⴰ', // ADDED: Arabic 'لا' to Tifinagh 'ⵍⴰ'
 
         // Digraphs (e.g., 'gh' -> 'ⵖ').
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ', 'dh': 'ⴹ', 'ts': 'ⵚ', 'gl': 'ⴳⵍ',
@@ -161,26 +160,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- NEW LOGIC TO BLOCK 'ة' and 'لا' ---
-        // If the pressed key is 'ة' or if 'لا' is formed, prevent any output
-        if (key === 'ة') {
-            e.preventDefault(); // Prevent the 'ة' from being typed
-            return; // Stop further processing, no output
-        }
-
-        if (key === 'ا' && keyboardInput.value.endsWith('ل')) {
-            e.preventDefault(); // Prevent the 'ا' from being typed (which would complete 'لا')
-            // Optionally, you might want to remove the 'ل' if the user's intention was to form 'لا' and get no output.
-            // For now, it will just block the 'ا' part of 'لا'.
-            // If you want to delete the 'ل' as well:
-            // keyboardInput.value = keyboardInput.value.slice(0, -1);
-            return; // Stop further processing, no output
-        }
-        // --- END NEW LOGIC ---
-
-
-        // --- ORIGINAL LOGIC FOR OTHER KEY MAPPING ---
+        // --- MODIFIED LOGIC FOR KEY MAPPING ---
         let tifinaghChar;
+
+        // Prioritize multi-character Arabic mappings if the input field ends with a relevant character
+        // This is a simplified approach for 'لا'. For more complex digraphs/ligatures,
+        // a more robust state machine or input buffer might be needed.
+        if (key === 'ا' && keyboardInput.value.endsWith('ل')) {
+            const potentialLigature = keyboardInput.value.slice(-1) + key; // 'ل' + 'ا'
+            if (keyMap[potentialLigature]) {
+                e.preventDefault();
+                keyboardInput.value = keyboardInput.value.slice(0, -1); // Remove the 'ل'
+                handleInput(keyMap[potentialLigature]); // Add 'ⵍⴰ'
+                const virtualKey = document.querySelector(`.keyboard-key[data-key="${keyMap[potentialLigature]}"]`);
+                if (virtualKey) applyClickEffect(virtualKey);
+                return;
+            }
+        }
+
 
         // 1. Try to find an exact match for the key (e.g., 'A' for 'ⵄ')
         if (keyMap[key]) {
@@ -199,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (virtualKey) applyClickEffect(virtualKey);
             return;
         }
-        // --- END ORIGINAL LOGIC ---
+        // --- END MODIFIED LOGIC ---
     }
 });
 
@@ -246,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = copyBtn.innerHTML;
             copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
             setTimeout(() => {
-                        copyBtn.innerHTML = originalText;
-                    }, 1500);
+                copyBtn.innerHTML = originalText;
+            }, 1500);
         } catch (err) {
             console.error('Fallback: Oops, unable to copy', err);
         }
@@ -264,3 +261,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
 });
+</script>
