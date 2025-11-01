@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sunIcon = document.querySelector('.sun-icon');
 
     // --- Theme Toggle Functionality ---
-    // Function to apply theme
     function applyTheme(isDark) {
         if (isDark) {
             document.documentElement.classList.add('dark');
@@ -21,28 +20,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Load theme preference from localStorage on page load
     const savedTheme = localStorage.getItem('theme');
-    let isDarkMode = savedTheme === 'dark'; // Initialize based on saved preference
+    let isDarkMode = savedTheme === 'dark';
 
-    // If no theme is saved, check system preference
     if (savedTheme === null) {
         isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
-    applyTheme(isDarkMode); // Apply the theme immediately
+    applyTheme(isDarkMode);
 
     themeToggle.addEventListener('click', () => {
-        isDarkMode = !isDarkMode; // Toggle the state
-        applyTheme(isDarkMode); // Apply the new state
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); // Save preference
+        isDarkMode = !isDarkMode;
+        applyTheme(isDarkMode);
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     });
 
-    // --- Virtual Keyboard Input (Rest of your existing code) ---
+    // --- Virtual Keyboard Input ---
     keyboardKeys.forEach(key => {
         key.addEventListener('click', () => {
             const keyValue = key.dataset.key;
+            // IMPORTANT: Virtual keyboard clicks should always work,
+            // so we call handleInput directly.
             handleInput(keyValue);
-            applyClickEffect(key); // Apply the visual click effect
+            applyClickEffect(key);
         });
     });
 
@@ -57,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyboardInput.value = newValue;
                 keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
             }
-        } else if (keyValue === ' ') { // Handle space explicitly
+        } else if (keyValue === ' ') {
             let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
             keyboardInput.value = newValue;
             keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
@@ -66,139 +65,159 @@ document.addEventListener('DOMContentLoaded', () => {
             keyboardInput.value = newValue;
             keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
         }
-        keyboardInput.focus(); // Keep focus on the textarea
+        keyboardInput.focus();
     }
 
     // --- Physical Keyboard Mapping ---
     const keyMap = {
-        // Latin to Tifinagh (lowercase for default lookup)
+        // Latin to Tifinagh
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
         'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
         'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
         's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ',
         'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
 
-        // Latin to Tifinagh (uppercase for *distinct* Tifinagh characters)
+        // Latin to Tifinagh (uppercase)
         'A': 'ⵄ', 'D': 'ⴹ', 'G': 'ⵖ', 'H': 'ⵃ', 'R': 'ⵕ', 'S': 'ⵚ', 'T': 'ⵟ', 'W': 'ⵯ', 'Z': 'ⵥ',
 
-        // Arabic to Tifinagh (from your provided list)
+        // Arabic to Tifinagh (from your provided list - includes 'ة' and 'لا' for VIRTUAL keyboard if needed)
         'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
         'د': 'ⴷ', 'ذ': 'ⴷ',
         'ر': 'ⵔ', 'ز': 'ⵣ',
         'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ',
-        'ط': 'ⵟ', 'ظ': 'ⵥ',
-       'ع': 'ⵄ', 'غ': 'ⵖ',
+        'ط': 'ⵟ', 'ظ': 'ⴹ',
+        'ع': 'ⵄ', 'غ': 'ⵖ',
         'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ',
         'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        'ة': 'ⴻ', 'ى': 'ⵉ',
+        'ة': 'ⴻ', // RE-ADDED for potential virtual keyboard use or other Arabic-to-Tifinagh mappings
+        'ى': 'ⵉ',
         'ء': 'ⴻ',
         'ؤ': 'ⵓ', 'ئ': 'ⵉ',
         'ڤ': 'ⵠ',
         'ڭ': 'ⴳ',
-        'ـ': 'ⵯ', // Special character from arabicToTifinaghMap
-        'لا': 'ⵍⴰ', // ADDED: Arabic 'لا' to Tifinagh 'ⵍⴰ'
+        'ـ': 'ⵯ',
+        'لا': 'ⵍⴰ', // RE-ADDED for potential virtual keyboard use or other Arabic-to-Tifinagh mappings
 
-        // Digraphs (e.g., 'gh' -> 'ⵖ').
+        // Digraphs
         'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ', 'dh': 'ⴹ', 'ts': 'ⵚ', 'gl': 'ⴳⵍ',
         ' ': ' ',
         'Backspace': 'backspace',
     };
 
-   document.addEventListener('keydown', (e) => {
-    // Only process if the textarea is focused
-    if (document.activeElement === keyboardInput) {
-        const key = e.key;
+    document.addEventListener('keydown', (e) => {
+        // Only process if the textarea is focused
+        if (document.activeElement === keyboardInput) {
+            const key = e.key;
+            const currentValue = keyboardInput.value; // Get current value here for checks
 
-        // Handle Ctrl/Cmd + A (Select All)
-        if ((e.ctrlKey || e.metaKey) && key === 'a') {
-            e.preventDefault(); // Prevent browser's default select all
-            keyboardInput.select();
-            return; // Stop further processing after handling Select All
-        }
+            // --- 1. HANDLE SPECIAL/CONTROL KEYS FIRST (always prevent default) ---
 
-        // Handle Backspace
-        if (key === 'Backspace') {
-            e.preventDefault(); // Prevent default browser back action
-            handleInput('backspace');
-            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-            return;
-        }
-
-        // --- MODIFIED LOGIC for Delete key ---
-        if (key === 'Delete') {
-            e.preventDefault(); // Prevent default browser delete action
-            let start = keyboardInput.selectionStart;
-            let end = keyboardInput.selectionEnd;
-            let currentValue = keyboardInput.value;
-
-            // If text is selected (start != end), delete the selection
-            if (start !== end) {
-                let newValue = currentValue.substring(0, start) + currentValue.substring(end);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
-            } else if (end < currentValue.length) { // If no text selected, delete character to the right
-                let newValue = currentValue.substring(0, start) + currentValue.substring(end + 1);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
-            }
-            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]'); // Still activate virtual backspace button for visual feedback
-            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-            return;
-        }
-        // --- END MODIFIED LOGIC ---
-
-        // Handle space directly for physical keyboard
-        if (key === ' ') {
-            e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
-            handleInput(' ');
-            const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
-            if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
-            return;
-        }
-
-        // --- MODIFIED LOGIC FOR KEY MAPPING ---
-        let tifinaghChar;
-
-        // Prioritize multi-character Arabic mappings if the input field ends with a relevant character
-        // This is a simplified approach for 'لا'. For more complex digraphs/ligatures,
-        // a more robust state machine or input buffer might be needed.
-        if (key === 'ا' && keyboardInput.value.endsWith('ل')) {
-            const potentialLigature = keyboardInput.value.slice(-1) + key; // 'ل' + 'ا'
-            if (keyMap[potentialLigature]) {
+            // Handle Ctrl/Cmd + A (Select All)
+            if ((e.ctrlKey || e.metaKey) && key === 'a') {
                 e.preventDefault();
-                keyboardInput.value = keyboardInput.value.slice(0, -1); // Remove the 'ل'
-                handleInput(keyMap[potentialLigature]); // Add 'ⵍⴰ'
-                const virtualKey = document.querySelector(`.keyboard-key[data-key="${keyMap[potentialLigature]}"]`);
-                if (virtualKey) applyClickEffect(virtualKey);
+                keyboardInput.select();
                 return;
             }
-        }
+
+            // Handle Backspace
+            if (key === 'Backspace') {
+                e.preventDefault();
+                handleInput('backspace');
+                const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+                if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+                return;
+            }
+
+            // Handle Delete key
+            if (key === 'Delete') {
+                e.preventDefault();
+                let start = keyboardInput.selectionStart;
+                let end = keyboardInput.selectionEnd;
+                if (start !== end) {
+                    let newValue = currentValue.substring(0, start) + currentValue.substring(end);
+                    keyboardInput.value = newValue;
+                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
+                } else if (end < currentValue.length) {
+                    let newValue = currentValue.substring(0, start) + currentValue.substring(end + 1);
+                    keyboardInput.value = newValue;
+                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
+                }
+                const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+                if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+                return;
+            }
+
+            // Handle space directly for physical keyboard
+            if (key === ' ') {
+                e.preventDefault();
+                handleInput(' ');
+                const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
+                if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
+                return;
+            }
+
+            // --- 2. EXPLICITLY BLOCK PHYSICAL ARABIC 'ة' AND 'لا' INPUT ---
+            // If the user presses the physical Arabic 'ة' key.
+            if (key === 'ة') {
+                e.preventDefault(); // Stop the browser from handling it
+                return;             // Stop all further processing for this key press
+            }
+
+            // If the user types 'ل' followed by 'ا' which forms Arabic 'لا'
+            // We need to check the current input state to identify this sequence for blocking.
+            if (key === 'ا' && currentValue.endsWith('ل')) {
+                e.preventDefault(); // Stop the browser from handling it
+                return;             // Stop all further processing for this key press
+            }
+
+            // --- 3. HANDLE OTHER MAPPINGS (ONLY IF NOT BLOCKED ABOVE) ---
+
+            let tifinaghChar;
+
+            // Prioritize the 'ل' + 'ا' sequence to form 'ⵍⴰ' if it's NOT the Arabic 'لا' that we just blocked.
+            // This is primarily for other mapping scenarios (e.g., Latin 'l' + 'a').
+            if (key === 'ا' && currentValue.endsWith('ل')) { // This condition will only be met if the Arabic 'لا' was NOT typed
+                const potentialLigature = currentValue.slice(-1) + key; // 'ل' + 'ا'
+                if (keyMap[potentialLigature]) {
+                    e.preventDefault();
+                    keyboardInput.value = currentValue.slice(0, -1); // Remove the 'ل'
+                    handleInput(keyMap[potentialLigature]); // Add 'ⵍⴰ'
+                    const virtualKey = document.querySelector(`.keyboard-key[data-key="${keyMap[potentialLigature]}"]`);
+                    if (virtualKey) applyClickEffect(virtualKey);
+                    return;
+                }
+            }
 
 
-        // 1. Try to find an exact match for the key (e.g., 'A' for 'ⵄ')
-        if (keyMap[key]) {
-            tifinaghChar = keyMap[key];
-        }
-        // 2. If no exact match, try the lowercase version (e.g., 'b' for 'ⴱ')
-        else if (keyMap[key.toLowerCase()]) {
-            tifinaghChar = keyMap[key.toLowerCase()];
-        }
+            // Try to find a direct match for the key (e.g., 'a' for 'ⴰ', 'ا' for 'ⴰ')
+            if (keyMap[key]) {
+                tifinaghChar = keyMap[key];
+            }
+            // If no exact match, try the lowercase version (e.g., 'A' for 'ⵄ' via 'a' for 'ⴰ')
+            else if (keyMap[key.toLowerCase()]) {
+                tifinaghChar = keyMap[key.toLowerCase()];
+            }
 
-        if (tifinaghChar) {
-            e.preventDefault(); // Prevent default Latin character from appearing
-            handleInput(tifinaghChar);
-            // Find the corresponding virtual key and apply effect
-            const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
-            if (virtualKey) applyClickEffect(virtualKey);
-            return;
+            if (tifinaghChar) {
+                e.preventDefault(); // ONLY prevent default if we successfully found a Tifinagh character to input
+                handleInput(tifinaghChar);
+                const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghChar}"]`);
+                if (virtualKey) applyClickEffect(virtualKey);
+                return; // Stop further processing after a successful Tifinagh input
+            }
+
+            // --- 4. FALLBACK: IF NO MAPPING OR SPECIAL KEY, ALLOW BROWSER DEFAULT ---
+            // If we reach here, it means:
+            // - It wasn't a special key (Backspace, Delete, Space, Ctrl+A)
+            // - It wasn't the physical Arabic 'ة' or 'لا' sequence that we specifically blocked
+            // - It wasn't a key that successfully mapped to a Tifinagh character.
+            // In this case, we DO NOT call e.preventDefault(), allowing the browser to insert
+            // the default character for that key (e.g., typing 'z' if 'z' isn't in keyMap).
         }
-        // --- END MODIFIED LOGIC ---
-    }
-});
+    });
 
 
     // --- Action Buttons (Copy/Clear) ---
@@ -261,4 +280,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
 });
-</script>
