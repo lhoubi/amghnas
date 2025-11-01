@@ -1,62 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
     const keyboardInput = document.getElementById('keyboardInput');
-    const keyboardKeys = document.querySelectorAll('.keyboard-key'); // All Tifinagh buttons
+    const keyboardKeys = document.querySelectorAll('.keyboard-key');
     const copyBtn = document.getElementById('copyBtn');
     const clearBtn = document.getElementById('clearBtn');
-    const themeToggle = document.getElementById('themeToggle'); // Added for theme toggle
+    const themeToggle = document.getElementById('themeToggle');
     const moonIcon = document.querySelector('.moon-icon');
     const sunIcon = document.querySelector('.sun-icon');
 
-
-    if (!keyboardInput) {
-        console.error("Error: 'keyboardInput' textarea not found. Please ensure your HTML has <textarea id='keyboardInput'>.");
-        return;
+    // --- Theme Toggle Functionality (Keeping yours as is, it's good) ---
+    function applyTheme(isDark) {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
+        }
     }
 
-    // --- Tifinagh Mapping (for Latin input - all lowercase base characters) ---
-    // This map covers the basic lowercase Latin to Tifinagh.
+    const savedTheme = localStorage.getItem('theme');
+    let isDarkMode = savedTheme === 'dark';
+    if (savedTheme === null) {
+        isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    applyTheme(isDarkMode);
+
+    themeToggle.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        applyTheme(isDarkMode);
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    });
+
+    // --- Tifinagh Character Mapping ---
+    // This map needs to be ordered carefully for digraphs (multi-character inputs)
+    // to be checked before single characters. Longer matches should be first.
     const tifinaghMap = {
+        // Latin Digraphs (Order by length, longest first)
+        'gh': 'ⵖ', 'kh': 'ⵅ', 'sh': 'ⵛ', 'ch': 'ⵛ', // ch might be different depending on dialect
+        'dh': 'ⴹ', 'th': 'ⵜ', // Add if 'th' is a common input for Tifinagh
+        'ts': 'ⵚ', // Add if 'ts' is a common input for Tifinagh
+
+        // Latin Single Characters (case-sensitive where distinct Tifinagh exists)
+        // Lowercase as primary, uppercase if it maps to a different Tifinagh character
         'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
         'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
         'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
         's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ',
         'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
-        ' ': ' ' // Space key
-    };
 
-    // --- Shifted/Capitalized Tifinagh Mapping (for distinct shifted outputs) ---
-    // These are for specific capital Latin letters that map to a *different* Tifinagh char.
-    // e.g., 'D' -> 'ⴹ', not 'ⴷ'
-    const tifinaghShiftMap = {
-        'A': 'ⵄ', // as per HTML
-        'G': 'ⵖ', // for 'gh' or 'ɣ'
-        'H': 'ⵃ', // for 'ḥ'
-        'D': 'ⴹ', // for 'ḍ'
-        'T': 'ⵟ', // for 'ṭ'
-        'R': 'ⵕ', // for 'ṛ'
-        'S': 'ⵚ', // for 'ṣ'
-        'Z': 'ⵥ', // for 'ẓ'
-        'C': 'ⵛ', // as per HTML (if 'C' is distinct from 'c')
-        'W': 'ⵯ', // for 'ʷ'
-        // 'Q' could be ⵇ if that's a different Tifinagh for Q than 'q'
-    };
+        // Explicit uppercase Latin if they map to DIFFERENT Tifinagh characters than their lowercase counterparts
+        // (Based on your HTML data-latin attributes and what might be intended for 'shifted' keys)
+        'A': 'ⵄ', // Your HTML: A -> ⵄ
+        'ḍ': 'ⴹ', // Explicitly handle 'ḍ' (char 7693)
+        'Ḥ': 'ⵃ', // Explicitly handle 'Ḥ' (char 7716)
+        'L': 'ⵍ', // Your HTML: L -> ⵍ (same as l)
+        'Ṛ': 'ⵕ', // Your HTML: Ṛ -> ⵕ
+        'ṣ': 'ⵚ', // Explicitly handle 'ṣ' (char 7769)
+        'ṭ': 'ⵟ', // Explicitly handle 'ṭ' (char 7793)
+        'W̌': 'ⵯ', // Your HTML: ʷ -> ⵯ (char 785)
+        'Ẓ': 'ⵥ', // Your HTML: ẓ -> ⵥ
 
-    // --- Digraph Map (Longest matches first for Latin conversion logic) ---
-    // These should represent sequences of Latin chars that become a single Tifinagh char.
-    const digraphMap = {
-        'gh': 'ⵖ', // ⵖ
-        'kh': 'ⵅ', // ⵅ
-        'ch': 'ⵛ', // ⵛ
-        'sh': 'ⵛ', // ⵛ
-        'dh': 'ⴹ', // ⴹ
-        // 'th': 'ⵜ', // 'th' often just maps to 't'
-        // 'ts': 'ⵚ', // 'ts' can be 'ṣ'
-        'gl': 'ⴳⵍ', // Example if you want 'gl' to map to a sequence
-    };
-
-    // --- Arabic to Tifinagh Mapping ---
-    // Ensure this is comprehensive and accurate to your desired Arabic-Tifinagh conversions.
-    const arabicToTifinaghMap = {
+        // Arabic Characters (ensure full coverage)
         'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
@@ -68,344 +74,277 @@ document.addEventListener('DOMContentLoaded', () => {
         'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ',
         'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
         'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        'ة': 'ⴻ', 'ى': 'ⵉ',
-        'ء': 'ⴻ',
+        'ة': 'ⴻ', 'ى': 'ⵉ', // Often mapped to 'i' or 'e'
+        'ء': 'ⴻ', // Hamza
         'ؤ': 'ⵓ', 'ئ': 'ⵉ',
-        ' ': ' ',
-        '\n': '\n',
-        'ـ': 'ⵯ',
-        'ڤ': 'ⵠ',
-        'ڭ': 'ⴳ',
+        'ڤ': 'ⵠ', // Tifinagh V
+        'ڭ': 'ⴳ', // Tifinagh G
+        'ـ': 'ⵯ', // Tatweel/Kashida could map to W̌
+
+        // Arabic Diacritics (handled more like combining marks, so setting to empty string to be ignored)
+        'َ': '', // Fatha
+        'ُ': '', // Damma
+        'ِ': '', // Kasra
+        'ْ': '', // Sukun
+        'ّ': '', // Shadda
+        'ٰ': '', // Alif Khanjariya
     };
 
-    /**
-     * Activates the 'fire-active' animation on a given key element.
-     * @param {HTMLElement} keyElement The virtual keyboard button to animate.
-     */
-    function activateKeyAnimation(keyElement) {
-        if (keyElement) {
-            // Remove the class first to ensure the animation restarts
-            keyElement.classList.remove('fire-active');
-            // Trigger reflow to restart CSS animation
-            void keyElement.offsetWidth;
-            keyElement.classList.add('fire-active');
-            // Remove the class after the animation duration (0.3s as per CSS)
-            setTimeout(() => {
-                keyElement.classList.remove('fire-active');
-            }, 300);
-        }
-    }
 
-    /**
-     * Finds a virtual key element based on its data-key (Tifinagh char) or a label.
-     * @param {string} searchKey The Tifinagh char, 'backspace', 'space', or a Latin/Arabic char label.
-     * @param {string} [type='tifinagh'] 'tifinagh', 'latin', or 'arabic' to search by label.
-     * @returns {HTMLElement|null} The matching key element or null.
-     */
-    function findVirtualKeyElement(searchKey, type = 'tifinagh') {
-        // Handle special keys first based on their data-key
-        if (searchKey === 'backspace') {
-            return document.querySelector(`.keyboard-key[data-key="backspace"]`);
-        }
-        if (searchKey === ' ' || searchKey === 'SPACE') { // Handle both space character and 'SPACE' label
-            return document.querySelector(`.keyboard-key[data-key=" "]`);
-        }
-        // If you had an 'Enter' key:
-        // if (searchKey === 'Enter') {
-        //     return document.querySelector(`.keyboard-key[data-key="enter"]`);
-        // }
+    // Create a map for physical keyboard key codes to Tifinagh characters for animation/feedback
+    // This is useful for `applyClickEffect` on the correct virtual key.
+    const physicalKeyToTifinaghMap = new Map();
+    keyboardKeys.forEach(button => {
+        const tifinaghChar = button.dataset.key;
+        if (tifinaghChar && tifinaghChar !== 'backspace' && tifinaghChar !== ' ') {
+            // Find the corresponding Latin/Arabic labels
+            const keyGroup = button.closest('.key-group');
+            if (keyGroup) {
+                const latinLabel = keyGroup.dataset.latin;
+                const arabicLabel = keyGroup.dataset.arabic;
 
-        // Search by Tifinagh data-key (most direct for virtual keyboard chars)
-        if (type === 'tifinagh') {
-            const keyElement = document.querySelector(`.keyboard-key[data-key="${searchKey}"]`);
-            if (keyElement) return keyElement;
-        }
-
-        // Search by label (Latin or Arabic)
-        // Iterate through all key-group elements to find a match in their labels
-        for (const keyGroup of document.querySelectorAll('.key-group')) {
-            const button = keyGroup.querySelector('.keyboard-key');
-            if (!button) continue; // Skip if no button inside group
-
-            if (type === 'latin') {
-                const latinLabel = keyGroup.querySelector('.latin-label');
-                if (latinLabel && latinLabel.textContent.trim().toLowerCase() === searchKey.toLowerCase()) {
-                    return button;
+                if (latinLabel) {
+                    // Handle single Latin char
+                    if (latinLabel.length === 1) physicalKeyToTifinaghMap.set(latinLabel.toLowerCase(), tifinaghChar);
+                    // Handle special Latin chars like 'ḍ'
+                    physicalKeyToTifinaghMap.set(latinLabel, tifinaghChar); // Keep original case too
                 }
-            } else if (type === 'arabic') {
-                const arabicLabel = keyGroup.querySelector('.arabic-label');
-                if (arabicLabel && arabicLabel.textContent.trim() === searchKey) {
-                    return button;
+                if (arabicLabel) {
+                    // Handle single Arabic char
+                    if (arabicLabel.length === 1) physicalKeyToTifinaghMap.set(arabicLabel, tifinaghChar);
                 }
             }
         }
-        return null; // No matching key found
+    });
+    // Add space and backspace explicitly
+    physicalKeyToTifinaghMap.set(' ', ' ');
+    physicalKeyToTifinaghMap.set('Backspace', 'backspace');
+
+
+    // --- Helper Function to Insert Text at Cursor ---
+    // This function will now be the primary way all text changes are made
+    function insertTextAtCursor(textArea, textToInsert, shiftCursor = 0) {
+        const start = textArea.selectionStart;
+        const end = textArea.selectionEnd;
+        const before = textArea.value.substring(0, start);
+        const after = textArea.value.substring(end);
+        textArea.value = before + textToInsert + after;
+        textArea.selectionStart = textArea.selectionEnd = start + textToInsert.length + shiftCursor;
+        textArea.focus();
     }
 
-    function isArabicChar(char) {
-        if (!char) return false;
-        // Comprehensive Arabic Unicode ranges
-        return char.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/);
-    }
-
-    function isLatinChar(char) {
-        if (!char) return false;
-        // Basic Latin and common extended Latin (for diacritics like ḍ, ḥ, ṭ, ṛ, ṣ, ẓ)
-        return char.match(/[a-zA-Z\u00C0-\u017F\u0180-\u024F\u1E00-\u1EFF\u1EE0-\u1EF9]/);
-    }
-
-    /**
-     * Converts a single input character (Latin or Arabic) to its Tifinagh equivalent.
-     * Prioritizes shifted Latin, then basic Latin, then Arabic.
-     * @param {string} inputChar The character to convert.
-     * @returns {string|null} The Tifinagh character or null if no conversion.
-     */
-    function convertSingleCharToTifinagh(inputChar) {
-        // 1. Try exact match in shifted Latin (e.g., 'D' -> 'ⴹ')
-        if (tifinaghShiftMap[inputChar] !== undefined) {
-            return tifinaghShiftMap[inputChar];
-        }
-
-        // 2. Try lowercase Latin (e.g., 'a' -> 'ⴰ', 'L' -> 'ⵍ')
-        if (isLatinChar(inputChar)) {
-            const lowerChar = inputChar.toLowerCase();
-            if (tifinaghMap[lowerChar] !== undefined) {
-                return tifinaghMap[lowerChar];
-            }
-        }
-
-        // 3. Try exact match for Arabic (e.g., 'ا' -> 'ⴰ')
-        if (isArabicChar(inputChar)) {
-            if (arabicToTifinaghMap[inputChar] !== undefined) {
-                return arabicToTifinaghMap[inputChar];
-            }
-        }
-        
-        // 4. Handle space and newline directly if they bypass other maps
-        if (inputChar === ' ') return ' ';
-        if (inputChar === '\n') return '\n';
-
-        return null; // No conversion found
-    }
-
-    // Helper to insert text at the current cursor position
-    function insertAtCursor(textarea, textToInsert) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const value = textarea.value;
-
-        textarea.value = value.substring(0, start) + textToInsert + value.substring(end);
-        textarea.selectionStart = textarea.selectionEnd = start + textToInsert.length;
-        // Ensure the input area retains focus after insertion
-        textarea.focus();
-    }
-
-    // Helper to delete characters at the current cursor position (backwards)
-    function deleteAtCursor(textarea, length) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const value = textarea.value;
-
-        if (start === end) { // No selection, delete backwards from cursor
-            if (start >= length) {
-                textarea.value = value.substring(0, start - length) + value.substring(end);
-                textarea.selectionStart = textarea.selectionEnd = start - length;
-            }
-        } else { // There's a selection, delete the selection
-            textarea.value = value.substring(0, start) + value.substring(end);
-            textarea.selectionStart = textarea.selectionEnd = start;
-        }
-        textarea.focus();
-    }
-
-    // --- Virtual Keyboard Key Clicks ---
-    keyboardKeys.forEach(key => {
-        key.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent default button behavior (like form submission)
-
-            const keyValue = key.dataset.key; // The Tifinagh character or "backspace"
+    // --- Virtual Keyboard Input Handling ---
+    keyboardKeys.forEach(keyButton => {
+        keyButton.addEventListener('click', () => {
+            const keyValue = keyButton.dataset.key; // This should be the Tifinagh char or 'backspace'
 
             if (keyValue === 'backspace') {
-                deleteAtCursor(keyboardInput, 1);
+                const start = keyboardInput.selectionStart;
+                const end = keyboardInput.selectionEnd;
+                if (start > 0 || start !== end) { // Only if there's text or a selection
+                    const before = keyboardInput.value.substring(0, start === end ? start - 1 : start);
+                    const after = keyboardInput.value.substring(end);
+                    keyboardInput.value = before + after;
+                    keyboardInput.selectionStart = keyboardInput.selectionEnd = start === end ? start - 1 : start;
+                }
             } else {
-                insertAtCursor(keyboardInput, keyValue);
+                insertTextAtCursor(keyboardInput, keyValue);
             }
-
-            activateKeyAnimation(key); // Activate animation for the clicked virtual key
+            applyClickEffect(keyButton);
         });
     });
 
-    // --- Physical Keyboard Input (keydown event) ---
+    // --- Physical Keyboard Input Conversion (The main logic) ---
     keyboardInput.addEventListener('keydown', (e) => {
-        // --- 1. Handle special non-character keys (Backspace, Enter, Tab, Arrow keys etc.) ---
-        let keyToAnimateSpecial = null;
-        if (e.key === 'Backspace') {
-            keyToAnimateSpecial = findVirtualKeyElement('backspace');
-            e.preventDefault(); // Prevent default browser backspace
-            deleteAtCursor(keyboardInput, 1);
-        } else if (e.key === 'Enter') {
-            // If you have a virtual 'enter' key, animate it
-            // keyToAnimateSpecial = findVirtualKeyElement('enter'); 
-            e.preventDefault(); // Prevent default browser new line
-            insertAtCursor(keyboardInput, '\n');
-        } else if (e.key === ' ') { // Spacebar
-            keyToAnimateSpecial = findVirtualKeyElement(' '); // Search for the spacebar button
-            e.preventDefault(); // Prevent default browser space
-            insertAtCursor(keyboardInput, ' ');
-        }
-        // Add more special keys if needed (e.g., Tab for a specific Tifinagh character)
+        // Only process if the textarea is focused
+        if (document.activeElement !== keyboardInput) return;
 
-        if (keyToAnimateSpecial) {
-            activateKeyAnimation(keyToAnimateSpecial);
-            return; // Exit as special key handled
+        const key = e.key;
+        const start = keyboardInput.selectionStart;
+        const end = keyboardInput.selectionEnd;
+        const currentValue = keyboardInput.value;
+
+        // --- Special Key Handling ---
+        // Handle Ctrl/Cmd + A (Select All)
+        if ((e.ctrlKey || e.metaKey) && key === 'a') {
+            e.preventDefault();
+            keyboardInput.select();
+            return;
         }
 
-        // --- 2. Ignore modifier keys and other non-typing keys ---
-        if (e.ctrlKey || e.altKey || e.metaKey || e.key.length > 1) { // e.key.length > 1 catches F-keys, arrows, Shift etc.
-            return; 
-        }
-
-        // --- 3. Process actual character input for conversion and animation ---
-        const inputChar = e.key; // The character typed on the physical keyboard
-        const currentInputValue = keyboardInput.value;
-        const cursorPosition = keyboardInput.selectionStart;
-
-        let tifinaghToInsert = null;
-        let charsToDelete = 0; // How many previous characters to delete for a digraph
-
-        // Digraph check: Look for a potential digraph formed by previous char + current char
-        // Ensure there's a character before the cursor for digraph consideration
-        if (cursorPosition > 0) {
-            const charBeforeCursor = currentInputValue.substring(cursorPosition - 1, cursorPosition);
-            const potentialDigraph = (charBeforeCursor + inputChar).toLowerCase();
-
-            // Check if this potentialDigraph is in our digraphMap
-            if (digraphMap[potentialDigraph]) {
-                tifinaghToInsert = digraphMap[potentialDigraph];
-                charsToDelete = 1; // We will replace the `charBeforeCursor`
+        // Handle Backspace
+        if (key === 'Backspace') {
+            e.preventDefault();
+            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+            // Use virtual keyboard's backspace logic
+            if (start > 0 || start !== end) {
+                const before = currentValue.substring(0, start === end ? start - 1 : start);
+                const after = currentValue.substring(end);
+                keyboardInput.value = before + after;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start === end ? start - 1 : start;
             }
+            return;
         }
 
-        // If no digraph found or not applicable, try single character conversion
-        if (tifinaghToInsert === null) {
-            tifinaghToInsert = convertSingleCharToTifinagh(inputChar);
-        }
-        
-        if (tifinaghToInsert !== null) {
-            e.preventDefault(); // Crucial: Stop the browser from inserting the original `inputChar`
-
-            if (charsToDelete > 0) {
-                deleteAtCursor(keyboardInput, charsToDelete); // Remove the previous Latin char
+        // Handle physical Delete key (deletes char to the right or selection)
+        if (key === 'Delete') {
+            e.preventDefault();
+            if (start < end) { // Selection exists
+                insertTextAtCursor(keyboardInput, ''); // Delete selection
+            } else if (start < currentValue.length) { // Delete char to the right
+                const before = currentValue.substring(0, start);
+                const after = currentValue.substring(start + 1);
+                keyboardInput.value = before + after;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
             }
-            insertAtCursor(keyboardInput, tifinaghToInsert); // Insert the Tifinagh equivalent
+            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]'); // Visual feedback
+            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+            return;
+        }
 
-            // --- Animate the corresponding virtual key ---
-            let keyToAnimate = findVirtualKeyElement(tifinaghToInsert, 'tifinagh'); // Try to animate the Tifinagh char
+        // Handle Space bar
+        if (key === ' ') {
+            e.preventDefault();
+            insertTextAtCursor(keyboardInput, ' ');
+            const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
+            if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
+            return;
+        }
 
-            // Fallback for animation: if Tifinagh button not found, try by Latin/Arabic label
-            if (!keyToAnimate) {
-                if (isLatinChar(inputChar)) {
-                    keyToAnimate = findVirtualKeyElement(inputChar, 'latin');
-                } else if (isArabicChar(inputChar)) {
-                    keyToAnimate = findVirtualKeyElement(inputChar, 'arabic');
+        // --- Character Conversion Logic ---
+        // Only proceed if it's a single character key (not a modifier, arrow, etc.)
+        if (key.length === 1 && !e.altKey && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault(); // IMPORTANT: Prevent the Latin/Arabic character from appearing initially
+
+            const textBeforeCursor = currentValue.substring(0, start);
+            const textAfterCursor = currentValue.substring(end);
+            let charToInsert = key; // Default to the key itself if no conversion
+
+            let matchedLength = 0; // How many Latin/Arabic chars were consumed by the conversion
+            let tifinaghOutput = ''; // The Tifinagh character(s) after conversion
+
+            // 1. Try to match 2-character Latin digraphs (e.g., 'sh', 'gh')
+            if (textBeforeCursor.length >= 1) { // Need at least one char before
+                const potentialDigraph = textBeforeCursor.slice(-1).toLowerCase() + key.toLowerCase(); // last char + current key
+                if (tifinaghMap[potentialDigraph]) {
+                    tifinaghOutput = tifinaghMap[potentialDigraph];
+                    matchedLength = 2; // Two Latin chars consumed
                 }
             }
 
-            if (keyToAnimate) {
-                activateKeyAnimation(keyToAnimate);
+            // 2. Try to match 3-character Latin digraphs (e.g., 'sch' - unlikely for Tifinagh but for completeness)
+            // This would require checking if (textBeforeCursor.length >= 2) { ... }
+            // For now, sticking to 2-char digraphs as most common.
+
+            // 3. If no digraph, try single character conversion
+            if (!tifinaghOutput) {
+                // Prioritize exact case match first (e.g., for 'Ḍ' or Arabic chars)
+                if (tifinaghMap[key]) {
+                    tifinaghOutput = tifinaghMap[key];
+                    matchedLength = 1;
+                }
+                // Then try lowercase Latin conversion
+                else if (tifinaghMap[key.toLowerCase()]) {
+                    tifinaghOutput = tifinaghMap[key.toLowerCase()];
+                    matchedLength = 1;
+                }
+            }
+
+
+            // --- Apply Conversion ---
+            if (tifinaghOutput) {
+                let newStart = start;
+                let newEnd = end;
+                let newTextBeforeCursor = textBeforeCursor;
+
+                if (matchedLength === 2) { // It was a digraph
+                    newTextBeforeCursor = textBeforeCursor.slice(0, -1); // Remove the last Latin char
+                    newStart = start - 1; // Cursor moves back one
+                }
+
+                keyboardInput.value = newTextBeforeCursor + tifinaghOutput + textAfterCursor;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = newStart + tifinaghOutput.length;
+
+                // Find the corresponding virtual key for animation
+                const virtualKey = document.querySelector(`.keyboard-key[data-key="${tifinaghOutput}"]`);
+                if (virtualKey) applyClickEffect(virtualKey);
+            } else {
+                // If no Tifinagh mapping, just insert the original key (e.g., punctuation, numbers)
+                insertTextAtCursor(keyboardInput, key);
+            }
+
+            // Try to find a virtual key for visual feedback for the original key pressed
+            const visualKeyMatch = physicalKeyToTifinaghMap.get(key) || physicalKeyToTifinaghMap.get(key.toLowerCase());
+            if (visualKeyMatch && visualKeyMatch !== 'backspace' && visualKeyMatch !== ' ') {
+                 const virtualKeyToAnimate = document.querySelector(`.keyboard-key[data-key="${visualKeyMatch}"]`);
+                 if (virtualKeyToAnimate) applyClickEffect(virtualKeyToAnimate);
             }
         }
-        // If tifinaghToInsert is null, it means no conversion was found.
-        // In this case, e.preventDefault() was not called, so the browser will insert the original `inputChar`
-        // (e.g., numbers, punctuation not in maps, etc.), which is usually desired behavior.
+        // If it's not a single char (e.g., arrow keys, function keys), let default behavior happen
     });
 
 
-    // --- Copy and Clear button functionality ---
-    if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-            keyboardInput.select(); // Selects all text in the textarea
-            
-            // Modern way to copy to clipboard
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(keyboardInput.value)
-                    .then(() => {
-                        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!'; // Change icon and text
-                        setTimeout(() => {
-                            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Tifinagh Text'; // Reset button
-                        }, 1500);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy text using Clipboard API:', err);
-                        // Fallback to deprecated execCommand for older browsers or HTTP
-                        try {
-                            document.execCommand('copy');
-                            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                            setTimeout(() => {
-                                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Tifinagh Text';
-                            }, 1500);
-                        } catch (execErr) {
-                            console.error('Fallback copy failed:', execErr);
-                            alert('Failed to copy text. Please copy manually.');
-                        }
-                    });
-            } else {
-                // Fallback for very old browsers where Clipboard API is not available
-                try {
-                    document.execCommand('copy');
+    // --- Action Buttons (Copy/Clear) ---
+    copyBtn.addEventListener('click', () => {
+        keyboardInput.select();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(keyboardInput.value)
+                .then(() => {
+                    console.log('Tifinagh text copied to clipboard!');
+                    const originalText = copyBtn.innerHTML;
                     copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
                     setTimeout(() => {
-                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Tifinagh Text';
+                        copyBtn.innerHTML = originalText;
                     }, 1500);
-                } catch (execErr) {
-                    console.error('Fallback copy failed:', execErr);
-                    alert('Failed to copy text. Your browser does not support automatic copying. Please copy manually.');
-                }
-            }
-            keyboardInput.focus(); // Keep focus on the textarea
-        });
-    }
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            keyboardInput.value = ''; // Clear the textarea content
-            keyboardInput.focus(); // Set focus back to the textarea
-        });
-    }
-
-    // --- Focus and Blur handling for styling ---
-    keyboardInput.addEventListener('focus', () => {
-        keyboardInput.classList.add('focused');
-    });
-    keyboardInput.addEventListener('blur', () => {
-        keyboardInput.classList.remove('focused');
-    });
-
-    // --- Dark Mode Toggle (Integrated from your themeToggle.js logic) ---
-    if (themeToggle && moonIcon && sunIcon) {
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Disable Dark Mode';
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    fallbackCopyTextToClipboard(keyboardInput.value);
+                });
         } else {
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i> Enable Dark Mode';
+            fallbackCopyTextToClipboard(keyboardInput.value);
         }
+        window.getSelection().removeAllRanges(); // Deselect text
+        keyboardInput.focus();
+    });
 
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-                moonIcon.classList.add('hidden');
-                sunIcon.classList.remove('hidden');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Disable Dark Mode';
-            } else {
-                localStorage.setItem('theme', 'light');
-                moonIcon.classList.remove('hidden');
-                sunIcon.classList.add('hidden');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Enable Dark Mode';
-            }
-        });
+    clearBtn.addEventListener('click', () => {
+        keyboardInput.value = '';
+        keyboardInput.focus();
+    });
+
+    // Fallback for copying text (older browsers)
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            console.log('Fallback: Tifinagh text copied to clipboard!');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 1500);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+        document.body.removeChild(textArea);
     }
+
+    // --- Click Effect Function (Red Fire) ---
+    function applyClickEffect(element) {
+        element.classList.add('key-active');
+        setTimeout(() => {
+            element.classList.remove('key-active');
+        }, 150);
+    }
+
+    // Update copyright year dynamically
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
 });
