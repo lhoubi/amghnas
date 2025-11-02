@@ -825,7 +825,7 @@
                 <div class="keyboard-row">
                     <div class="key-group" data-latin="ẓ" data-arabic=""> <div class="label-container"><span class="latin-label">ẓ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵥ">ⵥ</button> </div>
                     <div class="key-group" data-latin="ʷ" data-arabic="ـ"> <div class="label-container"><span class="latin-label">ʷ</span><span class="arabic-label"></span></div> <button class="keyboard-key" data-key="ⵯ">ⵯ</button> </div>
-                    <div class="key-group" data-latin="A" data-arabic="ع"> <div class="label-container"><span class="latin-label">A</span><span class="arabic-label">ع</span></div> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
+                    <div class="key-group" data-latin="ⵄ" data-arabic="ع"> <div class="label-container"><span class="latin-label">ɛ</span><span class="arabic-label">ع</span></div> <button class="keyboard-key" data-key="ⵄ">ⵄ</button> </div>
                     <div class="key-group" data-latin="gh" data-arabic="غ"> <div class="label-container"><span class="latin-label">gh</span><span class="arabic-label">غ</span></div> <button class="keyboard-key" data-key="ⵖ">ⵖ</button> </div>
                     
         <!-- SPACE Button - Use a specific class for width -->
@@ -869,3 +869,75 @@
 <!-- Link to your separate JavaScript files -->
 <script src="themeToggle.js"></script>
 <script src="converter.js"></script> <!-- Ensure converter.js exists if it's referenced -->
+
+<script>
+     document.addEventListener('DOMContentLoaded', () => {
+    const keyboardInput = document.getElementById('keyboardInput');
+    const keyboardKeys = document.querySelectorAll('.keyboard-key');
+    const copyBtn = document.getElementById('copyBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const moonIcon = document.querySelector('.moon-icon');
+    const sunIcon = document.querySelector('.sun-icon');
+
+    // --- Theme Toggle Functionality ---
+    // Function to apply theme
+    function applyTheme(isDark) {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
+        }
+    }
+
+    // Load theme preference from localStorage on page load
+    const savedTheme = localStorage.getItem('theme');
+    let isDarkMode = savedTheme === 'dark'; // Initialize based on saved preference
+
+    // If no theme is saved, check system preference
+    if (savedTheme === null) {
+        isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    applyTheme(isDarkMode); // Apply the theme immediately
+
+    themeToggle.addEventListener('click', () => {
+        isDarkMode = !isDarkMode; // Toggle the state
+        applyTheme(isDarkMode); // Apply the new state
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); // Save preference
+    });
+
+    // --- Virtual Keyboard Input (Rest of your existing code) ---
+    keyboardKeys.forEach(key => {
+        key.addEventListener('click', () => {
+            const keyValue = key.dataset.key;
+            handleInput(keyValue);
+            applyClickEffect(key); // Apply the visual click effect
+        });
+    });
+
+    function handleInput(keyValue) {
+        let start = keyboardInput.selectionStart;
+        let end = keyboardInput.selectionEnd;
+        let currentValue = keyboardInput.value;
+
+        if (keyValue === 'backspace') {
+            if (start > 0) {
+                let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
+                keyboardInput.value = newValue;
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
+            }
+        } else if (keyValue === ' ') { // Handle space explicitly
+            let newValue = currentValue.substring(0, start) + ' ' + currentValue.substring(end);
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + 1;
+        } else {
+            let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
+        }
+        keyboardInput.focus(); // Keep focus on the textarea
+    }
