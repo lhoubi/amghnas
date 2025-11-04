@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- Tailwind CSS (for header, footer, dark mode transition) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
@@ -20,7 +20,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&family=Noto+Sans:wght@300;400;700&family=Noto+Sans+Tifinagh&family=Noto+Naskh+Arabic&display=swap" rel="stylesheet">
     
     <script>
-      // Tailwind config must be present for dark mode to work on body/html
       tailwind.config = {
         darkMode: 'class', 
         theme: {
@@ -32,15 +31,14 @@
               'arabic': ['Noto Naskh Arabic', 'serif'],
             },
             colors: {
-              'logo-start': '#00BCD4', // Not used in this specific file but kept for consistency with config
-              'logo-end': '#673AB7',   // Not used in this specific file but kept for consistency with config
+              'logo-start': '#00BCD4',
+              'logo-end': '#673AB7',
             },
           },
         },
       }
     </script>
     <style>
-        /* Original CSS variables and dark mode definitions */
         :root {
             --primary-color: #334155;
             --secondary-color: #64748b;
@@ -78,83 +76,66 @@
             box-sizing: border-box
         }
 
-        /* Body and container now use Tailwind's dark mode classes and original padding */
         body {
             @apply bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
             margin: 0;
-            /* Remove fixed padding, let the wrapper handle it */
-            /* Removed display: flex; justify-content: center; */
         }
 
         .container {
-            max-width: 1000px; /* Original max-width */
+            max-width: 1000px;
             width: 100%;
-            background-color: var(--background-color-light); /* Keep original variable */
+            background-color: var(--background-color-light);
             border-radius: var(--border-radius);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 30px;
-            margin-left: auto; /* Center the container */
-            margin-right: auto; /* Center the container */
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Original H1 and Tagline styles (adjusted to use Tailwind for dark mode) */
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5em;
             text-align: center;
-            color: var(--primary-color); /* Keep original variable */
+            color: var(--primary-color);
             margin: 25px 0 10px;
-            @apply dark:text-gray-200; /* Add dark mode text color from first page */
+            @apply dark:text-gray-200;
         }
 
         .tagline {
             text-align: center;
             font-size: 1.1em;
-            color: var(--text-color-light); /* Keep original variable */
+            color: var(--text-color-light);
             margin-bottom: 30px;
-            @apply dark:text-gray-400; /* Add dark mode text color from first page */
-        }
-        /* Custom styling for the keyboard page's main title to match index.html's h2 */
-        .container > h1.font-serif.text-center.mt-8,
-        .container > p.tagline {
-            /* These styles are removed because we are applying Tailwind directly to the elements below */
-            /* However, if you explicitly want to override or ensure specific font-size/family, you can add here */
+            @apply dark:text-gray-400;
         }
 
-        /* Specific styles for the keyboard page's main title */
         .container > h1.font-serif.text-center.mt-8.dark\:text-gray-200 {
-            /* Override to match index.html's H2 for text-3xl sm:text-5xl */
-            font-size: 1.875rem; /* text-3xl */
-            line-height: 2.25rem; /* leading-9 */
-            /* For sm:text-5xl (768px and up) */
-            @media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
-                font-size: 3rem; /* text-5xl */
-                line-height: 1; /* leading-none */
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+            @media (min-width: 640px) {
+                font-size: 3rem;
+                line-height: 1;
             }
-            /* You already have font-family: 'Playfair Display', serif; in the general h1 rule */
-            /* You already have text-align: center; in the general h1 rule */
-            /* You already have @apply dark:text-gray-200; in the general h1 rule */
-            /* Keep margin as is or adjust to match index.html's h2 margin-top and margin-bottom */
-            margin-top: 2rem; /* mt-8 in Tailwind is 2rem */
-            margin-bottom: 1rem; /* Adjust if needed, index.html's h2 doesn't have explicit mb */
-            font-weight: 700; /* font-bold */
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
         }
 
-        /* Specific styles for the keyboard page's tagline */
         .container > p.tagline {
-            /* Override to match index.html's p */
-            font-size: 1.125rem; /* text-lg */
-            line-height: 1.75rem; /* leading-7 */
-            /* For sm:text-lg (768px and up) */
-            @media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
-                font-size: 1.125rem; /* text-lg */
-                line-height: 1.75rem; /* leading-7 */
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            @media (min-width: 640px) {
+                font-size: 1.125rem;
+                line-height: 1.75rem;
             }
-            margin-top: 1rem; /* mt-4 in Tailwind is 1rem */
-            margin-bottom: 2.5rem; /* mb-10 in Tailwind is 2.5rem (adjust if needed) */
+            @media (max-width: 480px) {
+                font-size: 0.75rem !important;
+                line-height: 1.2rem;
+            }
+            margin-top: 1rem;
+            margin-bottom: 2.5rem;
         }
 
-        /* input */
         .input-area-wrapper {
             display: flex;
             justify-content: center;
@@ -173,27 +154,23 @@
             font-family: 'Noto Sans Tifinagh', 'Noto Naskh Arabic', 'Roboto', sans-serif;
             line-height: 1.6;
             resize: vertical;
-            /* Focus ring from first page */
-            outline: none; /* Remove default focus outline */
-            transition: border-color 0.2s, box-shadow 0.2s; /* Smooth transition */
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         .text-input:focus {
-            border-color: #6366f1; /* Tailwind indigo-500 */
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5); /* Tailwind indigo-500 with opacity */
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
         }
-        /* Dark mode for text-input */
         html.dark .text-input {
-            background-color: var(--background-color-light); /* Darker background in dark mode */
-            border-color: var(--border-color); /* Dark mode border color */
-            color: var(--text-color); /* Dark mode text color */
+            background-color: var(--background-color-light);
+            border-color: var(--border-color);
+            color: var(--text-color);
         }
         html.dark .text-input:focus {
-            border-color: #818cf8; /* Tailwind indigo-400 in dark mode */
-            box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.5); /* Dark mode focus shadow */
+            border-color: #818cf8;
+            box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.5);
         }
 
-
-        /* Action buttons */
         .action-buttons {
             display: flex;
             justify-content: center;
@@ -213,18 +190,17 @@
             gap: 8px;
             transition: all .25s ease;
             box-shadow: 0 3px 6px rgba(0, 0, 0, .12);
-            /* Focus ring from first page's buttons */
-            outline: none; /* Remove default focus outline */
-            position: relative; /* For the focus ring */
+            outline: none;
+            position: relative;
         }
         .action-buttons button:focus {
             z-index: 10;
-            border-color: #6366f1; /* Tailwind indigo-500 */
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Tailwind indigo-500 with opacity */
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
         }
         html.dark .action-buttons button:focus {
-            border-color: #818cf8; /* Tailwind indigo-400 */
-            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.5); /* Dark mode focus shadow */
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.5);
         }
 
         .copy {
@@ -232,8 +208,8 @@
             color: #fff;
             border-color: var(--accent-color);
         }
-        .copy:hover { /* Added hover effect to match first page buttons */
-            background-color: #0c8a7e; /* Slightly darker accent */
+        .copy:hover {
+            background-color: #0c8a7e;
             border-color: #0c8a7e;
         }
         html.dark .copy {
@@ -241,18 +217,17 @@
             border-color: var(--accent-color);
         }
         html.dark .copy:hover {
-            background-color: #26b1a0; /* Slightly darker accent for dark mode */
+            background-color: #26b1a0;
             border-color: #26b1a0;
         }
-
 
         .clear {
             background-color: var(--secondary-color);
             color: #fff;
             border-color: var(--secondary-color);
         }
-        .clear:hover { /* Added hover effect */
-            background-color: #5a6b7d; /* Slightly darker secondary */
+        .clear:hover {
+            background-color: #5a6b7d;
             border-color: #5a6b7d;
         }
         html.dark .clear {
@@ -260,14 +235,9 @@
             border-color: var(--secondary-color);
         }
         html.dark .clear:hover {
-            background-color: #5a6b7d; /* Slightly darker secondary for dark mode */
+            background-color: #5a6b7d;
             border-color: #5a6b7d;
         }
-
-
-        /* ---------------------
-           KEYBOARD LAYOUT + LABEL FIX (Original styles maintained)
-           --------------------- */
 
         .keyboard-layout {
             display: flex;
@@ -291,7 +261,6 @@
             width: 76px;
             min-width: 76px;
             max-width: 76px;
-            /* REMOVED: padding-top: 6px; */ /* This was causing inconsistent visual height */
             box-sizing: border-box;
             text-align: center;
         }
@@ -303,8 +272,7 @@
             width: 100%;
             line-height: 0.9;
             margin-bottom: -5px;
-           /* ADDED: */
-            min-height: 1.2rem; /* This value is estimated based on your label font-sizes (0.72rem, 0.65rem) + line-height. Adjust if needed. */
+            min-height: 1.2rem;
         }
 
         .latin-label {
@@ -342,7 +310,7 @@
             transition: all .15s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
             user-select: none;
-            font-family: 'Noto Sans Tifinagh', sans-serif; /* Ensure Tifinagh font */
+            font-family: 'Noto Sans Tifinagh', sans-serif;
         }
 
         .keyboard-key:hover {
@@ -368,37 +336,29 @@
             font-size: 1.15rem;
         }
 
-       /* No custom CSS needed for footer, Tailwind classes handle it */
-        /* Retaining this block for clarity but it will be empty if only Tailwind is used */
-
-        /* ADDED: New rules for space-key and delete-key */
         .key-group.space-key {
-            flex-grow: 1; /* Allow it to expand */
-            min-width: 150px; /* Minimum width for space key */
-            max-width: 350px; /* Max width for space key */
-            width: auto; /* Let flex-grow handle its width */
+            flex-grow: 1;
+            min-width: 150px;
+            max-width: 350px;
+            width: auto;
         }
 
         .key-group.delete-key {
-            width: 76px; /* Match standard key width */
+            width: 76px;
             min-width: 76px;
             max-width: 76px;
         }
 
-        .delete-key .keyboard-key i { /* Ensure the delete icon is sized correctly */
+        .delete-key .keyboard-key i {
             font-size: 1.6rem;
         }
 
-        /* ---------------------
-           Responsiveness — keep exact desktop look but tidy mobile (Original styles maintained)
-           --------------------- */
         @media (max-width: 1024px) {
             .key-group {
                 width: 72px;
                 min-width: 72px;
                 max-width: 72px;
             }
-            /* ADDED for consistency */
             .key-group.delete-key {
                 width: 72px;
                 min-width: 72px;
@@ -448,13 +408,11 @@
                 max-width: 66px;
                 gap: 4px;
             }
-            /* ADDED for consistency */
             .key-group.delete-key {
                 width: 66px;
                 min-width: 66px;
                 max-width: 66px;
             }
-            /* ADJUSTED for responsiveness */
             .key-group.space-key {
                 min-width: 120px;
                 max-width: 250px;
@@ -477,76 +435,112 @@
                 font-size: 1.2rem;
                 border-radius: 10px;
             }
-            /* amghnas-logo responsive size */
-            .amghnas-logo span {
-                font-size: 2.5em; /* Adjusted to match prior 2.5em on medium screens */
-            }
         }
 
-        @media (max-width: 480px) {
+       @media (max-width: 480px) {
             body {
-                padding: 10px;
+                padding: 5px;
             }
 
             .container {
-                padding: 15px;
+                padding: 12px 8px;
+                border-radius: 0;
             }
 
             h1 {
-                font-size: 1.7em;
+                font-size: 1.5em;
+                margin: 15px 0 5px;
             }
 
             .tagline {
-                font-size: 0.95em;
+                font-size: 0.65em;
+                margin-bottom: 15px;
             }
 
             .text-input {
-                height: 120px;
-                font-size: 1.1em;
+                height: 100px;
+                font-size: 1em;
+                padding: 10px;
             }
 
+            .action-buttons {
+                gap: 8px;
+                margin: 12px 0;
+            }
+
+            .action-buttons button {
+                padding: 8px 12px;
+                font-size: 0.85em;
+                gap: 5px;
+            }
+
+            .action-buttons button svg {
+                height: 16px;
+                width: 16px;
+            }
+
+            .keyboard-layout {
+                gap: 5px;
+                padding: 6px 3px;
+            }
+
+            .keyboard-row {
+                gap: 5px;
+                justify-content: center;
+            }
+
+            /* Key sizing for mobile - compact layout */
             .key-group {
-                width: 60px;
-                min-width: 60px;
-                max-width: 60px;
+                width: 38px;
+                min-width: 38px;
+                max-width: 38px;
             }
-            /* ADDED for consistency */
+
             .key-group.delete-key {
-                width: 60px;
-                min-width: 60px;
-                max-width: 60px;
+                width: 42px;
+                min-width: 42px;
+                max-width: 42px;
             }
-            /* ADJUSTED for responsiveness */
+
             .key-group.space-key {
-                min-width: 80px;
-                max-width: 200px;
+                flex-grow: 1;
+                width: auto;
+                min-width: 140px;
+                max-width: none;
             }
 
             .label-container {
                 gap: 2px;
+                margin-bottom: -3px;
+                min-height: 0.85rem;
             }
 
             .latin-label {
-                font-size: 0.64rem;
+                font-size: 0.52rem;
+                letter-spacing: 0.2px;
             }
 
             .arabic-label {
-                font-size: 0.58rem;
+                font-size: 0.5rem;
             }
 
             .keyboard-key {
                 height: 42px;
-                font-size: 1.05rem;
-                border-radius: 10px;
+                font-size: 1.1rem;
+                border-radius: 7px;
+                border-width: 1.5px;
             }
-            /* amghnas-logo responsive size */
-            .amghnas-logo span {
-                font-size: 2em; /* Adjusted to match prior 2em on small screens */
+
+            .keyboard-key.wide {
+                font-size: 0.8rem;
+                height: 42px;
+            }
+
+            .delete-key .keyboard-key i {
+                font-size: 1.1rem;
             }
         }
 
-
-        /* Red Fire Glow Effect for active keys (Original styles maintained) */
         .keyboard-key.key-active {
             animation: fireGlow 0.15s forwards;
         }
@@ -557,7 +551,6 @@
                 border-color: var(--accent-color);
                 transform: translateY(0);
             }
-
             50% {
                 box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
                     0 0 20px 10px rgba(255, 140, 0, 0.5);
@@ -565,7 +558,6 @@
                 background-color: #ff6347;
                 color: #fff;
             }
-
             100% {
                 box-shadow: 0 0 0px 0px rgba(255, 69, 0, 0.7);
                 border-color: var(--border-color);
@@ -574,7 +566,6 @@
             }
         }
 
-        /* Optional: Adjust hover for delete button when active */
         .keyboard-key.delete.key-active {
             animation: fireGlowDelete 0.15s forwards;
         }
@@ -585,7 +576,6 @@
                 border-color: var(--delete-button-bg);
                 transform: translateY(0);
             }
-
             50% {
                 box-shadow: 0 0 12px 6px rgba(255, 69, 0, 0.7),
                     0 0 20px 10px rgba(255, 140, 0, 0.5);
@@ -593,7 +583,6 @@
                 background-color: #ff6347;
                 color: #fff;
             }
-
             100% {
                 box-shadow: 0 3px 8px rgba(239, 68, 68, 0.18);
                 border-color: var(--delete-button-bg);
@@ -602,7 +591,6 @@
             }
         }
 
-        /* Visually hidden utility class */
         .visually-hidden {
             position: absolute;
             width: 1px;
@@ -614,14 +602,6 @@
             border: 0;
         }
 
-        /* Ensure the sun icon is hidden by default if moon is shown by default */
-        .sun-icon.hidden {
-            display: none;
-        }
-
-        .moon-icon.hidden {
-            display: none;
-/* Ensure the sun icon is hidden by default if moon is shown by default */
         .sun-icon.hidden {
             display: none;
         }
@@ -629,41 +609,13 @@
         .moon-icon.hidden {
             display: none;
         }
-
-        /* --- New CSS for Keyboard Layout Fixes --- */
-        .keyboard-row {
-            /* Ensure items stretch if needed, and distribute space */
-            justify-content: flex-start; /* Align to start, let keys manage gap */
-        }
-
-        /* Styles for the space bar key group */
-        .key-group.space-key {
-            flex-grow: 1; /* Allow it to take available space */
-            min-width: 150px; /* Minimum width for space key */
-            max-width: 300px; /* Max width for space key */
-        }
-
-        /* Styles for the delete key group */
-        .key-group.delete-key {
-            width: 76px; /* Match standard key width */
-            min-width: 76px;
-            max-width: 76px;
-        }
-
-        .keyboard-key.delete i {
-            font-size: 1.6rem; /* Ensure the icon size matches Tifinagh characters */
-            color: inherit; /* Inherit color from the button */
-        }
-        /* --- End of New CSS for Keyboard Layout Fixes --- */
-
     </style>
 </head>
 
 <body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-   <div class="min-h-screen flex flex-col"> <!-- Added min-h-screen and flex-col for sticky footer -->
-      <div class="relative isolate px-6 pt-6 lg:px-8 flex-grow"> <!-- flex-grow to push footer down -->
+   <div class="min-h-screen flex flex-col">
+      <div class="relative isolate px-6 pt-6 lg:px-8 flex-grow">
         <div class="container">
-            <!-- HEADER (copied directly from your index.html and adjusted slightly for keyboard page content) -->
             <header class="flex flex-col sm:flex-row justify-center sm:justify-between items-center py-4 sm:py-6 gap-3 sm:gap-0">
             <div class="flex-1 text-center sm:text-left order-2 sm:order-1">
                 <a href="index.html" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1">
@@ -693,18 +645,13 @@
             </div>
             </header>
 
-
-            <!-- Main Title for the Keyboard Page (reverted to original h1, not h2 as before) -->
             <h1 class="font-serif text-center mt-8 dark:text-gray-200">Online Tifinagh Keyboard <span class="visually-hidden">for Tamazight and Amazigh Script</span></h1>
             <p class="tagline">Type directly in Tifinagh using this virtual keyboard, or your physical keyboard with Latin/Arabic input. This tool helps you write Tamazight and Amazigh characters easily.</p>
 
-            <!-- The input area should be centered within its available width -->
             <div class="input-area-wrapper">
-                <!-- Improved placeholder text with keywords -->
                 <textarea id="keyboardInput" class="text-input" placeholder="Start typing in Tifinagh, Latin, or Arabic here to generate Tifinagh text..." lang="ber" inputmode="text"></textarea>
             </div>
 
-            <!-- Action Buttons: Copy and Clear -->
             <div class="action-buttons">
                 <button class="copy" id="copyBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -984,44 +931,65 @@
     if (document.activeElement === keyboardInput) {
         const key = e.key;
 
-        // Handle Ctrl/Cmd + A (Select All)
-        if ((e.ctrlKey || e.metaKey) && key === 'a') {
-            e.preventDefault(); // Prevent browser's default select all
-            keyboardInput.select();
-            return; // Stop further processing after handling Select All
-        }
-
-        // Handle Backspace
-        if (key === 'Backspace') {
-            e.preventDefault(); // Prevent default browser back action
-            handleInput('backspace');
-            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-            return;
-        }
-
-        // --- MODIFIED LOGIC for Delete key ---
-        if (key === 'Delete') {
-            e.preventDefault(); // Prevent default browser delete action
-            let start = keyboardInput.selectionStart;
-            let end = keyboardInput.selectionEnd;
-            let currentValue = keyboardInput.value;
-
-            // If text is selected (start != end), delete the selection
-            if (start !== end) {
-                let newValue = currentValue.substring(0, start) + currentValue.substring(end);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
-            } else if (end < currentValue.length) { // If no text selected, delete character to the right
-                let newValue = currentValue.substring(0, start) + currentValue.substring(end + 1);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start;
+         // Handle Ctrl/Cmd + A (Select All)
+            if ((e.ctrlKey || e.metaKey) && key === 'a') {
+                e.preventDefault(); // Prevent browser's default select all
+                keyboardInput.select();
+                return; // Stop further processing after handling Select All
             }
-            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]'); // Still activate virtual backspace button for visual feedback
-            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-            return;
-        }
-        // --- END MODIFIED LOGIC ---
+
+           // Handle Backspace
+if (key === 'Backspace') {
+    e.preventDefault(); // Prevent default browser back action
+
+    let start = keyboardInput.selectionStart;
+    let end = keyboardInput.selectionEnd;
+    let currentValue = keyboardInput.value;
+
+    // If text is selected, delete the selection
+    if (start !== end) {
+        keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(end);
+        keyboardInput.setSelectionRange(start, start);
+        keyboardInput.focus();
+    }
+    // If no text selected, delete character to the left (normal backspace)
+    else if (start > 0) {
+        keyboardInput.value = currentValue.substring(0, start - 1) + currentValue.substring(end);
+        keyboardInput.setSelectionRange(start - 1, start - 1);
+        keyboardInput.focus();
+    }
+
+    const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+    if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+    return;
+}
+
+// --- MODIFIED LOGIC for Delete key ---
+if (key === 'Delete') {
+    e.preventDefault(); // Prevent default browser delete action
+
+    let start = keyboardInput.selectionStart;
+    let end = keyboardInput.selectionEnd;
+    let currentValue = keyboardInput.value;
+
+    // If text is selected (start != end), delete the selection
+    if (start !== end) {
+        keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(end);
+        keyboardInput.setSelectionRange(start, start);
+        keyboardInput.focus();
+    }
+    // If no text selected, delete character to the right
+    else if (start < currentValue.length) {
+        keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(start + 1);
+        keyboardInput.setSelectionRange(start, start);
+        keyboardInput.focus();
+    }
+
+    const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+    if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+    return;
+}
+// --- END MODIFIED LOGIC ---
 
         // Handle space directly for physical keyboard
         if (key === ' ') {
