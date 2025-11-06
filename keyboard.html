@@ -1053,6 +1053,7 @@
     // Only process if the textarea is focused
     if (document.activeElement === keyboardInput) {
         const key = e.key;
+        const code = e.code; // Define 'code' here
 
          // Handle Ctrl/Cmd + A (Select All)
             if ((e.ctrlKey || e.metaKey) && key === 'a') {
@@ -1145,6 +1146,8 @@
             if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
             return;
         }
+    }
+});
 
         // For other keys, let the 'input' event handle the conversion
         // We only prevent default if a direct keyMap match *could* occur
