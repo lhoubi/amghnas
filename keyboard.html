@@ -1060,6 +1060,22 @@
                 keyboardInput.select();
                 return; // Stop further processing after handling Select All
             }
+         // TEMPORARY: Log to see what's being pressed
+            console.log('Key pressed:', key, 'Code:', code, 'KeyCode:', e.keyCode);
+
+            // Block only the B key when it produces 'لا' (Arabic keyboard)
+            if (code === 'KeyB' && (key === 'لا' || key === 'ﻻ' || key === 'ﻼ')) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Blocked لا button (KeyB in Arabic)');
+                return;
+            }
+
+            // Handle 'ة' - do nothing
+            if (key === 'ة') {
+                e.preventDefault();
+                return;
+            }
 
            // Handle Backspace
         if (key === 'Backspace') {
