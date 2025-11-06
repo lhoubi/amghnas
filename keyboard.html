@@ -994,7 +994,35 @@ function processInputForConversion() {
     lastKnownInput = keyboardInput.value;
 }
 
-keyboardInput.addEventListener('input', processInputForConversion);
+// Enhanced input event handler for mobile compatibility
+keyboardInput.addEventListener('input', function(e) {
+    // Block 'ة' character on mobile
+    if (this.value.includes('ة')) {
+        this.value = this.value.replace(/ة/g, '');
+        console.log('Blocked: ة character on mobile');
+    }
+    processInputForConversion();
+});
+
+// Additional event listeners for mobile virtual keyboards
+keyboardInput.addEventListener('beforeinput', function(e) {
+    // Block 'ة' character at input level (works better for mobile)
+    if (e.data && e.data.includes('ة')) {
+        e.preventDefault();
+        console.log('Prevented: ة character input on mobile');
+        return;
+    }
+});
+
+keyboardInput.addEventListener('compositionstart', function(e) {
+    console.log('Composition started:', e.data);
+});
+
+keyboardInput.addEventListener('compositionend', function(e) {
+    console.log('Composition ended:', e.data);
+    // Process conversion after IME composition
+    setTimeout(processInputForConversion, 0);
+});
 
 document.addEventListener('keydown', (e) => {
     // Crucial check: Is the textarea actively focused?
@@ -1063,10 +1091,10 @@ document.addEventListener('keydown', (e) => {
             console.log('Handled: Space');
             return; // Prevent further processing for this key
         }
-        // Prevent 'ة' input
-        else if (key === 'ة') {
+        // Prevent 'ة' input - Enhanced for mobile
+        else if (key === 'ة' || key === 'ۀ' || key === 'ہ') {
             e.preventDefault();
-            console.log('Prevented: ة');
+            console.log('Prevented: ة character');
             return;
         }
         // --- FIXED LOGIC for other printable characters (Latin & Arabic) ---
@@ -1122,6 +1150,16 @@ document.addEventListener('keydown', (e) => {
         }
     } else {
         console.log('Keyboard input is not focused.'); // DEBUGGING
+    }
+});
+
+// Additional event for mobile virtual keyboard input
+keyboardInput.addEventListener('keyup', (e) => {
+    // This helps capture mobile virtual keyboard inputs better
+    if (document.activeElement === keyboardInput && e.key.length === 1) {
+        console.log('Keyup event (mobile):', e.key);
+        // Trigger conversion after a short delay to ensure input is processed
+        setTimeout(processInputForConversion, 10);
     }
 });
 
