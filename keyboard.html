@@ -828,342 +828,336 @@
     const moonIcon = document.querySelector('.moon-icon');
     const sunIcon = document.querySelector('.sun-icon');
 
-    // --- Theme Toggle Functionality ---
-    // Function to apply theme
-    function applyTheme(isDark) {
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
+   // --- Theme Toggle Functionality ---
+// Function to apply theme
+function applyTheme(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark');
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+    } else {
+        document.documentElement.classList.remove('dark');
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+    }
+}
+
+// Load theme preference from localStorage on page load
+const savedTheme = localStorage.getItem('theme');
+let isDarkMode = savedTheme === 'dark'; // Initialize based on saved preference
+
+// If no theme is saved, check system preference
+if (savedTheme === null) {
+    isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+applyTheme(isDarkMode); // Apply the theme immediately
+
+themeToggle.addEventListener('click', () => {
+    isDarkMode = !isDarkMode; // Toggle the state
+    applyTheme(isDarkMode); // Apply the new state
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); // Save preference
+});
+
+// --- Virtual Keyboard Input (Rest of your existing code) ---
+keyboardKeys.forEach(key => {
+    key.addEventListener('click', () => {
+        const keyValue = key.dataset.key;
+        // The handleInput function now just inserts text. The conversion happens on 'input'
+        handleDirectInput(keyValue); 
+        applyClickEffect(key); // Apply the visual click effect
+    });
+});
+
+function handleDirectInput(keyValue) {
+    let start = keyboardInput.selectionStart;
+    let end = keyboardInput.selectionEnd;
+    let currentValue = keyboardInput.value;
+
+    if (keyValue === 'backspace') {
+        if (start > 0) {
+            let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
+            keyboardInput.value = newValue;
+            keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
+        }
+    } else { // For all other virtual key presses, just insert
+        let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
+        keyboardInput.value = newValue;
+        keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
+    }
+    keyboardInput.focus(); // Keep focus on the textarea
+    // Manually trigger the conversion after virtual keyboard input
+    processInputForConversion(); 
+}
+
+// --- Physical Keyboard Mapping ---
+const keyMap = {
+    // Latin to Tifinagh (lowercase for default lookup)
+    'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
+    'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
+    'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
+    's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ',
+    'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
+
+    // Latin to Tifinagh (uppercase for *distinct* Tifinagh characters)
+    'A': 'ⵄ', 'D': 'ⴹ', 'G': 'ⵖ', 'H': 'ⵃ', 'R': 'ⵕ', 'S': 'ⵚ', 'T': 'ⵟ', 'W': 'ⵯ', 'Z': 'ⵥ',
+
+    // Arabic to Tifinagh (from your provided list, excluding 'لا' and 'ة' mapping)
+    'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
+    'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
+    'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
+    'د': 'ⴷ', 'ذ': 'ⴷ',
+    'ر': 'ⵔ', 'ز': 'ⵣ',
+    'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ',
+    'ط': 'ⵟ', 'ظ': 'ⴹ',
+    'ع': 'ⵄ', 'غ': 'ⵖ',
+    'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ',
+    'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
+    'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
+    'ى': 'ⵉ',
+    'ء': 'ⴻ',
+    'ؤ': 'ⵓ', 'ئ': 'ⵉ',
+    'ڤ': 'ⵠ',
+    'ڭ': 'ⴳ',
+    'ـ': 'ⵯ', 
+
+    // Digraphs (e.g., 'gh' -> 'ⵖ').
+    'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ', 'dh': 'ⴹ', 'ts': 'ⵚ', 'gl': 'ⴳⵍ',
+    ' ': ' ',
+    // 'Backspace' and 'Delete' are handled separately, not mapped here
+};
+
+// New conversion function that processes the entire text for conversion
+function convertToTifinagh(text) {
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+        let converted = false;
+
+        // Try to match digraphs first (e.g., 'gh', 'sh')
+        for (const key in keyMap) {
+            if (key.length > 1 && text.substring(i, i + key.length).toLowerCase() === key.toLowerCase()) {
+                result += keyMap[key];
+                i += key.length;
+                converted = true;
+                break;
+            }
+        }
+
+        if (converted) continue;
+
+        // Then try single characters
+        const char = text[i];
+        // Arabic characters often have presentation forms and diacritics, normalize them
+        const normalizedChar = char.normalize("NFC"); 
+
+        if (keyMap[normalizedChar]) {
+            result += keyMap[normalizedChar];
+        } else if (keyMap[normalizedChar.toLowerCase()]) { // Try lowercase for Latin
+            result += keyMap[normalizedChar.toLowerCase()];
         } else {
-            document.documentElement.classList.remove('dark');
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
+            result += char; // If no mapping, keep the original character
+        }
+        i++;
+    }
+    return result;
+}
+
+let lastKnownInput = ""; // To prevent infinite loops with selection updates
+
+function processInputForConversion() {
+    const currentInputValue = keyboardInput.value;
+    const currentSelectionStart = keyboardInput.selectionStart;
+    const currentSelectionEnd = keyboardInput.selectionEnd;
+
+    // Only process if the input has actually changed to avoid re-converting when selection changes
+    if (currentInputValue === lastKnownInput) {
+        return;
+    }
+
+    let newConvertedValue = "";
+    let newSelectionStart = currentSelectionStart;
+    let newSelectionEnd = currentSelectionEnd;
+
+    // Identify the last character typed by comparing current and last input
+    // This is a simplified approach, a more robust solution might involve diffing
+    let lastCharTyped = '';
+    if (currentInputValue.length > lastKnownInput.length) {
+        lastCharTyped = currentInputValue.substring(currentSelectionStart - 1, currentSelectionStart);
+    } else if (currentInputValue.length < lastKnownInput.length) {
+        // A deletion occurred, just re-convert the whole string
+    }
+    
+    // This logic will be simpler: always convert the entire text and manage cursor
+    // This is where we need to be careful with cursor position.
+    
+    // The core conversion logic. This assumes a simple 1:1 or 2:1 mapping.
+    // For more complex input methods (like Arabic context-sensitive shaping),
+    // a more sophisticated processing might be needed.
+    
+    let tempResult = '';
+    let cursorOffset = 0; // To adjust cursor after conversion
+
+    for (let idx = 0; idx < currentInputValue.length; idx++) {
+        let char = currentInputValue[idx];
+        let mappedChar = '';
+
+        // Check for digraphs first (e.g., 'sh', 'kh')
+        let foundDigraph = false;
+        if (idx + 1 < currentInputValue.length) {
+            let twoChars = currentInputValue.substring(idx, idx + 2).toLowerCase();
+            if (keyMap[twoChars]) {
+                mappedChar = keyMap[twoChars];
+                idx++; // Skip next character as it's part of the digraph
+                foundDigraph = true;
+            }
+        }
+        
+        if (!foundDigraph) {
+            // Check single character
+            mappedChar = keyMap[char] || keyMap[char.toLowerCase()] || char;
+        }
+
+        tempResult += mappedChar;
+
+        // If the cursor was past the original character(s) that got converted,
+        // adjust its position based on the length difference.
+        if (idx < currentSelectionStart) { // Adjust selection start for characters before it
+            if (mappedChar.length !== (foundDigraph ? 2 : 1)) {
+                cursorOffset += mappedChar.length - (foundDigraph ? 2 : 1);
+            }
         }
     }
 
-    // Load theme preference from localStorage on page load
-    const savedTheme = localStorage.getItem('theme');
-    let isDarkMode = savedTheme === 'dark'; // Initialize based on saved preference
+    newConvertedValue = tempResult;
+    
+    // Only update if conversion actually changed something to avoid cursor jump
+    if (keyboardInput.value !== newConvertedValue) {
+        keyboardInput.value = newConvertedValue;
 
-    // If no theme is saved, check system preference
-    if (savedTheme === null) {
-        isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Restore cursor position as accurately as possible
+        // This is a heuristic and might not be perfect for all cases,
+        // especially complex input sequences or deletions.
+        const newCursorPos = currentSelectionStart + cursorOffset;
+        keyboardInput.setSelectionRange(newCursorPos, newCursorPos);
     }
-    applyTheme(isDarkMode); // Apply the theme immediately
 
-    themeToggle.addEventListener('click', () => {
-        isDarkMode = !isDarkMode; // Toggle the state
-        applyTheme(isDarkMode); // Apply the new state
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); // Save preference
-    });
+    lastKnownInput = keyboardInput.value; // Update last known input after conversion
+}
 
-    // --- Virtual Keyboard Input (Rest of your existing code) ---
-    keyboardKeys.forEach(key => {
-        key.addEventListener('click', () => {
-            const keyValue = key.dataset.key;
-            // The handleInput function now just inserts text. The conversion happens on 'input'
-            handleDirectInput(keyValue); 
-            applyClickEffect(key); // Apply the visual click effect
-        });
-    });
+// Add an 'input' event listener to the textarea
+// This will trigger whenever the textarea's value changes,
+// including mobile keyboard input, pasting, drag-and-drop, etc.
+keyboardInput.addEventListener('input', processInputForConversion);
 
-    function handleDirectInput(keyValue) {
+document.addEventListener('keydown', (e) => {
+// Only process if the textarea is focused
+if (document.activeElement === keyboardInput) {
+    const key = e.key;
+
+     // Handle Ctrl/Cmd + A (Select All)
+        if ((e.ctrlKey || e.metaKey) && key === 'a') {
+            e.preventDefault(); // Prevent browser's default select all
+            keyboardInput.select();
+            return; // Stop further processing after handling Select All
+        }
+     // TEMPORARY: Log to see what's being pressed
+        console.log('Key pressed:', key, 'Code:', code, 'KeyCode:', e.keyCode);
+
+        // Block only the B key when it produces 'لا' (Arabic keyboard)
+        if (code === 'KeyB' && (key === 'لا' || key === 'ﻻ' || key === 'ﻼ')) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Blocked لا button (KeyB in Arabic)');
+            return;
+        }
+
+        // Handle 'ة' - do nothing
+        if (key === 'ة') {
+            e.preventDefault();
+            return;
+        }
+
+       // Handle Backspace
+    if (key === 'Backspace') {
+        e.preventDefault(); // Prevent default browser back action
+
         let start = keyboardInput.selectionStart;
         let end = keyboardInput.selectionEnd;
         let currentValue = keyboardInput.value;
 
-        if (keyValue === 'backspace') {
-            if (start > 0) {
-                let newValue = currentValue.substring(0, start - 1) + currentValue.substring(end);
-                keyboardInput.value = newValue;
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = start - 1;
-            }
-        } else { // For all other virtual key presses, just insert
-            let newValue = currentValue.substring(0, start) + keyValue + currentValue.substring(end);
-            keyboardInput.value = newValue;
-            keyboardInput.selectionStart = keyboardInput.selectionEnd = start + keyValue.length;
+        // If text is selected, delete the selection
+        if (start !== end) {
+            keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(end);
+            keyboardInput.setSelectionRange(start, start);
+            keyboardInput.focus();
         }
-        keyboardInput.focus(); // Keep focus on the textarea
-        // Manually trigger the conversion after virtual keyboard input
+        // If no text selected, delete character to the left (normal backspace)
+        else if (start > 0) {
+            keyboardInput.value = currentValue.substring(0, start - 1) + currentValue.substring(end);
+            keyboardInput.setSelectionRange(start - 1, start - 1);
+            keyboardInput.focus();
+        }
+
+        const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+        if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+        
+        // After handling backspace, re-process input to ensure consistent state
+        // This is crucial for digraphs if a part of it was deleted
         processInputForConversion(); 
+        return;
     }
 
-    // --- Physical Keyboard Mapping ---
-    const keyMap = {
-        // Latin to Tifinagh (lowercase for default lookup)
-        'a': 'ⴰ', 'b': 'ⴱ', 'c': 'ⵛ', 'd': 'ⴷ', 'e': 'ⴻ', 'f': 'ⴼ',
-        'g': 'ⴳ', 'h': 'ⵀ', 'i': 'ⵉ', 'j': 'ⵊ', 'k': 'ⴽ', 'l': 'ⵍ',
-        'm': 'ⵎ', 'n': 'ⵏ', 'o': 'ⵓ', 'p': 'ⵒ', 'q': 'ⵇ', 'r': 'ⵔ',
-        's': 'ⵙ', 't': 'ⵜ', 'u': 'ⵓ', 'v': 'ⵠ', 'w': 'ⵡ',
-        'x': 'ⵅ', 'y': 'ⵢ', 'z': 'ⵣ',
+    // --- MODIFIED LOGIC for Delete key ---
+    if (key === 'Delete') {
+        e.preventDefault(); // Prevent default browser delete action
 
-        // Latin to Tifinagh (uppercase for *distinct* Tifinagh characters)
-        'A': 'ⵄ', 'D': 'ⴹ', 'G': 'ⵖ', 'H': 'ⵃ', 'R': 'ⵕ', 'S': 'ⵚ', 'T': 'ⵟ', 'W': 'ⵯ', 'Z': 'ⵥ',
+        let start = keyboardInput.selectionStart;
+        let end = keyboardInput.selectionEnd;
+        let currentValue = keyboardInput.value;
 
-        // Arabic to Tifinagh (from your provided list, excluding 'لا' and 'ة' mapping)
-        'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ', 'أُ': 'ⵓ',
-        'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
-        'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
-        'د': 'ⴷ', 'ذ': 'ⴷ',
-        'ر': 'ⵔ', 'ز': 'ⵣ',
-        'س': 'ⵙ', 'ش': 'ⵛ', 'ص': 'ⵚ', 'ض': 'ⴹ',
-        'ط': 'ⵟ', 'ظ': 'ⴹ',
-        'ع': 'ⵄ', 'غ': 'ⵖ',
-        'ف': 'ⴼ', 'ق': 'ⵇ', 'ك': 'ⴽ',
-        'ل': 'ⵍ', 'م': 'ⵎ', 'ن': 'ⵏ',
-        'ه': 'ⵀ', 'و': 'ⵡ', 'ي': 'ⵢ',
-        'ى': 'ⵉ',
-        'ء': 'ⴻ',
-        'ؤ': 'ⵓ', 'ئ': 'ⵉ',
-        'ڤ': 'ⵠ',
-        'ڭ': 'ⴳ',
-        'ـ': 'ⵯ', 
-
-        // Digraphs (e.g., 'gh' -> 'ⵖ').
-        'gh': 'ⵖ', 'kh': 'ⵅ', 'ch': 'ⵛ', 'sh': 'ⵛ', 'dh': 'ⴹ', 'ts': 'ⵚ', 'gl': 'ⴳⵍ',
-        ' ': ' ',
-        // 'Backspace' and 'Delete' are handled separately, not mapped here
-    };
-
-    // New conversion function that processes the entire text for conversion
-    function convertToTifinagh(text) {
-        let result = '';
-        let i = 0;
-        while (i < text.length) {
-            let converted = false;
-
-            // Try to match digraphs first (e.g., 'gh', 'sh')
-            for (const key in keyMap) {
-                if (key.length > 1 && text.substring(i, i + key.length).toLowerCase() === key.toLowerCase()) {
-                    result += keyMap[key];
-                    i += key.length;
-                    converted = true;
-                    break;
-                }
-            }
-
-            if (converted) continue;
-
-            // Then try single characters
-            const char = text[i];
-            // Arabic characters often have presentation forms and diacritics, normalize them
-            const normalizedChar = char.normalize("NFC"); 
-
-            if (keyMap[normalizedChar]) {
-                result += keyMap[normalizedChar];
-            } else if (keyMap[normalizedChar.toLowerCase()]) { // Try lowercase for Latin
-                result += keyMap[normalizedChar.toLowerCase()];
-            } else {
-                result += char; // If no mapping, keep the original character
-            }
-            i++;
+        // If text is selected (start != end), delete the selection
+        if (start !== end) {
+            keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(end);
+            keyboardInput.setSelectionRange(start, start);
+            keyboardInput.focus();
         }
-        return result;
+        // If no text selected, delete character to the right
+        else if (start < currentValue.length) {
+            keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(start + 1);
+            keyboardInput.setSelectionRange(start, start);
+            keyboardInput.focus();
+        }
+
+        const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
+        if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
+
+        // After handling delete, re-process input
+        processInputForConversion(); 
+        return;
+    }
+    // --- END MODIFIED LOGIC ---
+
+    // Handle space directly for physical keyboard
+    if (key === ' ') {
+        e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
+        handleDirectInput(' '); // Use handleDirectInput for space to also trigger conversion
+        const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
+        if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
+        return;
     }
 
-    let lastKnownInput = ""; // To prevent infinite loops with selection updates
-
-    function processInputForConversion() {
-        const currentInputValue = keyboardInput.value;
-        const currentSelectionStart = keyboardInput.selectionStart;
-        const currentSelectionEnd = keyboardInput.selectionEnd;
-
-        // Only process if the input has actually changed to avoid re-converting when selection changes
-        if (currentInputValue === lastKnownInput) {
-            return;
-        }
-
-        let newConvertedValue = "";
-        let newSelectionStart = currentSelectionStart;
-        let newSelectionEnd = currentSelectionEnd;
-
-        // Identify the last character typed by comparing current and last input
-        // This is a simplified approach, a more robust solution might involve diffing
-        let lastCharTyped = '';
-        if (currentInputValue.length > lastKnownInput.length) {
-            lastCharTyped = currentInputValue.substring(currentSelectionStart - 1, currentSelectionStart);
-        } else if (currentInputValue.length < lastKnownInput.length) {
-            // A deletion occurred, just re-convert the whole string
-        }
-        
-        // This logic will be simpler: always convert the entire text and manage cursor
-        // This is where we need to be careful with cursor position.
-        
-        // The core conversion logic. This assumes a simple 1:1 or 2:1 mapping.
-        // For more complex input methods (like Arabic context-sensitive shaping),
-        // a more sophisticated processing might be needed.
-        
-        let tempResult = '';
-        let cursorOffset = 0; // To adjust cursor after conversion
-
-        for (let idx = 0; idx < currentInputValue.length; idx++) {
-            let char = currentInputValue[idx];
-            let mappedChar = '';
-
-            // Check for digraphs first (e.g., 'sh', 'kh')
-            let foundDigraph = false;
-            if (idx + 1 < currentInputValue.length) {
-                let twoChars = currentInputValue.substring(idx, idx + 2).toLowerCase();
-                if (keyMap[twoChars]) {
-                    mappedChar = keyMap[twoChars];
-                    idx++; // Skip next character as it's part of the digraph
-                    foundDigraph = true;
-                }
-            }
-            
-            if (!foundDigraph) {
-                // Check single character
-                mappedChar = keyMap[char] || keyMap[char.toLowerCase()] || char;
-            }
-
-            tempResult += mappedChar;
-
-            // If the cursor was past the original character(s) that got converted,
-            // adjust its position based on the length difference.
-            if (idx < currentSelectionStart) { // Adjust selection start for characters before it
-                if (mappedChar.length !== (foundDigraph ? 2 : 1)) {
-                    cursorOffset += mappedChar.length - (foundDigraph ? 2 : 1);
-                }
-            }
-        }
-
-        newConvertedValue = tempResult;
-        
-        // Only update if conversion actually changed something to avoid cursor jump
-        if (keyboardInput.value !== newConvertedValue) {
-            keyboardInput.value = newConvertedValue;
-
-            // Restore cursor position as accurately as possible
-            // This is a heuristic and might not be perfect for all cases,
-            // especially complex input sequences or deletions.
-            const newCursorPos = currentSelectionStart + cursorOffset;
-            keyboardInput.setSelectionRange(newCursorPos, newCursorPos);
-        }
-
-        lastKnownInput = keyboardInput.value; // Update last known input after conversion
-    }
-
-    // Add an 'input' event listener to the textarea
-    // This will trigger whenever the textarea's value changes,
-    // including mobile keyboard input, pasting, drag-and-drop, etc.
-    keyboardInput.addEventListener('input', processInputForConversion);
-
-    document.addEventListener('keydown', (e) => {
-    // Only process if the textarea is focused
-    if (document.activeElement === keyboardInput) {
-        const key = e.key;
-        const code = e.code; // Define 'code' here
-
-         // Handle Ctrl/Cmd + A (Select All)
-            if ((e.ctrlKey || e.metaKey) && key === 'a') {
-                e.preventDefault(); // Prevent browser's default select all
-                keyboardInput.select();
-                return; // Stop further processing after handling Select All
-            }
-         // TEMPORARY: Log to see what's being pressed
-            console.log('Key pressed:', key, 'Code:', code, 'KeyCode:', e.keyCode);
-
-            // Block only the B key when it produces 'لا' (Arabic keyboard)
-            if (code === 'KeyB' && (key === 'لا' || key === 'ﻻ' || key === 'ﻼ')) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Blocked لا button (KeyB in Arabic)');
-                return;
-            }
-
-            // Handle 'ة' - do nothing
-            if (key === 'ة') {
-                e.preventDefault();
-                return;
-            }
-
-           // Handle Backspace
-        if (key === 'Backspace') {
-            e.preventDefault(); // Prevent default browser back action
-
-            let start = keyboardInput.selectionStart;
-            let end = keyboardInput.selectionEnd;
-            let currentValue = keyboardInput.value;
-
-            // If text is selected, delete the selection
-            if (start !== end) {
-                keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(end);
-                keyboardInput.setSelectionRange(start, start);
-                keyboardInput.focus();
-            }
-            // If no text selected, delete character to the left (normal backspace)
-            else if (start > 0) {
-                keyboardInput.value = currentValue.substring(0, start - 1) + currentValue.substring(end);
-                keyboardInput.setSelectionRange(start - 1, start - 1);
-                keyboardInput.focus();
-            }
-
-            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-            
-            // After handling backspace, re-process input to ensure consistent state
-            // This is crucial for digraphs if a part of it was deleted
-            processInputForConversion(); 
-            return;
-        }
-
-        // --- MODIFIED LOGIC for Delete key ---
-        if (key === 'Delete') {
-            e.preventDefault(); // Prevent default browser delete action
-
-            let start = keyboardInput.selectionStart;
-            let end = keyboardInput.selectionEnd;
-            let currentValue = keyboardInput.value;
-
-            // If text is selected (start != end), delete the selection
-            if (start !== end) {
-                keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(end);
-                keyboardInput.setSelectionRange(start, start);
-                keyboardInput.focus();
-            }
-            // If no text selected, delete character to the right
-            else if (start < currentValue.length) {
-                keyboardInput.value = currentValue.substring(0, start) + currentValue.substring(start + 1);
-                keyboardInput.setSelectionRange(start, start);
-                keyboardInput.focus();
-            }
-
-            const deleteKeyBtn = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-            if (deleteKeyBtn) applyClickEffect(deleteKeyBtn);
-
-            // After handling delete, re-process input
-            processInputForConversion(); 
-            return;
-        }
-        // --- END MODIFIED LOGIC ---
-
-        // Handle space directly for physical keyboard
-        if (key === ' ') {
-            e.preventDefault(); // Prevent default space behavior (e.g., scrolling)
-            handleDirectInput(' '); // Use handleDirectInput for space to also trigger conversion
-            const spaceKeyBtn = document.querySelector('.keyboard-key.wide[data-key=" "]');
-            if (spaceKeyBtn) applyClickEffect(spaceKeyBtn);
-            return;
-        }
-    }
-});
-
-        // For other keys, let the 'input' event handle the conversion
-        // We only prevent default if a direct keyMap match *could* occur
-        // This is to avoid double-processing (once by keydown, once by input)
-        // However, given the new `input` listener, `keydown` should primarily handle
-        // control keys (Backspace, Delete, Space, Ctrl+A) or direct virtual key clicks.
-        // For standard character input, the 'input' event is more reliable.
-        
-        // Removed specific `keyMap` processing from `keydown` for regular characters
-        // to let the `input` event handle character conversions uniformly.
-        // This prevents issues with mobile keyboards not triggering `keydown` reliably
-        // for character input.
-    }
-});
-
-
+    // For other keys, let the 'input' event handle the conversion
+    // We only prevent default if a direct keyMap match *could* occur
+    // This is to avoid double-processing (once by keydown, once by input)
+    // However, given the new `input` listener, `keydown` should primarily handle
+    // control keys (Backspace, Delete, Space, Ctrl+A) or direct virtual key clicks.
+    // For standard character input, the 'input' event is more reliable.
+    
+    // Removed specific `keyMap` processing from `keydown` for regular characters
+    // to let the `input` event handle character conversions uniformly.
+    // This prevents issues with mobile keyboards not triggering `keydown` reliably
+    // for character input.
+}
     // --- Action Buttons (Copy/Clear) ---
     copyBtn.addEventListener('click', () => {
         keyboardInput.select();
