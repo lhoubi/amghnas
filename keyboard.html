@@ -1130,7 +1130,7 @@ if (document.activeElement === keyboardInput) {
         return;
     }
 
-    // For other keys, let the 'input' event handle the conversion
+   // For other keys, let the 'input' event handle the conversion
     // We only prevent default if a direct keyMap match *could* occur
     // This is to avoid double-processing (once by keydown, once by input)
     // However, given the new `input` listener, `keydown` should primarily handle
@@ -1141,9 +1141,11 @@ if (document.activeElement === keyboardInput) {
     // to let the `input` event handle character conversions uniformly.
     // This prevents issues with mobile keyboards not triggering `keydown` reliably
     // for character input.
-}
-    // --- Action Buttons (Copy/Clear) ---
-    copyBtn.addEventListener('click', () => {
+    }
+});
+
+// --- Action Buttons (Copy/Clear) ---
+copyBtn.addEventListener('click', () => {
         keyboardInput.select();
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(keyboardInput.value)
