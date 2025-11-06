@@ -819,7 +819,7 @@
 <script src="converter.js"></script> <!-- Ensure converter.js exists if it's referenced -->
 
 <script>
- document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const keyboardInput = document.getElementById('keyboardInput');
     const keyboardKeys = document.querySelectorAll('.keyboard-key');
     const copyBtn = document.getElementById('copyBtn');
@@ -1130,7 +1130,13 @@ if (document.activeElement === keyboardInput) {
         return;
     }
 
-   // For other keys, let the 'input' event handle the conversion
+        // --- MODIFIED LOGIC FOR KEY MAPPING ---
+        // If the pressed key is 'لا' or 'ة', do nothing.
+        if (key === 'ة') {
+            e.preventDefault(); // Prevent default input
+            return;
+    }
+       // For other keys, let the 'input' event handle the conversion
     // We only prevent default if a direct keyMap match *could* occur
     // This is to avoid double-processing (once by keydown, once by input)
     // However, given the new `input` listener, `keydown` should primarily handle
