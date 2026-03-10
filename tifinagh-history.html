@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ancient Origins of the Tifinagh Script | amghnas.com</title>
+  <meta name="description" content="Explore the 2,500-year history of the Tifinagh script — from ancient Libyan inscriptions to its modern Neo-Tifinagh standardization by IRCAM." />
+  <meta name="keywords" content="Tifinagh history, ancient Berber script, Neo-Tifinagh, Libyco-Berber, Amazigh writing, IRCAM, Tuareg script" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Tifinagh&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #f5ede0; --sand-dark: #e8d9c4; --ochre: #c9853a; --ochre-deep: #a3622a;
+      --terracotta: #b85c38; --indigo: #3d3580; --text: #1a1a2e; --text-muted: #5a5a7a;
+      --card-bg: rgba(255,255,255,0.72); --border: rgba(201,133,58,0.2); --glow: rgba(201,133,58,0.15); --tag-bg: rgba(201,133,58,0.1);
+    }
+    html.dark { --sand: #1a1728; --sand-dark: #231e35; --ochre: #e0a050; --ochre-deep: #c9853a; --text: #f0ece4; --text-muted: #9d97b8; --card-bg: rgba(35,30,53,0.85); --border: rgba(224,160,80,0.2); --glow: rgba(224,160,80,0.1); --tag-bg: rgba(224,160,80,0.12); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--sand); color: var(--text); min-height: 100vh; transition: background-color 0.4s, color 0.4s; position: relative; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(201,133,58,0.04) 30px, rgba(201,133,58,0.04) 31px), repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(61,53,128,0.04) 30px, rgba(61,53,128,0.04) 31px); pointer-events: none; z-index: 0; }
+    .page-wrap { position: relative; z-index: 1; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 64px; background: rgba(245,237,224,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; transition: background 0.4s; }
+    html.dark nav { background: rgba(26,23,40,0.88); }
+    .nav-brand { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.6rem; color: var(--ochre); text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1.5px; background: var(--ochre); transform: scaleX(0); transition: transform 0.2s; }
+    .nav-links a:hover { color: var(--ochre); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--ochre); }
+    #themeToggle { background: none; border: 1.5px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+    #themeToggle:hover { border-color: var(--ochre); color: var(--ochre); }
+    .sun-icon { display: none; }
+    html.dark .moon-icon { display: none; }
+    html.dark .sun-icon { display: flex; }
+
+    /* ARTICLE LAYOUT */
+    .article-wrap { max-width: 740px; margin: 0 auto; padding: 3.5rem 1.5rem 5rem; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); text-decoration: none; margin-bottom: 2rem; transition: color 0.2s; }
+    .back-link:hover { color: var(--ochre); }
+    .back-link svg { transition: transform 0.2s; }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .article-tag { display: inline-block; padding: 0.2rem 0.75rem; background: var(--tag-bg); border: 1px solid var(--border); border-radius: 999px; font-size: 0.75rem; font-weight: 600; color: var(--ochre); margin-bottom: 1.1rem; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; color: var(--text); margin-bottom: 1rem; }
+    .article-meta { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 2rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+    .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); flex-shrink: 0; }
+    .article-hero-glyph { text-align: center; padding: 2.5rem 1rem; background: linear-gradient(135deg, var(--ochre-deep) 0%, var(--indigo) 100%); border-radius: 16px; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .article-hero-glyph::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.04) 20px, rgba(255,255,255,0.04) 21px); }
+    .article-hero-glyph span { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 4rem; color: rgba(255,255,255,0.85); position: relative; z-index: 1; display: block; }
+    .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+    .article-body { font-size: 1rem; line-height: 1.85; color: var(--text); }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--ochre); margin: 2rem 0 0.75rem; }
+    .article-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--ochre); margin: 1.75rem 0 0.6rem; }
+    .article-body .tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; color: var(--ochre); font-size: 1.1em; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-cta { margin-top: 3rem; padding: 1.5rem; background: var(--tag-bg); border: 1px solid var(--border); border-radius: 14px; text-align: center; }
+    .article-cta p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 0.85rem; }
+    .btn-primary { display: inline-block; padding: 0.65rem 1.5rem; background: var(--ochre); color: white; border-radius: 9px; text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--ochre-deep); }
+    footer { border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); font-size: 0.88rem; background: rgba(245,237,224,0.5); transition: background 0.4s; }
+    html.dark footer { background: rgba(26,23,40,0.5); }
+    footer a { color: var(--ochre); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.3rem; color: var(--ochre); display: block; margin-bottom: 0.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 0.75rem 0; flex-wrap: wrap; }
+    @media (max-width: 600px) { nav { padding: 0 1rem; } .nav-links { gap: 1rem; } .nav-links a { font-size: 0.82rem; } }
+
+
+    @media (max-width: 640px) {
+      .article-wrap { padding: 2rem 1.25rem 3.5rem; }
+      h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+      .article-hero-glyph { padding: 1.75rem 1rem; border-radius: 12px; margin-bottom: 1.75rem; }
+      .article-hero-glyph span { font-size: 3rem; }
+      .article-body { font-size: 0.95rem; }
+      .article-body h3 { font-size: 1.1rem; }
+      .article-cta { padding: 1.25rem; margin-top: 2rem; }
+      .back-link { margin-bottom: 1.5rem; }
+    }
+
+    /* ====== MOBILE RESPONSIVE ====== */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      width: 38px; height: 38px;
+      cursor: pointer;
+      color: var(--text-muted);
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .nav-hamburger:hover { border-color: var(--ochre); color: var(--ochre); }
+
+    @media (max-width: 640px) {
+/* MOBILE NAV FIX */
+      nav { padding: 0 1rem; display: flex; align-items: center; justify-content: space-between; }
+      .nav-brand { font-size: 1.3rem; color: var(--ochre) !important; flex-shrink: 0; display: flex !important; }
+      #themeToggle { display: none !important; }
+      .nav-hamburger { display: flex !important; margin-left: auto; }
+      .nav-hamburger { display: flex !important; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(245,237,224,0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        gap: 0;
+        z-index: 99;
+        padding: 0.5rem 0 1rem;
+        list-style: none;
+      }
+      html.dark .nav-links { background: rgba(26,23,40,0.97); }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block;
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+      }
+      .nav-links a:hover, .nav-links a.active { color: var(--ochre); background: var(--tag-bg); }
+      .nav-links a::after { display: none; }
+      .nav-links li:last-child a { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Converter</a></li>
+      <li><a href="keyboard.html">Keyboard</a></li>
+      <li><a href="articles.html" class="active">Articles</a></li>
+    </ul>
+    <button id="themeToggle" aria-label="Toggle theme">
+      <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+      <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+    </button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+
+  <main class="article-wrap">
+    <a href="articles.html" class="back-link">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Articles
+    </a>
+    <span class="article-tag">Script &amp; Writing</span>
+    <h1>The Ancient Origins of the Tifinagh Script</h1>
+    <div class="article-meta">
+      <span>By Anaruz Elhabib</span><span class="meta-dot"></span><span>8 min read</span>
+    </div>
+    <div class="article-hero-glyph"><span>ⵜⵉⴼⵉⵏⴰⵖ</span></div>
+    <div class="divider"></div>
+
+    <div class="article-body">
+      <p>The Tifinagh script stands as one of humanity's most resilient writing systems — an alphabet that has survived over two and a half millennia, outlasting empires and enduring colonial suppression to emerge today as a vibrant symbol of Amazigh identity.</p>
+
+      <h3>Ancient Libyan Roots</h3>
+      <p>The earliest known inscriptions related to Tifinagh date to around the 3rd century BCE, discovered across what is today Algeria, Tunisia, and Libya. Scholars refer to these early forms as "Libyco-Berber" script. Carved into rock faces and funerary monuments, these inscriptions represent the ancestors of the modern Tifinagh characters used today.</p>
+      <p>One of the most famous ancient inscriptions is the bilingual Dougga inscription from Tunisia (139 BCE), written in both Punic and Libyco-Berber, which allowed 19th-century scholars to begin deciphering the ancient alphabet.</p>
+
+      <h3>The Tuareg Preservation</h3>
+      <p>While the script fell out of widespread use across most of North Africa following the Arab conquest of the 7th century CE, it was preserved by the Tuareg people of the Sahara. The Tuareg used a descendant script called <span class="tifinagh">ⵜⵉⴼⵉⵏⴰⵖ</span> (Tifinagh) for centuries — traditionally inscribed on leather, wood, and stone, and notably used as a form of secret communication and love poetry by Tuareg women.</p>
+
+      <h3>Neo-Tifinagh and Modern Revival</h3>
+      <p>The 20th century brought a renewed push for Amazigh cultural recognition. The Royal Institute of Amazigh Culture (IRCAM), established in Morocco in 2001, standardized the "Neo-Tifinagh" alphabet — a modernized, unicase version with 33 characters, designed for digital use and print. In 2003, Morocco officially adopted Neo-Tifinagh for use in Tamazight education.</p>
+      <p>In 2003, Unicode incorporated the full Tifinagh block (U+2D30 to U+2D7F), allowing <span class="tifinagh">ⵜⵉⴼⵉⵏⴰⵖ</span> to be typed and displayed on any modern device — a milestone that made tools like amghnas.com possible.</p>
+
+      <h3>The Script Today</h3>
+      <p>Today, Tifinagh appears on road signs, banknotes, and official documents across Morocco. Millions of children learn it in school. The script has become a powerful emblem — not just a writing system, but a statement of identity and continuity for a people who have called North Africa home since before recorded history.</p>
+    </div>
+
+    <div class="article-cta">
+      <p>Try converting Tifinagh to Latin and back using our free online tool</p>
+      <a href="index.html" class="btn-primary">Open the Converter →</a>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
+    <div class="footer-links">
+      <a href="index.html">Converter</a>
+      <a href="keyboard.html">Keyboard</a>
+      <a href="articles.html">Articles</a>
+    </div>
+    <p>Made with ❤ for Amazigh culture · By Anaruz Elhabib</p>
+    <p style="margin-top:0.4rem">&copy; <span id="yr"></span> amghnas.com</p>
+  </footer>
+</div>
+<script src="themeToggle.js"></script>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      hamburger.innerHTML = navLinks.classList.contains('open')
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    });
+    // Close on link click
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    }));
+  }
+</script>
+</body>
+</html>
