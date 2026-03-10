@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About amghnas — ⴰⵎⵖⵏⴰⵙ | The Story Behind the Tool</title>
+  <meta name="description" content="amghnas (ⴰⵎⵖⵏⴰⵙ) is a free Tifinagh converter and Amazigh keyboard built to preserve and celebrate the ancient script of the Amazigh people." />
+  <meta name="keywords" content="amghnas, about, tifinagh, amazigh, tamazight, anaruz elhabib" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Tifinagh&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #f5ede0; --sand-dark: #e8d9c4; --ochre: #c9853a; --ochre-deep: #a3622a;
+      --terracotta: #b85c38; --indigo: #3d3580; --text: #1a1a2e; --text-muted: #5a5a7a;
+      --card-bg: rgba(255,255,255,0.72); --border: rgba(201,133,58,0.2); --glow: rgba(201,133,58,0.15); --tag-bg: rgba(201,133,58,0.1);
+    }
+    html.dark { --sand: #1a1728; --sand-dark: #231e35; --ochre: #e0a050; --ochre-deep: #c9853a; --text: #f0ece4; --text-muted: #9d97b8; --card-bg: rgba(35,30,53,0.85); --border: rgba(224,160,80,0.2); --glow: rgba(224,160,80,0.1); --tag-bg: rgba(224,160,80,0.12); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--text); min-height: 100vh; transition: background 0.3s, color 0.3s; }
+    .font-tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(245,237,224,0.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+    html.dark nav { background: rgba(26,23,40,0.92); }
+    .nav-brand { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.4rem; color: var(--ochre); text-decoration: none; font-weight: 700; letter-spacing: 0.02em; }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.875rem; font-weight: 500; padding: 0.4rem 0.9rem; border-radius: 6px; transition: color 0.2s, background 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--ochre); border-radius: 2px; transition: width 0.25s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--ochre); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 60%; }
+    #themeToggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; transition: color 0.2s, border-color 0.2s; }
+    #themeToggle:hover { color: var(--ochre); border-color: var(--ochre); }
+    .sun-icon { display: none; }
+    html.dark .sun-icon { display: block; }
+    html.dark .moon-icon { display: none; }
+    .nav-hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem; cursor: pointer; color: var(--text); }
+
+    /* HERO */
+    .about-hero {
+      position: relative; overflow: hidden;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: linear-gradient(160deg, var(--sand) 0%, var(--sand-dark) 100%);
+    }
+    .about-hero::before {
+      content: 'ⴰⵎⵖⵏⴰⵙ';
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: clamp(8rem, 20vw, 16rem);
+      color: var(--ochre); opacity: 0.04;
+      pointer-events: none; white-space: nowrap; letter-spacing: 0.1em;
+    }
+    .about-hero-tag { display: inline-block; padding: 0.3rem 1rem; background: var(--ochre); border-radius: 999px; font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .about-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 600; line-height: 1.1; color: var(--text); margin-bottom: 1rem; }
+    .about-hero h1 span { color: var(--ochre); font-style: italic; }
+    .about-hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 540px; margin: 0 auto; line-height: 1.75; }
+
+    /* DIVIDER */
+    .ornament { text-align: center; padding: 2rem 0 1rem; font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.5rem; color: var(--ochre); opacity: 0.4; letter-spacing: 0.3em; }
+
+    /* CONTENT */
+    .about-wrap { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+    /* STORY SECTION */
+    .story-block { display: grid; grid-template-columns: 3px 1fr; gap: 0 2rem; margin-bottom: 3.5rem; }
+    .story-line { background: linear-gradient(to bottom, var(--ochre), transparent); border-radius: 3px; }
+    .story-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; }
+    .story-content h2 em { color: var(--ochre); font-style: italic; }
+    .story-content p { color: var(--text-muted); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 3rem 0; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem 1.5rem; text-align: center; backdrop-filter: blur(8px); transition: transform 0.2s, box-shadow 0.2s; }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--glow); }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: var(--ochre); line-height: 1; }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+    .stat-tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.1rem; color: var(--ochre); opacity: 0.6; margin-top: 0.25rem; }
+
+    /* TOOLS SECTION */
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0; }
+    .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; backdrop-filter: blur(8px); display: flex; align-items: flex-start; gap: 1rem; transition: transform 0.2s; }
+    .tool-card:hover { transform: translateY(-2px); }
+    .tool-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, var(--ochre), var(--terracotta)); display: flex; align-items: center; justify-content: center; font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.2rem; color: white; flex-shrink: 0; }
+    .tool-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+    .tool-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .tool-card a { font-size: 0.78rem; color: var(--ochre); text-decoration: none; font-weight: 500; margin-top: 0.5rem; display: inline-block; }
+    .tool-card a:hover { text-decoration: underline; }
+
+    /* MISSION BANNER */
+    .mission-banner { background: linear-gradient(135deg, var(--ochre) 0%, var(--terracotta) 100%); border-radius: 20px; padding: 2.5rem; text-align: center; margin: 3rem 0; position: relative; overflow: hidden; }
+    .mission-banner::before { content: 'ⵣ'; font-family: 'Noto Sans Tifinagh', sans-serif; position: absolute; right: -1rem; bottom: -2rem; font-size: 10rem; color: rgba(255,255,255,0.07); pointer-events: none; }
+    .mission-banner h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: white; margin-bottom: 0.75rem; font-style: italic; }
+    .mission-banner p { color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.75; max-width: 500px; margin: 0 auto; }
+
+    /* CONTACT */
+    .contact-row { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .contact-row p { color: var(--text-muted); font-size: 0.9rem; }
+    .contact-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: var(--ochre); color: white; border-radius: 999px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s; }
+    .contact-link:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; line-height: 1.8; }
+    .footer-tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.3rem; color: var(--ochre); display: block; margin-bottom: 0.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ochre); }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+      .nav-hamburger { display: flex !important; }
+      #themeToggle { display: none !important; }
+      .nav-brand { display: flex !important; }
+      .nav-links {
+        display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0;
+        background: rgba(245,237,224,0.97); border-bottom: 1px solid var(--border); padding: 0.5rem 0; z-index: 99;
+      }
+      html.dark .nav-links { background: rgba(26,23,40,0.97); }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 0.85rem 1.5rem; border-radius: 0; border-bottom: 1px solid var(--border); }
+      .nav-links a::after { display: none; }
+      .nav-links li:last-child a { border-bottom: none; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .about-hero { padding: 3rem 1.25rem 2.5rem; }
+      .about-wrap { padding: 2rem 1.25rem 3rem; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About amghnas — ⴰⵎⵖⵏⴰⵙ",
+    "url": "https://amghnas.com/about.html",
+    "description": "amghnas is a free Tifinagh converter and Amazigh keyboard built to preserve and celebrate the ancient script of the Amazigh people.",
+    "publisher": { "@type": "Organization", "name": "amghnas", "url": "https://amghnas.com" }
+  }
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav>
+    <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Converter</a></li>
+      <li><a href="keyboard.html">Keyboard</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+    <button id="themeToggle" aria-label="Toggle theme">
+      <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+      <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+    </button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="about-hero-tag">Our Story</div>
+    <h1>Built for a script<br>that <span>survived 2,500 years</span></h1>
+    <p>amghnas is a free digital home for Tifinagh — the ancient writing system of the Amazigh people, spoken across Morocco, Algeria, Libya, and beyond.</p>
+  </section>
+
+  <div class="ornament">ⵎ · ⵣ · ⵖ</div>
+
+  <div class="about-wrap">
+
+    <!-- STORY -->
+    <div class="story-block">
+      <div class="story-line"></div>
+      <div class="story-content">
+        <h2>Why <em>amghnas</em> exists</h2>
+        <p>The word <strong>amghnas (ⴰⵎⵖⵏⴰⵙ)</strong> means <em>"the struggler"</em> or <em>"the activist"</em> in Tamazight — in Arabic, <strong>المناضل</strong> — the one who fights for a cause. Here, that cause is the Amazigh identity: its language, its script, its culture, and its place in the modern world.</p>
+        <p>Tifinagh is one of humanity's oldest continuously used writing systems. Yet until recently, typing it online was nearly impossible without special software. amghnas was built to change that — making Tifinagh accessible to anyone, anywhere, on any device, for free.</p>
+        <p>Whether you're a student learning the script for the first time, a researcher studying Amazigh linguistics, or someone who simply wants to write their name in Tifinagh — this tool is for you.</p>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">3,200+</div>
+        <div class="stat-label">Monthly Impressions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">33+</div>
+        <div class="stat-tifinagh">ⵜⵉⴼⵉⵏⴰⵖ</div>
+        <div class="stat-label">Tifinagh Characters</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-tifinagh">ⵜⵓⵜⵍⴰⵢⵉⵏ</div>
+        <div class="stat-label">Scripts Supported</div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="story-block">
+      <div class="story-line"></div>
+      <div class="story-content">
+        <h2>What <em>we offer</em></h2>
+        <p>Three free tools — built with care, designed for clarity.</p>
+      </div>
+    </div>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">ⵜ</div>
+        <div>
+          <h3>Tifinagh Converter</h3>
+          <p>Convert between Tifinagh, Talatint (Latin), and Arabic script instantly — with full vowel support.</p>
+          <a href="index.html">Try the converter →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">ⴽ</div>
+        <div>
+          <h3>Online Keyboard</h3>
+          <p>Type Tifinagh using your physical keyboard, Arabic layout, or our on-screen virtual keyboard.</p>
+          <a href="keyboard.html">Open keyboard →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">ⵙ</div>
+        <div>
+          <h3>Articles & Guides</h3>
+          <p>In-depth articles on Tifinagh history, Tamazight language, Amazigh culture, and Berber kingdoms.</p>
+          <a href="articles.html">Read articles →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">ⴰ</div>
+        <div>
+          <h3>Always Free</h3>
+          <p>No accounts. No paywalls. No ads interrupting your work. amghnas will always be free and open.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MISSION BANNER -->
+    <div class="mission-banner">
+      <h2>"Language is the road map of a culture."</h2>
+      <p>Tifinagh is more than an alphabet — it is a living testament to the resilience of the Amazigh people. amghnas exists to ensure this script thrives in the digital age, accessible to every Amazigh person on earth.</p>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-row">
+      <p>Have a suggestion, found a bug, or want to collaborate?</p>
+      <a href="/cdn-cgi/l/email-protection#781b17160c191b0c3819151f1016190b561b1715" class="contact-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Get in touch
+      </a>
+    </div>
+
+  </div><!-- end about-wrap -->
+
+  <footer>
+    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
+    <div class="footer-links">
+      <a href="index.html">Converter</a>
+      <a href="keyboard.html">Online Keyboard</a>
+      <a href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <p>Made with ❤ for Amazigh culture · By Anaruz Elhabib</p>
+    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+  </footer>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="themeToggle.js"></script>
+<script>
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      hamburger.innerHTML = navLinks.classList.contains('open')
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.innerHTML = '<svg width="18" height="18" fill="
