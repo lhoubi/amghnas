@@ -800,10 +800,10 @@
         <span class="tab-icon ar-icon">ع</span>Arabic Input
       </button>
       <button class="guide-tab" onclick="showTab('latin', this)">
-        <span class="tab-icon">a</span>Latin Keys
+        <span class="tab-icon">ⴰ</span>Latin Keys
       </button>
       <button class="guide-tab" onclick="showTab('capitals', this)">
-        <span class="tab-icon">A</span>Capital Keys
+        <span class="tab-icon">ⴹ</span>Capital Keys
       </button>
     </div>
 
@@ -833,16 +833,16 @@
           <div class="map-cell"><span class="map-from-val ar">غ</span><span class="map-tifi">ⵖ</span></div>
           <div class="map-cell"><span class="map-from-val ar">ف</span><span class="map-tifi">ⴼ</span></div>
           <div class="map-cell"><span class="map-from-val ar">ق</span><span class="map-tifi">ⵇ</span></div>
-          <div class="map-cell"><span class="map-from-val ar">ك</span><span class="map-tifi">ⴽ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ك / ڭ</span><span class="map-tifi">ⴽ</span></div>
           <div class="map-cell"><span class="map-from-val ar">ل</span><span class="map-tifi">ⵍ</span></div>
           <div class="map-cell"><span class="map-from-val ar">م</span><span class="map-tifi">ⵎ</span></div>
           <div class="map-cell"><span class="map-from-val ar">ن</span><span class="map-tifi">ⵏ</span></div>
           <div class="map-cell"><span class="map-from-val ar">ه</span><span class="map-tifi">ⵀ</span></div>
           <div class="map-cell"><span class="map-from-val ar">و</span><span class="map-tifi">ⵡ</span></div>
-          <div class="map-cell"><span class="map-from-val ar">ي</span><span class="map-tifi">ⵢ</span></div>
-          <div class="map-cell"><span class="map-from-val ar">كسرة </span><span class="map-tifi">ⵉ</span></div>
-          <div class="map-cell"><span class="map-from-val ar">فتحة </span><span class="map-tifi">ⴰ</span></div>
-          <div class="map-cell"><span class="map-from-val ar">ضمة </span><span class="map-tifi">ⵓ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ي / ى</span><span class="map-tifi">ⵢ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">كسرة (ِ)</span><span class="map-tifi">ⵉ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">فتحة (َ)</span><span class="map-tifi">ⴰ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ضمة (ُ)</span><span class="map-tifi">ⵓ</span></div>
         </div>
       </div>
     </div>
@@ -910,7 +910,7 @@
           <span><strong>D → ⴹ</strong> like ض</span>
           <span><strong>T → ⵟ</strong> like ط</span>
           <span><strong>S → ⵚ</strong> like ص</span>
-          <span><strong>Z → ⵥ</strong> like ز مفخمة</span>
+          <span><strong>Z → ⵥ</strong> like ظ</span>
           <span><strong>G → ⵖ</strong> like غ</span>
           <span><strong>A → ⵄ</strong> like ع</span>
         </div>
@@ -1019,12 +1019,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const newChars = current.slice(lastKnownInput.length);
         let converted = '';
         for (let char of newChars) {
-            const mapped = physicalToTifinaghMap[char];
-            if (mapped && !isAlreadyTifinagh(char)) {
-                converted += mapped;
-            } else {
-                converted += char;
+            if (char === '\u0629') continue;                          // ة → nothing
+            if (char >= '\u064B' && char <= '\u0652') continue;     // Arabic diacritics → skip
+            if (isAlreadyTifinagh(char)) { converted += char; continue; } // Tifinagh passthrough
+            if (char === ' ' || char === '\n') { converted += char; continue; } // space passthrough
+            const mapped = physicalToTifinaghMap[char] || physicalToTifinaghMap[char.toLowerCase()];
+            if (mapped) {
+                converted += mapped; // capitals: emphatic A D G H R S T W Z → distinct; others → lowercase Tifinagh
             }
+            // everything else (unmapped Latin capitals etc.) → produce nothing
         }
         if (newChars !== converted) {
             const sel = keyboardInput.selectionStart;
