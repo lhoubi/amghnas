@@ -23,7 +23,7 @@
     .font-tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; }
 
     /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(245,237,224,0.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 64px; background: rgba(245,237,224,0.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); transition: background 0.4s; }
     html.dark nav { background: rgba(26,23,40,0.92); }
     .nav-brand { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.4rem; color: var(--ochre); text-decoration: none; font-weight: 700; letter-spacing: 0.02em; }
     .nav-links { display: flex; gap: 0.25rem; list-style: none; }
@@ -31,12 +31,13 @@
     .nav-links a::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--ochre); border-radius: 2px; transition: width 0.25s; }
     .nav-links a:hover, .nav-links a.active { color: var(--ochre); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 60%; }
-    #themeToggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; transition: color 0.2s, border-color 0.2s; }
+    #themeToggle { background: none; border: 1.5px solid var(--border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
     #themeToggle:hover { color: var(--ochre); border-color: var(--ochre); }
     .sun-icon { display: none; }
-    html.dark .sun-icon { display: block; }
+    html.dark .sun-icon { display: flex; }
     html.dark .moon-icon { display: none; }
-    .nav-hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem; cursor: pointer; color: var(--text); }
+    .nav-hamburger { display: none; background: none; border: 1.5px solid var(--border); border-radius: 8px; width: 38px; height: 38px; cursor: pointer; color: var(--text-muted); align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+    .nav-hamburger:hover { border-color: var(--ochre); color: var(--ochre); }
 
     /* HERO */
     .about-hero {
@@ -110,17 +111,18 @@
 
     /* MOBILE */
     @media (max-width: 640px) {
+      nav { padding: 0 1rem !important; display: flex; align-items: center; justify-content: space-between; }
+      .nav-brand { font-size: 1.3rem; color: var(--ochre) !important; flex-shrink: 0; display: flex !important; }
       .nav-hamburger { display: flex !important; }
-      #themeToggle { display: none !important; }
-      .nav-brand { display: flex !important; }
       .nav-links {
-        display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0;
-        background: rgba(245,237,224,0.97); border-bottom: 1px solid var(--border); padding: 0.5rem 0; z-index: 99;
+        display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0;
+        background: rgba(245,237,224,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0.5rem 0 1rem; z-index: 99; gap: 0; list-style: none;
       }
       html.dark .nav-links { background: rgba(26,23,40,0.97); }
       .nav-links.open { display: flex; }
       .nav-links li { width: 100%; }
-      .nav-links a { display: block; padding: 0.85rem 1.5rem; border-radius: 0; border-bottom: 1px solid var(--border); }
+      .nav-links a { display: block; padding: 0.9rem 1.5rem; font-size: 1rem; border-radius: 0; border-bottom: 1px solid var(--border); color: var(--text); }
+      .nav-links a:hover, .nav-links a.active { color: var(--ochre); background: var(--tag-bg); }
       .nav-links a::after { display: none; }
       .nav-links li:last-child a { border-bottom: none; }
       .stats-row { grid-template-columns: 1fr 1fr; }
@@ -128,6 +130,7 @@
       .about-hero { padding: 3rem 1.25rem 2.5rem; }
       .about-wrap { padding: 2rem 1.25rem 3rem; }
     }
+      .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
   </style>
 
   <script type="application/ld+json">
@@ -147,18 +150,16 @@
   <nav>
     <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
     <ul class="nav-links">
-      <li><a href="index.html">Converter</a></li>
-      <li><a href="keyboard.html">Keyboard</a></li>
-      <li><a href="articles.html">Articles</a></li>
-      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html" class="active">About</a></li>
     </ul>
-    <button id="themeToggle" aria-label="Toggle theme">
+    <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
       <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
       <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
     </button>
     <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
+  </div>
   </nav>
 
   <!-- HERO -->
@@ -253,7 +254,7 @@
     <!-- CONTACT -->
     <div class="contact-row">
       <p>Have a suggestion, found a bug, or want to collaborate?</p>
-      <a href="mailto:Anaruzelhabib@gmail.com" class="contact-link">
+      <a href="/cdn-cgi/l/email-protection#480926293a3d322d2420292a212a082f25292124662b2725" class="contact-link">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
         Get in touch
       </a>
@@ -276,7 +277,7 @@
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="themeToggle.js"></script>
+<script src="themeToggle.js"></script>
 <script>
   document.getElementById('copyright-year').textContent = new Date().getFullYear();
   const hamburger = document.getElementById('hamburger');
@@ -290,4 +291,9 @@
     });
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       navLinks.classList.remove('open');
-      hamburger.innerHTML = '<svg width="18" height="18" fill="
+      hamburger.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    }));
+  }
+</script>
+</body>
+</html>

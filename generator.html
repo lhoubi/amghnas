@@ -1,0 +1,2938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Write Your Name in Tifinagh | Free Name Generator | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
+  <meta name="description" content="Convert your name to Tifinagh script instantly. Type your name in Latin or Arabic and see it in the ancient Amazigh Tifinagh alphabet. Download as image, copy or share." />
+  <meta name="keywords" content="name in tifinagh, tifinagh name generator, amazigh name, write name in tifinagh, tifinagh converter, amghnas" />
+  <link rel="canonical" href="https://amghnas.com/generator.html" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Write Your Name in Tifinagh | amghnas" />
+  <meta property="og:description" content="See your name in the ancient Tifinagh script. Free, instant, beautiful." />
+  <meta property="og:url" content="https://amghnas.com/generator.html" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Tifinagh&family=Noto+Sans+Arabic&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sand: #f5ede0;
+      --ochre: #c9853a;
+      --ochre-deep: #a3622a;
+      --ochre-light: #e0a050;
+      --terra: #b85c38;
+      --indigo: #3d3580;
+      --indigo-deep: #2a2460;
+      --bg: #f5ede0;
+      --bg2: #ede0cc;
+      --bg3: #e4d2b8;
+      --border: rgba(201,133,58,0.25);
+      --text-muted: #7a6a5a;
+      --text-main: #1a1a2e;
+      --gold: #d4a843;
+      --nav-bg: rgba(245,237,224,0.85);
+    }
+    html.dark {
+      --bg: #1a1728;
+      --bg2: #211d30;
+      --bg3: #2a2540;
+      --border: #352f50;
+      --text-muted: #9b91b8;
+      --text-main: #f0ece4;
+      --nav-bg: rgba(26,23,40,0.85);
+      --sand: #f0ece4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ── Animated background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(61,53,128,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,133,58,0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,133,58,0.15);
+      transition: background 0.3s;
+    }
+    .nav-brand {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      font-size: 1.5rem; color: var(--ochre);
+      text-decoration: none; letter-spacing: 2px;
+    }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--text-muted); text-decoration: none;
+      padding: 0.4rem 0.9rem; border-radius: 6px;
+      transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 2px;
+      left: 50%; transform: translateX(-50%);
+      width: 0; height: 2px; background: var(--ochre);
+      border-radius: 2px; transition: width 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ochre); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 60%; }
+    .nav-hamburger { display: none; background: none; border: 1.5px solid rgba(201,133,58,0.3); border-radius: 8px; width: 38px; height: 38px; cursor: pointer; color: var(--text-muted); align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+    .nav-hamburger:hover { border-color: var(--ochre); color: var(--ochre); }
+    #themeToggle { background: none; border: 1.5px solid rgba(201,133,58,0.3); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+    #themeToggle:hover { border-color: var(--ochre); color: var(--ochre); }
+    .sun-icon { display: none; } html.dark .moon-icon { display: none; } html.dark .sun-icon { display: flex; }
+    @media(max-width: 640px) {
+      nav { padding: 0 1rem !important; display: flex; align-items: center; justify-content: space-between; }
+      .nav-brand { font-size: 1.3rem; color: var(--ochre) !important; flex-shrink: 0; display: flex !important; }
+      .nav-hamburger { display: flex !important; }
+      .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(245,237,224,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(201,133,58,0.15); flex-direction: column; gap: 0; z-index: 99; padding: 0.5rem 0 1rem; list-style: none; }
+      html.dark .nav-links { background: rgba(26,23,40,0.97); }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 0.9rem 1.5rem; font-size: 1rem; border-bottom: 1px solid rgba(201,133,58,0.1); color: var(--text-main); }
+      .nav-links a:hover, .nav-links a.active { color: var(--ochre); background: rgba(201,133,58,0.08); }
+      .nav-links a::after { display: none; }
+      .nav-links li:last-child a { border-bottom: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 2.5rem;
+      max-width: 740px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--ochre);
+      border: 1px solid rgba(201,133,58,0.35);
+      padding: 0.35rem 1rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700; line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--ochre-light), var(--gold), var(--ochre));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1rem; color: var(--text-muted);
+      max-width: 480px; margin: 0 auto 1.5rem;
+      line-height: 1.7;
+    }
+    .divider-line {
+      display: flex; align-items: center; gap: 1rem;
+      justify-content: center; margin-bottom: 3rem;
+    }
+    .divider-line::before, .divider-line::after {
+      content: ''; width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ochre));
+    }
+    .divider-line::after { background: linear-gradient(90deg, var(--ochre), transparent); }
+    .divider-line span { color: var(--ochre); font-size: 0.8rem; }
+
+    /* ── MAIN CARD ── */
+    .main-card {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* Input section */
+    .input-section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-label {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--ochre); margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .input-row {
+      display: flex; gap: 1rem; margin-bottom: 1rem;
+    }
+
+    .lang-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--ochre);
+      border-color: var(--ochre);
+      color: #fff;
+    }
+    .lang-btn:hover:not(.active) {
+      border-color: var(--ochre);
+      color: var(--sand);
+    }
+
+    .name-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      font-size: 1.3rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      letter-spacing: 1px;
+    }
+    .name-input:focus {
+      border-color: var(--ochre);
+      box-shadow: 0 0 0 3px rgba(201,133,58,0.12);
+    }
+    .name-input::placeholder { color: rgba(155,145,184,0.5); }
+    .name-input[dir="rtl"] {
+      font-family: 'Noto Sans Arabic', sans-serif;
+      font-size: 1.4rem;
+    }
+
+    .input-hint {
+      font-size: 0.75rem; color: var(--text-muted);
+      margin-top: 0.6rem; opacity: 0.7;
+    }
+
+    /* Preview section */
+    .preview-section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .preview-header span {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--ochre);
+    }
+    .preview-style-dots { display: flex; gap: 0.5rem; }
+    .style-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .style-dot.dark { background: #1a1728; border-color: var(--ochre); }
+    .style-dot.gold { background: #d4a843; }
+    .style-dot.sand { background: #f5ede0; }
+    .style-dot.active { transform: scale(1.3); border-color: white; }
+
+    /* Canvas preview */
+    .canvas-wrap {
+      position: relative;
+      padding: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 220px;
+      background:
+        radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,133,58,0.05) 0%, transparent 70%);
+    }
+
+    #nameCanvas {
+      border-radius: 14px;
+      max-width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transition: opacity 0.3s;
+    }
+
+    .empty-state {
+      text-align: center; padding: 3rem 2rem;
+    }
+    .empty-tifinagh {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      font-size: 3rem; color: var(--border);
+      display: block; margin-bottom: 0.75rem;
+      letter-spacing: 8px;
+    }
+    .empty-text { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* Action buttons */
+    .action-buttons {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      border: none; text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--ochre), var(--terra));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(201,133,58,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,133,58,0.4);
+    }
+    .btn-secondary {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover {
+      border-color: var(--ochre);
+      color: var(--ochre);
+      transform: translateY(-2px);
+    }
+    .btn svg { width: 16px; height: 16px; }
+
+    .btn.copied { background: #2a5c3a; border-color: #4a9c6a; color: #7fd4a0; }
+
+    /* Live Tifinagh display below input */
+    .live-tifinagh {
+      text-align: center;
+      padding: 1.5rem;
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      font-size: 2.5rem;
+      color: var(--ochre-light);
+      letter-spacing: 6px;
+      min-height: 80px;
+      transition: all 0.3s;
+      border-top: 1px solid var(--border);
+    }
+    .live-tifinagh.empty { color: var(--border); }
+
+    /* Info section */
+    .info-strip {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1rem; margin-top: 2rem;
+    }
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .info-icon {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      font-size: 1.8rem; color: var(--ochre);
+      display: block; margin-bottom: 0.5rem;
+    }
+    .info-title {
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--text-main); margin-bottom: 0.3rem;
+    }
+    .info-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* Footer */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ochre); }
+    .footer-copy { font-size: 0.75rem; color: var(--text-muted); opacity: 0.6; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 3rem 1rem 2rem; }
+      .input-section { padding: 1.25rem; }
+      .info-strip { grid-template-columns: 1fr; }
+      .action-buttons { flex-direction: column; }
+      .btn { justify-content: center; }
+    }
+
+    /* Notification toast */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #2a5c3a; color: #7fd4a0;
+      padding: 0.75rem 1.5rem; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600;
+      transition: transform 0.3s ease;
+      z-index: 999; pointer-events: none;
+      border: 1px solid #4a9c6a;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+      .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tifinagh Name Generator",
+    "url": "https://amghnas.com/generator.html",
+    "description": "Convert your name to Tifinagh script instantly and download as image",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+  <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html" class="active">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
+    </ul>
+  <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
+    <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+    <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+  </button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">✦ Free · Instant · Beautiful</div>
+  <h1>Write Your Name<br/><span>in Tifinagh</span></h1>
+  <p class="hero-sub">Type your name and see it transform into the ancient Amazigh alphabet — then download it as a beautiful image to share.</p>
+  <div class="divider-line"><span>ⵣ</span></div>
+</section>
+
+<!-- MAIN -->
+<main class="main-card">
+
+  <!-- Input -->
+  <div class="input-section">
+    <label class="input-label">Your Name</label>
+    <div class="input-row">
+      <button class="lang-btn active" onclick="setLang('latin')">Latin</button>
+      <button class="lang-btn" onclick="setLang('arabic')">العربية</button>
+    </div>
+    <input
+      type="text"
+      id="nameInput"
+      class="name-input"
+      placeholder="e.g. Anaruz, Tiziri, Yidir..."
+      maxlength="30"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <div class="input-hint">Supports Latin and Arabic input · Up to 30 characters</div>
+
+    <!-- Live Tifinagh display -->
+    <div class="live-tifinagh empty" id="liveTifinagh">ⴰⵎⵖⵏⴰⵙ</div>
+  </div>
+
+  <!-- Preview -->
+  <div class="preview-section">
+    <div class="preview-header">
+      <span>Preview</span>
+      <div class="preview-style-dots">
+        <div class="style-dot dark active" onclick="setStyle('dark')" title="Dark elegant"></div>
+        <div class="style-dot gold" onclick="setStyle('gold')" title="Gold on black"></div>
+        <div class="style-dot sand" onclick="setStyle('sand')" title="Sand warm"></div>
+      </div>
+    </div>
+
+    <div class="canvas-wrap" id="canvasWrap">
+      <div class="empty-state" id="emptyState">
+        <span class="empty-tifinagh">ⵜⵉⴼⵉⵏⴰⵖ</span>
+        <p class="empty-text">Type your name above to see it in Tifinagh</p>
+      </div>
+      <canvas id="nameCanvas" style="display:none;" width="600" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="action-buttons" id="actionButtons" style="display:none; margin-bottom:1.5rem;">
+    <button class="btn btn-primary" onclick="downloadPNG()">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PNG
+    </button>
+    <button class="btn btn-secondary" id="copyBtn" onclick="copyText()">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy Tifinagh
+    </button>
+    <button class="btn btn-secondary" onclick="shareIt()">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Share
+    </button>
+  </div>
+
+  <!-- Info strip -->
+  <div class="info-strip">
+    <div class="info-card">
+      <span class="info-icon">ⵜ</span>
+      <div class="info-title">Ancient Script</div>
+      <div class="info-desc">Tifinagh is over 2,500 years old — one of the oldest writing systems still in use today.</div>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">ⵎ</span>
+      <div class="info-title">Amazigh Heritage</div>
+      <div class="info-desc">Used by Tuareg, Moroccan, and Algerian Amazigh communities across North Africa.</div>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">ⵣ</span>
+      <div class="info-title">Share Your Name</div>
+      <div class="info-desc">Download your name as an image for WhatsApp, Instagram, or a tattoo design.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Converter</a>
+    <a href="keyboard.html">Online Keyboard</a>
+    <a href="articles.html">Articles</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+  <div class="footer-copy">Made with ❤ for Amazigh culture · By Anaruz Elhabib · <a href="https://amghnas.com" style="color:var(--ochre);text-decoration:none;">amghnas.com</a></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const arabicNameDict = {
+  'آدم':'ⴰⴷⴰⵎ',
+  'آريان':'ⴰⵔⵢⴰⵏ',
+  'آزاد':'ⴰⵣⴰⴷ',
+  'آسف':'ⴰⵙⵉⴼ',
+  'آسيا':'ⴰⵙⵢⴰ',
+  'آلاء':'ⴰⵍⴰⵄ',
+  'آمال':'ⴰⵎⴰⵍ',
+  'آمنة':'ⴰⵎⵉⵏⴰ',
+  'آيات':'ⴰⵢⴰⵜ',
+  'آية':'ⴰⵢⴰ',
+  'آيشة':'ⴰⵢⵛⴰ',
+  'أبان':'ⴰⴱⴰⵏ',
+  'أبهى':'ⴰⴱⵀⴰ',
+  'أبو الحسن':'ⴰⴱⵓⴰⵍⵃⴰⵙⴰⵏ',
+  'أبو الحسين':'ⴰⴱⵓⴰⵍⵃⵓⵙⴰⵢⵏ',
+  'أبو الخير':'ⴰⴱⵓⴰⵍⵅⴰⵢⵔ',
+  'أبو الفضل':'ⴰⴱⵓⴰⵍⴼⴰⴹⵍ',
+  'أبو القاسم':'ⴰⴱⵓⴰⵍⵇⴰⵙⵉⵎ',
+  'أبو بكر':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'أبو حامد':'ⴰⴱⵓⵃⴰⵎⵉⴷ',
+  'أبو ذر':'ⴰⴱⵓⴹⴰⵔⵔ',
+  'أبو سعيد':'ⴰⴱⵓⵙⴰⵄⵉⴷ',
+  'أبو سفيان':'ⴰⴱⵓⵙⵓⴼⵢⴰⵏ',
+  'أبو طالب':'ⴰⴱⵓⵟⴰⵍⵉⴱ',
+  'أبو عبيدة':'ⴰⴱⵓⵄⵓⴱⴰⵢⴷⴰ',
+  'أبو علي':'ⴰⴱⵓⵄⴰⵍⵉ',
+  'أبو عمر':'ⴰⴱⵓⵄⵓⵎⴰⵔ',
+  'أبو موسى':'ⴰⴱⵓⵎⵓⵙⴰ',
+  'أبو نواس':'ⴰⴱⵓⵏⵡⴰⵙ',
+  'أبو هريرة':'ⴰⴱⵓⵀⵓⵔⴰⵢⵔⴰ',
+  'أبو يوسف':'ⴰⴱⵓⵢⵓⵙⵓⴼ',
+  'أبوبكر':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'أبوحامد':'ⴰⴱⵓⵃⴰⵎⵉⴷ',
+  'أبوطالب':'ⴰⴱⵓⵟⴰⵍⵉⴱ',
+  'أبوعلي':'ⴰⴱⵓⵄⴰⵍⵉ',
+  'أبوعمر':'ⴰⴱⵓⵄⵓⵎⴰⵔ',
+  'أبويوسف':'ⴰⴱⵓⵢⵓⵙⵓⴼ',
+  'أتقى':'ⴰⵜⵇⴰ',
+  'أثير':'ⴰⵜⵉⵔ',
+  'أثيل':'ⴰⵜⵉⵍ',
+  'أثيلة':'ⴰⵜⵉⵍⴰ',
+  'أجمل':'ⴰⵊⵎⴰⵍ',
+  'أجود':'ⴰⵊⵡⴰⴷ',
+  'أحاسيس':'ⴰⵃⴰⵙⵉⵙ',
+  'أحلام':'ⴰⵃⵍⴰⵎ',
+  'أحلى':'ⴰⵃⵍⴰ',
+  'أحمد':'ⴰⵃⵎⴰⴷ',
+  'أخضر':'ⴰⵅⴹⴰⵔ',
+  'أخلاص':'ⴰⵅⵍⴰⵚ',
+  'أديب':'ⴰⴷⵉⴱ',
+  'أرسلان':'ⴰⵔⵙⵍⴰⵏ',
+  'أرقم':'ⴰⵔⵇⴰⵎ',
+  'أريج':'ⴰⵔⵉⵊ',
+  'أريحا':'ⴰⵔⵉⵃⴰ',
+  'أزهر':'ⴰⵣⵀⴰⵔ',
+  'أسامة':'ⵓⵙⴰⵎⴰ',
+  'أسرار':'ⴰⵙⵔⴰⵔ',
+  'أسعد':'ⴰⵙⵄⴰⴷ',
+  'أسلم':'ⴰⵙⵍⴰⵎ',
+  'أسماء':'ⴰⵙⵎⴰⵄ',
+  'أسيل':'ⴰⵙⵉⵍ',
+  'أشرف':'ⴰⵛⵔⴰⴼ',
+  'أشواق':'ⴰⵛⵡⴰⵇ',
+  'أصيل':'ⴰⵚⵉⵍ',
+  'أغيد':'ⴰⵖⵢⴰⴷ',
+  'أفضل':'ⴰⴼⴹⴰⵍ',
+  'أكرام':'ⴰⴽⵔⴰⵎ',
+  'أكرم':'ⴰⴽⵔⴰⵎ',
+  'أكمل':'ⴰⴽⵎⴰⵍ',
+  'أكنوش':'ⴰⴽⵏⵓⵛ',
+  'ألاء':'ⴰⵍⴰⵄ',
+  'ألماس':'ⴰⵍⵎⴰⵙ',
+  'أم البنين':'ⵓⵎⵎⴰⵍⴱⴰⵏⵉⵏ',
+  'أم حبيبة':'ⵓⵎⵎⵃⴰⴱⵉⴱⴰ',
+  'أم سلمة':'ⵓⵎⵎⵙⴰⵍⴰⵎⴰ',
+  'أم كلثوم':'ⵓⵎⵎⴽⵓⵍⵜⵓⵎ',
+  'أمال':'ⴰⵎⴰⵍ',
+  'أماني':'ⴰⵎⴰⵏⵉ',
+  'أمة الله':'ⴰⵎⴰⵜⴰⵍⵍⴰⵀ',
+  'أمجد':'ⴰⵎⵊⴰⴷ',
+  'أمزيان':'ⴰⵎⵣⵢⴰⵏ',
+  'أمير':'ⴰⵎⵉⵔ',
+  'أميرة':'ⴰⵎⵉⵔⴰ',
+  'أمين':'ⴰⵎⵉⵏ',
+  'أمينة':'ⴰⵎⵉⵏⴰ',
+  'أنس':'ⴰⵏⴰⵙ',
+  'أنفال':'ⴰⵏⴼⴰⵍ',
+  'أنوار':'ⴰⵏⵡⴰⵔ',
+  'أنور':'ⴰⵏⵡⴰⵔ',
+  'أنيس':'ⴰⵏⵉⵙ',
+  'أنيسة':'ⴰⵏⵉⵙⴰ',
+  'أوس':'ⴰⵡⵙ',
+  'أوشن':'ⴰⵡⵛⵉⵏ',
+  'أيسر':'ⴰⵢⵙⴰⵔ',
+  'أيمن':'ⴰⵢⵎⴰⵏ',
+  'أيهم':'ⴰⵢⵀⴰⵎ',
+  'أيوب':'ⴰⵢⵢⵓⴱ',
+  'إبتسام':'ⵉⴱⵜⵉⵙⴰⵎ',
+  'إبراهيم':'ⵉⴱⵔⴰⵀⵉⵎ',
+  'إحسان':'ⵉⵃⵙⴰⵏ',
+  'إدريس':'ⵉⴷⵔⵉⵙ',
+  'إسحاق':'ⵉⵙⵃⴰⵇ',
+  'إسراء':'ⵉⵙⵔⴰⵄ',
+  'إسلام':'ⵉⵙⵍⴰⵎ',
+  'إسماعيل':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'إشراق':'ⵉⵛⵔⴰⵇ',
+  'إقبال':'ⵉⵇⴱⴰⵍ',
+  'إكرام':'ⵉⴽⵔⴰⵎ',
+  'إلهام':'ⵉⵍⵀⴰⵎ',
+  'إلياس':'ⵉⵍⵢⴰⵙ',
+  'إنتصار':'ⵉⵏⵜⵉⵚⴰⵔ',
+  'إنعام':'ⵉⵏⵄⴰⵎ',
+  'إياد':'ⵉⵢⴰⴷ',
+  'إياس':'ⵉⵢⴰⵙ',
+  'إيمان':'ⵉⵎⴰⵏ',
+  'ايمن':'ⴰⵢⵎⴰⵏ',
+  'بارعة':'ⴱⴰⵔⵉⵄⴰ',
+  'باركة':'ⴱⴰⵔⴽⴰ',
+  'باسل':'ⴱⴰⵙⵉⵍ',
+  'باسم':'ⴱⴰⵙⵉⵎ',
+  'باهر':'ⴱⴰⵀⵉⵔ',
+  'بايزيد':'ⴱⴰⵢⵣⵉⴷ',
+  'بتول':'ⴱⴰⵜⵜⵓⵍ',
+  'بثينة':'ⴱⴰⵜⵉⵏⴰ',
+  'بحر':'ⴱⴰⵃⵔ',
+  'بختيار':'ⴱⴰⵅⵜⵉⵢⴰⵔ',
+  'بدر':'ⴱⴰⴷⵔ',
+  'بدر الدين':'ⴱⴰⴷⵔⴷⴷⵉⵏ',
+  'بدر الزمان':'ⴱⴰⴷⵔⴰⵣⵣⴰⵎⴰⵏ',
+  'بدران':'ⴱⴰⴷⵔⴰⵏ',
+  'بدرية':'ⴱⴰⴷⵔⵉⵢⴰ',
+  'بدوي':'ⴱⴰⴷⴰⵡⵉ',
+  'بديعة':'ⴱⴰⴷⵉⵄⴰ',
+  'براء':'ⴱⴰⵔⴰⵄ',
+  'براق':'ⴱⵓⵔⴰⵇ',
+  'بركة':'ⴱⴰⵔⴽⴰ',
+  'برهان':'ⴱⵓⵔⵀⴰⵏ',
+  'برهان الدين':'ⴱⵓⵔⵀⴰⵏⴷⴷⵉⵏ',
+  'بريق':'ⴱⴰⵔⵉⵇ',
+  'بسام':'ⴱⴰⵙⵙⴰⵎ',
+  'بشائر':'ⴱⴰⵛⴰⵉⵔ',
+  'بشار':'ⴱⴰⵛⵛⴰⵔ',
+  'بشرى':'ⴱⵓⵛⵔⴰ',
+  'بشير':'ⴱⴰⵛⵉⵔ',
+  'بطل':'ⴱⴰⵟⴰⵍ',
+  'بكر':'ⴱⴰⴽⵔ',
+  'بلال':'ⴱⵉⵍⴰⵍ',
+  'بلعيد':'ⴱⴰⵍⵄⵉⴷ',
+  'بلقاسم':'ⴱⴰⵍⵇⴰⵙⵉⵎ',
+  'بلقيس':'ⴱⴰⵍⵇⵉⵙ',
+  'بلوط':'ⴱⴰⵍⵡⴰⵟ',
+  'بنعلي':'ⴱⴰⵏⵄⴰⵍⵉ',
+  'بنيامين':'ⴱⵉⵏⵢⴰⵎⵉⵏ',
+  'بهاء':'ⴱⴰⵀⴰⵄ',
+  'بهاء الدين':'ⴱⴰⵀⴰⴷⴷⵉⵏ',
+  'بهجت':'ⴱⴰⵀⵊⴰⵜ',
+  'بهيجة':'ⴱⴰⵀⵉⵊⴰ',
+  'بوعزيز':'ⴱⵓⵄⴰⵣⵉⵣ',
+  'بوعلام':'ⴱⵓⵄⴰⵍⴰⵎ',
+  'بوعمامة':'ⴱⵓⵄⴰⵎⴰⵎⴰ',
+  'بوكراع':'ⴱⵓⴽⵔⴰⵄ',
+  'بومدين':'ⴱⵓⵎⴷⵉⵢⴰⵏ',
+  'بيان':'ⴱⴰⵢⴰⵏ',
+  'تافوكت':'ⵜⴰⴼⵓⴽⵜ',
+  'تاكودة':'ⵜⴰⴽⵓⴷⴰ',
+  'تامر':'ⵜⴰⵎⵉⵔ',
+  'تميم':'ⵜⴰⵎⵉⵎ',
+  'توفيق':'ⵜⴰⵡⴼⵉⵇ',
+  'تيزيري':'ⵜⵉⵣⵉⵔⵉ',
+  'تيسير':'ⵜⴰⵢⵙⵉⵔ',
+  'تيليلي':'ⵜⵉⵍⵉⵍⵉ',
+  'ثابت':'ⵜⴰⴱⵉⵜ',
+  'ثامر':'ⵜⴰⵎⵉⵔ',
+  'ثريا':'ⵙⵓⵔⴰⵢⵢⴰ',
+  'جابر':'ⵊⴰⴱⵉⵔ',
+  'جاد':'ⵊⴰⴷ',
+  'جاد الله':'ⵊⴰⴷⴰⵍⵍⴰⵀ',
+  'جاسر':'ⵊⴰⵙⵉⵔ',
+  'جاسم':'ⵊⴰⵙⵉⵎ',
+  'جاهد':'ⵊⴰⵀⵉⴷ',
+  'جبار':'ⵊⴰⴱⴱⴰⵔ',
+  'جبرائيل':'ⵊⴰⴱⵔⴰⵉⵍ',
+  'جبران':'ⵊⴰⴱⵔⴰⵏ',
+  'جبريل':'ⵊⵉⴱⵔⵉⵍ',
+  'جرار':'ⵊⴰⵔⵔⴰⵔ',
+  'جرير':'ⵊⴰⵔⵉⵔ',
+  'جعفر':'ⵊⴰⵄⴼⴰⵔ',
+  'جعيد':'ⵊⵓⵄⴰⵢⴷ',
+  'جلال':'ⵊⴰⵍⴰⵍ',
+  'جلال الدين':'ⵊⴰⵍⴰⵍⴷⴷⵉⵏ',
+  'جمال':'ⵊⴰⵎⴰⵍ',
+  'جمال الدين':'ⵊⴰⵎⴰⵍⴷⴷⵉⵏ',
+  'جمعة':'ⵊⵓⵎⵄⴰ',
+  'جميل':'ⵊⴰⵎⵉⵍ',
+  'جميل الدين':'ⵊⴰⵎⵉⵍⴷⴷⵉⵏ',
+  'جميلة':'ⵊⴰⵎⵉⵍⴰ',
+  'جنان':'ⵊⵉⵏⴰⵏ',
+  'جنى':'ⵊⴰⵏⴰ',
+  'جنيد':'ⵊⵓⵏⴰⵢⴷ',
+  'جهاد':'ⵊⵉⵀⴰⴷ',
+  'جواد':'ⵊⴰⵡⴰⴷ',
+  'جوهر':'ⵊⴰⵡⵀⴰⵔ',
+  'جوهرة':'ⵊⴰⵡⵀⴰⵔⴰ',
+  'جوهري':'ⵊⴰⵡⵀⴰⵔⵉ',
+  'جيهان':'ⵊⵉⵀⴰⵏ',
+  'حاتم':'ⵃⴰⵜⵉⵎ',
+  'حارث':'ⵃⴰⵔⵉⵜ',
+  'حازم':'ⵃⴰⵣⵉⵎ',
+  'حاسب':'ⵃⴰⵙⵉⴱ',
+  'حاشر':'ⵃⴰⵛⵉⵔ',
+  'حافظ':'ⵃⴰⴼⵉⴹ',
+  'حامد':'ⵃⴰⵎⵉⴷ',
+  'حاملة':'ⵃⴰⵎⵍⴰ',
+  'حبش':'ⵃⴰⴱⴰⵛ',
+  'حبوبة':'ⵃⴱⵓⴱⴰ',
+  'حبيب':'ⵃⴰⴱⵉⴱ',
+  'حبيب الله':'ⵃⴰⴱⵉⴱⴰⵍⵍⴰⵀ',
+  'حبيبة':'ⵃⴰⴱⵉⴱⴰ',
+  'حجاج':'ⵃⴰⵊⵊⴰⵊ',
+  'حذيفة':'ⵃⵓⴹⴰⵢⴼⴰ',
+  'حرية':'ⵃⵓⵔⵔⵉⵢⴰ',
+  'حزام':'ⵃⵉⵣⴰⵎ',
+  'حزينة':'ⵃⴰⵣⵉⵏⴰ',
+  'حسام':'ⵃⵓⵙⴰⵎ',
+  'حسام الدين':'ⵃⵓⵙⴰⵎⴷⴷⵉⵏ',
+  'حسن':'ⵃⴰⵙⴰⵏ',
+  'حسناء':'ⵃⴰⵙⵏⴰⵄ',
+  'حسنين':'ⵃⴰⵙⴰⵏⴰⵢⵏ',
+  'حسين':'ⵃⵓⵙⴰⵢⵏ',
+  'حصة':'ⵃⵉⵚⵙⴰ',
+  'حصين':'ⵃⵓⵚⴰⵢⵏ',
+  'حفيظ':'ⵃⴰⴼⵉⴹ',
+  'حفيظة':'ⵃⴰⴼⵉⴹⴰ',
+  'حكيم':'ⵃⴰⴽⵉⵎ',
+  'حلبي':'ⵃⴰⵍⴰⴱⵉ',
+  'حليم':'ⵃⴰⵍⵉⵎ',
+  'حليمة':'ⵃⴰⵍⵉⵎⴰ',
+  'حمادي':'ⵃⴰⵎⵎⴰⴷⵉ',
+  'حمد':'ⵃⴰⵎⴷ',
+  'حمدان':'ⵃⴰⵎⴷⴰⵏ',
+  'حمدي':'ⵃⴰⵎⴷⵉ',
+  'حمران':'ⵃⴰⵎⵔⴰⵏ',
+  'حمزة':'ⵃⴰⵎⵣⴰ',
+  'حمود':'ⵃⴰⵎⵓⴷ',
+  'حميد':'ⵃⴰⵎⵉⴷ',
+  'حميدة':'ⵃⴰⵎⵉⴷⴰ',
+  'حنان':'ⵃⴰⵏⴰⵏ',
+  'حنبل':'ⵃⴰⵏⴱⴰⵍ',
+  'حنظلة':'ⵃⴰⵏⴹⴰⵍⴰ',
+  'حنين':'ⵃⴰⵏⵉⵏ',
+  'حورية':'ⵃⵓⵔⵉⵢⴰ',
+  'حياة':'ⵃⴰⵢⴰⵜ',
+  'حيان':'ⵃⴰⵢⵢⴰⵏ',
+  'حيدر':'ⵃⴰⵢⴷⴰⵔ',
+  'خالد':'ⵅⴰⵍⵉⴷ',
+  'خالص':'ⵅⴰⵍⵉⵚ',
+  'خالصة':'ⵅⴰⵍⵉⵚⴰ',
+  'خبير':'ⵅⴰⴱⵉⵔ',
+  'خديجة':'ⵅⴰⴷⵉⵊⴰ',
+  'خزيمة':'ⵅⵓⵣⴰⵢⵎⴰ',
+  'خشبة':'ⵅⴰⵛⴰⴱⴰ',
+  'خضر':'ⵅⵉⴹⵔ',
+  'خطاب':'ⵅⴰⵟⵟⴰⴱ',
+  'خلدون':'ⵅⴰⵍⴷⵓⵏ',
+  'خلود':'ⵅⵓⵍⵓⴷ',
+  'خلوف':'ⵅⴰⵍⵓⴼ',
+  'خليفة':'ⵅⴰⵍⵉⴼⴰ',
+  'خليل':'ⵅⴰⵍⵉⵍ',
+  'خنساء':'ⵅⴰⵏⵙⴰⵄ',
+  'خولة':'ⵅⴰⵡⵍⴰ',
+  'خير الدين':'ⵅⴰⵢⵔⴷⴷⵉⵏ',
+  'خيرالدين':'ⵅⴰⵢⵔⴷⴷⵉⵏ',
+  'خيرة':'ⵅⴰⵢⵔⴰ',
+  'خيري':'ⵅⴰⵢⵔⵉ',
+  'داود':'ⴷⴰⵡⵓⴷ',
+  'دحمان':'ⴷⴰⵃⵎⴰⵏ',
+  'دحية':'ⴷⵉⵃⵢⴰ',
+  'درغام':'ⴷⵓⵔⵖⴰⵎ',
+  'درويش':'ⴷⴰⵔⵡⵉⵛ',
+  'دعاء':'ⴷⵓⵄⴰⵄ',
+  'دغوغي':'ⴷⵖⵓⵖⵉ',
+  'دلال':'ⴷⴰⵍⴰⵍ',
+  'دليل':'ⴷⴰⵍⵉⵍ',
+  'دنيا':'ⴷⵓⵏⵢⴰ',
+  'دياء':'ⴷⵉⵢⴰⵄ',
+  'دياب':'ⴷⵉⵢⴰⴱ',
+  'دينا':'ⴷⵉⵏⴰ',
+  'رؤوف':'ⵔⴰⵄⵓⴼ',
+  'رؤى':'ⵔⵓⵢⴰ',
+  'رائعة':'ⵔⴰⵉⵄⴰ',
+  'رابح':'ⵔⴰⴱⵉⵃ',
+  'رابعة':'ⵔⴰⴱⵉⵄⴰ',
+  'راشد':'ⵔⴰⵛⵉⴷ',
+  'راشدي':'ⵔⴰⵛⵉⴷⵉ',
+  'رافع':'ⵔⴰⴼⵉⵄ',
+  'رافي':'ⵔⴰⴼⵉ',
+  'رامي':'ⵔⴰⵎⵉ',
+  'رامية':'ⵔⴰⵎⵉⵢⴰ',
+  'رانيا':'ⵔⴰⵏⵢⴰ',
+  'رباب':'ⵔⴰⴱⴰⴱ',
+  'رباح':'ⵔⴰⴱⴱⴰⵃ',
+  'ربيع':'ⵔⴰⴱⵉⵄ',
+  'ربيعة':'ⵔⴰⴱⵉⵄⴰ',
+  'رجب':'ⵔⴰⵊⴰⴱ',
+  'رحاب':'ⵔⵉⵃⴰⴱ',
+  'رحمة':'ⵔⴰⵃⵎⴰ',
+  'ردينة':'ⵔⴰⴷⵉⵏⴰ',
+  'رزان':'ⵔⴰⵣⵣⴰⵏ',
+  'رستم':'ⵔⵓⵙⵜⴰⵎ',
+  'رشاد':'ⵔⴰⵛⴰⴷ',
+  'رشيد':'ⵔⴰⵛⵉⴷ',
+  'رشيدة':'ⵔⴰⵛⵉⴷⴰ',
+  'رشيق':'ⵔⴰⵛⵉⵇ',
+  'رضا':'ⵔⵉⴹⴰ',
+  'رضوان':'ⵔⵉⴹⵡⴰⵏ',
+  'رضوى':'ⵔⴰⴹⵡⴰ',
+  'رعد':'ⵔⴰⵄⴷ',
+  'رغد':'ⵔⴰⵖⴷ',
+  'رفاعي':'ⵔⵉⴼⴰⵄⵉ',
+  'رفيق':'ⵔⴰⴼⵉⵇ',
+  'رفيقة':'ⵔⴰⴼⵉⵇⴰ',
+  'رقية':'ⵔⵓⵇⴰⵢⵢⴰ',
+  'ركن الدين':'ⵔⵓⴽⵏⴷⴷⵉⵏ',
+  'رنا':'ⵔⴰⵏⴰ',
+  'رهف':'ⵔⴰⵀⴼ',
+  'روضة':'ⵔⴰⵡⴹⴰ',
+  'ريان':'ⵔⴰⵢⴰⵏ',
+  'ريحان':'ⵔⴰⵢⵃⴰⵏ',
+  'ريحانة':'ⵔⴰⵢⵃⴰⵏⴰ',
+  'ريم':'ⵔⵉⵎ',
+  'ريهام':'ⵔⵉⵀⴰⵎ',
+  'زاكي':'ⵣⴰⴽⵉ',
+  'زاهد':'ⵣⴰⵀⵉⴷ',
+  'زاهر':'ⵣⴰⵀⵉⵔ',
+  'زبرقان':'ⵣⴰⴱⵔⴰⵇⴰⵏ',
+  'زبيدة':'ⵣⵓⴱⴰⵢⴷⴰ',
+  'زبير':'ⵣⵓⴱⴰⵢⵔ',
+  'زكريا':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'زكي':'ⵣⴰⴽⵉ',
+  'زكية':'ⵣⴰⴽⵉⵢⴰ',
+  'زلفى':'ⵣⵓⵍⴼⴰ',
+  'زليخة':'ⵣⵓⵍⴰⵢⵅⴰ',
+  'زمردة':'ⵣⵓⵎⵓⵔⵔⵓⴷⴰ',
+  'زهران':'ⵣⴰⵀⵔⴰⵏ',
+  'زهرة':'ⵣⴰⵀⵔⴰ',
+  'زهية':'ⵣⴰⵀⵉⵢⴰ',
+  'زهير':'ⵣⵓⵀⴰⵢⵔ',
+  'زياد':'ⵣⵉⵢⴰⴷ',
+  'زيد':'ⵣⴰⵢⴷ',
+  'زيد الخير':'ⵣⴰⵢⴷⴰⵍⵅⴰⵢⵔ',
+  'زينب':'ⵣⴰⵢⵏⴰⴱ',
+  'ساجد':'ⵙⴰⵊⵉⴷ',
+  'ساجدة':'ⵙⴰⵊⵉⴷⴰ',
+  'سارة':'ⵙⴰⵔⴰ',
+  'سالم':'ⵙⴰⵍⵉⵎ',
+  'سامر':'ⵙⴰⵎⵉⵔ',
+  'سامي':'ⵙⴰⵎⵉ',
+  'سامية':'ⵙⴰⵎⵉⵢⴰ',
+  'ساهر':'ⵙⴰⵀⵉⵔ',
+  'سبأ':'ⵙⴰⴱⴰⵄ',
+  'سباعي':'ⵙⵓⴱⴰⵄⵉ',
+  'سبهان':'ⵙⵓⴱⵃⴰⵏ',
+  'سحر':'ⵙⴰⵃⴰⵔ',
+  'سدرة':'ⵙⵉⴷⵔⴰ',
+  'سديل':'ⵙⴰⴷⵉⵍ',
+  'سراج':'ⵙⵉⵔⴰⵊ',
+  'سراج الدين':'ⵙⵉⵔⴰⵊⴷⴷⵉⵏ',
+  'سريرة':'ⵙⵓⵔⴰⵢⵔⴰ',
+  'سطام':'ⵙⴰⵟⵟⴰⵎ',
+  'سعاد':'ⵙⵓⵄⴰⴷ',
+  'سعد':'ⵙⴰⵄⴷ',
+  'سعد الدين':'ⵙⴰⵄⴷⴷⴷⵉⵏ',
+  'سعدون':'ⵙⴰⵄⴷⵓⵏ',
+  'سعدية':'ⵙⴰⵄⴷⵉⵢⴰ',
+  'سعيد':'ⵙⴰⵄⵉⴷ',
+  'سعيدة':'ⵙⴰⵄⵉⴷⴰ',
+  'سفيان':'ⵙⵓⴼⵢⴰⵏ',
+  'سكينة':'ⵙⴰⴽⵉⵏⴰ',
+  'سلاف':'ⵙⴰⵍⴰⴼ',
+  'سلطان':'ⵙⵓⵍⵟⴰⵏ',
+  'سلفي':'ⵙⴰⵍⴰⴼⵉ',
+  'سلمى':'ⵙⴰⵍⵎⴰ',
+  'سلوى':'ⵙⴰⵍⵡⴰ',
+  'سليل':'ⵙⴰⵍⵉⵍ',
+  'سليم':'ⵙⴰⵍⵉⵎ',
+  'سليمان':'ⵙⵓⵍⴰⵢⵎⴰⵏ',
+  'سمح':'ⵙⴰⵎⵉⵃ',
+  'سمر':'ⵙⴰⵎⴰⵔ',
+  'سمية':'ⵙⵓⵎⴰⵢⵢⴰ',
+  'سمير':'ⵙⴰⵎⵉⵔ',
+  'سمير الدين':'ⵙⴰⵎⵉⵔⴷⴷⵉⵏ',
+  'سميرة':'ⵙⴰⵎⵉⵔⴰ',
+  'سناء':'ⵙⴰⵏⴰⵄ',
+  'سنان':'ⵙⵉⵏⴰⵏ',
+  'سندس':'ⵙⵓⵏⴷⵓⵙ',
+  'سهام':'ⵙⵉⵀⴰⵎ',
+  'سهل':'ⵙⴰⵀⵍ',
+  'سهيل':'ⵙⵓⵀⴰⵢⵍ',
+  'سوسن':'ⵙⴰⵡⵙⴰⵏ',
+  'سياف':'ⵙⴰⵢⵢⴰⴼ',
+  'سيد':'ⵙⴰⵢⵢⵉⴷ',
+  'سيرين':'ⵙⵉⵔⵉⵏ',
+  'سيف':'ⵙⴰⵢⴼ',
+  'سيف الدين':'ⵙⴰⵢⴼⴷⴷⵉⵏ',
+  'شادي':'ⵛⴰⴷⵉ',
+  'شادية':'ⵛⴰⴷⵉⵢⴰ',
+  'شافية':'ⵛⴰⴼⵉⵢⴰ',
+  'شاكر':'ⵛⴰⴽⵉⵔ',
+  'شامل':'ⵛⴰⵎⵉⵍ',
+  'شاهد':'ⵛⴰⵀⵉⴷ',
+  'شجرة الدر':'ⵛⴰⵊⴰⵔⴰⵜⴰⴷⴷⵓⵔⵔ',
+  'شداد':'ⵛⴰⴷⴷⴰⴷ',
+  'شريح':'ⵛⵓⵔⴰⵢⵃ',
+  'شريف':'ⵛⴰⵔⵉⴼ',
+  'شريفة':'ⵛⴰⵔⵉⴼⴰ',
+  'شعبان':'ⵛⴰⵄⴱⴰⵏ',
+  'شعلان':'ⵛⴰⵄⵍⴰⵏ',
+  'شعيب':'ⵛⵓⵄⴰⵢⴱ',
+  'شمس':'ⵛⴰⵎⵙ',
+  'شمس الدين':'ⵛⴰⵎⵙⴷⴷⵉⵏ',
+  'شمسي':'ⵛⴰⵎⵙⵉ',
+  'شنودة':'ⵛⵓⵏⵓⴷⴰ',
+  'شهاب':'ⵛⵉⵀⴰⴱ',
+  'شهاب الدين':'ⵛⵉⵀⴰⴱⴷⴷⵉⵏ',
+  'شهداء':'ⵛⵓⵀⴰⴷⴰⵄ',
+  'شوقي':'ⵛⴰⵡⵇⵉ',
+  'شيماء':'ⵛⴰⵢⵎⴰⵄ',
+  'صابر':'ⵚⴰⴱⵉⵔ',
+  'صادق':'ⵚⴰⴷⵉⵇ',
+  'صالح':'ⵚⴰⵍⵉⵃ',
+  'صالحة':'ⵚⴰⵍⵉⵃⴰ',
+  'صبا':'ⵚⴰⴱⴰ',
+  'صبحي':'ⵚⵓⴱⵃⵉ',
+  'صبري':'ⵚⴰⴱⵔⵉ',
+  'صبرية':'ⵚⴰⴱⵔⵉⵢⴰ',
+  'صبرينة':'ⵙⴰⴱⵔⵉⵏⴰ',
+  'صخر':'ⵚⴰⵅⵔ',
+  'صدام':'ⵚⴰⴷⴷⴰⵎ',
+  'صديقة':'ⵚⴰⴷⵉⵇⴰ',
+  'صفاء':'ⵚⴰⴼⴰⵄ',
+  'صفوان':'ⵚⴰⴼⵡⴰⵏ',
+  'صفي الدين':'ⵚⴰⴼⵉⴷⴷⵉⵏ',
+  'صقر':'ⵚⴰⵇⵔ',
+  'صلاح':'ⵚⴰⵍⴰⵃ',
+  'صلاح الدين':'ⵚⴰⵍⴰⵃⴷⴷⵉⵏ',
+  'صنهاجي':'ⵚⵓⵏⵀⴰⵊⵉ',
+  'صهيب':'ⵚⵓⵀⴰⵢⴱ',
+  'صيام':'ⵚⵉⵢⴰⵎ',
+  'ضياء':'ⴹⵉⵢⴰⵄ',
+  'ضياء الدين':'ⴹⵉⵢⴰⴷⴷⵉⵏ',
+  'طارق':'ⵟⴰⵔⵉⵇ',
+  'طالب':'ⵟⴰⵍⵉⴱ',
+  'طاهر':'ⵟⴰⵀⵉⵔ',
+  'طراد':'ⵟⴰⵔⵔⴰⴷ',
+  'طلال':'ⵟⴰⵍⴰⵍ',
+  'طلحة':'ⵟⴰⵍⵃⴰ',
+  'طه':'ⵟⴰⵀⴰ',
+  'طيب':'ⵟⴰⵢⵢⵉⴱ',
+  'عائشة':'ⵄⴰⵉⵛⴰ',
+  'عابد':'ⵄⴰⴱⵉⴷ',
+  'عاتكة':'ⵄⴰⵜⵉⴽⴰ',
+  'عادل':'ⵄⴰⴷⵉⵍ',
+  'عارف':'ⵄⴰⵔⵉⴼ',
+  'عاشورة':'ⵄⴰⵛⵓⵔⴰ',
+  'عاصم':'ⵄⴰⵚⵉⵎ',
+  'عاصمة':'ⵄⴰⵚⵉⵎⴰ',
+  'عاقل':'ⵄⴰⵇⵉⵍ',
+  'عاليا':'ⵄⴰⵍⵉⵢⴰ',
+  'عالية':'ⵄⴰⵍⵉⵢⴰ',
+  'عامر':'ⵄⴰⵎⵉⵔ',
+  'عباس':'ⵄⴰⴱⴱⴰⵙ',
+  'عبد الباسط':'ⵄⴰⴱⴷⴰⵍⴱⴰⵙⵉⵟ',
+  'عبد الجليل':'ⵄⴰⴱⴷⴰⵍⵊⴰⵍⵉⵍ',
+  'عبد الحق':'ⵄⴰⴱⴷⴰⵍⵃⴰⵇ',
+  'عبد الحميد':'ⵄⴰⴱⴷⴰⵍⵃⴰⵎⵉⴷ',
+  'عبد الرحمن':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵎⴰⵏ',
+  'عبد الرزاق':'ⵄⴰⴱⴷⴰⵔⵔⴰⵣⵣⴰⵇ',
+  'عبد السلام':'ⵄⴰⴱⴷⴰⵙⵙⴰⵍⴰⵎ',
+  'عبد العزيز':'ⵄⴰⴱⴷⴰⵍⵄⴰⵣⵉⵣ',
+  'عبد الغني':'ⵄⴰⴱⴷⴰⵍⵖⴰⵏⵉ',
+  'عبد القادر':'ⵄⴰⴱⴷⴰⵍⵇⴰⴷⵉⵔ',
+  'عبد الكريم':'ⵄⴰⴱⴷⴰⵍⴽⴰⵔⵉⵎ',
+  'عبد الله':'ⵄⴰⴱⴷⴰⵍⵍⴰⵀ',
+  'عبد المالك':'ⵄⴰⴱⴷⴰⵍⵎⴰⵍⵉⴽ',
+  'عبد المجيد':'ⵄⴰⴱⴷⴰⵍⵎⴰⵊⵉⴷ',
+  'عبد النور':'ⵄⴰⴱⴷⴰⵏⵏⵓⵔ',
+  'عبد الوهاب':'ⵄⴰⴱⴷⴰⵍⵡⴰⵀⵀⴰⴱ',
+  'عبدالباسط':'ⵄⴰⴱⴷⴰⵍⴱⴰⵙⵉⵟ',
+  'عبدالتواب':'ⵄⴰⴱⴷⴰⵜⵜⴰⵡⵡⴰⴱ',
+  'عبدالجبار':'ⵄⴰⴱⴷⴰⵍⵊⴰⴱⴱⴰⵔ',
+  'عبدالجليل':'ⵄⴰⴱⴷⴰⵍⵊⴰⵍⵉⵍ',
+  'عبدالحافظ':'ⵄⴰⴱⴷⴰⵍⵃⴰⴼⵉⴹ',
+  'عبدالحق':'ⵄⴰⴱⴷⴰⵍⵃⴰⵇ',
+  'عبدالحكيم':'ⵄⴰⴱⴷⴰⵍⵃⴰⴽⵉⵎ',
+  'عبدالحميد':'ⵄⴰⴱⴷⴰⵍⵃⴰⵎⵉⴷ',
+  'عبدالخالق':'ⵄⴰⴱⴷⴰⵍⵅⴰⵍⵉⵇ',
+  'عبدالدائم':'ⵄⴰⴱⴷⴰⴷⴷⴰⵉⵎ',
+  'عبدالرؤوف':'ⵄⴰⴱⴷⴰⵔⵔⴰⵄⵓⴼ',
+  'عبدالرافع':'ⵄⴰⴱⴷⴰⵔⵔⴰⴼⵉⵄ',
+  'عبدالرب':'ⵄⴰⴱⴷⴰⵔⵔⴰⴱ',
+  'عبدالرحمن':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵎⴰⵏ',
+  'عبدالرحيم':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵉⵎ',
+  'عبدالرزاق':'ⵄⴰⴱⴷⴰⵔⵔⴰⵣⵣⴰⵇ',
+  'عبدالرشيد':'ⵄⴰⴱⴷⴰⵔⵔⴰⵛⵉⴷ',
+  'عبدالزراق':'ⵄⴰⴱⴷⴰⵣⵣⴰⵔⵔⴰⵇ',
+  'عبدالستار':'ⵄⴰⴱⴷⴰⵙⵙⴰⵜⵜⴰⵔ',
+  'عبدالسلام':'ⵄⴰⴱⴷⴰⵙⵙⴰⵍⴰⵎ',
+  'عبدالسميع':'ⵄⴰⴱⴷⴰⵙⵙⴰⵎⵉⵄ',
+  'عبدالشكور':'ⵄⴰⴱⴷⴰⵛⵛⴰⴽⵓⵔ',
+  'عبدالصادق':'ⵄⴰⴱⴷⴰⵚⵚⴰⴷⵉⵇ',
+  'عبدالصمد':'ⵄⴰⴱⴷⴰⵚⵚⴰⵎⴰⴷ',
+  'عبدالطيف':'ⵄⴰⴱⴷⴰⵍⵍⴰⵟⵉⴼ',
+  'عبدالعزيز':'ⵄⴰⴱⴷⴰⵍⵄⴰⵣⵉⵣ',
+  'عبدالعظيم':'ⵄⴰⴱⴷⴰⵍⵄⴰⴹⵉⵎ',
+  'عبدالعلي':'ⵄⴰⴱⴷⴰⵍⵄⴰⵍⵉ',
+  'عبدالغفار':'ⵄⴰⴱⴷⴰⵍⵖⴰⴼⴼⴰⵔ',
+  'عبدالغفور':'ⵄⴰⴱⴷⴰⵍⵖⴰⴼⵓⵔ',
+  'عبدالغني':'ⵄⴰⴱⴷⴰⵍⵖⴰⵏⵉ',
+  'عبدالفتاح':'ⵄⴰⴱⴷⴰⵍⴼⴰⵜⵜⴰⵃ',
+  'عبدالقادر':'ⵄⴰⴱⴷⴰⵍⵇⴰⴷⵉⵔ',
+  'عبدالقهار':'ⵄⴰⴱⴷⴰⵍⵇⴰⵀⵀⴰⵔ',
+  'عبدالقوي':'ⵄⴰⴱⴷⴰⵍⵇⴰⵡⵡⵉ',
+  'عبدالقيوم':'ⵄⴰⴱⴷⴰⵍⵇⴰⵢⵢⵓⵎ',
+  'عبدالكافي':'ⵄⴰⴱⴷⴰⵍⴽⴰⴼⵉ',
+  'عبدالكريم':'ⵄⴰⴱⴷⴰⵍⴽⴰⵔⵉⵎ',
+  'عبدالله':'ⵄⴰⴱⴷⴰⵍⵍⴰⵀ',
+  'عبدالله خان':'ⵄⴰⴱⴷⴰⵍⵍⴰⵀⵅⴰⵏ',
+  'عبدالمؤمن':'ⵄⴰⴱⴷⴰⵍⵎⵓⵄⵎⵉⵏ',
+  'عبدالمالك':'ⵄⴰⴱⴷⴰⵍⵎⴰⵍⵉⴽ',
+  'عبدالمتعال':'ⵄⴰⴱⴷⴰⵍⵎⵓⵜⴰⵄⴰⵍ',
+  'عبدالمجيد':'ⵄⴰⴱⴷⴰⵍⵎⴰⵊⵉⴷ',
+  'عبدالمحسن':'ⵄⴰⴱⴷⴰⵍⵎⵓⵃⵙⵉⵏ',
+  'عبدالمعطي':'ⵄⴰⴱⴷⴰⵍⵎⵓⵄⵟⵉ',
+  'عبدالملك':'ⵄⴰⴱⴷⴰⵍⵎⴰⵍⵉⴽ',
+  'عبدالمنان':'ⵄⴰⴱⴷⴰⵍⵎⴰⵏⵏⴰⵏ',
+  'عبدالمنعم':'ⵄⴰⴱⴷⴰⵍⵎⵓⵏⵄⵉⵎ',
+  'عبدالنور':'ⵄⴰⴱⴷⴰⵏⵏⵓⵔ',
+  'عبدالهادي':'ⵄⴰⴱⴷⴰⵍⵀⴰⴷⵉ',
+  'عبدالواحد':'ⵄⴰⴱⴷⴰⵍⵡⴰⵃⵉⴷ',
+  'عبدالوارث':'ⵄⴰⴱⴷⴰⵍⵡⴰⵔⵉⵜ',
+  'عبدالودود':'ⵄⴰⴱⴷⴰⵍⵡⴰⴷⵓⴷ',
+  'عبدالوكيل':'ⵄⴰⴱⴷⴰⵍⵡⴰⴽⵉⵍ',
+  'عبدالولي':'ⵄⴰⴱⴷⴰⵍⵡⴰⵍⵉ',
+  'عبدالوهاب':'ⵄⴰⴱⴷⴰⵍⵡⴰⵀⵀⴰⴱ',
+  'عبلة':'ⵄⴰⴱⵍⴰ',
+  'عبود':'ⵄⴰⴱⵓⴷ',
+  'عبيد الله':'ⵄⵓⴱⴰⵢⴷⴰⵍⵍⴰⵀ',
+  'عبيدة':'ⵄⵓⴱⴰⵢⴷⴰ',
+  'عبير':'ⵄⴰⴱⵉⵔ',
+  'عتبة':'ⵄⵓⵜⴱⴰ',
+  'عثمان':'ⵄⵓⵜⵎⴰⵏ',
+  'عدالة':'ⵄⴰⴷⴰⵍⴰ',
+  'عدنان':'ⵄⴰⴷⵏⴰⵏ',
+  'عذبة':'ⵄⴰⴹⴱⴰ',
+  'عذراء':'ⵄⴰⴹⵔⴰⵄ',
+  'عرفان':'ⵄⵉⵔⴼⴰⵏ',
+  'عروة':'ⵄⵓⵔⵡⴰ',
+  'عروس':'ⵄⴰⵔⵓⵙ',
+  'عزام':'ⵄⴰⵣⵣⴰⵎ',
+  'عزت':'ⵄⵉⵣⵣⴰⵜ',
+  'عزيز':'ⵄⴰⵣⵉⵣ',
+  'عزيز الله':'ⵄⴰⵣⵉⵣⴰⵍⵍⴰⵀ',
+  'عزيزة':'ⵄⴰⵣⵉⵣⴰ',
+  'عسكر':'ⵄⴰⵙⴽⴰⵔ',
+  'عشية':'ⵄⵉⵛⵉⵢⴰ',
+  'عصام':'ⵄⵉⵚⴰⵎ',
+  'عصفور':'ⵄⵓⵚⴼⵓⵔ',
+  'عصمة':'ⵄⵉⵚⵎⴰ',
+  'عصمت':'ⵄⵉⵚⵎⴰⵜ',
+  'عطاء':'ⵄⴰⵟⴰⵄ',
+  'عطاء الله':'ⵄⴰⵟⴰⴰⵍⵍⴰⵀ',
+  'عطية':'ⵄⴰⵟⵉⵢⴰ',
+  'عفراء':'ⵄⴰⴼⵔⴰⵄ',
+  'عقبة':'ⵄⵓⵇⴱⴰ',
+  'عقيلة':'ⵄⴰⵇⵉⵍⴰ',
+  'علاء':'ⵄⴰⵍⴰⵄ',
+  'علاء الدين':'ⵄⴰⵍⴰⴷⴷⵉⵏ',
+  'علم الدين':'ⵄⵉⵍⵎⴷⴷⵉⵏ',
+  'علي':'ⵄⴰⵍⵉ',
+  'عماد':'ⵄⵉⵎⴰⴷ',
+  'عماد الدين':'ⵄⵉⵎⴰⴷⴷⴷⵉⵏ',
+  'عمار':'ⵄⴰⵎⵎⴰⵔ',
+  'عمر':'ⵄⵓⵎⴰⵔ',
+  'عمر الشريف':'ⵄⵓⵎⴰⵔⴰⵛⵛⴰⵔⵉⴼ',
+  'عمر خيام':'ⵄⵓⵎⴰⵔⵅⴰⵢⵢⴰⵎ',
+  'عمران':'ⵄⵓⵎⵔⴰⵏ',
+  'عميد':'ⵄⴰⵎⵉⴷ',
+  'عنبر':'ⵄⴰⵏⴱⴰⵔ',
+  'عواطف':'ⵄⴰⵡⴰⵟⵉⴼ',
+  'عوض':'ⵄⴰⵡⴹ',
+  'عيسى':'ⵄⵉⵙⴰ',
+  'عيشة':'ⵄⵉⵛⴰ',
+  'غادة':'ⵖⴰⴷⴰ',
+  'غازي':'ⵖⴰⵣⵉ',
+  'غالب':'ⵖⴰⵍⵉⴱ',
+  'غالي':'ⵖⴰⵍⵉ',
+  'غانم':'ⵖⴰⵏⵉⵎ',
+  'غانمي':'ⵖⴰⵏⵉⵎⵉ',
+  'غزلان':'ⵖⴰⵣⵍⴰⵏ',
+  'غسان':'ⵖⴰⵙⵙⴰⵏ',
+  'غنية':'ⵖⴰⵏⵉⵢⴰ',
+  'غياث':'ⵖⵉⵢⴰⵜ',
+  'فاتن':'ⴼⴰⵜⵉⵏ',
+  'فادي':'ⴼⴰⴷⵉ',
+  'فارس':'ⴼⴰⵔⵉⵙ',
+  'فاروق':'ⴼⴰⵔⵓⵇ',
+  'فاضل':'ⴼⴰⴹⵉⵍ',
+  'فاطمة':'ⴼⴰⵟⵉⵎⴰ',
+  'فاطمة الزهراء':'ⴼⴰⵟⵉⵎⴰⵣⵣⴰⵀⵔⴰⵄ',
+  'فاطنة':'ⴼⴰⵟⵏⴰ',
+  'فالح':'ⴼⴰⵍⵉⵃ',
+  'فتح الله':'ⴼⴰⵜⵃⴰⵍⵍⴰⵀ',
+  'فتحي':'ⴼⴰⵜⵃⵉ',
+  'فتيحة':'ⴼⴰⵜⵉⵃⴰ',
+  'فجر':'ⴼⴰⵊⵔ',
+  'فخر الدين':'ⴼⴰⵅⵔⴷⴷⵉⵏ',
+  'فدوى':'ⴼⴰⴷⵡⴰ',
+  'فراس':'ⴼⵉⵔⴰⵙ',
+  'فرحان':'ⴼⴰⵔⵃⴰⵏ',
+  'فرحة':'ⴼⴰⵔⵃⴰ',
+  'فريال':'ⴼⴰⵔⵢⴰⵍ',
+  'فريد':'ⴼⴰⵔⵉⴷ',
+  'فريدة':'ⴼⴰⵔⵉⴷⴰ',
+  'فصيح':'ⴼⴰⵚⵉⵃ',
+  'فضيلة':'ⴼⴰⴹⵉⵍⴰ',
+  'فلاح':'ⴼⴰⵍⵍⴰⵃ',
+  'فلسطين':'ⴼⴰⵍⴰⵙⵟⵉⵏ',
+  'فهد':'ⴼⴰⵀⴷ',
+  'فهمي':'ⴼⴰⵀⵎⵉ',
+  'فواد':'ⴼⵓⴰⴷ',
+  'فوزان':'ⴼⴰⵡⵣⴰⵏ',
+  'فوزي':'ⴼⴰⵡⵣⵉ',
+  'فيروز':'ⴼⴰⵢⵔⵓⵣ',
+  'فيصل':'ⴼⴰⵢⵚⴰⵍ',
+  'قادر':'ⵇⴰⴷⵉⵔ',
+  'قاسم':'ⵇⴰⵙⵉⵎ',
+  'قباء':'ⵇⵓⴱⴰⵄ',
+  'قتادة':'ⵇⴰⵜⴰⴷⴰ',
+  'قحطان':'ⵇⴰⵃⵟⴰⵏ',
+  'قدامة':'ⵇⵓⴷⴰⵎⴰ',
+  'قدس':'ⵇⵓⴷⵙ',
+  'قرظة':'ⵇⴰⵔⴹⴰ',
+  'قعقاع':'ⵇⴰⵄⵇⴰⵄ',
+  'قمبر':'ⵇⴰⵎⴱⴰⵔ',
+  'قمر':'ⵇⴰⵎⴰⵔ',
+  'قمرية':'ⵇⴰⵎⴰⵔⵉⵢⴰ',
+  'قيس':'ⵇⴰⵢⵙ',
+  'كابر':'ⴽⴰⴱⵉⵔ',
+  'كاشف':'ⴽⴰⵛⵉⴼ',
+  'كاظم':'ⴽⴰⴹⵉⵎ',
+  'كثير':'ⴽⴰⵜⵉⵔ',
+  'كريم':'ⴽⴰⵔⵉⵎ',
+  'كريمة':'ⴽⴰⵔⵉⵎⴰ',
+  'كسرى':'ⴽⵉⵙⵔⴰ',
+  'كلثوم':'ⴽⵓⵍⵜⵓⵎ',
+  'كمال':'ⴽⴰⵎⴰⵍ',
+  'كنان':'ⴽⵉⵏⴰⵏ',
+  'كوثر':'ⴽⴰⵡⵜⴰⵔ',
+  'لؤي':'ⵍⵓⵄⴰⵢ',
+  'لبنى':'ⵍⵓⴱⵏⴰ',
+  'لبيب':'ⵍⴰⴱⵉⴱ',
+  'لجين':'ⵍⴰⵊⵉⵏ',
+  'لحسن':'ⵍⵃⴰⵙⴰⵏ',
+  'لحسين':'ⵍⵃⵓⵙⴰⵢⵏ',
+  'لطف الله':'ⵍⵓⵟⴼⴰⵍⵍⴰⵀ',
+  'لطفي':'ⵍⵓⵟⴼⵉ',
+  'لطيفة':'ⵍⴰⵟⵉⴼⴰ',
+  'لقمان':'ⵍⵓⵇⵎⴰⵏ',
+  'لمياء':'ⵍⴰⵎⵢⴰⵄ',
+  'لمين':'ⵍⴰⵎⵉⵏ',
+  'لوز':'ⵍⵡⴰⵣ',
+  'لوط':'ⵍⵓⵟ',
+  'لونيس':'ⵍⵓⵏⵉⵙ',
+  'ليلى':'ⵍⴰⵢⵍⴰ',
+  'لينا':'ⵍⵉⵏⴰ',
+  'مأمون':'ⵎⴰⵄⵎⵓⵏ',
+  'ماجد':'ⵎⴰⵊⵉⴷ',
+  'ماجدة':'ⵎⴰⵊⵉⴷⴰ',
+  'مازن':'ⵎⴰⵣⴻⵏ',
+  'مالك':'ⵎⴰⵍⵉⴽ',
+  'ماهان':'ⵎⴰⵀⴰⵏ',
+  'ماهر':'ⵎⴰⵀⵉⵔ',
+  'ماهر الدين':'ⵎⴰⵀⵉⵔⴷⴷⵉⵏ',
+  'ماهرة':'ⵎⴰⵀⵉⵔⴰ',
+  'مبارك':'ⵎⴱⴰⵔⴰⴽ',
+  'مباركة':'ⵎⴱⴰⵔⴽⴰ',
+  'مبروكة':'ⵎⴱⴰⵔⴽⴰ',
+  'متعب':'ⵎⵓⵜⵄⵉⴱ',
+  'متولي':'ⵎⵜⴰⵡⵡⴰⵍⵉ',
+  'مثنى':'ⵎⵓⵜⴰⵏⵏⴰ',
+  'مجاهد':'ⵎⵓⵊⴰⵀⵉⴷ',
+  'مجدي':'ⵎⴰⵊⴷⵉ',
+  'محبوب':'ⵎⴰⵃⴱⵓⴱ',
+  'محجوب':'ⵎⴰⵃⵊⵓⴱ',
+  'محسن':'ⵎⵓⵃⵙⵉⵏ',
+  'محمد':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'محمد أمين':'ⵎⵓⵃⴰⵎⵎⴰⴷⴰⵎⵉⵏ',
+  'محمد الأمين':'ⵎⵓⵃⴰⵎⵎⴰⴷⴰⵍⴰⵎⵉⵏ',
+  'محمد حسن':'ⵎⵓⵃⴰⵎⵎⴰⴷⵃⴰⵙⴰⵏ',
+  'محمد رضا':'ⵎⵓⵃⴰⵎⵎⴰⴷⵔⵉⴹⴰ',
+  'محمد علي':'ⵎⵓⵃⴰⵎⵎⴰⴷⵄⴰⵍⵉ',
+  'محمد يوسف':'ⵎⵓⵃⴰⵎⵎⴰⴷⵢⵓⵙⵓⴼ',
+  'محمود':'ⵎⴰⵃⵎⵓⴷ',
+  'محي الدين':'ⵎⵓⵃⵢⵉⴷⴷⵉⵏ',
+  'محيي الدين':'ⵎⵓⵃⵢⵉⴷⴷⵉⵏ',
+  'مدحة':'ⵎⴰⴷⵃⴰ',
+  'مراد':'ⵎⵓⵔⴰⴷ',
+  'مرام':'ⵎⴰⵔⴰⵎ',
+  'مروان':'ⵎⴰⵔⵡⴰⵏ',
+  'مروة':'ⵎⴰⵔⵡⴰ',
+  'مريم':'ⵎⴰⵔⵢⴰⵎ',
+  'مزيان':'ⵎⵣⵉⵢⴰⵏ',
+  'مسعود':'ⵎⴰⵙⵄⵓⴷ',
+  'مسعودة':'ⵎⴰⵙⵄⵓⴷⴰ',
+  'مسلم':'ⵎⵓⵙⵍⵉⵎ',
+  'مشاعل':'ⵎⴰⵛⴰⵄⵉⵍ',
+  'مصباح':'ⵎⵉⵚⴱⴰⵃ',
+  'مصطفى':'ⵎⵓⵚⵟⴰⴼⴰ',
+  'معاذ':'ⵎⵓⵄⴰⴹ',
+  'معاوية':'ⵎⵓⵄⴰⵡⵉⵢⴰ',
+  'معتز':'ⵎⵓⵄⵜⴰⵣ',
+  'معمر':'ⵎⵓⵄⴰⵎⵎⴰⵔ',
+  'معن':'ⵎⴰⵄⵏ',
+  'مفيد':'ⵎⵓⴼⵉⴷ',
+  'مقداد':'ⵎⵉⵇⴷⴰⴷ',
+  'ملاك':'ⵎⵉⵍⴰⴽ',
+  'مليكة':'ⵎⴰⵍⵉⴽⴰ',
+  'منال':'ⵎⴰⵏⴰⵍ',
+  'منذر':'ⵎⵓⵏⴹⵉⵔ',
+  'منصور':'ⵎⴰⵏⵚⵓⵔ',
+  'منهل':'ⵎⴰⵏⵀⴰⵍ',
+  'منى':'ⵎⵓⵏⴰ',
+  'منير':'ⵎⵓⵏⵉⵔ',
+  'منيرة':'ⵎⵓⵏⵉⵔⴰ',
+  'مهدي':'ⵎⴰⵀⴷⵉ',
+  'موسى':'ⵎⵓⵙⴰ',
+  'مولود':'ⵎⵓⵍⵓⴷ',
+  'مي':'ⵎⴰⵢ',
+  'ميرة':'ⵎⵉⵔⴰ',
+  'ميساء':'ⵎⴰⵢⵙⴰⵄ',
+  'ميمونة':'ⵎⴰⵢⵎⵓⵏⴰ',
+  'ناجي':'ⵏⴰⵊⵉ',
+  'ناجية':'ⵏⴰⵊⵉⵢⴰ',
+  'نادر':'ⵏⴰⴷⵔ',
+  'نادل':'ⵏⴰⴷⵉⵍ',
+  'نادية':'ⵏⴰⴷⵢⴰ',
+  'ناصر':'ⵏⴰⵚⵉⵔ',
+  'ناظم':'ⵏⴰⴹⵉⵎ',
+  'نافع':'ⵏⴰⴼⵉⵄ',
+  'ناهض':'ⵏⴰⵀⵉⴹ',
+  'نبهان':'ⵏⴰⴱⵀⴰⵏ',
+  'نبوية':'ⵏⴰⴱⴰⵡⵉⵢⴰ',
+  'نبيل':'ⵏⴰⴱⵉⵍ',
+  'نجاة':'ⵏⴰⵊⴰⵜ',
+  'نجلاء':'ⵏⴰⵊⵍⴰⵄ',
+  'نجم الدين':'ⵏⴰⵊⵎⴷⴷⵉⵏ',
+  'نجمة':'ⵏⴰⵊⵎⴰ',
+  'نجود':'ⵏⵓⵊⵓⴷ',
+  'نجيب':'ⵏⴰⵊⵉⴱ',
+  'نرجس':'ⵏⴰⵔⵊⵉⵙ',
+  'نرمين':'ⵏⴰⵔⵎⵉⵏ',
+  'نزار':'ⵏⵉⵣⴰⵔ',
+  'نزيهة':'ⵏⴰⵣⵉⵀⴰ',
+  'نسرين':'ⵏⴰⵙⵔⵉⵏ',
+  'نسمة':'ⵏⴰⵙⵉⵎⴰ',
+  'نسيمة':'ⵏⴰⵙⵉⵎⴰ',
+  'نضال':'ⵏⵉⴹⴰⵍ',
+  'نعمان':'ⵏⵓⵄⵎⴰⵏ',
+  'نعيم':'ⵏⴰⵄⵉⵎ',
+  'نعيمة':'ⵏⴰⵄⵉⵎⴰ',
+  'نفيسة':'ⵏⴰⴼⵉⵙⴰ',
+  'نقاش':'ⵏⴰⵇⵇⴰⵛ',
+  'نمر':'ⵏⴰⵎⵉⵔ',
+  'نهى':'ⵏⵓⵀⴰ',
+  'نهيلة':'ⵏⴰⵀⵉⵍⴰ',
+  'نواف':'ⵏⴰⵡⵡⴰⴼ',
+  'نوال':'ⵏⴰⵡⴰⵍ',
+  'نوح':'ⵏⵓⵃ',
+  'نور':'ⵏⵓⵔ',
+  'نور الدين':'ⵏⵓⵔⴷⴷⵉⵏ',
+  'نورالإسلام':'ⵏⵓⵔⴰⵍⵉⵙⵍⴰⵎ',
+  'نورالدين':'ⵏⵓⵔⴷⴷⵉⵏ',
+  'نورة':'ⵏⵓⵔⴰ',
+  'نوفل':'ⵏⴰⵡⴼⴰⵍ',
+  'هاجر':'ⵀⴰⵊⴰⵔ',
+  'هادي':'ⵀⴰⴷⵉ',
+  'هارون':'ⵀⴰⵔⵓⵏ',
+  'هاشم':'ⵀⴰⵛⵉⵎ',
+  'هاني':'ⵀⴰⵏⵉ',
+  'هبات':'ⵀⴰⴱⴰⵜ',
+  'هبة':'ⵀⴰⴱⴰ',
+  'هدى':'ⵀⵓⴷⴰ',
+  'هدية':'ⵀⴰⴷⵉⵢⴰ',
+  'هديل':'ⵀⴰⴷⵉⵍ',
+  'هزيم':'ⵀⴰⵣⵉⵎ',
+  'هشام':'ⵀⵉⵛⴰⵎ',
+  'هشام الدين':'ⵀⵉⵛⴰⵎⴷⴷⵉⵏ',
+  'هلال':'ⵀⵉⵍⴰⵍ',
+  'هلاوي':'ⵀⵉⵍⴰⵡⵉ',
+  'همام':'ⵀⵓⵎⴰⵎ',
+  'همزة':'ⵀⴰⵎⵣⴰ',
+  'هناء':'ⵀⴰⵏⴰⵄ',
+  'هنادي':'ⵀⴰⵏⴰⴷⵉ',
+  'هند':'ⵀⵉⵏⴷ',
+  'هنية':'ⵀⴰⵏⵉⵢⴰ',
+  'هود':'ⵀⵓⴷ',
+  'هيام':'ⵀⵉⵢⴰⵎ',
+  'هيثم':'ⵀⴰⵢⵜⴰⵎ',
+  'هيفاء':'ⵀⴰⵢⴼⴰⵄ',
+  'وائل':'ⵡⴰⵉⵍ',
+  'وجدان':'ⵡⵉⵊⴷⴰⵏ',
+  'وجدي':'ⵡⴰⵊⴷⵉ',
+  'وحيد':'ⵡⴰⵃⵉⴷ',
+  'وداد':'ⵡⴰⴷⴷⴰⴷ',
+  'وردان':'ⵡⴰⵔⴷⴰⵏ',
+  'وردة':'ⵡⴰⵔⴷⴰ',
+  'ورشة':'ⵡⴰⵔⵛⴰ',
+  'وسيلة':'ⵡⴰⵙⵉⵍⴰ',
+  'وسيم':'ⵡⴰⵙⵉⵎ',
+  'وفاء':'ⵡⴰⴼⴰⵄ',
+  'وليد':'ⵡⴰⵍⵉⴷ',
+  'ونيسة':'ⵡⴰⵏⵉⵙⴰ',
+  'وهب':'ⵡⴰⵀⴱ',
+  'وهب الله':'ⵡⴰⵀⴱⴰⵍⵍⴰⵀ',
+  'ويزة':'ⵡⵉⵣⵣⴰ',
+  'ياسر':'ⵢⴰⵙⵉⵔ',
+  'ياسمين':'ⵢⴰⵙⵎⵉⵏ',
+  'ياسين':'ⵢⴰⵙⵉⵏ',
+  'يامن':'ⵢⴰⵎⵉⵏ',
+  'يحيى':'ⵢⴰⵃⵢⴰ',
+  'يدير':'ⵢⵉⴷⵉⵔ',
+  'يرلان':'ⵢⴰⵔⵍⴰⵏ',
+  'يزن':'ⵢⴰⵣⴰⵏ',
+  'يسار':'ⵢⴰⵙⴰⵔ',
+  'يسرى':'ⵢⵓⵙⵔⴰ',
+  'يسير':'ⵢⴰⵙⵉⵔ',
+  'يعقوب':'ⵢⴰⵄⵇⵓⴱ',
+  'يعلى':'ⵢⴰⵄⵍⴰ',
+  'يمينة':'ⵢⴰⵎⵉⵏⴰ',
+  'ينابيع':'ⵢⴰⵏⴰⴱⵉⵄ',
+  'يوسف':'ⵢⵓⵙⵓⴼ',
+  'يونس':'ⵢⵓⵏⵓⵙ',
+};
+
+
+const latinNameDict = {
+  'aaron':'ⴰⵀⴰⵔⵓⵏ',
+  'abdallah':'ⵄⴰⴱⴷⴰⵍⵍⴰⵀ',
+  'abdelali':'ⵄⴰⴱⴷⴰⵍⵄⴰⵍⵉ',
+  'abdelaziz':'ⵄⴰⴱⴷⴰⵍⵄⴰⵣⵉⵣ',
+  'abdelbasit':'ⵄⴰⴱⴷⴰⵍⴱⴰⵙⵉⵟ',
+  'abdelbasset':'ⵄⴰⴱⴷⴰⵍⴱⴰⵙⵉⵟ',
+  'abdelfattah':'ⵄⴰⴱⴷⴰⵍⴼⴰⵜⵜⴰⵃ',
+  'abdelghani':'ⵄⴰⴱⴷⴰⵍⵖⴰⵏⵉ',
+  'abdelhafid':'ⵄⴰⴱⴷⴰⵍⵃⴰⴼⵉⴹ',
+  'abdelhak':'ⵄⴰⴱⴷⴰⵍⵃⴰⵇ',
+  'abdelhakim':'ⵄⴰⴱⴷⴰⵍⵃⴰⴽⵉⵎ',
+  'abdelhamid':'ⵄⴰⴱⴷⴰⵍⵃⴰⵎⵉⴷ',
+  'abdelilah':'ⵄⴰⴱⴷⴰⵍⵉⵍⴰⵀ',
+  'abdeljalil':'ⵄⴰⴱⴷⴰⵍⵊⴰⵍⵉⵍ',
+  'abdelkader':'ⵄⴰⴱⴷⴰⵍⵇⴰⴷⵉⵔ',
+  'abdelkarim':'ⵄⴰⴱⴷⴰⵍⴽⴰⵔⵉⵎ',
+  'abdelkrim':'ⵄⴰⴱⴷⴰⵍⴽⴰⵔⵉⵎ',
+  'abdellah':'ⵄⴰⴱⴷⴰⵍⵍⴰⵀ',
+  'abdellatif':'ⵄⴰⴱⴷⴰⵍⵍⴰⵟⵉⴼ',
+  'abdelmajid':'ⵄⴰⴱⴷⴰⵍⵎⴰⵊⵉⴷ',
+  'abdelmalek':'ⵄⴰⴱⴷⴰⵍⵎⴰⵍⵉⴽ',
+  'abdelmonem':'ⵄⴰⴱⴷⴰⵍⵎⵓⵏⵄⵉⵎ',
+  'abdelmoumene':'ⵄⴰⴱⴷⴰⵍⵎⵓⵄⵎⵉⵏ',
+  'abdelnour':'ⵄⴰⴱⴷⴰⵏⵏⵓⵔ',
+  'abdelrahim':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵉⵎ',
+  'abdelrazak':'ⵄⴰⴱⴷⴰⵔⵔⴰⵣⵣⴰⵇ',
+  'abdelsalam':'ⵄⴰⴱⴷⴰⵙⵙⴰⵍⴰⵎ',
+  'abdelwahab':'ⵄⴰⴱⴷⴰⵍⵡⴰⵀⵀⴰⴱ',
+  'abdelwahid':'ⵄⴰⴱⴷⴰⵍⵡⴰⵃⵉⴷ',
+  'abderrahim':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵉⵎ',
+  'abderrahman':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵎⴰⵏ',
+  'abderrahmane':'ⵄⴰⴱⴷⴰⵔⵔⴰⵃⵎⴰⵏ',
+  'abderrashid':'ⵄⴰⴱⴷⴰⵔⵔⴰⵛⵉⴷ',
+  'abderrazak':'ⵄⴰⴱⴷⴰⵔⵔⴰⵣⵣⴰⵇ',
+  'abderrazek':'ⵄⴰⴱⴷⴰⵔⵔⴰⵣⵣⴰⵇ',
+  'abderrazzak':'ⵄⴰⴱⴷⴰⵔⵔⴰⵣⵣⴰⵇ',
+  'abdessalam':'ⵄⴰⴱⴷⴰⵙⵙⴰⵍⴰⵎ',
+  'abdessalem':'ⵄⴰⴱⴷⴰⵙⵙⴰⵍⴰⵎ',
+  'abdillah':'ⵄⴰⴱⴷⴰⵍⵍⴰⵀ',
+  'abdou':'ⵄⴰⴱⴷⵓ',
+  'abehlul':'ⴰⴱⴻⵀⵍⵓⵍ',
+  'aberkane':'ⴰⴱⴻⵔⴽⴰⵏ',
+  'abhishek':'ⴰⴱⵉⵛⴰⴽ',
+  'abigail':'ⴰⴱⵉⵖⴰⵢⵍ',
+  'abobaker':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'abouali':'ⴰⴱⵓⵄⴰⵍⵉ',
+  'aboubacar':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'aboubakar':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'aboubakr':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'abouomar':'ⴰⴱⵓⵄⵓⵎⴰⵔ',
+  'aboutalib':'ⴰⴱⵓⵟⴰⵍⵉⴱ',
+  'abubacar':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'abubakar':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'abubakr':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'abubakre':'ⴰⴱⵓⴱⴰⴽⵔ',
+  'abutalib':'ⴰⴱⵓⵟⴰⵍⵉⴱ',
+  'abuyoussef':'ⴰⴱⵓⵢⵓⵙⵓⴼ',
+  'acha':'ⵄⴰⵛⴰ',
+  'adam':'ⴰⴷⴰⵎ',
+  'adeel':'ⵄⴰⴷⵉⵍ',
+  'adel':'ⵄⴰⴷⵉⵍ',
+  'adele':'ⴰⴷⴰⵍ',
+  'adeline':'ⴰⴷⴰⵍⵉⵏ',
+  'adil':'ⵄⴰⴷⵉⵍ',
+  'aditya':'ⴰⴷⵉⵜⵢⴰ',
+  'adnan':'ⵄⴰⴷⵏⴰⵏ',
+  'adnane':'ⵄⴰⴷⵏⴰⵏ',
+  'adriana':'ⴰⴷⵔⵢⴰⵏⴰ',
+  'adrien':'ⴰⴷⵔⵉⵢⴰⵏ',
+  'adyl':'ⵄⴰⴷⵉⵍ',
+  'aghilas':'ⴰⵖⵉⵍⴰⵙ',
+  'agnes':'ⴰⵏⵢⴰⵙ',
+  'aguellid':'ⴰⴳⴻⵍⵍⵉⴷ',
+  'ahmad':'ⴰⵃⵎⴰⴷ',
+  'ahmed':'ⴰⵃⵎⴰⴷ',
+  'aicha':'ⵄⴰⵉⵛⴰ',
+  'aioub':'ⴰⵢⵢⵓⴱ',
+  'aisha':'ⵄⴰⵉⵛⴰ',
+  'aissa':'ⵄⵉⵙⴰ',
+  'akli':'ⴰⴽⵍⵉ',
+  'akram':'ⴰⴽⵔⴰⵎ',
+  'alaa':'ⵄⴰⵍⴰⵄ',
+  'alan':'ⴰⵍⴰⵏ',
+  'albert':'ⴰⵍⴱⴰⵔⵜ',
+  'alee':'ⵄⴰⵍⵉ',
+  'alejandra':'ⴰⵍⴰⵅⴰⵏⴷⵔⴰ',
+  'alejandro':'ⴰⵍⴰⵅⴰⵏⴷⵔⵓ',
+  'alex':'ⴰⵍⴰⴽⵙⵉⵙ',
+  'alexandre':'ⴰⵍⴰⴽⵙⴰⵏⴷⵔ',
+  'alexios':'ⴰⵍⴰⴽⵙⵉⵢⵓⵙ',
+  'alexis':'ⴰⵍⴰⴽⵙⵉⵙ',
+  'alfonso':'ⴰⵍⴼⵓⵏⵙⵓ',
+  'ali':'ⵄⴰⵍⵉ',
+  'alice':'ⴰⵍⵉⵙ',
+  'alicia':'ⴰⵍⵉⵙⵢⴰ',
+  'allison':'ⴰⵍⵉⵙⵓⵏ',
+  'alphonse':'ⴰⵍⴼⵓⵏⵙ',
+  'aly':'ⵄⴰⵍⵉ',
+  'alyssa':'ⴰⵍⵉⵙⴰ',
+  'amaal':'ⴰⵎⴰⵍ',
+  'amal':'ⴰⵎⴰⵍ',
+  'amanda':'ⴰⵎⴰⵏⴷⴰ',
+  'amar':'ⵄⴰⵎⵎⴰⵔ',
+  'amazigh':'ⴰⵎⴰⵣⵉⵖ',
+  'amber':'ⴰⵎⴱⴰⵔ',
+  'ameen':'ⴰⵎⵉⵏ',
+  'ameena':'ⴰⵎⵉⵏⴰ',
+  'ameera':'ⴰⵎⵉⵔⴰ',
+  'amel':'ⴰⵎⴰⵍ',
+  'amelie':'ⴰⵎⴰⵍⵉ',
+  'amellal':'ⴰⵎⴻⵍⵍⴰⵍ',
+  'amena':'ⴰⵎⵉⵏⴰ',
+  'ameur':'ⴰⵎⴻⵡⵔ',
+  'amghar':'ⴰⵎⵖⴰⵔ',
+  'amiin':'ⴰⵎⵉⵏ',
+  'amina':'ⴰⵎⵉⵏⴰ',
+  'aminah':'ⴰⵎⵉⵏⴰ',
+  'amine':'ⴰⵎⵉⵏ',
+  'amir':'ⴰⵎⵉⵔ',
+  'amira':'ⴰⵎⵉⵔⴰ',
+  'amirah':'ⴰⵎⵉⵔⴰ',
+  'amit':'ⴰⵎⵉⵜ',
+  'amjad':'ⴰⵎⵊⴰⴷ',
+  'ammar':'ⵄⴰⵎⵎⴰⵔ',
+  'amokrane':'ⴰⵎⵓⴽⵔⴰⵏ',
+  'amusnaw':'ⴰⵎⵓⵙⵏⴰⵡ',
+  'amy':'ⴰⵢⵎⵉ',
+  'amyn':'ⴰⵎⵉⵏ',
+  'ana':'ⴰⵏⴰ',
+  'anaas':'ⴰⵏⴰⵙ',
+  'anaelle':'ⴰⵏⴰⴰⵍ',
+  'anas':'ⴰⵏⴰⵙ',
+  'anass':'ⴰⵏⴰⵙ',
+  'anatole':'ⴰⵏⴰⵜⵓⵍ',
+  'anaïs':'ⴰⵏⴰⵢⵉⵙ',
+  'andre':'ⴰⵏⴷⵔⵉ',
+  'andrea':'ⴰⵏⴷⵔⵉⵢⴰ',
+  'andrei':'ⴰⵏⴷⵔⴰⵢ',
+  'andrew':'ⴰⵏⴷⵔⵓ',
+  'andrzej':'ⴰⵏⴷⵊⴰⵢ',
+  'andy':'ⴰⵏⴷⵉ',
+  'angel':'ⴰⵏⵊⴰⵍ',
+  'angela':'ⴰⵏⵀⴰⵍⴰ',
+  'angelique':'ⴰⵏⵊⴰⵍⵉⴽ',
+  'anissa':'ⴰⵏⵉⵙⴰ',
+  'anna':'ⴰⵏⴰ',
+  'anne':'ⴰⵏ',
+  'antoine':'ⴰⵏⵜⵡⴰⵏ',
+  'antonin':'ⴰⵏⵜⵓⵏⴰⵏ',
+  'antonio':'ⴰⵏⵜⵓⵏⵢⵓ',
+  'anuj':'ⴰⵏⵓⵊ',
+  'anwar':'ⴰⵏⵡⴰⵔ',
+  'anzar':'ⴰⵏⵣⴰⵔ',
+  'arezki':'ⴰⵔⴻⵣⵇⵉ',
+  'arjun':'ⴰⵔⵊⵓⵏ',
+  'armand':'ⴰⵔⵎⴰⵏ',
+  'arnaud':'ⴰⵔⵏⵓ',
+  'arslane':'ⴰⵔⵙⵍⴰⵏ',
+  'arthur':'ⴰⵔⵜⵓⵔ',
+  'asaad':'ⴰⵙⵄⴰⴷ',
+  'ashley':'ⴰⵛⵍⵉ',
+  'ashraf':'ⴰⵛⵔⴰⴼ',
+  'asia':'ⴰⵙⵢⴰ',
+  'asil':'ⴰⵙⵉⵍ',
+  'aslan':'ⴰⵙⵍⴰⵏ',
+  'asma':'ⴰⵙⵎⴰⵄ',
+  'asmaa':'ⴰⵙⵎⴰⵄ',
+  'assia':'ⴰⵙⵢⴰ',
+  'assmaa':'ⴰⵙⵎⴰⵄ',
+  'augustin':'ⵓⵖⵓⵙⵜⴰⵏ',
+  'aurelie':'ⵓⵔⴰⵍⵉ',
+  'ayman':'ⴰⵢⵎⴰⵏ',
+  'ayoub':'ⴰⵢⵢⵓⴱ',
+  'aysha':'ⵄⴰⵉⵛⴰ',
+  'ayub':'ⴰⵢⵢⵓⴱ',
+  'ayyub':'ⴰⵢⵢⵓⴱ',
+  'azhar':'ⴰⵣⵀⴰⵔ',
+  'aziiz':'ⵄⴰⵣⵉⵣ',
+  'aziz':'ⵄⴰⵣⵉⵣ',
+  'azul':'ⴰⵣⵓⵍ',
+  'azziz':'ⵄⴰⵣⵉⵣ',
+  'azziza':'ⵄⴰⵣⵉⵣⴰ',
+  'aïcha':'ⵄⴰⵉⵛⴰ',
+  'bader':'ⴱⴰⴷⵔ',
+  'badr':'ⴱⴰⴷⵔ',
+  'badreddine':'ⴱⴰⴷⵔⴷⴷⵉⵏ',
+  'bahija':'ⴱⴰⵀⵉⵊⴰ',
+  'baptiste':'ⴱⴰⵜⵉⵙⵜ',
+  'barbara':'ⴱⴰⵔⴱⴰⵔⴰ',
+  'basem':'ⴱⴰⵙⵉⵎ',
+  'bashar':'ⴱⴰⵛⵛⴰⵔ',
+  'bashir':'ⴱⴰⵛⵉⵔ',
+  'basil':'ⴱⴰⵙⵉⵍ',
+  'bassem':'ⴱⴰⵙⵉⵎ',
+  'bassim':'ⴱⴰⵙⵉⵎ',
+  'beatrice':'ⴱⴰⴰⵜⵔⵉⵙ',
+  'beatriz':'ⴱⴰⴰⵜⵔⵉⵙ',
+  'bedredine':'ⴱⴰⴷⵔⴷⴷⵉⵏ',
+  'belaid':'ⴱⴰⵍⵄⴰⵢⴷ',
+  'belkacem':'ⴱⴰⵍⵇⴰⵙⵉⵎ',
+  'benoit':'ⴱⴰⵏⵡⴰ',
+  'berkan':'ⴱⴰⵔⴽⴰⵏ',
+  'bernard':'ⴱⴰⵔⵏⴰⵔ',
+  'bertrand':'ⴱⴰⵔⵜⵔⴰⵏ',
+  'bethany':'ⴱⴰⵜⴰⵏⵉ',
+  'bilaal':'ⴱⵉⵍⴰⵍ',
+  'bilal':'ⴱⵉⵍⴰⵍ',
+  'bilel':'ⴱⵉⵍⴰⵍ',
+  'billal':'ⴱⵉⵍⴰⵍ',
+  'birgit':'ⴱⵉⵔⵊⵉⵜ',
+  'blanca':'ⴱⵍⴰⵏⴽⴰ',
+  'bochra':'ⴱⵓⵛⵔⴰ',
+  'bogdan':'ⴱⵓⵖⴷⴰⵏ',
+  'boris':'ⴱⵓⵔⵉⵙ',
+  'bouazza':'ⴱⵓⵄⴰⵣⵣⴰ',
+  'boubaker':'ⴱⵓⴱⴰⴽⵔ',
+  'bouchaib':'ⴱⵓⵛⴰⵢⴱ',
+  'bouchra':'ⴱⵓⵛⵔⴰ',
+  'boujemaa':'ⴱⵓⵊⵎⴰⵄ',
+  'boutaina':'ⴱⵓⵜⴰⵢⵏⴰ',
+  'bradley':'ⴱⵔⴰⴷⵍⵉ',
+  'brahem':'ⴱⵔⴰⵀⵉⵎ',
+  'brahim':'ⴱⵔⴰⵀⵉⵎ',
+  'brandon':'ⴱⵔⴰⵏⴷⵓⵏ',
+  'brian':'ⴱⵔⴰⵢⴰⵏ',
+  'brigitte':'ⴱⵔⵉⵊⵉⵜ',
+  'brittany':'ⴱⵔⵉⵜⴰⵏⵉ',
+  'brooke':'ⴱⵔⵓⴽ',
+  'bruce':'ⴱⵔⵓⵙ',
+  'bulent':'ⴱⵓⵍⴻⵏⵜ',
+  'burak':'ⴱⵓⵔⴰⴽ',
+  'bushra':'ⴱⵓⵛⵔⴰ',
+  'caitlin':'ⴽⴰⵢⵜⵍⵉⵏ',
+  'caleb':'ⴽⴰⵍⴰⴱ',
+  'cameron':'ⴽⴰⵎⴰⵔⵓⵏ',
+  'camille':'ⴽⴰⵎⵉⵢ',
+  'carlos':'ⴽⴰⵔⵍⵓⵙ',
+  'carmen':'ⴽⴰⵔⵎⴰⵏ',
+  'carolina':'ⴽⴰⵔⵓⵍⵉⵏⴰ',
+  'caroline':'ⴽⴰⵔⵓⵍⵉⵏ',
+  'cassandra':'ⴽⴰⵙⴰⵏⴷⵔⴰ',
+  'catherine':'ⴽⴰⵜⵔⵉⵏ',
+  'cecile':'ⵙⴰⵙⵉⵍ',
+  'cem':'ⵊⴰⵎ',
+  'cengiz':'ⵊⴰⵏⵊⵉⵣ',
+  'chad':'ⵛⴰⴷ',
+  'chaima':'ⵛⴰⵢⵎⴰⵄ',
+  'charles':'ⵛⴰⵔⵍⵣ',
+  'charlotte':'ⵛⴰⵔⵍⵓⵜ',
+  'chase':'ⵛⴰⵢⵙ',
+  'chaïma':'ⵛⴰⵢⵎⴰⵄ',
+  'chiara':'ⴽⵢⴰⵔⴰ',
+  'chloe':'ⴽⵍⵓⴰ',
+  'christian':'ⴽⵔⵉⵙⵜⵉⵢⴰⵏ',
+  'christiane':'ⴽⵔⵉⵙⵜⵢⴰⵏⴰ',
+  'christophe':'ⴽⵔⵉⵙⵜⵓⴼ',
+  'christopher':'ⴽⵔⵉⵙⵜⵓⴼⴰⵔ',
+  'claire':'ⴽⵍⴰⵔ',
+  'clarisse':'ⴽⵍⴰⵔⵉⵙ',
+  'claudia':'ⴽⵍⵓⴷⵢⴰ',
+  'clementine':'ⴽⵍⴰⵎⴰⵏⵜⵉⵏ',
+  'clément':'ⴽⵍⴰⵎⴰⵏ',
+  'colton':'ⴽⵓⵍⵜⵓⵏ',
+  'concepcion':'ⴽⵓⵏⵙⴰⵙⵢⵓⵏ',
+  'coralie':'ⴽⵓⵔⴰⵍⵉ',
+  'corentin':'ⴽⵓⵔⴰⵏⵜⴰⵏ',
+  'corey':'ⴽⵓⵔⵉ',
+  'cory':'ⴽⵓⵔⵉ',
+  'cristian':'ⴽⵔⵉⵙⵜⵉⵢⴰⵏ',
+  'crystal':'ⴽⵔⵉⵙⵜⴰⵍ',
+  'dalal':'ⴷⴰⵍⴰⵍ',
+  'dalia':'ⴷⴰⵍⵢⴰ',
+  'damien':'ⴷⴰⵎⵉⵢⴰⵏ',
+  'daniel':'ⴷⴰⵏⵉⵢⴰⵍ',
+  'danielle':'ⴷⴰⵏⵢⴰⵍ',
+  'dante':'ⴷⴰⵏⵜⴰ',
+  'david':'ⴷⴰⴼⵉⴷ',
+  'deborah':'ⴷⴰⴱⵓⵔⴰ',
+  'deepak':'ⴷⵉⴱⴰⴽ',
+  'delphine':'ⴷⴰⵍⴼⵉⵏ',
+  'denis':'ⴷⴻⵏⵉ',
+  'derek':'ⴷⴰⵔⵉⴽ',
+  'dev':'ⴷⴰⵡ',
+  'diana':'ⴷⵢⴰⵏⴰ',
+  'diane':'ⴷⵢⴰⵏ',
+  'diego':'ⴷⵢⴰⵖⵓ',
+  'dieter':'ⴷⵉⵜⴰⵔ',
+  'dina':'ⴷⵉⵏⴰ',
+  'djaafar':'ⵊⴰⵄⴼⴰⵔ',
+  'djamal':'ⵊⴰⵎⴰⵍ',
+  'djamel':'ⵊⴰⵎⴰⵍ',
+  'djamil':'ⵊⴰⵎⵉⵍ',
+  'djamila':'ⵊⴰⵎⵉⵍⴰ',
+  'djemila':'ⵊⴰⵎⵉⵍⴰ',
+  'djemill':'ⵊⴰⵎⵉⵍⴰ',
+  'dmitri':'ⴷⵎⵉⵜⵔⵉ',
+  'donia':'ⴷⵓⵏⵢⴰ',
+  'dorian':'ⴷⵓⵔⵉⵢⴰⵏ',
+  'dorothea':'ⴷⵓⵔⵓⵜⴰ',
+  'dounia':'ⴷⵓⵏⵢⴰ',
+  'dragoslav':'ⴷⵔⴰⵖⵓⵙⵍⴰⴼ',
+  'driss':'ⵉⴷⵔⵉⵙ',
+  'dunia':'ⴷⵓⵏⵢⴰ',
+  'dustin':'ⴷⴰⵙⵜⴰⵏ',
+  'dylan':'ⴷⵉⵍⴰⵏ',
+  'ebrahim':'ⵉⴱⵔⴰⵀⵉⵎ',
+  'edouard':'ⴰⴷⵡⴰⵔ',
+  'edward':'ⴰⴷⵡⴰⵔⴷ',
+  'elena':'ⴰⵍⴰⵏⴰ',
+  'elfriede':'ⴰⵍⴼⵔⵉⴷⴰ',
+  'elhadi':'ⴰⵍⵀⴰⴷⵉ',
+  'eli':'ⵉⵍⵉ',
+  'elias':'ⵉⵍⵢⴰⵙ',
+  'eliass':'ⵉⵍⵢⴰⵙ',
+  'elijah':'ⵉⵍⴰⵢⵊⴰ',
+  'elise':'ⴰⵍⵉⵣ',
+  'eliza':'ⴰⵍⵉⵣⴰ',
+  'elizabeth':'ⵉⵍⵉⵣⴰⴱⴰⵜ',
+  'ella':'ⴰⵍⴰ',
+  'elliot':'ⴰⵍⵢⵓⵜ',
+  'eloise':'ⴰⵍⵡⴰⵣ',
+  'elyasse':'ⵉⵍⵢⴰⵙ',
+  'emane':'ⵉⵎⴰⵏ',
+  'emile':'ⴰⵎⵉⵍ',
+  'emilie':'ⴰⵎⵉⵍⵉ',
+  'emilio':'ⵉⵎⵉⵍⵢⵓ',
+  'emily':'ⴰⵎⵉⵍⵉ',
+  'emma':'ⴰⵎⴰ',
+  'emmanuel':'ⴰⵎⴰⵏⵢⵡⴰⵍ',
+  'emre':'ⴰⵎⵔⴰ',
+  'enrique':'ⴰⵏⵔⵉⴽⴰ',
+  'ercan':'ⴰⵔⵊⴰⵏ',
+  'erdem':'ⴰⵔⴷⴰⵎ',
+  'eric':'ⴰⵔⵉⴽ',
+  'erika':'ⴰⵔⵉⴽⴰ',
+  'esmaeel':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'esmail':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'estelle':'ⴻⵙⵜⴰⵍ',
+  'ethan':'ⵉⵜⴰⵏ',
+  'etienne':'ⴰⵜⵢⴰⵏ',
+  'eva':'ⴰⴼⴰ',
+  'evan':'ⵉⴼⴰⵏ',
+  'evgeni':'ⴰⴼⵊⴰⵏⵉ',
+  'fabien':'ⴼⴰⴱⵉⵢⴰⵏ',
+  'fabienne':'ⴼⴰⴱⵢⴰⵏ',
+  'fadila':'ⴼⴰⴹⵉⵍⴰ',
+  'fadwa':'ⴼⴰⴷⵡⴰ',
+  'fahd':'ⴼⴰⵀⴷ',
+  'fairouz':'ⴼⴰⵢⵔⵓⵣ',
+  'faisal':'ⴼⴰⵢⵚⴰⵍ',
+  'faissal':'ⴼⴰⵢⵚⴰⵍ',
+  'faith':'ⴼⴰⵢⵜ',
+  'fareeda':'ⴼⴰⵔⵉⴷⴰ',
+  'farha':'ⴼⴰⵔⵃⴰ',
+  'farid':'ⴼⴰⵔⵉⴷ',
+  'farida':'ⴼⴰⵔⵉⴷⴰ',
+  'faris':'ⴼⴰⵔⵉⵙ',
+  'fatema':'ⴼⴰⵟⵉⵎⴰ',
+  'fathi':'ⴼⴰⵜⵃⵉ',
+  'fatiema':'ⴼⴰⵟⵉⵎⴰ',
+  'fatih':'ⴼⴰⵜⵉⵃ',
+  'fatiha':'ⴼⴰⵜⵉⵃⴰ',
+  'fatima':'ⴼⴰⵟⵉⵎⴰ',
+  'fatime':'ⴼⴰⵟⵉⵎⴰ',
+  'fatna':'ⴼⴰⵟⵏⴰ',
+  'fatouma':'ⴼⴰⵟⵓⵎⴰ',
+  'fawaz':'ⴼⴰⵡⵡⴰⵣ',
+  'fawzi':'ⴼⴰⵡⵣⵉ',
+  'faycal':'ⴼⴰⵢⵚⴰⵍ',
+  'faycel':'ⴼⴰⵢⵚⴰⵍ',
+  'fayez':'ⴼⴰⵢⵉⵣ',
+  'faysal':'ⴼⴰⵢⵚⴰⵍ',
+  'felix':'ⴼⴰⵍⵉⴽⵙ',
+  'fernand':'ⴼⴰⵔⵏⴰⵏ',
+  'fernando':'ⴼⴰⵔⵏⴰⵏⴷⵓ',
+  'fethi':'ⴼⴰⵜⵃⵉ',
+  'flora':'ⴼⵍⵓⵔⴰ',
+  'florence':'ⴼⵍⵓⵔⴰⵏⵙ',
+  'florian':'ⴼⵍⵓⵔⵉⵢⴰⵏ',
+  'fouad':'ⴼⵓⴰⴷ',
+  'fouzi':'ⴼⴰⵡⵣⵉ',
+  'francisco':'ⴼⵔⴰⵏⵙⵉⵙⴽⵓ',
+  'francois':'ⴼⵔⴰⵏⵙⵡⴰ',
+  'francoise':'ⴼⵔⴰⵏⵙⵡⴰⵣ',
+  'friederike':'ⴼⵔⵉⴷⴰⵔⵉⴽⴰ',
+  'fyodor':'ⴼⵢⵓⴷⵓⵔ',
+  'gabi':'ⵊⴰⴱⵉ',
+  'gabriel':'ⵊⴰⴱⵔⵉⵢⴰⵍ',
+  'gabriela':'ⵊⴰⴱⵔⵉⵢⴰⵍⴰ',
+  'gabriele':'ⵊⴰⴱⵔⵉⵢⴰⵍⴰ',
+  'gabrielle':'ⵊⴰⴱⵔⵉⵢⴰⵍ',
+  'gamal':'ⵊⴰⵎⴰⵍ',
+  'gaurav':'ⵊⵓⵔⴰⴼ',
+  'gauthier':'ⵖⵓⵜⵉⵢⴰ',
+  'gavin':'ⵊⴰⴼⵉⵏ',
+  'genevieve':'ⵊⴻⵏⴻⴼⵢⴰⵡ',
+  'geoffrey':'ⵊⴰⴼⵔⵉ',
+  'george':'ⵊⵓⵔⵊ',
+  'georges':'ⵊⵓⵔⵊ',
+  'gerhard':'ⵊⴰⵔⴰⵔ',
+  'ghada':'ⵖⴰⴷⴰ',
+  'ghali':'ⵖⴰⵍⵉ',
+  'ghalib':'ⵖⴰⵍⵉⴱ',
+  'ghassane':'ⵖⴰⵙⵙⴰⵏ',
+  'ghassen':'ⵖⴰⵙⵙⴰⵏ',
+  'ghazi':'ⵖⴰⵣⵉ',
+  'ghizlan':'ⵖⵉⵣⵍⴰⵏ',
+  'ghizlane':'ⵖⵉⵣⵍⴰⵏ',
+  'ghizlann':'ⵖⵉⵣⵍⴰⵏ',
+  'ghizlène':'ⵖⵉⵣⵍⴰⵏ',
+  'giovanna':'ⵊⵓⴼⴰⵏⴰ',
+  'giulia':'ⵊⵓⵍⵢⴰ',
+  'gonzalo':'ⵖⵓⵏⵙⴰⵍⵓ',
+  'grace':'ⵊⵔⴰⵢⵙ',
+  'grant':'ⵊⵔⴰⵏⵜ',
+  'gregoire':'ⵖⵔⴰⴳⵡⴰⵔ',
+  'gregory':'ⵊⵔⴰⵖⵓⵔⵉ',
+  'guillaume':'ⵖⵉⵢⵓⵎ',
+  'guillermo':'ⵖⵉⵢⴰⵔⵎⵓ',
+  'gunter':'ⵖⵓⵏⵜⴰⵔ',
+  'gurkan':'ⵖⵓⵔⴽⴰⵏ',
+  'gustave':'ⵖⵓⵙⵜⴰⴼ',
+  'gustavo':'ⵖⵓⵙⵜⴰⴼⵓ',
+  'habib':'ⵃⴰⴱⵉⴱ',
+  'habiib':'ⵃⴰⴱⵉⴱ',
+  'hadi':'ⵀⴰⴷⵉ',
+  'hafida':'ⵃⴰⴼⵉⴷⴰ',
+  'hager':'ⵀⴰⵊⴰⵔ',
+  'haitham':'ⵀⴰⵢⵜⴰⵎ',
+  'hajar':'ⵀⴰⵊⴰⵔ',
+  'hajer':'ⵀⴰⵊⴰⵔ',
+  'hakim':'ⵃⴰⴽⵉⵎ',
+  'haleema':'ⵃⴰⵍⵉⵎⴰ',
+  'halema':'ⵃⴰⵍⵉⵎⴰ',
+  'halim':'ⵃⴰⵍⵉⵎ',
+  'halima':'ⵃⴰⵍⵉⵎⴰ',
+  'haluk':'ⵀⴰⵍⵓⴽ',
+  'halyma':'ⵃⴰⵍⵉⵎⴰ',
+  'hamdan':'ⵃⴰⵎⴷⴰⵏ',
+  'hamdaoui':'ⵃⴰⵎⴷⴰⵡⵉ',
+  'hamdi':'ⵃⴰⵎⴷⵉ',
+  'hamid':'ⵃⴰⵎⵉⴷ',
+  'hamza':'ⵃⴰⵎⵣⴰ',
+  'hamzah':'ⵃⴰⵎⵣⴰ',
+  'hamze':'ⵃⴰⵎⵣⴰ',
+  'hamzé':'ⵃⴰⵎⵣⴰ',
+  'hanaan':'ⵃⴰⵏⴰⵏ',
+  'hanan':'ⵃⴰⵏⴰⵏ',
+  'hanane':'ⵃⴰⵏⴰⵏ',
+  'hani':'ⵀⴰⵏⵉ',
+  'hanna':'ⵀⴰⵏⴰ',
+  'hannah':'ⵀⴰⵏⴰ',
+  'hans':'ⵀⴰⵏⵣ',
+  'harish':'ⵀⴰⵔⵉⵛ',
+  'haroun':'ⵀⴰⵔⵓⵏ',
+  'harsh':'ⵀⴰⵔⵛ',
+  'hasan':'ⵃⴰⵙⴰⵏ',
+  'hassan':'ⵃⴰⵙⵙⴰⵏ',
+  'hassane':'ⵃⴰⵙⵙⴰⵏ',
+  'hassene':'ⵃⴰⵙⵙⴰⵏ',
+  'hatem':'ⵃⴰⵜⵉⵎ',
+  'hayat':'ⵃⴰⵢⴰⵜ',
+  'haydar':'ⵃⴰⵢⴷⴰⵔ',
+  'hayri':'ⵀⴰⵢⵔⵉ',
+  'haytham':'ⵀⴰⵢⵜⴰⵎ',
+  'hazem':'ⵃⴰⵣⵉⵎ',
+  'heather':'ⵀⴰⴹⴰⵔ',
+  'heinrich':'ⵀⴰⵢⵏⵔⵉⵅ',
+  'helen':'ⵀⴻⵍⴰⵏ',
+  'helene':'ⴻⵍⴰⵏ',
+  'helmut':'ⵀⴻⵍⵎⵓⵜ',
+  'hemza':'ⵃⴰⵎⵣⴰ',
+  'henriette':'ⴰⵏⵔⵢⴰⵜ',
+  'henry':'ⵀⴰⵏⵔⵉ',
+  'hesham':'ⵀⵉⵛⴰⵎ',
+  'hiba':'ⵀⵉⴱⴰ',
+  'hicham':'ⵀⵉⵛⴰⵎ',
+  'hichem':'ⵀⵉⵛⴰⵎ',
+  'hilal':'ⵀⵉⵍⴰⵍ',
+  'hind':'ⵀⵉⵏⴷ',
+  'hisham':'ⵀⵉⵛⴰⵎ',
+  'hoda':'ⵀⵓⴷⴰ',
+  'holly':'ⵀⵓⵍⵉ',
+  'hossein':'ⵃⵓⵙⴰⵢⵏ',
+  'houcin':'ⵃⵓⵙⴰⵢⵏ',
+  'houcine':'ⵃⵓⵙⴰⵢⵏ',
+  'houda':'ⵀⵓⴷⴰ',
+  'houria':'ⵀⵓⵔⵉⵢⴰ',
+  'houriya':'ⵀⵓⵔⵉⵢⴰ',
+  'houssein':'ⵃⵓⵙⴰⵢⵏ',
+  'huda':'ⵀⵓⴷⴰ',
+  'hugo':'ⵢⵓⵖⵓ',
+  'hunter':'ⵀⴰⵏⵜⴰⵔ',
+  'husain':'ⵃⵓⵙⴰⵢⵏ',
+  'husayn':'ⵃⵓⵙⴰⵢⵏ',
+  'husein':'ⵃⵓⵙⴰⵢⵏ',
+  'hussayn':'ⵃⵓⵙⴰⵢⵏ',
+  'hussein':'ⵃⵓⵙⴰⵢⵏ',
+  'hyppolite':'ⵉⴱⵓⵍⵉⵜ',
+  'ian':'ⵉⵢⴰⵏ',
+  'ibraheem':'ⵉⴱⵔⴰⵀⵉⵎ',
+  'ibraheim':'ⵉⴱⵔⴰⵀⵉⵎ',
+  'ibrahim':'ⵉⴱⵔⴰⵀⵉⵎ',
+  'idir':'ⵉⴷⵉⵔ',
+  'idris':'ⵉⴷⵔⵉⵙ',
+  'ignacio':'ⵉⵖⵏⴰⵙⵢⵓ',
+  'igor':'ⵉⵖⵓⵔ',
+  'ilham':'ⵉⵍⵀⴰⵎ',
+  'ilya':'ⵉⵍⵢⴰ',
+  'ilyas':'ⵉⵍⵢⴰⵙ',
+  'ilyass':'ⵉⵍⵢⴰⵙ',
+  'imaan':'ⵉⵎⴰⵏ',
+  'iman':'ⵉⵎⴰⵏ',
+  'ines':'ⵉⵏⴰⵙ',
+  'ingrid':'ⵉⵏⵊⵔⵉⴷ',
+  'isaac':'ⵉⵣⴰⴽ',
+  'isabella':'ⵉⵣⴰⴱⴰⵍⴰ',
+  'isabelle':'ⵉⵣⴰⴱⴰⵍ',
+  'ismaeel':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'ismael':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'ismail':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'ismaïl':'ⵉⵙⵎⴰⵄⵉⵍ',
+  'isra':'ⵉⵙⵔⴰⵄ',
+  'issa':'ⵄⵉⵙⴰ',
+  'ivan':'ⵉⴼⴰⵏ',
+  'iyas':'ⵉⵢⴰⵙ',
+  'izem':'ⵉⵣⴻⵎ',
+  'jaafar':'ⵊⴰⵄⴼⴰⵔ',
+  'jabir':'ⵊⴰⴱⵉⵔ',
+  'jack':'ⵊⴰⴽ',
+  'jackson':'ⵊⴰⴽⵙⵓⵏ',
+  'jacob':'ⵊⴰⴽⵓⴱ',
+  'jade':'ⵊⴰⴷ',
+  'jalal':'ⵊⴰⵍⴰⵍ',
+  'jamaal':'ⵊⴰⵎⴰⵍ',
+  'jamal':'ⵊⴰⵎⴰⵍ',
+  'james':'ⵊⴰⵢⵎⵣ',
+  'jamil':'ⵊⴰⵎⵉⵍ',
+  'jamila':'ⵊⴰⵎⵉⵍⴰ',
+  'janusz':'ⵢⴰⵏⵓⵛ',
+  'jasem':'ⵊⴰⵙⵉⵎ',
+  'jaser':'ⵊⴰⵙⵉⵔ',
+  'jasmeen':'ⵢⴰⵙⵎⵉⵏ',
+  'jasmine':'ⵢⴰⵙⵎⵉⵏ',
+  'jason':'ⵊⴰⵢⵙⵓⵏ',
+  'jawad':'ⵊⴰⵡⴰⴷ',
+  'jean':'ⵊⴰⵏ',
+  'jean-baptiste':'ⵊⴰⵏⴱⴰⵜⵉⵙⵜ',
+  'jean-pierre':'ⵊⴰⵏⴱⵢⴰⵔ',
+  'jeanne':'ⵊⴰⵏ',
+  'jeff':'ⵊⴰⴼ',
+  'jeffrey':'ⵊⴰⴼⵔⵉ',
+  'jennifer':'ⵊⴻⵏⵉⴼⴰⵔ',
+  'jeremy':'ⵊⴰⵔⴰⵎⵉ',
+  'jerome':'ⵊⴰⵔⵓⵎ',
+  'jesse':'ⵊⴰⵙⵉ',
+  'jessica':'ⵊⴰⵙⵉⴽⴰ',
+  'jesus':'ⵀⴰⵙⵓⵙ',
+  'jihad':'ⵊⵉⵀⴰⴷ',
+  'jihane':'ⵊⵉⵀⴰⵏ',
+  'jochen':'ⵢⵓⵅⴰⵏ',
+  'johanna':'ⵢⵓⵀⴰⵏⴰ',
+  'jonathan':'ⵊⵓⵏⴰⵜⴰⵏ',
+  'jordan':'ⵊⵓⵔⴷⴰⵏ',
+  'jorge':'ⵀⵓⵔⵀⴰ',
+  'jose':'ⵀⵓⵣⴰ',
+  'joseph':'ⵊⵓⵣⵉⴼ',
+  'joshua':'ⵊⵓⵛⵡⴰ',
+  'jouhara':'ⵊⴰⵡⵀⴰⵔⴰ',
+  'juan':'ⵀⵡⴰⵏ',
+  'juergen':'ⵢⵓⵔⵖⴰⵏ',
+  'julia':'ⵊⵓⵍⵢⴰ',
+  'julie':'ⵊⵓⵍⵉ',
+  'julien':'ⵊⵓⵍⵉⵢⴰⵏ',
+  'juliette':'ⵊⵓⵍⵢⴰⵜ',
+  'justin':'ⵊⴰⵙⵜⵉⵏ',
+  'justine':'ⵊⵓⵙⵜⵉⵏ',
+  'kaan':'ⴽⴰⵏ',
+  'kamel':'ⴽⴰⵎⴰⵍ',
+  'karan':'ⴽⴰⵔⴰⵏ',
+  'kareem':'ⴽⴰⵔⵉⵎ',
+  'kareema':'ⴽⴰⵔⵉⵎⴰ',
+  'kariim':'ⴽⴰⵔⵉⵎ',
+  'karim':'ⴽⴰⵔⵉⵎ',
+  'karima':'ⴽⴰⵔⵉⵎⴰ',
+  'karimah':'ⴽⴰⵔⵉⵎⴰ',
+  'katrin':'ⴽⴰⵜⵔⵉⵏ',
+  'kauthar':'ⴽⴰⵡⵜⴰⵔ',
+  'kawtar':'ⴽⴰⵡⵜⴰⵔ',
+  'kawther':'ⴽⴰⵡⵜⴰⵔ',
+  'kayla':'ⴽⴰⵢⵍⴰ',
+  'kazimierz':'ⴽⴰⵣⵉⵎⵢⴰⵔⵣ',
+  'kelly':'ⴽⴻⵍⵉ',
+  'kemal':'ⴽⴰⵎⴰⵍ',
+  'kerim':'ⴽⴰⵔⵉⵎ',
+  'kerstin':'ⴽⴰⵔⵙⵜⵉⵏ',
+  'kevin':'ⴽⴰⴼⵉⵏ',
+  'khaalid':'ⵅⴰⵍⵉⴷ',
+  'khadidja':'ⵅⴰⴷⵉⵊⴰ',
+  'khadija':'ⵅⴰⴷⵉⵊⴰ',
+  'khadijah':'ⵅⴰⴷⵉⵊⴰ',
+  'khaled':'ⵅⴰⵍⵉⴷ',
+  'khalid':'ⵅⴰⵍⵉⴷ',
+  'khalil':'ⵅⴰⵍⵉⵍ',
+  'khaoula':'ⵅⴰⵡⵍⴰ',
+  'khattab':'ⵅⴰⵟⵟⴰⴱ',
+  'khawla':'ⵅⴰⵡⵍⴰ',
+  'khedidja':'ⵅⴰⴷⵉⵊⴰ',
+  'kheira':'ⵅⴰⵢⵔⴰ',
+  'kheireddine':'ⵅⴰⵢⵔⴷⴷⵉⵏ',
+  'khloued':'ⵅⵓⵍⵓⴷ',
+  'khola':'ⵅⴰⵡⵍⴰ',
+  'khouloud':'ⵅⵓⵍⵓⴷ',
+  'khyreddin':'ⵅⴰⵢⵔⴷⴷⵉⵏ',
+  'khâlid':'ⵅⴰⵍⵉⴷ',
+  'kirsten':'ⴽⵉⵔⵙⵜⴰⵏ',
+  'konrad':'ⴽⵓⵏⵔⴰⴷ',
+  'kowthar':'ⴽⴰⵡⵜⴰⵔ',
+  'kristina':'ⴽⵔⵉⵙⵜⵉⵏⴰ',
+  'kunal':'ⴽⵓⵏⴰⵍ',
+  'kurt':'ⴽⵓⵔⵜ',
+  'kyle':'ⴽⴰⵢⵍ',
+  'kylian':'ⴽⵉⵍⵉⵢⴰⵏ',
+  'laetitia':'ⵍⴰⵜⵉⵙⵢⴰ',
+  'lahouari':'ⵍⴰⵀⵡⴰⵔⵉ',
+  'laila':'ⵍⴰⵢⵍⴰ',
+  'lamia':'ⵍⴰⵎⵢⴰⵄ',
+  'lamine':'ⵍⴰⵎⵉⵏ',
+  'larbi':'ⵍⴰⵄⵔⴰⴱⵉ',
+  'lateefa':'ⵍⴰⵟⵉⴼⴰ',
+  'latifa':'ⵍⴰⵟⵉⴼⴰ',
+  'latifah':'ⵍⴰⵟⵉⴼⴰ',
+  'laura':'ⵍⴰⵡⵔⴰ',
+  'laure':'ⵍⵓⵔ',
+  'lauren':'ⵍⵓⵔⴰⵏ',
+  'laurence':'ⵍⵓⵔⴰⵏⵙ',
+  'laurent':'ⵍⵓⵔⴰⵏ',
+  'layla':'ⵍⴰⵢⵍⴰ',
+  'leena':'ⵍⵉⵏⴰ',
+  'leila':'ⵍⴰⵢⵍⴰ',
+  'lena':'ⵍⴰⵏⴰ',
+  'leo':'ⵍⴰⵢⵓ',
+  'leon':'ⵍⴰⵢⵓⵏ',
+  'leonard':'ⵍⴰⵢⵓⵏⴰⵔ',
+  'leonie':'ⵍⴰⵢⵓⵏⵉ',
+  'liam':'ⵍⵉⵢⴰⵎ',
+  'lieselotte':'ⵍⵉⵣⵍⵓⵜ',
+  'lila':'ⵍⴰⵢⵍⴰ',
+  'lily':'ⵍⵉⵍⵉ',
+  'lina':'ⵍⵉⵏⴰ',
+  'lindsey':'ⵍⵉⵏⴷⵣⵉ',
+  'lisa':'ⵍⵉⵣⴰ',
+  'loco':'ⵍⵓⴽ',
+  'logan':'ⵍⵓⵖⴰⵏ',
+  'lokmane':'ⵍⵓⵇⵎⴰⵏ',
+  'lola':'ⵍⵓⵍⴰ',
+  'loqmane':'ⵍⵓⵇⵎⴰⵏ',
+  'lorena':'ⵍⵓⵔⴰⵏⴰ',
+  'lorenzo':'ⵍⵓⵔⴰⵏⵙⵓ',
+  'lotfi':'ⵍⵓⵟⴼⵉ',
+  'louai':'ⵍⵓⵄⴰⵢ',
+  'louis':'ⵍⵡⵉ',
+  'louise':'ⵍⵡⵉⵣ',
+  'lounes':'ⵍⵓⵏⵉⵙ',
+  'luca':'ⵍⵓⴽⴰ',
+  'lucas':'ⵍⵓⴽⴰⵙ',
+  'lucia':'ⵍⵓⵜⵛⵢⴰ',
+  'lucie':'ⵍⵓⵙⵉ',
+  'lucien':'ⵍⵓⵙⵉⵢⴰⵏ',
+  'luis':'ⵍⵡⵉⵙ',
+  'lukas':'ⵍⵓⴽⴰⵙ',
+  'luna':'ⵍⵓⵏⴰ',
+  'lutfi':'ⵍⵓⵟⴼⵉ',
+  'lyla':'ⵍⴰⵢⵍⴰ',
+  'lyna':'ⵍⵉⵏⴰ',
+  'maahdi':'ⵎⴰⵀⴷⵉ',
+  'maalik':'ⵎⴰⵍⵉⴽ',
+  'mabrouk':'ⵎⴰⴱⵔⵓⴽ',
+  'mabrouka':'ⵎⴱⴰⵔⴽⴰ',
+  'madison':'ⵎⴰⴷⵉⵙⵓⵏ',
+  'madjid':'ⵎⴰⵊⵉⴷ',
+  'madjide':'ⵎⴰⵊⵉⴷ',
+  'maeva':'ⵎⴰⵢⴼⴰ',
+  'mahdi':'ⵎⴰⵀⴷⵉ',
+  'maher':'ⵎⴰⵀⵉⵔ',
+  'mahmoud':'ⵎⴰⵃⵎⵓⴷ',
+  'mahomet':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'majid':'ⵎⴰⵊⵉⴷ',
+  'malak':'ⵎⴰⵍⵉⴽ',
+  'maleeka':'ⵎⴰⵍⵉⴽⴰ',
+  'malik':'ⵎⴰⵍⵉⴽ',
+  'malika':'ⵎⴰⵍⵉⴽⴰ',
+  'manal':'ⵎⴰⵏⴰⵍ',
+  'manel':'ⵎⴰⵏⴰⵍ',
+  'manish':'ⵎⴰⵏⵉⵛ',
+  'manon':'ⵎⴰⵏⵓⵏ',
+  'mansour':'ⵎⴰⵏⵚⵓⵔ',
+  'marc':'ⵎⴰⵔⴽ',
+  'marco':'ⵎⴰⵔⴽⵓ',
+  'marcos':'ⵎⴰⵔⴽⵓⵙ',
+  'margot':'ⵎⴰⵔⵖⵓ',
+  'maria':'ⵎⴰⵔⵢⴰ',
+  'mariam':'ⵎⴰⵔⵢⴰⵎ',
+  'mariana':'ⵎⴰⵔⵢⴰⵏⴰ',
+  'marie':'ⵎⴰⵔⵉ',
+  'mariela':'ⵎⴰⵔⵢⴰⵍⴰ',
+  'marine':'ⵎⴰⵔⵉⵏ',
+  'mario':'ⵎⴰⵔⵢⵓ',
+  'markus':'ⵎⴰⵔⴽⵓⵙ',
+  'martin':'ⵎⴰⵔⵜⴰⵏ',
+  'marwa':'ⵎⴰⵔⵡⴰ',
+  'marwan':'ⵎⴰⵔⵡⴰⵏ',
+  'maryam':'ⵎⴰⵔⵢⴰⵎ',
+  'mason':'ⵎⴰⵢⵙⵓⵏ',
+  'massin':'ⵎⴰⵙⵙⵉⵏ',
+  'massinissa':'ⵎⴰⵙⵉⵏⵉⵙⴰ',
+  'mathieu':'ⵎⴰⵜⵢⵓ',
+  'mathilde':'ⵎⴰⵜⵉⵍⴷ',
+  'mathis':'ⵎⴰⵜⵉⵙ',
+  'matthew':'ⵎⴰⵜⵢⵓ',
+  'matthieu':'ⵎⴰⵜⵢⵓ',
+  'maxime':'ⵎⴰⴽⵙⵉⵎ',
+  'maximilieu':'ⵎⴰⴽⵙⵉⵎⵉⵍⵢⴰⵏ',
+  'maysam':'ⵎⴰⵢⵙⴰⵎ',
+  'maysem':'ⵎⴰⵢⵙⴰⵎ',
+  'mazene':'ⵎⴰⵣⴻⵏ',
+  'megan':'ⵎⵉⵖⴰⵏ',
+  'mehamed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mehammed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mehdi':'ⵎⴰⵀⴷⵉ',
+  'mehmet':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mehyeddine':'ⵎⵓⵃⵢⵉⴷⴷⵉⵏ',
+  'melissa':'ⵎⴻⵍⵉⵙⴰ',
+  'meriem':'ⵎⴰⵔⵢⴰⵎ',
+  'merouane':'ⵎⴰⵔⵡⴰⵏ',
+  'mervet':'ⵎⴰⵔⵡⴰⵜ',
+  'merwa':'ⵎⴰⵔⵡⴰ',
+  'meryem':'ⵎⴰⵔⵢⴰⵎ',
+  'mia':'ⵎⵉⵢⴰ',
+  'michael':'ⵎⵉⵅⴰⵢⵍ',
+  'michelle':'ⵎⵉⵛⴰⵍ',
+  'mickael':'ⵎⵉⴽⴰⵢⵍ',
+  'miguel':'ⵎⵉⵖⴰⵍ',
+  'mike':'ⵎⴰⵢⴽ',
+  'mikhail':'ⵎⵉⵅⴰⵢⵍ',
+  'milan':'ⵎⵉⵍⴰⵏ',
+  'miriam':'ⵎⴰⵔⵢⴰⵎ',
+  'moez':'ⵎⵓⵄⵉⵣ',
+  'mohamad':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mohamed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mohamid':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mohammed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mohammod':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mohand':'ⵎⵓⵃⴰⵏⴷ',
+  'mohand ouramdane':'ⵎⵓⵃⴰⵏⴷⵓⵔⴰⵎⴷⴰⵏ',
+  'mohit':'ⵎⵓⵀⵉⵜ',
+  'mohmed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mohsin':'ⵎⵓⵃⵙⵉⵏ',
+  'monika':'ⵎⵓⵏⵉⴽⴰ',
+  'monir':'ⵎⵓⵏⵉⵔ',
+  'morad':'ⵎⵓⵔⴰⴷ',
+  'mored':'ⵎⵓⵔⴰⴷ',
+  'mouez':'ⵎⵓⵄⵉⵣ',
+  'mouhamed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mouhyeddine':'ⵎⵓⵃⵢⵉⴷⴷⵉⵏ',
+  'mouloud':'ⵎⵓⵍⵓⴷ',
+  'moundhir':'ⵎⵓⵏⴹⵉⵔ',
+  'mounir':'ⵎⵓⵏⵉⵔ',
+  'mourad':'ⵎⵓⵔⴰⴷ',
+  'mousa':'ⵎⵓⵙⴰ',
+  'moussa':'ⵎⵓⵙⴰ',
+  'moustafa':'ⵎⵓⵚⵟⴰⴼⴰ',
+  'moustapha':'ⵎⵓⵚⵟⴰⴼⴰ',
+  'muhamad':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'muhammad':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'muhammed':'ⵎⵓⵃⴰⵎⵎⴰⴷ',
+  'mulood':'ⵎⵓⵍⵓⴷ',
+  'munir':'ⵎⵓⵏⵉⵔ',
+  'murad':'ⵎⵓⵔⴰⴷ',
+  'murat':'ⵎⵓⵔⴰⵜ',
+  'musa':'ⵎⵓⵙⴰ',
+  'mustafa':'ⵎⵓⵚⵟⴰⴼⴰ',
+  'myriam':'ⵎⴰⵔⵢⴰⵎ',
+  'nabeel':'ⵏⴰⴱⵉⵍ',
+  'nabel':'ⵏⴰⴱⵉⵍ',
+  'nabil':'ⵏⴰⴱⵉⵍ',
+  'nabyl':'ⵏⴰⴱⵉⵍ',
+  'nacer':'ⵏⴰⵚⵉⵔ',
+  'naceur':'ⵏⴰⵚⵉⵔ',
+  'nadia':'ⵏⴰⴷⵢⴰ',
+  'nadir':'ⵏⴰⴷⵉⵔ',
+  'nadira':'ⵏⴰⴷⵉⵔⴰ',
+  'nadiya':'ⵏⴰⴷⵢⴰ',
+  'nadjat':'ⵏⴰⵊⴰⵜ',
+  'nadya':'ⵏⴰⴷⵢⴰ',
+  'nafissa':'ⵏⴰⴼⵉⵙⴰ',
+  'naim':'ⵏⴰⵄⵉⵎ',
+  'naima':'ⵏⴰⵄⵉⵎⴰ',
+  'najat':'ⵏⴰⵊⴰⵜ',
+  'najet':'ⵏⴰⵊⴰⵜ',
+  'najma':'ⵏⴰⵊⵎⴰ',
+  'naoufel':'ⵏⴰⵡⴼⴰⵍ',
+  'naouil':'ⵏⴰⵡⴰⵍ',
+  'narjiss':'ⵏⴰⵔⵊⵉⵙ',
+  'nasrine':'ⵏⴰⵙⵔⵉⵏ',
+  'nasser':'ⵏⴰⵚⵉⵔ',
+  'nassim':'ⵏⴰⵙⵙⵉⵎ',
+  'natalie':'ⵏⴰⵜⴰⵍⵉ',
+  'natasha':'ⵏⴰⵜⴰⵛⴰ',
+  'nathalie':'ⵏⴰⵜⴰⵍⵉ',
+  'nathan':'ⵏⴰⵜⴰⵏ',
+  'nawal':'ⵏⴰⵡⴰⵍ',
+  'nawel':'ⵏⴰⵡⴰⵍ',
+  'nawfel':'ⵏⴰⵡⴼⴰⵍ',
+  'nazar':'ⵏⵉⵣⴰⵔ',
+  'nesrine':'ⵏⴰⵙⵔⵉⵏ',
+  'nicholas':'ⵏⵉⴽⵓⵍⴰⵙ',
+  'nichole':'ⵏⵉⴽⵓⵍ',
+  'nicolas':'ⵏⵉⴽⵓⵍⴰ',
+  'nicole':'ⵏⵉⴽⵓⵍ',
+  'nikhil':'ⵏⵉⴽⵉⵍ',
+  'nikolai':'ⵏⵉⴽⵓⵍⴰⵢ',
+  'nina':'ⵏⵉⵏⴰ',
+  'nisar':'ⵏⵉⵣⴰⵔ',
+  'nizar':'ⵏⵉⵣⴰⵔ',
+  'noah':'ⵏⵓⵀⴰ',
+  'noe':'ⵏⵓⵀⴰ',
+  'noemi':'ⵏⵓⵢⴰⵎⵉ',
+  'nora':'ⵏⵓⵔⴰ',
+  'norbert':'ⵏⵓⵔⴱⴰⵔⵜ',
+  'nordine':'ⵏⵓⵔⴷⴷⵉⵏ',
+  'nouha':'ⵏⵓⵀⴰ',
+  'nour':'ⵏⵓⵔ',
+  'noura':'ⵏⵓⵔⴰ',
+  'noure':'ⵏⵓⵔ',
+  'noureddin':'ⵏⵓⵔⴷⴷⵉⵏ',
+  'nouredine':'ⵏⵓⵔⴷⴷⵉⵏ',
+  'nur':'ⵏⵓⵔ',
+  'oceane':'ⵓⵙⴰⵢⴰⵏ',
+  'oliver':'ⵓⵍⵉⴼⴰⵔ',
+  'olivia':'ⵓⵍⵉⴼⵢⴰ',
+  'olivier':'ⵓⵍⵉⴼⵉⵢⴰ',
+  'omar':'ⵄⵓⵎⴰⵔ',
+  'omer':'ⵄⵓⵎⴰⵔ',
+  'onur':'ⵓⵏⵓⵔ',
+  'oscar':'ⵓⵙⴽⴰⵔ',
+  'osman':'ⵄⵓⵜⵎⴰⵏ',
+  'othman':'ⵄⵓⵜⵎⴰⵏ',
+  'othmane':'ⵄⵓⵜⵎⴰⵏ',
+  'oualed':'ⵡⴰⵍⵉⴷ',
+  'ouarda':'ⵡⴰⵔⴷⴰ',
+  'ouerd':'ⵡⴰⵔⴷⴰ',
+  'oumr':'ⵄⵓⵎⴰⵔ',
+  'oussama':'ⵓⵙⴰⵎⴰ',
+  'oussmann':'ⵄⵓⵜⵎⴰⵏ',
+  'owen':'ⵓⵡⴰⵏ',
+  'pablo':'ⴱⴰⴱⵍⵓ',
+  'paige':'ⴱⴰⵢⵊ',
+  'pamela':'ⴱⴰⵎⵉⵍⴰ',
+  'paola':'ⴱⴰⵡⵍⴰ',
+  'pascal':'ⴱⴰⵙⴽⴰⵍ',
+  'patricia':'ⴱⴰⵜⵔⵉⵙⵢⴰ',
+  'paul':'ⴱⵓⵍ',
+  'pauline':'ⴱⵓⵍⵉⵏ',
+  'pawel':'ⴱⴰⴼⴰⵡ',
+  'pedro':'ⴱⴰⴷⵔⵓ',
+  'penelope':'ⴱⴰⵏⴰⵍⵓⴱⴰ',
+  'peter':'ⴱⵉⵜⴰⵔ',
+  'petra':'ⴱⴰⵜⵔⴰ',
+  'philip':'ⴼⵉⵍⵉⴱ',
+  'pierre':'ⴱⵢⴰⵔ',
+  'pierre-marie':'ⴱⵢⴰⵔⵎⴰⵔⵉ',
+  'pilar':'ⴱⵉⵍⴰⵔ',
+  'priya':'ⴱⵔⵉⵢⴰ',
+  'qassim':'ⵇⴰⵙⵉⵎ',
+  'quentin':'ⴽⴰⵏⵜⴰⵏ',
+  'rabah':'ⵔⴰⴱⴰⵃ',
+  'rabii':'ⵔⴰⴱⵉⵄ',
+  'rachel':'ⵔⴰⵛⴰⵍ',
+  'rachid':'ⵔⴰⵛⵉⴷ',
+  'rafael':'ⵔⴰⴼⴰⵢⵍ',
+  'rafik':'ⵔⴰⴼⵉⵇ',
+  'rafika':'ⵔⴰⴼⵉⵇⴰ',
+  'rahama':'ⵔⴰⵃⵎⴰ',
+  'rahma':'ⵔⴰⵃⵎⴰ',
+  'rahul':'ⵔⴰⵀⵓⵍ',
+  'raiane':'ⵔⴰⵢⴰⵏ',
+  'rainer':'ⵔⴰⵢⵏⴰⵔ',
+  'raj':'ⵔⴰⵊ',
+  'raja':'ⵔⴰⵊⴰⵄ',
+  'rajaa':'ⵔⴰⵊⴰⵄ',
+  'rami':'ⵔⴰⵎⵉ',
+  'rana':'ⵔⴰⵏⴰ',
+  'rania':'ⵔⴰⵏⵢⴰ',
+  'raniya':'ⵔⴰⵏⵢⴰ',
+  'ranya':'ⵔⴰⵏⵢⴰ',
+  'raouaf':'ⵔⴰⵄⵓⴼ',
+  'raouf':'ⵔⴰⵄⵓⴼ',
+  'raphael':'ⵔⴰⴼⴰⵢⵍ',
+  'rasheed':'ⵔⴰⵛⵉⴷ',
+  'rashid':'ⵔⴰⵛⵉⴷ',
+  'rashida':'ⵔⴰⵛⵉⴷⴰ',
+  'raul':'ⵔⴰⵡⵍ',
+  'rawane':'ⵔⴰⵡⴰⵏ',
+  'rayan':'ⵔⴰⵢⴰⵏ',
+  'rayane':'ⵔⴰⵢⴰⵏ',
+  'rayen':'ⵔⴰⵢⴰⵏ',
+  'rebecca':'ⵔⴰⴱⴰⴽⴰ',
+  'reda':'ⵔⵉⴹⴰ',
+  'redha':'ⵔⵉⴹⴰ',
+  'redouane':'ⵔⵉⴹⵡⴰⵏ',
+  'reine':'ⵔⴰⵏ',
+  'remi':'ⵔⴰⵎⵉ',
+  'renate':'ⵔⴰⵏⴰⵜⴰ',
+  'renaud':'ⵔⴰⵏⵓ',
+  'rhama':'ⵔⴰⵃⵎⴰ',
+  'riad':'ⵔⵉⵢⴰⵟ',
+  'rida':'ⵔⵉⴹⴰ',
+  'ridha':'ⵔⵉⴹⴰ',
+  'ridwan':'ⵔⵉⴹⵡⴰⵏ',
+  'riley':'ⵔⴰⵢⵍⵉ',
+  'rim':'ⵔⵉⵎ',
+  'robert':'ⵔⵓⴱⴰⵔⵜ',
+  'roberto':'ⵔⵓⴱⴰⵔⵜⵓ',
+  'rodrigo':'ⵔⵓⴷⵔⵉⵖⵓ',
+  'rohan':'ⵔⵓⵀⴰⵏ',
+  'rokaya':'ⵔⵓⵇⴰⵢⵢⴰ',
+  'romain':'ⵔⵓⵎⴰⵏ',
+  'romaissa':'ⵔⵓⵎⴰⵢⵙⴰⵄ',
+  'rosa':'ⵔⵓⵣⴰ',
+  'rouda':'ⵔⴰⵡⴹⴰ',
+  'roumaissa':'ⵔⵓⵎⴰⵢⵙⴰⵄ',
+  'ruqaya':'ⵔⵓⵇⴰⵢⵢⴰ',
+  'ryad':'ⵔⵉⵢⴰⵟ',
+  'ryan':'ⵔⴰⵢⴰⵏ',
+  'saad':'ⵙⴰⵄⴷ',
+  'saamir':'ⵙⴰⵎⵉⵔ',
+  'saara':'ⵙⴰⵔⴰ',
+  'sabine':'ⵣⴰⴱⵉⵏ',
+  'sabir':'ⵙⴰⴱⵉⵔ',
+  'sabrina':'ⵙⴰⴱⵔⵉⵏⴰ',
+  'sabrine':'ⵙⴰⴱⵔⵉⵏⴰ',
+  'sadiq':'ⵙⴰⴷⵉⵇ',
+  'saed':'ⵙⴰⵄⴷ',
+  'said':'ⵙⴰⵄⵉⴷ',
+  'saida':'ⵙⴰⵄⵉⴷⴰ',
+  'saif':'ⵙⴰⵢⴼ',
+  'sakina':'ⵙⴰⴽⵉⵏⴰ',
+  'salah':'ⵚⴰⵍⴰⵃ',
+  'saleem':'ⵙⴰⵍⵉⵎ',
+  'salem':'ⵙⴰⵍⵉⵎ',
+  'salim':'ⵙⴰⵍⵉⵎ',
+  'salima':'ⵙⴰⵍⵉⵎⴰ',
+  'salma':'ⵙⴰⵍⵎⴰ',
+  'samantha':'ⵙⴰⵎⴰⵏⵜⴰ',
+  'samer':'ⵙⴰⵎⵉⵔ',
+  'sami':'ⵙⴰⵎⵉ',
+  'samir':'ⵙⴰⵎⵉⵔ',
+  'samuel':'ⵙⴰⵎⵢⵡⴰⵍ',
+  'sana':'ⵙⴰⵏⴰⵄ',
+  'sanaa':'ⵙⴰⵏⴰⵄ',
+  'sandra':'ⵣⴰⵏⴷⵔⴰ',
+  'sandrine':'ⵙⴰⵏⴷⵔⵉⵏ',
+  'sanjay':'ⵙⴰⵏⵊⴰⵢ',
+  'sanâ':'ⵙⴰⵏⴰⵄ',
+  'sara':'ⵙⴰⵔⴰ',
+  'sarah':'ⵙⴰⵔⴰ',
+  'savannah':'ⵙⴰⴼⴰⵏⴰ',
+  'sayf':'ⵙⴰⵢⴼ',
+  'saïd':'ⵙⴰⵄⵉⴷ',
+  'scott':'ⵙⴽⵓⵜ',
+  'sean':'ⵛⵓⵏ',
+  'sebastien':'ⵙⴰⴱⴰⵙⵜⵉⵢⴰⵏ',
+  'sebrina':'ⵙⴰⴱⵔⵉⵏⴰ',
+  'seham':'ⵙⵉⵀⴰⵎ',
+  'selim':'ⵙⴰⵍⵉⵎ',
+  'selma':'ⵙⴰⵍⵎⴰ',
+  'sergio':'ⵙⴰⵔⵀⵢⵓ',
+  'serhiy':'ⵙⴰⵔⵀⵉ',
+  'serine':'ⵙⵉⵔⵉⵏ',
+  'seth':'ⵙⴰⵜ',
+  'seyf':'ⵙⴰⵢⴼ',
+  'shayma':'ⵛⴰⵢⵎⴰⵄ',
+  'shelby':'ⵛⴻⵍⴱⵉ',
+  'shiva':'ⵛⵉⴼⴰ',
+  'sierra':'ⵙⵢⴰⵔⴰ',
+  'siham':'ⵙⵉⵀⴰⵎ',
+  'simon':'ⵙⵉⵎⵓⵏ',
+  'siradj':'ⵙⵉⵔⴰⵊ',
+  'siraj':'ⵙⵉⵔⴰⵊ',
+  'siraje':'ⵙⵉⵔⴰⵊ',
+  'sirajeddin':'ⵙⵉⵔⴰⵊⴷⴷⵉⵏ',
+  'sirine':'ⵙⵉⵔⵉⵏ',
+  'slavko':'ⵙⵍⴰⴼⴽⵓ',
+  'sofia':'ⵙⵓⴼⵢⴰ',
+  'sofiane':'ⵙⵓⴼⵢⴰⵏ',
+  'sofiyan':'ⵙⵓⴼⵢⴰⵏ',
+  'sohayb':'ⵚⵓⵀⴰⵢⴱ',
+  'soledad':'ⵙⵓⵍⴰⴷⴰⴷ',
+  'sophia':'ⵙⵓⴼⵢⴰ',
+  'sophie':'ⵙⵓⴼⵉ',
+  'souad':'ⵙⵓⵄⴰⴷ',
+  'soufiane':'ⵙⵓⴼⵢⴰⵏ',
+  'soufyane':'ⵙⵓⴼⵢⴰⵏ',
+  'souhil':'ⵙⵓⵀⴰⵢⵍ',
+  'soukaina':'ⵙⵓⴽⴰⵢⵏⴰ',
+  'soukayna':'ⵙⵓⴽⴰⵢⵏⴰ',
+  'soukeine':'ⵙⵓⴽⴰⵢⵏⴰ',
+  'souleymane':'ⵙⵓⵍⴰⵢⵎⴰⵏ',
+  'soumayya':'ⵙⵓⵎⴰⵢⵢⴰ',
+  'soumia':'ⵙⵓⵎⵢⴰ',
+  'soumiya':'ⵙⵓⵎⵉⵢⴰ',
+  'stefan':'ⵛⵜⴰⴼⴰⵏ',
+  'stefanie':'ⵛⵜⴰⴼⴰⵏⵉ',
+  'stephane':'ⵙⵜⴰⴼⴰⵏ',
+  'stephanie':'ⵙⵜⴻⴼⴰⵏⵉ',
+  'steven':'ⵙⵜⵉⴼⴰⵏ',
+  'sufyan':'ⵙⵓⴼⵢⴰⵏ',
+  'suleiman':'ⵙⵓⵍⴰⵢⵎⴰⵏ',
+  'suleyman':'ⵙⵓⵍⴰⵢⵎⴰⵏ',
+  'sultan':'ⵙⵓⵍⵟⴰⵏ',
+  'suresh':'ⵙⵓⵔⴰⵛ',
+  'susanne':'ⵣⵓⵣⴰⵏⴰ',
+  'syham':'ⵙⵉⵀⴰⵎ',
+  'taariq':'ⵟⴰⵔⵉⵇ',
+  'tafat':'ⵜⴰⴼⴰⵜ',
+  'tafoukt':'ⵜⴰⴼⵓⴽⵜ',
+  'tafsut':'ⵜⴰⴼⵙⵓⵜ',
+  'tafukt':'ⵜⴰⴼⵓⴽⵜ',
+  'taha':'ⵟⴰⵀⴰ',
+  'tahat':'ⵜⴰⵀⴰⵜ',
+  'taher':'ⵟⴰⵀⵉⵔ',
+  'taib':'ⵟⴰⵢⵢⵉⴱ',
+  'takouda':'ⵜⴰⴽⵓⴷⴰ',
+  'tala':'ⵜⴰⵍⴰ',
+  'tameem':'ⵜⴰⵎⵉⵎ',
+  'tamer':'ⵜⴰⵎⵉⵔ',
+  'tamurt':'ⵜⴰⵎⵓⵔⵜ',
+  'tanirt':'ⵜⴰⵏⵉⵔⵜ',
+  'taourit':'ⵜⴰⵡⵔⵉⵜ',
+  'tarek':'ⵟⴰⵔⵉⵇ',
+  'tarik':'ⵟⴰⵔⵉⴽ',
+  'tariq':'ⵟⴰⵔⵉⵇ',
+  'tarique':'ⵟⴰⵔⵉⵇ',
+  'tarkan':'ⵟⴰⵔⴽⴰⵏ',
+  'tasnift':'ⵜⴰⵙⵏⵉⴼⵜ',
+  'tawfiq':'ⵜⴰⵡⴼⵉⵇ',
+  'tayeb':'ⵟⴰⵢⵢⵉⴱ',
+  'tayib':'ⵟⴰⵢⵢⵉⴱ',
+  'taylor':'ⵜⴰⵢⵍⴰⵔ',
+  'tayri':'ⵜⴰⵢⵔⵉ',
+  'taysir':'ⵜⴰⵢⵙⵉⵔ',
+  'taziri':'ⵜⴰⵣⵉⵔⵉ',
+  'theo':'ⵜⴰⵢⵓ',
+  'thibault':'ⵜⵉⴱⵓ',
+  'thibaut':'ⵜⵉⴱⵓ',
+  'thomas':'ⵜⵓⵎⴰ',
+  'tidet':'ⵜⵉⴷⴻⵜ',
+  'tifawt':'ⵜⵉⴼⴰⵡⵜ',
+  'tiffany':'ⵜⵉⴼⴰⵏⵉ',
+  'tilili':'ⵜⵉⵍⵉⵍⵉ',
+  'timothee':'ⵜⵉⵎⵓⵜⴰ',
+  'timothy':'ⵜⵉⵎⵓⵜⵉ',
+  'timur':'ⵜⵉⵎⵓⵔ',
+  'tinhinan':'ⵜⵉⵏⵀⵉⵏⴰⵏ',
+  'tislit':'ⵜⵉⵙⵍⵉⵜ',
+  'tiziri':'ⵜⵉⵣⵉⵔⵉ',
+  'tiziritt':'ⵜⵉⵣⵉⵔⵉ',
+  'tobias':'ⵜⵓⴱⵉⴰⵙ',
+  'tolga':'ⵜⵓⵍⵖⴰ',
+  'travis':'ⵜⵔⴰⴼⵉⵙ',
+  'trevor':'ⵜⵔⴰⴼⴰⵔ',
+  'tristan':'ⵜⵔⵉⵙⵜⴰⵏ',
+  'tugrul':'ⵟⵓⵖⵔⵓⵍ',
+  'tyler':'ⵜⴰⵢⵍⴰⵔ',
+  'ulrich':'ⵓⵍⵔⵉⵅ',
+  'ulrike':'ⵓⵍⵔⵉⴽⴰ',
+  'umar':'ⵄⵓⵎⴰⵔ',
+  'ursula':'ⵓⵔⵙⵓⵍⴰ',
+  'uthman':'ⵄⵓⵜⵎⴰⵏ',
+  'uwe':'ⵓⴼⴰ',
+  'valentin':'ⴼⴰⵍⴰⵏⵜⴰⵏ',
+  'valentina':'ⴼⴰⵍⴰⵏⵜⵉⵏⴰ',
+  'valeria':'ⴼⴰⵍⴰⵔⵢⴰ',
+  'valerie':'ⴼⴰⵍⴰⵔⵉ',
+  'vanessa':'ⴼⴰⵏⴰⵙⴰ',
+  'varun':'ⴼⴰⵔⵓⵏ',
+  'veronique':'ⴼⴰⵔⵓⵏⵉⴽ',
+  'victor':'ⴼⵉⴽⵜⵓⵔ',
+  'victoria':'ⴼⵉⴽⵜⵓⵔⵢⴰ',
+  'vikram':'ⴼⵉⴽⵔⴰⵎ',
+  'vincent':'ⴼⴰⵏⵙⴰⵏ',
+  'virginie':'ⴼⵉⵔⵊⵉⵏⵉ',
+  'vishal':'ⴼⵉⵛⴰⵍ',
+  'vladimir':'ⴼⵍⴰⴷⵉⵎⵉⵔ',
+  'vladislav':'ⴼⵍⴰⴷⵉⵙⵍⴰⴼ',
+  'vladmir':'ⴼⵍⴰⴷⵉⵎⵉⵔ',
+  'wafa':'ⵡⴰⴼⴰⵄ',
+  'wafaa':'ⵡⴰⴼⴰⵄ',
+  'wahed':'ⵡⴰⵃⵉⴷ',
+  'waheed':'ⵡⴰⵃⵉⴷ',
+  'wahid':'ⵡⴰⵃⵉⴷ',
+  'waled':'ⵡⴰⵍⵉⴷ',
+  'waleed':'ⵡⴰⵍⵉⴷ',
+  'walid':'ⵡⴰⵍⵉⴷ',
+  'walter':'ⴼⴰⵍⵜⴰⵔ',
+  'warda':'ⵡⴰⵔⴷⴰ',
+  'wassila':'ⵡⴰⵙⵉⵍⴰ',
+  'wassim':'ⵡⴰⵙⵉⵎ',
+  'werner':'ⴼⴰⵔⵏⴰⵔ',
+  'whitney':'ⵡⵉⵜⵏⵉ',
+  'william':'ⵡⵉⵍⵢⴰⵎ',
+  'wissal':'ⵡⵉⵙⵙⴰⵍ',
+  'wissam':'ⵡⵉⵙⵙⴰⵎ',
+  'wolfram':'ⴼⵓⵍⴼⵔⴰⵎ',
+  'xalid':'ⵅⴰⵍⵉⴷ',
+  'xavier':'ⵣⴰⴼⵉⵢⴰ',
+  'yacine':'ⵢⴰⵙⵉⵏ',
+  'yahya':'ⵢⴰⵃⵢⴰ',
+  'yamina':'ⵢⴰⵎⵉⵏⴰ',
+  'yann':'ⵢⴰⵏ',
+  'yannick':'ⵢⴰⵏⵉⴽ',
+  'yaseen':'ⵢⴰⵙⵉⵏ',
+  'yasin':'ⵢⴰⵙⵉⵏ',
+  'yasir':'ⵢⴰⵙⵉⵔ',
+  'yasmin':'ⵢⴰⵙⵎⵉⵏ',
+  'yasmine':'ⵢⴰⵙⵎⵉⵏ',
+  'yassin':'ⵢⴰⵙⵉⵏ',
+  'yassine':'ⵢⴰⵙⵉⵏ',
+  'yassir':'ⵢⴰⵙⵉⵔ',
+  'yidir':'ⵢⵉⴷⵉⵔ',
+  'yilmaz':'ⵢⵉⵍⵎⴰⵣ',
+  'yosef':'ⵢⵓⵙⵓⴼ',
+  'youcef':'ⵢⵓⵙⵓⴼ',
+  'younes':'ⵢⵓⵏⵓⵙ',
+  'yousef':'ⵢⵓⵙⵓⴼ',
+  'yousra':'ⵢⵓⵙⵔⴰ',
+  'youssef':'ⵢⵓⵙⵓⴼ',
+  'youssouf':'ⵢⵓⵙⵓⴼ',
+  'youssuf':'ⵢⵓⵙⵓⴼ',
+  'yousuf':'ⵢⵓⵙⵓⴼ',
+  'yugurtha':'ⵢⵓⵖⵓⵔⵟⴰ',
+  'yusef':'ⵢⵓⵙⵓⴼ',
+  'yusof':'ⵢⵓⵙⵓⴼ',
+  'yusuf':'ⵢⵓⵙⵓⴼ',
+  'zacharia':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'zachariah':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'zachary':'ⵣⴰⴽⴰⵔⵉ',
+  'zahra':'ⵣⴰⵀⵔⴰ',
+  'zahrae':'ⵣⴰⵀⵔⴰ',
+  'zaid':'ⵣⴰⵢⴷ',
+  'zainab':'ⵣⴰⵢⵏⴰⴱ',
+  'zaineb':'ⵣⴰⵢⵏⴰⴱ',
+  'zakaria':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'zakariya':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'zakariyya':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'zakaría':'ⵣⴰⴽⴰⵔⵉⵢⴰ',
+  'zaki':'ⵣⴰⴽⵉ',
+  'zakia':'ⵣⴰⴽⵉⵢⴰ',
+  'zakiya':'ⵣⴰⴽⵉⵢⴰ',
+  'zayd':'ⵣⴰⵢⴷ',
+  'zaynab':'ⵣⴰⵢⵏⴰⴱ',
+  'zaïd':'ⵣⴰⵢⴷ',
+  'zeineb':'ⵣⴰⵢⵏⴰⴱ',
+  'zeneb':'ⵣⵉⵏⴰⴱ',
+  'ziad':'ⵣⵉⵢⴰⴷ',
+  'zine':'ⵣⵉⵏ',
+  'zine el abidine':'ⵣⵉⵏⴰⵍⵄⴰⴱⵉⴷⵉⵏ',
+  'zineb':'ⵣⵉⵏⴰⴱ',
+  'ziyad':'ⵣⵉⵢⴰⴷ',
+  'zobir':'ⵣⵓⴱⴰⵢⵔ',
+  'zoe':'ⵣⵓⵢⴰ',
+  'zohra':'ⵣⴰⵀⵔⴰ',
+  'zouhrae':'ⵣⴰⵀⵔⴰ',
+  'zoulikha':'ⵣⵓⵍⵉⵅⴰ',
+  'zubair':'ⵣⵓⴱⴰⵢⵔ',
+  'zubayda':'ⵣⵓⴱⴰⵢⴷⴰ',
+  'zubayr':'ⵣⵓⴱⴰⵢⵔ',
+  'zuhair':'ⵣⵓⵀⴰⵢⵔ',
+  'zyad':'ⵣⵉⵢⴰⴷ',
+  'zyade':'ⵣⵉⵢⴰⴷ',
+};
+
+// Arabic diacritics to vowels map
+const diacriticVowel = {
+  'َ': 'ⴰ', // fatha → a
+  'ُ': 'ⵓ', // damma → u
+  'ِ': 'ⵉ', // kasra → i
+  'ٰ': 'ⴰ', // superscript alef → a
+  'ً': '',   // tanwin fath → skip
+  'ٌ': '',   // tanwin damm → skip
+  'ٍ': '',   // tanwin kasr → skip
+  'ّ': '',   // shadda → skip (handled separately)
+  'ْ': '',   // sukun → skip
+};
+
+// Arabic consonant map (correct phonetics)
+const arabicConsonant = {
+  'ا':'ⴰ','أ':'ⴰ','آ':'ⴰ','إ':'ⵉ','ى':'ⴰ',
+  'ب':'ⴱ','ت':'ⵜ','ث':'ⵜ','ج':'ⵊ','ح':'ⵃ','خ':'ⵅ',
+  'د':'ⴷ','ذ':'ⴷ','ر':'ⵔ','ز':'ⵣ','س':'ⵙ','ش':'ⵛ',
+  'ص':'ⵚ','ض':'ⴹ','ط':'ⵟ','ظ':'ⴹ','ع':'ⵄ','غ':'ⵖ',
+  'ف':'ⴼ','ق':'ⵇ','ك':'ⴽ','ل':'ⵍ','م':'ⵎ','ن':'ⵏ',
+  'ه':'ⵀ','و':'ⵡ','ي':'ⵢ','ء':'ⴻ','ؤ':'ⵓ','ئ':'ⵉ',
+  'ڤ':'ⵠ','ڭ':'ⴳ','ة':'ⴰ',' ':' ',
+};
+
+// ── Smart vowel insertion for Arabic names (without diacritics) ──
+// Pattern: most Arabic names follow CV patterns — we insert 'a' after each consonant
+// unless next char is vowel letter (ا و ي)
+const arabicVowelLetters = new Set(['ا','و','ي','ى','آ','أ','إ','ئ','ؤ']);
+
+function convertArabicSmart(text) {
+  // 1. Check name dictionary first (whole name)
+  const clean = text.trim();
+  if (arabicNameDict[clean]) return arabicNameDict[clean];
+
+  // 2. Process character by character with diacritics
+  let result = '';
+  const chars = [...text];
+  let i = 0;
+  while (i < chars.length) {
+    const ch = chars[i];
+    const next = chars[i+1] || '';
+
+    // Space
+    if (ch === ' ') { result += ' '; i++; continue; }
+
+    // Diacritic alone (already handled with previous char)
+    if (diacriticVowel.hasOwnProperty(ch)) { i++; continue; }
+
+    // Shadda (double consonant) — skip
+    if (ch === 'ّ') { i++; continue; }
+
+    // Get Tifinagh for this consonant
+    const tif = arabicConsonant[ch];
+    if (!tif) { i++; continue; }
+
+    result += tif;
+
+    // Check what follows
+    if (diacriticVowel.hasOwnProperty(next)) {
+      // Has explicit diacritic — use it
+      result += diacriticVowel[next] || '';
+      i += 2;
+      // Skip shadda if after diacritic
+      if (chars[i] === 'ّ') i++;
+      continue;
+    }
+
+    // No diacritic — smart vowel insertion
+    // If next char is a vowel letter, it will provide the vowel
+    // If next char is end/space/another consonant → insert 'a' only if
+    // this isn't the last consonant of the name (avoid trailing vowels)
+    if (!arabicVowelLetters.has(next) && next !== '' && next !== ' ') {
+      // Insert default 'a' vowel between consonants (most common in Arabic names)
+      // Exception: don't add before ة (ta marbuta) at end
+      if (next !== 'ة' || i < chars.length - 2) {
+        result += 'ⴰ';
+      }
+    }
+    i++;
+  }
+  return result;
+}
+
+// ── Latin conversion maps ──
+const latinToTifinagh = {
+  'a':'ⴰ','b':'ⴱ','c':'ⵛ','d':'ⴷ','e':'ⴻ','f':'ⴼ','g':'ⴳ','h':'ⵀ',
+  'i':'ⵉ','j':'ⵊ','k':'ⴽ','l':'ⵍ','m':'ⵎ','n':'ⵏ','o':'ⵓ','p':'ⵒ',
+  'q':'ⵇ','r':'ⵔ','s':'ⵙ','t':'ⵜ','u':'ⵓ','v':'ⵠ','w':'ⵡ','x':'ⵅ',
+  'y':'ⵢ','z':'ⵣ',
+  'A':'ⵄ','D':'ⴹ','G':'ⵖ','H':'ⵃ','R':'ⵕ','S':'ⵚ','T':'ⵟ','W':'ⵯ','Z':'ⵥ',
+  'gh':'ⵖ','kh':'ⵅ','ch':'ⵛ','sh':'ⵛ',' ':' ',"'":''
+};
+
+let currentLang = 'latin';
+let currentStyle = 'dark';
+let currentTifinagh = '';
+
+const styles = {
+  dark: { bg: '#1a1728', text: '#e0a050', sub: '#9b91b8', border: '#c9853a', accent: '#c9853a' },
+  gold: { bg: '#0a0808', text: '#ffd700', sub: '#c8a060', border: '#d4a843', accent: '#d4a843' },
+  sand: { bg: '#f5ede0', text: '#a3622a', sub: '#8a7060', border: '#c9853a', accent: '#c9853a' },
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  const input = document.getElementById('nameInput');
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  input.dir = lang === 'arabic' ? 'rtl' : 'ltr';
+  input.placeholder = lang === 'arabic' ? 'مثال: أنارز، تيزيري...' : 'e.g. Anaruz, Tiziri, Yidir...';
+  input.value = '';
+  updateDisplay('');
+  input.focus();
+}
+
+function setStyle(style) {
+  currentStyle = style;
+  document.querySelectorAll('.style-dot').forEach(d => d.classList.remove('active'));
+  event.target.classList.add('active');
+  if (currentTifinagh) renderCanvas(currentTifinagh);
+}
+
+function convert(text) {
+  if (!text.trim()) return '';
+
+  if (currentLang === 'arabic') {
+    return convertArabicSmart(text);
+  }
+
+  // Latin: check dictionary first (case-insensitive)
+  const lower = text.trim().toLowerCase();
+  if (latinNameDict[lower]) return latinNameDict[lower];
+
+  // Fallback: char-by-char with digraphs
+  let result = '';
+  let i = 0;
+  while (i < lower.length) {
+    if (i+1 < lower.length) {
+      const di = lower[i] + lower[i+1];
+      if (latinToTifinagh[di]) { result += latinToTifinagh[di]; i += 2; continue; }
+    }
+    result += latinToTifinagh[lower[i]] || '';
+    i++;
+  }
+  return result;
+}
+
+function updateDisplay(tifinagh) {
+  currentTifinagh = tifinagh;
+  const live = document.getElementById('liveTifinagh');
+  const emptyState = document.getElementById('emptyState');
+  const canvas = document.getElementById('nameCanvas');
+  const actions = document.getElementById('actionButtons');
+
+  if (!tifinagh.trim()) {
+    live.textContent = 'ⴰⵎⵖⵏⴰⵙ';
+    live.classList.add('empty');
+    emptyState.style.display = 'block';
+    canvas.style.display = 'none';
+    actions.style.display = 'none';
+  } else {
+    live.textContent = tifinagh;
+    live.classList.remove('empty');
+    emptyState.style.display = 'none';
+    canvas.style.display = 'block';
+    actions.style.display = 'flex';
+    renderCanvas(tifinagh);
+  }
+}
+
+function renderCanvas(tifinagh) {
+  const canvas = document.getElementById('nameCanvas');
+  const ctx = canvas.getContext('2d');
+  const st = styles[currentStyle];
+
+  const W = 600, H = 200;
+  canvas.width = W; canvas.height = H;
+
+  // Background
+  ctx.fillStyle = st.bg;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, W, H, 16);
+  ctx.fill();
+
+  // Subtle gradient overlay
+  const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.7);
+  grad.addColorStop(0, 'rgba(201,133,58,0.06)');
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,W,H);
+
+  // Top accent line
+  const lineGrad = ctx.createLinearGradient(40, 0, W-40, 0);
+  lineGrad.addColorStop(0, 'rgba(201,133,58,0)');
+  lineGrad.addColorStop(0.5, st.accent);
+  lineGrad.addColorStop(1, 'rgba(201,133,58,0)');
+  ctx.strokeStyle = lineGrad;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(40,12); ctx.lineTo(W-40,12); ctx.stroke();
+
+  // Bottom accent line
+  ctx.beginPath(); ctx.moveTo(40,H-12); ctx.lineTo(W-40,H-12); ctx.stroke();
+
+  // Corner ornaments
+  ctx.fillStyle = st.accent;
+  ctx.font = '12px serif';
+  ctx.fillText('✦', 18, 28);
+  ctx.fillText('✦', W-30, 28);
+
+  // Tifinagh name — main
+  ctx.fillStyle = st.text;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Dynamic font size
+  let fontSize = 72;
+  ctx.font = `${fontSize}px "Noto Sans Tifinagh", "DejaVu Sans", serif`;
+  while (ctx.measureText(tifinagh).width > W - 80 && fontSize > 28) {
+    fontSize -= 4;
+    ctx.font = `${fontSize}px "Noto Sans Tifinagh", "DejaVu Sans", serif`;
+  }
+
+  // Glow effect
+  ctx.shadowColor = st.accent;
+  ctx.shadowBlur = 20;
+  ctx.fillText(tifinagh, W/2, H/2 - 8);
+  ctx.shadowBlur = 0;
+
+  // Latin name below
+  const latinName = document.getElementById('nameInput').value;
+  ctx.fillStyle = st.sub;
+  ctx.font = '600 13px "DM Sans", sans-serif';
+  ctx.letterSpacing = '3px';
+  ctx.fillText(latinName.toUpperCase(), W/2, H/2 + fontSize/2 + 10);
+  ctx.letterSpacing = '0px';
+
+  // Brand watermark
+  ctx.fillStyle = currentStyle === 'sand' ? 'rgba(100,80,60,0.3)' : 'rgba(201,133,58,0.25)';
+  ctx.font = '11px "DM Sans", sans-serif';
+  ctx.fillText('amghnas.com', W/2, H - 22);
+}
+
+function downloadPNG() {
+  if (!currentTifinagh) return;
+  const canvas = document.getElementById('nameCanvas');
+
+  // Render at 2x for quality
+  const hq = document.createElement('canvas');
+  hq.width = 1200; hq.height = 400;
+  const hqCtx = hq.getContext('2d');
+  hqCtx.scale(2, 2);
+  const st = styles[currentStyle];
+
+  hqCtx.fillStyle = st.bg;
+  hqCtx.beginPath();
+  hqCtx.roundRect(0, 0, 600, 200, 16);
+  hqCtx.fill();
+
+  const grad = hqCtx.createRadialGradient(300, 100, 0, 300, 100, 420);
+  grad.addColorStop(0, 'rgba(201,133,58,0.06)');
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  hqCtx.fillStyle = grad; hqCtx.fillRect(0,0,600,200);
+
+  const lineGrad = hqCtx.createLinearGradient(40,0,560,0);
+  lineGrad.addColorStop(0,'rgba(201,133,58,0)');
+  lineGrad.addColorStop(0.5,st.accent);
+  lineGrad.addColorStop(1,'rgba(201,133,58,0)');
+  hqCtx.strokeStyle = lineGrad; hqCtx.lineWidth = 1.5;
+  hqCtx.beginPath(); hqCtx.moveTo(40,12); hqCtx.lineTo(560,12); hqCtx.stroke();
+  hqCtx.beginPath(); hqCtx.moveTo(40,188); hqCtx.lineTo(560,188); hqCtx.stroke();
+
+  hqCtx.fillStyle = st.accent;
+  hqCtx.font = '12px serif';
+  hqCtx.fillText('✦', 18, 28);
+  hqCtx.fillText('✦', 570, 28);
+
+  let fontSize = 72;
+  hqCtx.font = `${fontSize}px "Noto Sans Tifinagh", serif`;
+  hqCtx.textAlign = 'center'; hqCtx.textBaseline = 'middle';
+  while (hqCtx.measureText(currentTifinagh).width > 520 && fontSize > 28) {
+    fontSize -= 4;
+    hqCtx.font = `${fontSize}px "Noto Sans Tifinagh", serif`;
+  }
+  hqCtx.fillStyle = st.text;
+  hqCtx.shadowColor = st.accent; hqCtx.shadowBlur = 20;
+  hqCtx.fillText(currentTifinagh, 300, 92);
+  hqCtx.shadowBlur = 0;
+
+  const latinName = document.getElementById('nameInput').value;
+  hqCtx.fillStyle = st.sub;
+  hqCtx.font = '600 13px sans-serif';
+  hqCtx.fillText(latinName.toUpperCase(), 300, 92 + fontSize/2 + 10);
+
+  hqCtx.fillStyle = currentStyle==='sand' ? 'rgba(100,80,60,0.3)' : 'rgba(201,133,58,0.25)';
+  hqCtx.font = '11px sans-serif';
+  hqCtx.fillText('amghnas.com', 300, 178);
+
+  const a = document.createElement('a');
+  a.download = `${document.getElementById('nameInput').value || 'tifinagh'}-tifinagh.png`;
+  a.href = hq.toDataURL('image/png');
+  a.click();
+  showToast('✓ Downloaded!');
+}
+
+function copyText() {
+  if (!currentTifinagh) return;
+  navigator.clipboard.writeText(currentTifinagh).then(() => {
+    showToast('✓ Tifinagh text copied!');
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = currentTifinagh;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('✓ Copied!');
+  });
+}
+
+function shareIt() {
+  const name = document.getElementById('nameInput').value;
+  const text = `My name "${name}" in Tifinagh script: ${currentTifinagh}\n\nConvert your name at amghnas.com ⴰⵎⵖⵏⴰⵙ`;
+  if (navigator.share) {
+    navigator.share({ title: 'My name in Tifinagh', text, url: 'https://amghnas.com/generator.html' });
+  } else {
+    navigator.clipboard.writeText(text).then(() => showToast('✓ Copied to share!'));
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Input listener
+document.getElementById('nameInput').addEventListener('input', function() {
+  const tifinagh = convert(this.value);
+  updateDisplay(tifinagh);
+});
+</script>
+<script src="themeToggle.js"></script>
+<script>
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      hamburger.innerHTML = navLinks.classList.contains('open')
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    }));
+  }
+</script>
+</body>
+</html>

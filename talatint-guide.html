@@ -56,8 +56,7 @@
     @media(max-width:640px){
       nav{padding:0 1rem !important;display:flex;align-items:center;justify-content:space-between;}
       .nav-brand{font-size:1.3rem;color:var(--ochre) !important;flex-shrink:0;display:flex !important;}
-      #themeToggle{display:none !important;}
-      .nav-hamburger{display:flex !important;margin-left:auto;}
+      .nav-hamburger{display:flex !important;}
       .nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(245,237,224,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);flex-direction:column;gap:0;z-index:99;padding:0.5rem 0 1rem;list-style:none;}
       html.dark .nav-links{background:rgba(26,23,40,0.97);}
       .nav-links.open{display:flex;}
@@ -73,7 +72,8 @@
       .article-body{font-size:0.95rem;}
       .article-cta{padding:1.25rem;margin-top:2rem;}
     }
-</style>
+    .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+  </style>
 
   <script type="application/ld+json">
   {
@@ -106,15 +106,16 @@
   <nav>
     <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
     <ul class="nav-links">
-      <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="articles.html" class="active">Articles</a></li>
+      <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html" class="active">Articles</a></li><li><a href="about.html">About</a></li>
     </ul>
-    <button id="themeToggle" aria-label="Toggle theme">
+    <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
       <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
       <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
     </button>
     <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
+  </div>
   </nav>
   <main class="article-wrap">
     <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;"><a href="articles.html" class="back-link"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Back to Articles</a><span class="article-tag">Script &amp; Writing</span></div>
@@ -122,14 +123,102 @@
     <div class="article-meta"><span>By Anaruz Elhabib</span><span class="meta-dot"></span><span>5 min read</span></div>
     <div class="article-hero-glyph" style="background:linear-gradient(135deg,#2a6b5c 0%,#c9853a 100%)"><span>ⵜⴰⵍⴰⵜⵉⵏⵜ</span></div>
     <div class="divider"></div>
-    <div class="article-body"><p>Talatint is a Latin-based romanization system for writing Tamazight. While Tifinagh is the official and most symbolically significant script, Talatint is widely used in academic linguistics, digital communication, and by speakers who learned to write Tamazight before Tifinagh was widely taught in schools.</p>
-      <h3>Special Characters</h3>
-      <p>Talatint uses several extended Latin characters to represent sounds that standard Latin cannot capture. These include emphatic consonants — consonants pronounced with the back of the tongue raised toward the pharynx — which are written with a dot below: <strong>ḍ, ṭ, ṛ, ṣ, ẓ</strong>.</p>
-      <p>Other key characters include: <strong>ɣ</strong> (gamma, for the voiced uvular fricative), <strong>ɛ</strong> (epsilon, for the voiced pharyngeal fricative), <strong>š</strong> (for the "sh" sound), and <strong>č</strong> (for the "ch" sound).</p>
-      <h3>Using amghnas.com</h3>
-      <p>Our converter supports multiple input methods for Talatint. You can type capital letters as shortcuts for emphatics: <strong>D</strong> → ḍ, <strong>T</strong> → ṭ, <strong>R</strong> → ṛ, <strong>S</strong> → ṣ, <strong>Z</strong> → ẓ, <strong>G</strong> → ɣ. Digraphs like <strong>gh</strong>, <strong>sh</strong>, <strong>ch</strong>, and <strong>kh</strong> are also recognized automatically.</p>
-      <h3>Why Both Scripts?</h3>
-      <p>Having both Tifinagh and Talatint is a strength, not a division. Tifinagh carries cultural and political weight as a visual symbol of Amazigh identity. Talatint provides a practical bridge for learners and researchers more familiar with Latin script. Tools like amghnas.com help speakers move freely between both worlds.</p></div>
+    <div class="article-body">
+
+      <p>Talatint is the Latin-based writing system for the Tamazight language. While <span class="tifinagh">ⵜⵉⴼⵉⵏⴰⵖ</span> (Tifinagh) is the official script used in schools and on road signs in Morocco, Talatint remains widely used in academic linguistics, digital communication, and by speakers who learned to write Tamazight before Tifinagh was widely taught.</p>
+
+      <h3>The Origin — Mouloud Mammeri and Tamɛemmrit</h3>
+      <p>The Latin-based alphabet for Tamazight was originally developed by <strong>Mouloud Mammeri</strong> — a Kabyle Amazigh linguist, novelist, and cultural figure who devoted his life to documenting and preserving the Tamazight language. Because of his foundational work, this Latin system is also called <strong>Tamɛemmrit</strong> in his honour.</p>
+      <p>IRCAM (the Royal Institute of Amazigh Culture in Morocco) later developed Neo-Tifinagh as a separate standardised script. The two systems coexist today and are both used across the Amazigh world. It is worth noting that Mammeri's Latin alphabet came first — Neo-Tifinagh was developed afterward, partly inspired by it.</p>
+
+      <h3>Single Characters, Not Digraphs</h3>
+      <p>A common mistake when writing Tamazight in Latin is using digraphs — two-letter combinations like <em>gh</em>, <em>kh</em>, or <em>sh</em>. The standard Talatint system uses dedicated single characters instead, which avoids ambiguity:</p>
+      <ul style="margin:0.5rem 0 1rem 1.5rem;line-height:2.2">
+        <li><strong>ɣ</strong> (gamma) — for the voiced velar sound, like Arabic <strong>غ</strong> — not <em>gh</em></li>
+        <li><strong>x</strong> — for the voiceless velar sound, like Arabic <strong>خ</strong> — not <em>kh</em></li>
+        <li><strong>c</strong> — for the sh sound — not <em>sh</em> or <em>ch</em></li>
+      </ul>
+      <p>For example, the word <span class="tifinagh">ⴰⵎⵖⵏⴰⵙ</span> (activist) is correctly written <strong>amɣnas</strong> in Talatint, not <em>amghnas</em>.</p>
+
+      <h3>Emphatic Consonants</h3>
+      <p>These are the sounds that have no equivalent in French or English — but any Arabic or Tamazight speaker will recognise them immediately. They are written with a dot below the letter:</p>
+
+      <div style="overflow-x:auto;margin:1rem 0 1.5rem">
+        <table style="width:100%;border-collapse:collapse;font-size:0.93rem">
+          <thead>
+            <tr style="border-bottom:2px solid var(--border)">
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Talatint</th>
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Tifinagh</th>
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Example</th>
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:0.6rem 1rem"><strong>ḍ</strong> (d with dot)</td>
+              <td style="padding:0.6rem 1rem"><span class="tifinagh">ⴹ</span></td>
+              <td style="padding:0.6rem 1rem">aḍu</td>
+              <td style="padding:0.6rem 1rem">wind / air</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:0.6rem 1rem"><strong>ṭ</strong> (t with dot)</td>
+              <td style="padding:0.6rem 1rem"><span class="tifinagh">ⵟ</span></td>
+              <td style="padding:0.6rem 1rem">ṭafukt</td>
+              <td style="padding:0.6rem 1rem">sun</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:0.6rem 1rem"><strong>ḥ</strong> (h with dot)</td>
+              <td style="padding:0.6rem 1rem"><span class="tifinagh">ⵃ</span></td>
+              <td style="padding:0.6rem 1rem"><span class="tifinagh">ⵃⵎⵍ</span> — ḥml</td>
+              <td style="padding:0.6rem 1rem">I like</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:0.6rem 1rem"><strong>ṝṣu</strong> (ṝ + ṣ together)</td>
+              <td style="padding:0.6rem 1rem"><span class="tifinagh">ⵕⵚⵓ</span></td>
+              <td style="padding:0.6rem 1rem">ṝṣu</td>
+              <td style="padding:0.6rem 1rem">to be still / fixed</td>
+            </tr>
+            <tr>
+              <td style="padding:0.6rem 1rem"><strong>ṣaḥa</strong> (ṣ + ḥ together)</td>
+              <td style="padding:0.6rem 1rem"><span class="tifinagh">ⵚⴰⵃⴰ</span></td>
+              <td style="padding:0.6rem 1rem">ṣaḥa</td>
+              <td style="padding:0.6rem 1rem">benefit / profit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The last two examples — <span class="tifinagh">ⵕⵚⵓ</span> and <span class="tifinagh">ⵚⴰⵃⴰ</span> — combine two emphatic consonants in a single word, a real feature of Tamazight phonology.</p>
+
+      <h3>Common Words in Both Scripts</h3>
+      <div style="overflow-x:auto;margin:1rem 0 1.5rem">
+        <table style="width:100%;border-collapse:collapse;font-size:0.93rem">
+          <thead>
+            <tr style="border-bottom:2px solid var(--border)">
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Meaning</th>
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Talatint</th>
+              <th style="text-align:left;padding:0.6rem 1rem;color:var(--ochre)">Tifinagh</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Hello</td><td style="padding:0.6rem 1rem">Azul</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⴰⵣⵓⵍ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Thank you</td><td style="padding:0.6rem 1rem">Tanmirt</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵜⴰⵏⵎⵉⵔⵜ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Yes</td><td style="padding:0.6rem 1rem">Ih</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵉⵀ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">No</td><td style="padding:0.6rem 1rem">Oho</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵓⵀⵓ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Water</td><td style="padding:0.6rem 1rem">Aman</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⴰⵎⴰⵏ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Sun</td><td style="padding:0.6rem 1rem">Tafukt</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵜⴰⴼⵓⴽⵜ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Moon</td><td style="padding:0.6rem 1rem">Ayyur</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⴰⵢⵢⵓⵔ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">House</td><td style="padding:0.6rem 1rem">Taddart</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵜⴰⴷⴷⴰⵔⵜ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Man</td><td style="padding:0.6rem 1rem">Argaz</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⴰⵔⴳⴰⵣ</span></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:0.6rem 1rem">Woman</td><td style="padding:0.6rem 1rem">Tameṭṭut</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵜⴰⵎⵟⵟⵓⵜ</span></td></tr>
+            <tr><td style="padding:0.6rem 1rem">I like</td><td style="padding:0.6rem 1rem">ḥml</td><td style="padding:0.6rem 1rem"><span class="tifinagh">ⵃⵎⵍ</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Two Scripts, One Language</h3>
+      <p>Having both Tifinagh and Talatint is a strength, not a division. Tifinagh carries deep cultural and political weight as the visual symbol of Amazigh identity. Talatint — Mammeri's Tamɛemmrit — provides a precise phonetic tool for linguists, learners, and communities where Tifinagh is not yet accessible. Both deserve respect. The converter at amghnas.com lets you move freely between both worlds.</p>
+
+    </div>
     <div class="article-cta">
       <p>Convert between Tifinagh and Talatint instantly</p>
       <a href="index.html" class="btn-primary">Open the Converter →</a>

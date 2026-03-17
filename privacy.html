@@ -80,7 +80,6 @@
     /* MOBILE */
     @media (max-width: 640px) {
       .nav-hamburger { display: flex !important; }
-      #themeToggle { display: none !important; }
       .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: rgba(245,237,224,0.97); border-bottom: 1px solid var(--border); padding: 0.5rem 0; z-index: 99; }
       html.dark .nav-links { background: rgba(26,23,40,0.97); }
       .nav-links.open { display: flex; }
@@ -91,6 +90,7 @@
       .privacy-wrap { padding: 2rem 1.25rem 3rem; }
       .privacy-hero { padding: 3rem 1.25rem 2.5rem; }
     }
+      .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
   </style>
   <script type="application/ld+json">
   {
@@ -108,18 +108,16 @@
   <nav>
     <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
     <ul class="nav-links">
-      <li><a href="index.html">Converter</a></li>
-      <li><a href="keyboard.html">Keyboard</a></li>
-      <li><a href="articles.html">Articles</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
     </ul>
-    <button id="themeToggle" aria-label="Toggle theme">
+    <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
       <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
       <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
     </button>
     <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
+  </div>
   </nav>
 
   <!-- HERO -->
@@ -208,7 +206,7 @@
     <div class="contact-bar">
       <h3>Questions about your privacy?</h3>
       <p>We're happy to answer any questions about how amghnas handles your data.</p>
-      <a href="mailto:contact@amghnas.com">Anaruzelhabib@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#dbb8b4b5afbab8af9bbab6bcb3b5baa8f5b8b4b6"><span class="__cf_email__" data-cfemail="d293bcb3a0a7a8b7bebab3b0bbb092b5bfb3bbbefcb1bdbf">[email&#160;protected]</span></a>
     </div>
 
   </div>
@@ -226,7 +224,7 @@
     <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
   </footer>
 
-<script src="themeToggle.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="themeToggle.js"></script>
 <script>
   document.getElementById('copyright-year').textContent = new Date().getFullYear();
   const hamburger = document.getElementById('hamburger');
@@ -239,10 +237,4 @@
         : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
     });
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      hamburger.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
-    }));
-  }
-</script>
-</body>
-</html>
+      n
