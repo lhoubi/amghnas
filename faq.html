@@ -59,7 +59,7 @@
         "name": "What is the difference between Tifinagh and Talatint?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": ""Tifinagh is the native, ancient alphabet of the Amazigh people (with letters like ⵎ, ⴰ, ⵣ), while Talatint is the standard Latin alphabet used to write Tamazight. Developed and standardized by the eminent Amazigh linguist Mouloud Mammeri, Talatint uses specific letters to accurately represent Amazigh phonetics rather than relying on French or English combinations. For example, it uses 'ɣ' for ⵖ, 'c' for ⵛ, and 'x' for ⵅ. Our converter at amghnas.com allows you to accurately and instantly convert text between Tifinagh, Mammeri's standard Talatint, and Arabic."
+          "text": "\"Tifinagh is the native, ancient alphabet of the Amazigh people (with letters like ⵎ, ⴰ, ⵣ), while Talatint is the standard Latin alphabet used to write Tamazight. Developed and standardized by the eminent Amazigh linguist Mouloud Mammeri, Talatint uses specific letters to accurately represent Amazigh phonetics rather than relying on French or English combinations. For example, it uses 'ɣ' for ⵖ, 'c' for ⵛ, and 'x' for ⵅ. It also utilizes dotted letters to represent emphatic or pharyngeal sounds, such as ḥ (deep H), ṭ (emphatic T), and ẓ (emphatic Z). Our converter at amghnas.com allows you to accurately and instantly convert text between Tifinagh, Mammeri's standard Talatint, and Arabic."
         }
       },
       {
@@ -222,6 +222,7 @@
     html.dark .moon-icon { display: none; }
     .nav-hamburger { display: none; background: none; border: 1.5px solid var(--border); border-radius: 8px; width: 38px; height: 38px; cursor: pointer; color: var(--text-muted); align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
     .nav-hamburger:hover { border-color: var(--ochre); color: var(--ochre); }
+    .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
     @media (max-width: 640px) {
       nav { padding: 0 1rem !important; display: flex; align-items: center; justify-content: space-between; }
       .nav-brand { font-size: 1.3rem; color: var(--ochre) !important; flex-shrink: 0; display: flex !important; }
@@ -230,7 +231,7 @@
       html.dark .nav-links { background: rgba(26,23,40,0.97); }
       .nav-links.open { display: flex; }
       .nav-links li { width: 100%; }
-      .nav-links a { display: block; padding: 0.9rem 1.5rem; font-size: 1rem; border-bottom: 1px solid var(--border); color: var(--text-main); }
+      .nav-links a { display: block; padding: 0.9rem 1.5rem; font-size: 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
       .nav-links a:hover, .nav-links a.active { color: var(--ochre); background: var(--tag-bg); }
       .nav-links a::after { display: none; }
       .nav-links li:last-child a { border-bottom: none; }
@@ -279,7 +280,6 @@
     .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
     .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--ochre); }
-      .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -287,15 +287,16 @@
 <nav>
   <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
   <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html" class="active">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
-    </ul>
-  <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
-    <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
-    <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
-  </button>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-  </button>
+    <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html" class="active">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="themeToggle" aria-label="Toggle theme">
+      <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+      <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+    </button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -319,186 +320,167 @@
       <div class="big">ⵙ</div>
       <p>No questions found for that search. Try different keywords.</p>
     </div>
+
     <div class="faq-item" data-faq="0">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is Tifinagh?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Tifinagh (<span class="tif">ⵜⵉⴼⵉⵏⴰⵖ</span>) is the ancient alphabet used to write the Tamazight (Amazigh/Berber) language. It is one of the oldest writing systems still in use, with origins tracing back over 2,500 years to ancient North Africa. The modern standardised version, called Neo-Tifinagh, was officially adopted by Morocco in 2003 and is used in schools, official documents, and digital media across the Maghreb.</div>
     </div>
+
     <div class="faq-item" data-faq="1">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What language is written in Tifinagh?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Tifinagh is used to write Tamazight, also called the Amazigh language or Berber language. Tamazight is spoken by tens of millions of people across Morocco, Algeria, Libya, Tunisia, Mali, Niger, and the broader Amazigh diaspora in Europe and North America. It is an official language of Morocco and Algeria.</div>
     </div>
+
     <div class="faq-item" data-faq="2">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>How many letters are in the Tifinagh alphabet?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">The standard Neo-Tifinagh alphabet used in Morocco contains 33 characters. This includes consonants, long vowels, and special letters for sounds unique to Tamazight such as the emphatic consonants. The ancient Tifinagh used by Tuareg communities (called Tifinar or Tifinarh) has a slightly different set of characters.</div>
     </div>
+
     <div class="faq-item" data-faq="3">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>How do I type Tifinagh on my phone or computer?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">You can type Tifinagh directly on our free online keyboard at amghnas.com/keyboard.html — no installation needed, works on any phone or computer. You simply click the Tifinagh characters and copy the result. Alternatively, on Android you can install a Tifinagh keyboard from the Google Play Store, and on iPhone you can add a Tifinagh keyboard through iOS Settings > General > Keyboard > Add New Keyboard.</div>
+      <div class="faq-answer">You can type Tifinagh directly on our free online keyboard at amghnas.com/keyboard.html — no installation needed, works on any phone or computer. You simply click the Tifinagh characters and copy the result. Alternatively, on Android you can install a Tifinagh keyboard from the Google Play Store, and on iPhone you can add a Tifinagh keyboard through iOS Settings &gt; General &gt; Keyboard &gt; Add New Keyboard.</div>
     </div>
+
     <div class="faq-item" data-faq="4">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is the difference between Tifinagh and Talatint?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">Tifinagh is the ancient alphabet (letters like <span class="tif">ⵎ</span>, <span class="tif">ⴰ</span>, <span class="tif">ⵣ</span>), while Talatint is the Latin-based romanisation system used to write Tamazight in Roman letters. Talatint uses letters and digraphs such as 'gh' for <span class="tif">ⵖ</span>, 'sh' for <span class="tif">ⵛ</span>, and 'kh' for <span class="tif">ⵅ</span>. Our converter at amghnas.com allows you to convert between Tifinagh, Talatint, and Arabic instantly.</div>
+      <div class="faq-answer">Tifinagh is the native, ancient alphabet of the Amazigh people (with letters like <span class="tif">ⵎ</span>, <span class="tif">ⴰ</span>, <span class="tif">ⵣ</span>), while Talatint is the standard Latin alphabet used to write Tamazight. Developed and standardized by the eminent Amazigh linguist Mouloud Mammeri, Talatint uses specific letters to accurately represent Amazigh phonetics rather than relying on French or English combinations. For example, it uses 'ɣ' for <span class="tif">ⵖ</span>, 'c' for <span class="tif">ⵛ</span>, and 'x' for <span class="tif">ⵅ</span>. It also utilizes dotted letters to represent emphatic or pharyngeal sounds, such as ḥ (deep H), ṭ (emphatic T), and ẓ (emphatic Z). Our converter at amghnas.com allows you to accurately and instantly convert text between Tifinagh, Mammeri's standard Talatint, and Arabic.</div>
     </div>
+
     <div class="faq-item" data-faq="5">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>How do you say hello in Tamazight?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">The most common greeting in Tamazight is 'Azul' (<span class="tif">ⴰⵣⵓⵍ</span>), which means hello or peace. You may also hear 'Azul fellak' (<span class="tif">ⴰⵣⵓⵍ</span> <span class="tif">ⴼⴰⵍⵍⴰⴽ</span>) — hello to you — and the response 'Azul fell awen'. In some regions, 'Amek tllid' (how are you?) is also common as a greeting.</div>
+      <div class="faq-answer">The most common greeting in Tamazight is 'Azul' (<span class="tif">ⴰⵣⵓⵍ</span>). Deeply rooted in Amazigh culture, the word literally means 'close to the heart' — derived from 'yaz' (close) and 'ul' (the heart). While you can simply say 'Azul', it is often tailored to the person you are speaking to: 'Azul fellak' (to a male), 'Azul fellam' (to a female), and 'Azul fellawen' (to a group). To ask 'how are you?', phrases like 'Manik tgit' (<span class="tif">ⵎⴰⵏⵉⴽ ⵜⴳⵉⵜ</span>) are widely used, though the exact wording and pronunciation vary beautifully across different Amazigh regions.</div>
     </div>
+
     <div class="faq-item" data-faq="6">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>How do you write my name in Tifinagh?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Use our free Name in Tifinagh generator at amghnas.com/generator.html. Type your name in Arabic or Latin letters and the tool instantly converts it to beautiful Tifinagh script. The tool supports over 2,000 names including Arabic, Amazigh, French, English, Spanish, and other names, and lets you download a stylish image of your name.</div>
     </div>
+
     <div class="faq-item" data-faq="7">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>Is Tamazight an official language?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">Yes. Tamazight is an official language of Morocco since the 2011 constitution and of Algeria since the 2016 constitution. In Morocco it is taught in primary schools using the Tifinagh script. In Algeria it is used in education and official signage. Tamazight is also recognised as a national language in several other North African countries.</div>
+      <div class="faq-answer">Yes, Tamazight is an official language. In Morocco, it was officially enshrined in the 2011 Constitution as a core component of the Kingdom's identity. It is taught in schools using the official Tifinagh script, featured on public signage and state media, and the Amazigh New Year (Yennayer) was declared an official paid national holiday. In neighboring Algeria, Tamazight was elevated to official language status in the 2016 Constitution, where it is also incorporated into education and official institutions.</div>
     </div>
+
     <div class="faq-item" data-faq="8">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What does Amazigh mean?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Amazigh (<span class="tif">ⴰⵎⴰⵣⵉⵖ</span>) means 'free person' or 'noble person' in Tamazight. It is the name the Berber people use for themselves. The plural is Imazighen (<span class="tif">ⵉⵎⴰⵣⵉⵖⴻⵏ</span>). The word Berber was given by outsiders and comes from the Greek word 'barbaros'. Today, many prefer the term Amazigh as a mark of cultural pride and identity.</div>
     </div>
+
     <div class="faq-item" data-faq="9">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is Yennayer?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">Yennayer (<span class="tif">ⵢⴻⵏⵏⴰⵢⴻⵔ</span>) is the Amazigh New Year, celebrated on January 12th each year (the 13th in some regions). It marks the first day of the Amazigh agrarian calendar, which is currently around 2974 years ahead of the Gregorian calendar. Yennayer is a national holiday in Algeria since 2018 and is widely celebrated across the Amazigh world with traditional food, music, and family gatherings.</div>
+      <div class="faq-answer">Yennayer (<span class="tif">ⵢⵏⵏⴰⵢⵔ</span>) is the Amazigh New Year, traditionally celebrated on January 13th in Morocco (and the 12th in some other regions). It marks the first day of the Amazigh agrarian calendar, which is exactly 950 years ahead of the Gregorian calendar (making the year 2026 equivalent to 2976). In Morocco, Yennayer is celebrated with family gatherings, Ahwash music, and special dishes like 'Tagulla' (an Amazigh porridge) or seven-vegetable couscous. Morocco recently elevated Yennayer to an official paid national public holiday. The festival is also recognized as a national holiday in Algeria since 2018.</div>
     </div>
+
     <div class="faq-item" data-faq="10">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>How do you convert Arabic to Tifinagh?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Our free Arabic to Tifinagh converter at amghnas.com handles the conversion automatically. Simply paste or type your Arabic text into the converter and it produces the Tifinagh equivalent. Note that Arabic is written without most vowels while Tifinagh includes vowel letters, so the converter adds the most phonetically accurate vowels based on the Arabic text. Short vowels (fatha, kasra, damma) are converted when present.</div>
     </div>
+
     <div class="faq-item" data-faq="11">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is the Tamazight word for sun, moon, and stars?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">In Tamazight: the sun is Tafukt (<span class="tif">ⵜⴰⴼⵓⴽⵜ</span>), the moon is Ayyur (<span class="tif">ⴰⵢⵢⵓⵔ</span>), and the stars are Ittij or Itran (<span class="tif">ⵉⵜⵔⴰⵏ</span>). These words appear in many Amazigh names — for example, Tiziri (<span class="tif">ⵜⵉⵣⵉⵔⵉ</span>) means moonlight and is a popular Amazigh girl's name.</div>
     </div>
+
     <div class="faq-item" data-faq="12">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What are the numbers 1 to 10 in Tamazight?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">The numbers 1–10 in Tamazight (Tachelhit/standard form): 1 = Yiwen (<span class="tif">ⵢⵉⵡⴻⵏ</span>), 2 = Sin (<span class="tif">ⵙⵉⵏ</span>), 3 = Krad (<span class="tif">ⴽⵔⴰⴹ</span>), 4 = Kkuz (<span class="tif">ⴽⴽⵓⵣ</span>), 5 = Smmus (<span class="tif">ⵙⵎⵎⵓⵙ</span>), 6 = Sḍis (<span class="tif">ⵙⴹⵉⵙ</span>), 7 = Sa (<span class="tif">ⵙⴰ</span>), 8 = Tam (<span class="tif">ⵜⴰⵎ</span>), 9 = Tẓa (<span class="tif">ⵜⵥⴰ</span>), 10 = Mraw (<span class="tif">ⵎⵔⴰⵡ</span>).</div>
     </div>
+
     <div class="faq-item" data-faq="13">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is the oldest Tifinagh inscription ever found?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">The oldest known Tifinagh inscriptions date back over 2,500 years and were found in the Saharan regions of Libya and Algeria. Rock engravings using proto-Tifinagh characters have been discovered in Dougga (Tunisia), the Ahaggar mountains (Algeria), and the Fezzan region (Libya). These ancient inscriptions confirm that Tifinagh is one of the longest continuously used writing systems in human history.</div>
     </div>
+
     <div class="faq-item" data-faq="14">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is the Amazigh flag?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">The Amazigh flag features three horizontal stripes of blue, green, and yellow, representing the sky and sea, the land and agriculture, and the desert and sun respectively. In the center is the Yaz (<span class="tif">ⵣ</span>) symbol — the Tifinagh letter Z — which represents a free man standing with arms and legs outstretched. The Yaz is one of the most iconic symbols of Amazigh identity and culture.</div>
     </div>
+
     <div class="faq-item" data-faq="15">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>How many people speak Tamazight?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Tamazight is spoken by an estimated 35–50 million people worldwide, though some estimates go higher when including diaspora communities. The largest communities are in Morocco (around 14–18 million speakers), Algeria (around 10–15 million), and significant diaspora populations in France, Belgium, the Netherlands, Spain, and Canada.</div>
     </div>
+
     <div class="faq-item" data-faq="16">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What does amghnas mean?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Amghnas (<span class="tif">ⴰⵎⵖⵏⴰⵙ</span>) is a Tamazight word meaning 'the activist', 'the struggler', or 'the advocate' — someone who fights for a cause. It is the name of this website, reflecting our mission to advocate for the preservation and promotion of the Tamazight language and Tifinagh script in the digital world.</div>
     </div>
+
     <div class="faq-item" data-faq="17">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>Can I use amghnas.com tools for free?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <div class="faq-answer">Yes — all tools on amghnas.com are completely free to use with no registration required. The Tifinagh converter, online keyboard, name generator, and all articles are freely accessible to everyone. The site is made with love for the Amazigh community and anyone interested in the Tamazight language and culture.</div>
     </div>
+
     <div class="faq-item" data-faq="18">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is Talatint script?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">Talatint is the standardised Latin-alphabet transliteration system for writing Tamazight. It uses special characters and digraphs to represent Tamazight sounds: for example ḥ (h with dot below) for the pharyngeal H sound, ṭ for the emphatic T, ẓ for emphatic Z, and digraphs like gh, kh, sh. Talatint is widely used in linguistics, Tamazight books, and online communities when Tifinagh is not available.</div>
+      <div class="faq-answer">Talatint is the standardized Latin-based alphabet system used to write Tamazight. The most strictly accurate and widely adopted version is known as 'Tammamrit', named in honor of its creator, the pioneering Amazigh linguist Mouloud Mammeri. To perfectly capture the unique phonetics of the Amazigh language, Tammamrit avoids ambiguous French or English digraphs (like 'gh', 'kh', or 'sh'). Instead, Mammeri's system relies on specific standalone characters such as ɣ, x, and c. It also utilizes dotted letters to represent emphatic or pharyngeal sounds, such as ḥ (deep H), ṭ (emphatic T), and ẓ (emphatic Z). Today, Tammamrit is the standard used in academia, modern Tamazight literature, and precision tools like our converter at amghnas.com.</div>
     </div>
+
     <div class="faq-item" data-faq="19">
       <div class="faq-question" onclick="toggleFaq(this)">
         <h2>What is the difference between Tachelhit, Tamazight, and Tarifit?</h2>
-        <div class="faq-chevron">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        <div class="faq-chevron"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
-      <div class="faq-answer">These are three major dialects (or varieties) of the Amazigh language. Tachelhit (Tashlhiyt) is spoken in southern Morocco and the Atlas mountains. Central Tamazight (Tamazight n Atlasn) is spoken in central Morocco. Tarifit (Riffian) is spoken in the Rif region of northern Morocco. While they share the same Tifinagh alphabet and many core words, each has distinct vocabulary and phonology. All three are part of the broader Tamazight/Berber language family.</div>
+      <div class="faq-answer">Tachelhit (spoken in the South), Central Tamazight (in the Middle Atlas), and Tarifit (in the northern Rif) are not separate languages, but simply regional dialects of one unified Amazigh language. Under the umbrella of Standard Moroccan Tamazight, the core grammar, roots, and Tifinagh alphabet are exactly the same. The differences are actually quite small, mostly limited to slight variations in pronunciation, spelling, or a few local words. Think of it like the Arabic language in the Middle East: people from the Gulf, Egypt, or the Levant have different local accents ('lahjas') and vocabulary, but they are all speaking one Arabic language. In the exact same way, whether someone is from Souss, the Atlas, or the Rif, the Amazigh people are one, sharing one rich language and identity.</div>
     </div>
+
   </div>
 
   <div class="faq-cta">
