@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محوّل التيفيناغ أونلاين | عربي، لاتيني إلى تيفيناغ | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
+  <meta name="description" content="amghnas — محوّل تيفيناغ مجاني. حوّل تيفيناغ إلى لاتيني، لاتيني إلى تيفيناغ، وعربي إلى تيفيناغ فوراً. أفضل أداة أمازيغية مجانية على الإنترنت." />
+  <meta name="keywords" content="محول تيفيناغ, تيفيناغ عربي, الأبجدية الأمازيغية, تيفيناغ اونلاين, تاmazight, كتابة تيفيناغ, لغة أمازيغية, أمازيغ" />
+  <link rel="alternate" hreflang="en" href="https://amghnas.com/index.html" />
+  <link rel="alternate" hreflang="fr" href="https://amghnas.com/fr/index.html" />
+  <link rel="alternate" hreflang="ar" href="https://amghnas.com/ar/index.html" />
+  <link rel="canonical" href="https://amghnas.com/ar/index.html" />
+  <link rel="icon" type="image/png" href="../favicon.png"><link rel="apple-touch-icon" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Tifinagh&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--sand:#f5ede0;--sand-dark:#e8d9c4;--ochre:#c9853a;--ochre-deep:#a3622a;--terracotta:#b85c38;--indigo:#3d3580;--indigo-light:#5548b0;--slate:#2c2c3e;--text:#1a1a2e;--text-muted:#5a5a7a;--white:#ffffff;--card-bg:rgba(255,255,255,0.72);--border:rgba(201,133,58,0.2);--glow:rgba(201,133,58,0.15);}
+    html.dark{--sand:#1a1728;--sand-dark:#231e35;--ochre:#e0a050;--ochre-deep:#c9853a;--terracotta:#d4714a;--indigo:#7b6fd0;--indigo-light:#9d92e0;--slate:#e8ddd0;--text:#f0ece4;--text-muted:#9d97b8;--white:#ffffff;--card-bg:rgba(35,30,53,0.85);--border:rgba(224,160,80,0.2);--glow:rgba(224,160,80,0.1);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Cairo','DM Sans',sans-serif;background-color:var(--sand);color:var(--text);min-height:100vh;transition:background-color 0.4s,color 0.4s;position:relative;overflow-x:hidden;direction:rtl;}
+    body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(201,133,58,0.04) 30px,rgba(201,133,58,0.04) 31px),repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(61,53,128,0.04) 30px,rgba(61,53,128,0.04) 31px);pointer-events:none;z-index:0;}
+    .page-wrap{position:relative;z-index:1;}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(245,237,224,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;transition:background 0.4s;direction:rtl;}
+    html.dark nav{background:rgba(26,23,40,0.88);}
+    .nav-brand{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.6rem;color:var(--ochre);text-decoration:none;letter-spacing:0.05em;}
+    .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+    .nav-links a{text-decoration:none;color:var(--text-muted);font-size:0.9rem;font-weight:600;transition:color 0.2s;position:relative;font-family:'Cairo',sans-serif;}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;right:0;left:0;height:1.5px;background:var(--ochre);transform:scaleX(0);transition:transform 0.2s;}
+    .nav-links a:hover{color:var(--ochre);}.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}.nav-links a.active{color:var(--ochre);}
+    #themeToggle{background:none;border:1.5px solid var(--border);border-radius:50%;width:38px;height:38px;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+    #themeToggle:hover{border-color:var(--ochre);color:var(--ochre);}
+    .sun-icon{display:none;}html.dark .moon-icon{display:none;}html.dark .sun-icon{display:flex;}
+    .hero{text-align:center;padding:5rem 2rem 3rem;position:relative;}
+    .hero-symbol{font-family:'Noto Sans Tifinagh',sans-serif;font-size:clamp(3.5rem,8vw,6rem);color:var(--ochre);display:block;line-height:1;margin-bottom:1rem;filter:drop-shadow(0 2px 12px var(--glow));animation:fadeUp 0.8s ease both;}
+    .hero h1{font-family:'Cairo',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--text);line-height:1.3;animation:fadeUp 0.8s 0.1s ease both;}
+    .hero p{margin-top:1rem;color:var(--text-muted);font-size:1.05rem;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.8;animation:fadeUp 0.8s 0.2s ease both;}
+    .divider-ornament{display:flex;align-items:center;justify-content:center;gap:1rem;margin:2rem auto;max-width:300px;animation:fadeUp 0.8s 0.3s ease both;}
+    .divider-ornament::before{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,var(--ochre));}
+    .divider-ornament::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--ochre));}
+    .divider-diamond{width:8px;height:8px;background:var(--ochre);transform:rotate(45deg);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+    .converter-section{max-width:1100px;margin:0 auto;padding:0 1.5rem 4rem;}
+    .converter-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;animation:fadeUp 0.8s 0.35s ease both;}
+    @media(max-width:768px){.converter-grid{grid-template-columns:1fr;}}
+    .card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:1.75rem;backdrop-filter:blur(16px);box-shadow:0 4px 24px rgba(0,0,0,0.06);transition:box-shadow 0.3s,transform 0.3s;}
+    .card:hover{box-shadow:0 8px 32px rgba(201,133,58,0.12);transform:translateY(-2px);}
+    .card-title{font-family:'Cairo',sans-serif;font-size:1.2rem;font-weight:700;color:var(--ochre);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;}
+    .card-title::before{content:'';width:3px;height:1.3em;background:var(--ochre);border-radius:2px;flex-shrink:0;order:1;}
+    label{display:block;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);margin-bottom:0.5rem;font-family:'Cairo',sans-serif;}
+    textarea{width:100%;padding:0.85rem 1rem;background:rgba(255,255,255,0.6);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Cairo','DM Sans',sans-serif;font-size:1.05rem;line-height:1.7;resize:vertical;min-height:110px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;}
+    html.dark textarea{background:rgba(255,255,255,0.06);}
+    textarea:focus{border-color:var(--ochre);box-shadow:0 0 0 3px var(--glow);}
+    textarea[readonly]{background:rgba(201,133,58,0.05);cursor:default;}
+    .font-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.15rem;direction:ltr;text-align:left;}
+    .output-wrap{position:relative;margin-top:1rem;}
+    .copy-btn{position:absolute;top:0.6rem;left:0.6rem;background:var(--sand-dark);border:1px solid var(--border);border-radius:7px;width:32px;height:32px;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+    html.dark .copy-btn{background:rgba(255,255,255,0.08);}
+    .copy-btn:hover{background:var(--ochre);color:white;border-color:var(--ochre);}
+    .copy-confirm{position:absolute;top:0.7rem;left:2.8rem;font-size:0.75rem;font-weight:700;color:#22c55e;opacity:0;transition:opacity 0.3s;pointer-events:none;font-family:'Cairo',sans-serif;}
+    .copy-confirm.show{opacity:1;}
+    .field-group{margin-top:1.25rem;}.field-group:first-child{margin-top:0;}
+    .info-section{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 5rem;}
+    .section-heading{font-family:'Cairo',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--text);text-align:center;margin-bottom:0.5rem;}
+    .section-sub{text-align:center;color:var(--text-muted);font-size:0.95rem;margin-bottom:2.5rem;font-family:'Cairo',sans-serif;}
+    .info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+    @media(max-width:700px){.info-cards{grid-template-columns:1fr;}}
+    .info-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:1.5rem;backdrop-filter:blur(12px);text-align:center;}
+    .info-card-glyph{font-family:'Noto Sans Tifinagh',sans-serif;font-size:2.2rem;color:var(--ochre);margin-bottom:0.75rem;display:block;}
+    .info-card h4{font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;}
+    .info-card p{font-size:0.88rem;color:var(--text-muted);line-height:1.7;font-family:'Cairo',sans-serif;}
+    footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.88rem;background:rgba(245,237,224,0.5);transition:background 0.4s;font-family:'Cairo',sans-serif;}
+    html.dark footer{background:rgba(26,23,40,0.5);}
+    footer a{color:var(--ochre);text-decoration:none;}footer a:hover{text-decoration:underline;}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin:0.75rem 0;flex-wrap:wrap;}
+    .nav-hamburger{display:none;background:none;border:1.5px solid var(--border);border-radius:8px;width:38px;height:38px;cursor:pointer;color:var(--text-muted);align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
+    .nav-hamburger:hover{border-color:var(--ochre);color:var(--ochre);}
+    .nav-right{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
+    @media(max-width:640px){
+      nav{padding:0 1rem !important;display:flex;align-items:center;justify-content:space-between;}
+      .nav-brand{font-size:1.3rem;color:var(--ochre) !important;flex-shrink:0;display:flex !important;}
+      .nav-hamburger{display:flex !important;}
+      .nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(245,237,224,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);flex-direction:column;gap:0;z-index:99;padding:0.5rem 0 1rem;list-style:none;}
+      html.dark .nav-links{background:rgba(26,23,40,0.97);}
+      .nav-links.open{display:flex;}
+      .nav-links li{width:100%;}
+      .nav-links a{display:block;padding:0.9rem 1.5rem;font-size:1rem;border-bottom:1px solid var(--border);color:var(--text);text-align:right;}
+      .nav-links a:hover,.nav-links a.active{color:var(--ochre);}
+      .nav-links a::after{display:none;}
+    }
+    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="../index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">المحوّل</a></li>
+      <li><a href="keyboard.html">لوحة المفاتيح</a></li>
+      <li><a href="generator.html">مولّد الأسماء</a></li>
+      <li><a href="faq.html">أسئلة شائعة</a></li>
+      <li><a href="articles.html">مقالات</a></li>
+      <li><a href="about.html">عن الموقع</a></li>
+    </ul>
+    <div class="nav-right">
+      
+      <div class="lang-switcher"><a href="../index.html" class="lang-btn">EN</a><a href="../fr/index.html" class="lang-btn">FR</a><a href="index.html" class="lang-btn active">AR</a></div><button id="themeToggle" aria-label="تبديل المظهر">
+        <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+        <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="فتح القائمة">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-symbol">ⴰⵎⵖⵏⴰⵙ</span>
+    <h1>ⴰⵎⵖⵏⴰⵙ — amghnas<br><span style="font-size:0.6em;opacity:0.85;">محوّل التيفيناغ ولوحة مفاتيح أمازيغية</span></h1>
+    <p>حوّل بسهولة بين حروف التيفيناغ والكتابة اللاتينية. تحويل النصوص الأمازيغية بدقة عالية.</p>
+    <div class="divider-ornament"><span class="divider-diamond"></span></div>
+  </section>
+
+  <section class="converter-section">
+    <div class="converter-grid">
+
+      <div class="card">
+        <div class="card-title">تيفيناغ ← تالاتينت</div>
+        <div class="field-group">
+          <label for="tifinaghInputMain">النص بالتيفيناغ</label>
+          <textarea id="tifinaghInputMain" class="font-tifinagh" placeholder="ⴰⵣⵓⵍ… أدخل التيفيناغ هنا" dir="ltr"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="talatintOutput">النتيجة بالتالاتينت (لاتيني)</label>
+          <div class="output-wrap">
+            <textarea id="talatintOutput" readonly placeholder="ستظهر النتيجة هنا…" dir="ltr"></textarea>
+            <button class="copy-btn" onclick="copyText('talatintOutput',this)" title="نسخ"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+            <span id="talatintOutput-confirm" class="copy-confirm">تم النسخ!</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">تالاتينت ← تيفيناغ</div>
+        <div class="field-group">
+          <label for="talatintInputMain">النص بالتالاتينت</label>
+          <textarea id="talatintInputMain" placeholder="saḥt, azul, amaɣnas…" dir="ltr"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="tifinaghTalatintOutput">النتيجة بالتيفيناغ</label>
+          <div class="output-wrap">
+            <textarea id="tifinaghTalatintOutput" readonly class="font-tifinagh" placeholder="النتيجة بالتيفيناغ…" dir="ltr"></textarea>
+            <button class="copy-btn" onclick="copyText('tifinaghTalatintOutput',this)" title="نسخ"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+            <span id="tifinaghTalatintOutput-confirm" class="copy-confirm">تم النسخ!</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">عربي ← تيفيناغ</div>
+        <div style="background:rgba(201,133,58,0.1);border:1px solid rgba(201,133,58,0.3);border-radius:10px;padding:0.85rem 1rem;margin-bottom:1.1rem;">
+          <div style="display:flex;align-items:flex-start;gap:0.5rem;">
+            <span style="font-size:1rem;">⚠️</span>
+            <div style="font-size:0.82rem;color:var(--text-muted);line-height:1.7;font-family:'Cairo',sans-serif;">
+              <strong style="color:var(--ochre);display:block;margin-bottom:0.3rem;">تنبيه — الحروف العربية لا تكتب الحركات القصيرة</strong>
+              للحصول على أفضل النتائج، <strong style="color:var(--text);">استخدم التالاتينت (اللاتينية)</strong> — فهي تحتوي على جميع الحركات.
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="arabicInputMain">النص العربي</label>
+          <textarea id="arabicInputMain" placeholder="أدخل النص العربي هنا…" dir="rtl"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="arabicTifinaghOutput">النتيجة بالتيفيناغ</label>
+          <div class="output-wrap">
+            <textarea id="arabicTifinaghOutput" readonly class="font-tifinagh" placeholder="النتيجة بالتيفيناغ…" dir="ltr"></textarea>
+            <button class="copy-btn" onclick="copyText('arabicTifinaghOutput',this)" title="نسخ"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+            <span id="arabicTifinaghOutput-confirm" class="copy-confirm">تم النسخ!</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="text-align:center;padding:2rem 1rem 0;width:100%;">
+    <h2 class="section-heading">عن الكتابات</h2>
+    <p class="section-sub">الحفاظ على التراث الأمازيغي والاحتفاء به من خلال الأدوات الرقمية</p>
+  </div>
+  <section class="info-section" style="padding-top:0;">
+    <div class="info-cards">
+      <div class="info-card"><span class="info-card-glyph">ⵜⵉⴼⵉⵏⴰⵖ</span><h4>كتابة التيفيناغ</h4><p>نظام كتابة قديم استخدمه الأمازيغ لأكثر من 2500 عام، تم توحيده حديثاً كتيفيناغ جديد من قِبل معهد IRCAM.</p></div>
+      <div class="info-card"><span class="info-card-glyph">ⵜⴰⵎⴰⵣⵉⵖⵜ</span><h4>اللغة الأمازيغية</h4><p>لغة الشعب الأمازيغي (البربر)، تُتكلم في أنحاء شمال أفريقيا من المغرب إلى مصر. تراث شفهي وكتابي غني.</p></div>
+      <div class="info-card"><span class="info-card-glyph">ⵜⴰⵍⴰⵜⵉⵏⵜ</span><h4>الكتابة اللاتينية (تالاتينت)</h4><p>نظام نقل حروف الأمازيغية إلى الكتابة اللاتينية، يستخدم أحرفاً موسّعة لتمثيل الأصوات الخاصة باللغة الأمازيغية.</p></div>
+    </div>
+  </section>
+
+    <footer>
+    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
+    <div class="footer-links">
+      <a href="../index.html">المحوّل</a>
+      <a href="../keyboard.html">لوحة المفاتيح</a>
+      <a href="../articles.html">مقالات</a>
+      <a href="../about.html">عن الموقع</a>
+      <a href="../privacy.html">الخصوصية</a>
+    </div>
+    <p>صُنع بـ ❤ للثقافة الأمازيغية · بقلم Anaruz Elhabib</p>
+    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+  </footer>
+</div>
+
+<script src="../themeToggle.js"></script>
+<script src="../converter.js"></script>
+<script>
+  document.getElementById('copyright-year').textContent=new Date().getFullYear();
+  const hamburger=document.getElementById('hamburger');
+  const navLinks=document.querySelector('.nav-links');
+  if(hamburger&&navLinks){hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.innerHTML=navLinks.classList.contains('open')?'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>':'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';});navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.innerHTML='<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';}));}
+  function copyText(id,btn){const el=document.getElementById(id);navigator.clipboard.writeText(el.value).then(()=>{const c=document.getElementById(id+'-confirm');c.classList.add('show');setTimeout(()=>c.classList.remove('show'),1500);});}
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سياسة الخصوصية | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
+  <meta name="description" content="سياسة الخصوصية لموقع amghnas.com — كيف نتعامل مع بياناتك عند استخدام أدواتنا المجانية." />
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Tifinagh&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--sand:#f5ede0;--sand-dark:#e8d9c4;--ochre:#c9853a;--ochre-deep:#a3622a;--terracotta:#b85c38;--text:#1a1a2e;--text-muted:#5a5a7a;--card-bg:rgba(255,255,255,0.72);--border:rgba(201,133,58,0.2);--glow:rgba(201,133,58,0.15);--tag-bg:rgba(201,133,58,0.1);}
+    html.dark{--sand:#1a1728;--sand-dark:#231e35;--ochre:#e0a050;--ochre-deep:#c9853a;--text:#f0ece4;--text-muted:#9d97b8;--card-bg:rgba(35,30,53,0.85);--border:rgba(224,160,80,0.2);--glow:rgba(224,160,80,0.1);--tag-bg:rgba(224,160,80,0.12);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Cairo','DM Sans',sans-serif;background:var(--sand);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;direction:rtl;}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(245,237,224,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);direction:rtl;}
+    html.dark nav{background:rgba(26,23,40,0.92);}
+    .nav-brand{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.4rem;color:var(--ochre);text-decoration:none;font-weight:700;}
+    .nav-links{display:flex;gap:0.25rem;list-style:none;}
+    .nav-links a{text-decoration:none;color:var(--text-muted);font-size:0.875rem;font-weight:600;padding:0.4rem 0.9rem;border-radius:6px;transition:color 0.2s;font-family:'Cairo',sans-serif;}
+    .nav-links a:hover,.nav-links a.active{color:var(--ochre);}
+    #themeToggle{background:none;border:1px solid var(--border);border-radius:8px;padding:0.4rem;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;transition:color 0.2s,border-color 0.2s;}
+    #themeToggle:hover{color:var(--ochre);border-color:var(--ochre);}
+    .sun-icon{display:none;}html.dark .sun-icon{display:block;}html.dark .moon-icon{display:none;}
+    .nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:0.4rem;cursor:pointer;color:var(--text);}
+    .nav-right{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
+    .privacy-hero{padding:4rem 2rem 3rem;text-align:center;border-bottom:1px solid var(--border);}
+    .privacy-tag{display:inline-block;padding:0.3rem 1rem;background:var(--ochre);border-radius:999px;font-size:0.72rem;font-weight:700;color:#fff;margin-bottom:1.25rem;letter-spacing:0.06em;text-transform:uppercase;}
+    .privacy-hero h1{font-family:'Cairo',sans-serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:700;color:var(--text);margin-bottom:0.75rem;}
+    .privacy-hero h1 span{color:var(--ochre);}
+    .privacy-hero p{color:var(--text-muted);font-size:0.9rem;}
+    .last-updated{display:inline-block;margin-top:0.75rem;font-size:0.8rem;color:var(--text-muted);background:var(--tag-bg);padding:0.25rem 0.75rem;border-radius:6px;border:1px solid var(--border);}
+    .privacy-wrap{max-width:720px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .section-block{margin-bottom:2.75rem;padding-bottom:2.75rem;border-bottom:1px solid var(--border);}
+    .section-block:last-child{border-bottom:none;}
+    .section-num{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.1rem;color:var(--ochre);opacity:0.5;display:block;margin-bottom:0.3rem;}
+    .section-block h2{font-family:'Cairo',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:1rem;}
+    .section-block p{color:var(--text-muted);line-height:1.85;font-size:0.95rem;margin-bottom:0.75rem;}
+    .section-block p:last-child{margin-bottom:0;}
+    .section-block ul{list-style:none;padding:0;}
+    .section-block ul li{color:var(--text-muted);font-size:0.95rem;line-height:1.75;padding:0.4rem 0 0.4rem 0;padding-right:1.5rem;position:relative;}
+    .section-block ul li::before{content:'·';position:absolute;right:0.5rem;color:var(--ochre);font-weight:700;}
+    .highlight-box{background:var(--card-bg);border:1px solid var(--border);border-right:3px solid var(--ochre);border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0;backdrop-filter:blur(6px);}
+    .highlight-box p{color:var(--text);font-size:0.92rem;line-height:1.7;margin:0;}
+    .highlight-box strong{color:var(--ochre);}
+    .contact-bar{background:linear-gradient(135deg,var(--ochre),var(--terracotta));border-radius:16px;padding:2rem;text-align:center;margin-top:2rem;}
+    .contact-bar h3{font-family:'Cairo',sans-serif;font-size:1.5rem;color:white;margin-bottom:0.5rem;}
+    .contact-bar p{color:rgba(255,255,255,0.85);font-size:0.88rem;margin-bottom:1rem;}
+    .contact-bar a{display:inline-block;background:white;color:var(--ochre-deep);padding:0.6rem 1.5rem;border-radius:999px;font-weight:700;font-size:0.85rem;text-decoration:none;transition:opacity 0.2s;font-family:'Cairo',sans-serif;}
+    .contact-bar a:hover{opacity:0.9;}
+    footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.82rem;line-height:1.8;font-family:'Cairo',sans-serif;}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
+    .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:0.75rem;flex-wrap:wrap;}
+    .footer-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--ochre);}
+    @media(max-width:640px){
+      nav{padding:0 1rem !important;display:flex;align-items:center;justify-content:space-between;}
+      .nav-brand{font-size:1.3rem;color:var(--ochre) !important;flex-shrink:0;display:flex !important;}
+      .nav-hamburger{display:flex !important;}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:rgba(245,237,224,0.97);border-bottom:1px solid var(--border);padding:0.5rem 0;z-index:99;}
+      html.dark .nav-links{background:rgba(26,23,40,0.97);}
+      .nav-links.open{display:flex;}
+      .nav-links li{width:100%;}
+      .nav-links a{display:block;padding:0.85rem 1.5rem;border-radius:0;border-bottom:1px solid var(--border);text-align:right;}
+      .privacy-wrap{padding:2rem 1.25rem 3rem;}
+      .privacy-hero{padding:3rem 1.25rem 2.5rem;}
+    }
+    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <ul class="nav-links">
+      <li><a href="index.html">المحوّل</a></li><li><a href="keyboard.html">لوحة المفاتيح</a></li><li><a href="generator.html">مولّد الأسماء</a></li><li><a href="faq.html">أسئلة شائعة</a></li><li><a href="articles.html">مقالات</a></li><li><a href="about.html">عن الموقع</a></li>
+    </ul>
+    <div class="nav-right">
+      
+      <div class="lang-switcher"><a href="../privacy.html" class="lang-btn">EN</a><a href="../fr/privacy.html" class="lang-btn">FR</a><a href="privacy.html" class="lang-btn active">AR</a></div><button id="themeToggle" aria-label="تبديل المظهر">
+        <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+        <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="فتح القائمة">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <section class="privacy-hero">
+    <div class="privacy-tag">قانوني</div>
+    <h1>سياسة <span>الخصوصية</span></h1>
+    <p>بسيطة وصادقة ومحترِمة — تماماً كأدواتنا.</p>
+    <span class="last-updated">آخر تحديث: مارس 2026</span>
+  </section>
+
+  <div class="privacy-wrap">
+
+    <div class="section-block">
+      <span class="section-num">ⴰ</span>
+      <h2>الملخص المختصر</h2>
+      <div class="highlight-box">
+        <p><strong>نحن لا نجمع بياناتك الشخصية ولا نخزّنها ولا نبيعها.</strong> كل النصوص التي تكتبها في المحوّل أو لوحة المفاتيح تبقى على جهازك ولا تُرسل إلى أي خادم. amghnas موقع ثابت — لا قاعدة بيانات، لا حسابات، لا تتبع لما تكتبه.</p>
+      </div>
+      <p>توضّح هذه السياسة بمزيد من التفصيل كيف يتعامل amghnas.com مع المعلومات عند استخدامك لأدواتنا المجانية.</p>
+    </div>
+
+    <div class="section-block">
+      <span class="section-num">ⴱ</span>
+      <h2>ما الذي نجمعه</h2>
+      <p>لا يجمع amghnas معلومات شخصية بشكل نشط. ومع ذلك، كما هو الحال مع أي موقع، قد تُعالَج بعض البيانات التقنية الأساسية تلقائياً:</p>
+      <ul>
+        <li>نوع متصفحك وإصداره (يستخدمه متصفحك، لا نخزّنه نحن)</li>
+        <li>بيانات الموقع العامة (على مستوى البلد) عبر Google Analytics إن كان مفعّلاً</li>
+        <li>الصفحات التي زرتها والوقت المقضي فيها (عبر Google Analytics، بشكل مجهول الهوية)</li>
+        <li>استعلامات البحث التي أوصلتك إلى موقعنا (عبر Google Search Console)</li>
+      </ul>
+      <p>نستخدم Google Analytics لفهم كيفية وصول الناس إلى الموقع واستخدامه، مما يساعدنا على تحسين الأدوات. يمكنك إلغاء الاشتراك عبر إعدادات الخصوصية في متصفحك أو امتدادات مثل uBlock Origin.</p>
+    </div>
+
+    <div class="section-block">
+      <span class="section-num">ⵛ</span>
+      <h2>النصوص التي تكتبها في الأدوات</h2>
+      <div class="highlight-box">
+        <p><strong>نصوصك لا تغادر جهازك أبداً.</strong> محوّل التيفيناغ ومحوّل اللاتيني ومحوّل العربي ولوحة المفاتيح الافتراضية تعمل كلها في متصفحك باستخدام JavaScript. لا يُرسل أي نص إلى أي خادم. لا نستطيع رؤية ما تكتبه.</p>
+      </div>
+      <p>تُحفظ تفضيلات المظهر (الوضع المضيء/المظلم) محلياً في <code>localStorage</code> بمتصفحك — لا تغادر جهازك أبداً ولا يمكننا الوصول إليها.</p>
+    </div>
+
+    <div class="section-block">
+      <span class="section-num">ⴷ</span>
+      <h2>ملفات تعريف الارتباط (Cookies)</h2>
+      <p>يستخدم amghnas ملفات تعريف ارتباط محدودة:</p>
+      <ul>
+        <li><strong>تفضيل المظهر</strong> — مخزّن في localStorage، لا يُرسل إلى أي خادم</li>
+        <li><strong>ملفات تعريف ارتباط Google Analytics</strong> — إحصاءات استخدام مجهولة الهوية (مثل _ga، _gid). تساعدنا على فهم الأدوات الأكثر فائدة.</li>
+      </ul>
+      <p>لا نستخدم ملفات تعريف ارتباط إعلانية، ولا بكسلات تتبع، ولا أي أدوات تسويقية تابعة لجهات خارجية.</p>
+    </div>
+
+    <div class="section-block">
+      <span class="section-num">ⴻ</span>
+      <h2>الخدمات الخارجية</h2>
+      <p>يستخدم amghnas الخدمات الخارجية التالية:</p>
+      <ul>
+        <li><strong>Google Fonts</strong> — لتحميل خطوط Noto Sans Tifinagh وCormorant Garamond وDM Sans. قد تسجّل Google طلبات الخطوط.</li>
+        <li><strong>Google Analytics</strong> — تحليل حركة المرور بشكل مجهول. راجع <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:var(--ochre);">سياسة خصوصية Google</a>.</li>
+        <li><strong>GitHub Pages</strong> — يُستضاف الموقع على GitHub Pages. راجع <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:var(--ochre);">سياسة خصوصية GitHub</a>.</li>
+      </ul>
+    </div>
+
+    <div class="section-block">
+      <span class="section-num">ⴼ</span>
+      <h2>خصوصية الأطفال</h2>
+      <p>لا يجمع amghnas أي معلومات عن الأطفال دون سن 13 عاماً. أدواتنا موارد تعليمية مجانية مناسبة لجميع الأعمار. لا نشترط التسجيل أو تقديم أي معلومات شخصية لاستخدام الموقع.</p>
+    </div>
+
+    <div class="section-block">
+      <span class="section-num">ⴳ</span>
+      <h2>التغييرات على هذه السياسة</h2>
+      <p>قد نحدّث سياسة الخصوصية هذه من حين لآخر. عند ذلك سنحدّث تاريخ "آخر تحديث" في أعلى هذه الصفحة. نشجعك على مراجعة هذه الصفحة دورياً. الاستمرار في استخدام amghnas بعد إجراء أي تغييرات يُعدّ قبولاً للسياسة المحدّثة.</p>
+    </div>
+
+    <div class="contact-bar">
+      <h3>أسئلة حول خصوصيتك؟</h3>
+      <p>يسعدنا الإجابة على أي أسئلة حول كيفية تعامل amghnas مع بياناتك.</p>
+      <a href="mailto:anaruzelhabib@gmail.com">تواصل معنا</a>
+    </div>
+
+  </div>
+
+    <footer>
+    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
+    <div class="footer-links">
+      <a href="../index.html">المحوّل</a>
+      <a href="../keyboard.html">لوحة المفاتيح</a>
+      <a href="../articles.html">مقالات</a>
+      <a href="../about.html">عن الموقع</a>
+      <a href="../privacy.html">الخصوصية</a>
+    </div>
+    <p>صُنع بـ ❤ للثقافة الأمازيغية · بقلم Anaruz Elhabib</p>
+    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+  </footer>
+
+<script src="../themeToggle.js"></script>
+<script>
+  document.getElementById('copyright-year').textContent=new Date().getFullYear();
+  const hamburger=document.getElementById('hamburger');
+  const navLinks=document.querySelector('.nav-links');
+  if(hamburger&&navLinks){hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.innerHTML=navLinks.classList.contains('open')?'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>':'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';});navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.innerHTML='<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';}));}
+</script>
+</body>
+</html>
