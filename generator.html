@@ -191,26 +191,6 @@
       display: flex; gap: 1rem; margin-bottom: 1rem;
     }
 
-    .lang-btn {
-      padding: 0.5rem 1.2rem;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-muted);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem; font-weight: 500;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .lang-btn.active {
-      background: var(--ochre);
-      border-color: var(--ochre);
-      color: #fff;
-    }
-    .lang-btn:hover:not(.active) {
-      border-color: var(--ochre);
-      color: var(--sand);
-    }
-
     .name-input {
       width: 100%;
       background: var(--bg3);
@@ -407,6 +387,15 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
       .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+
+    footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.88rem;background:rgba(245,237,224,0.5);transition:background 0.4s;}
+    html.dark footer{background:rgba(26,23,40,0.5);}
+    footer a{color:var(--ochre);text-decoration:none;}footer a:hover{text-decoration:underline;}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin:0.75rem 0;flex-wrap:wrap;}
+    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
   </style>
 
   <script type="application/ld+json">
@@ -430,7 +419,7 @@
   <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html" class="active">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
     </ul>
-  <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
+  <div class="nav-right"><div class="lang-switcher"><a href="generator.html" class="lang-btn active">EN</a><a href="fr/generator.html" class="lang-btn">FR</a><a href="ar/generator.html" class="lang-btn">AR</a></div><button id="themeToggle" aria-label="Toggle theme">
     <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
     <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
   </button>
@@ -530,16 +519,18 @@
 
 </main>
 
-<footer>
-  <div class="footer-links">
-    <a href="index.html">Converter</a>
-    <a href="keyboard.html">Online Keyboard</a>
-    <a href="articles.html">Articles</a>
-    <a href="about.html">About</a>
-    <a href="privacy.html">Privacy Policy</a>
-  </div>
-  <div class="footer-copy">Made with ❤ for Amazigh culture · By Anaruz Elhabib · <a href="https://amghnas.com" style="color:var(--ochre);text-decoration:none;">amghnas.com</a></div>
-</footer>
+  <footer>
+    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
+    <div class="footer-links">
+      <a href="index.html">Converter</a>
+      <a href="keyboard.html">Online Keyboard</a>
+      <a href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <p>Made with ❤ for Amazigh culture · By Anaruz Elhabib</p>
+    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+  </footer>
 
 <div class="toast" id="toast"></div>
 
@@ -2933,6 +2924,7 @@ document.getElementById('nameInput').addEventListener('input', function() {
       hamburger.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
     }));
   }
+document.getElementById('copyright-year').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>

@@ -661,6 +661,9 @@
       .map-from-val { font-size: 0.88rem; }
     }
       .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
   </style>
 
   <script type="application/ld+json">
@@ -687,7 +690,7 @@
     <ul class="nav-links">
       <li><a href="index.html">Converter</a></li><li><a href="keyboard.html" class="active">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
     </ul>
-    <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
+    <div class="nav-right"><div class="lang-switcher"><a href="keyboard.html" class="lang-btn active">EN</a><a href="fr/keyboard.html" class="lang-btn">FR</a><a href="ar/keyboard.html" class="lang-btn">AR</a></div><button id="themeToggle" aria-label="Toggle theme">
       <span class="moon-icon">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
       </span>
@@ -918,7 +921,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer>
+    <footer>
     <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
     <div class="footer-links">
       <a href="index.html">Converter</a>
@@ -958,161 +961,7 @@ document.getElementById('copyright-year').textContent = new Date().getFullYear()
       hamburger.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
     }));
   }
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const keyboardInput = document.getElementById('keyboardInput');
-    const keyboardKeys = document.querySelectorAll('.keyboard-key');
-    const copyBtn = document.getElementById('copyBtn');
-    const clearBtn = document.getElementById('clearBtn');
-
-    if (!keyboardInput) { console.error('keyboardInput not found'); return; }
-
-    let lastKnownInput = '';
-
-    // Virtual key clicks
-    keyboardKeys.forEach(key => {
-        key.addEventListener('click', () => {
-            handleDirectInput(key.dataset.key);
-            applyClickEffect(key);
-        });
-    });
-
-    function handleDirectInput(keyValue) {
-        let start = keyboardInput.selectionStart;
-        let end = keyboardInput.selectionEnd;
-        let current = keyboardInput.value;
-        if (keyValue === 'backspace') {
-            if (start !== end) {
-                keyboardInput.value = current.substring(0, start) + current.substring(end);
-                keyboardInput.setSelectionRange(start, start);
-            } else if (start > 0) {
-                keyboardInput.value = current.substring(0, start - 1) + current.substring(end);
-                keyboardInput.setSelectionRange(start - 1, start - 1);
-            }
-        } else {
-            let newVal = current.substring(0, start) + keyValue + current.substring(end);
-            keyboardInput.value = newVal;
-            keyboardInput.setSelectionRange(start + keyValue.length, start + keyValue.length);
-        }
-        keyboardInput.focus();
-        processInputForConversion();
-    }
-
-    // Conversion processing
-    const physicalToTifinaghMap = {
-        'a':'ⴰ','b':'ⴱ','c':'ⵛ','d':'ⴷ','e':'ⴻ','f':'ⴼ','g':'ⴳ','h':'ⵀ','i':'ⵉ',
-        'j':'ⵊ','k':'ⴽ','l':'ⵍ','m':'ⵎ','n':'ⵏ','o':'ⵓ','p':'ⵒ','q':'ⵇ','r':'ⵔ',
-        's':'ⵙ','t':'ⵜ','u':'ⵓ','v':'ⵠ','w':'ⵡ','x':'ⵅ','y':'ⵢ','z':'ⵣ',
-        'A':'ⵄ','D':'ⴹ','G':'ⵖ','H':'ⵃ','R':'ⵕ','S':'ⵚ','T':'ⵟ','W':'ⵯ','Z':'ⵥ',
-        'ا':'ⴰ','أ':'ⴰ','آ':'ⴰ','إ':'ⵉ','ب':'ⴱ','ت':'ⵜ','ث':'ⵜ','ج':'ⵊ','ح':'ⵃ',
-        'خ':'ⵅ','د':'ⴷ','ذ':'ⴷ','ر':'ⵔ','ز':'ⵣ','س':'ⵙ','ش':'ⵛ','ص':'ⵚ','ض':'ⴹ',
-        'ط':'ⵟ','ظ':'ⴹ','ع':'ⵄ','غ':'ⵖ','ف':'ⴼ','ق':'ⵇ','ك':'ⴽ','ل':'ⵍ','م':'ⵎ',
-        'ن':'ⵏ','ه':'ⵀ','و':'ⵡ','ي':'ⵢ','ى':'ⵉ','ء':'ⴻ','ؤ':'ⵓ','ئ':'ⵉ','ڤ':'ⵠ','ڭ':'ⴳ'
-    };
-
-    function processInputForConversion() {
-        const current = keyboardInput.value;
-        if (current === lastKnownInput) return;
-        const newChars = current.slice(lastKnownInput.length);
-        let converted = '';
-        for (let char of newChars) {
-            if (char === '\u0629') continue;                          // ة → nothing
-            if (char >= '\u064B' && char <= '\u0652') continue;     // Arabic diacritics → skip
-            if (isAlreadyTifinagh(char)) { converted += char; continue; } // Tifinagh passthrough
-            if (char === ' ' || char === '\n') { converted += char; continue; } // space passthrough
-            const mapped = physicalToTifinaghMap[char] || physicalToTifinaghMap[char.toLowerCase()];
-            if (mapped) {
-                converted += mapped; // capitals: emphatic A D G H R S T W Z → distinct; others → lowercase Tifinagh
-            }
-            // everything else (unmapped Latin capitals etc.) → produce nothing
-        }
-        if (newChars !== converted) {
-            const sel = keyboardInput.selectionStart;
-            keyboardInput.value = lastKnownInput + converted;
-            keyboardInput.setSelectionRange(sel, sel);
-        }
-        lastKnownInput = keyboardInput.value;
-    }
-
-    function isAlreadyTifinagh(char) {
-        const cp = char.codePointAt(0);
-        return cp >= 0x2D30 && cp <= 0x2D7F;
-    }
-
-    keyboardInput.addEventListener('input', () => {
-        setTimeout(processInputForConversion, 0);
-    });
-
-    // Physical keyboard
-    document.addEventListener('keydown', (e) => {
-        if (document.activeElement !== keyboardInput) return;
-        const key = e.key;
-        if ((e.ctrlKey || e.metaKey) && key === 'a') { e.preventDefault(); keyboardInput.select(); return; }
-        if (key === 'Backspace') {
-            e.preventDefault();
-            let s = keyboardInput.selectionStart, en = keyboardInput.selectionEnd, v = keyboardInput.value;
-            if (s !== en) { keyboardInput.value = v.substring(0, s) + v.substring(en); keyboardInput.setSelectionRange(s,s); }
-            else if (s > 0) { keyboardInput.value = v.substring(0, s-1) + v.substring(en); keyboardInput.setSelectionRange(s-1,s-1); }
-            keyboardInput.focus();
-            const dk = document.querySelector('.keyboard-key.delete[data-key="backspace"]');
-            if (dk) applyClickEffect(dk);
-            processInputForConversion();
-            return;
-        }
-        if (key === 'Delete') {
-            e.preventDefault();
-            let s = keyboardInput.selectionStart, en = keyboardInput.selectionEnd, v = keyboardInput.value;
-            if (s !== en) { keyboardInput.value = v.substring(0, s) + v.substring(en); keyboardInput.setSelectionRange(s,s); }
-            else if (s < v.length) { keyboardInput.value = v.substring(0, s) + v.substring(s+1); keyboardInput.setSelectionRange(s,s); }
-            keyboardInput.focus();
-            processInputForConversion();
-            return;
-        }
-        if (key === ' ') {
-            e.preventDefault();
-            handleDirectInput(' ');
-            const sk = document.querySelector('.keyboard-key.wide[data-key=" "]');
-            if (sk) applyClickEffect(sk);
-            return;
-        }
-        if (key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-            const tifChar = physicalToTifinaghMap[key] || physicalToTifinaghMap[key.toLowerCase()];
-            const vk = tifChar
-                ? document.querySelector(`.keyboard-key[data-key="${tifChar}"]`)
-                : document.querySelector(`.keyboard-key[data-key="${key}"]`);
-            if (vk) applyClickEffect(vk);
-        }
-    });
-
-    // Copy
-    copyBtn.addEventListener('click', () => {
-        keyboardInput.select();
-        navigator.clipboard.writeText(keyboardInput.value)
-            .then(() => {
-                const orig = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Copied!';
-                setTimeout(() => { copyBtn.innerHTML = orig; }, 1500);
-            })
-            .catch(() => {
-                document.execCommand('copy');
-            });
-        keyboardInput.focus();
-    });
-
-    clearBtn.addEventListener('click', () => {
-        keyboardInput.value = '';
-        lastKnownInput = '';
-        keyboardInput.focus();
-    });
-
-    function applyClickEffect(el) {
-        if (el) {
-            el.classList.add('key-active');
-            setTimeout(() => el.classList.remove('key-active'), 180);
-        }
-    }
-});
 </script>
+<script src="keyboard.js"></script>
 </body>
 </html>

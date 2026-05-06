@@ -464,6 +464,9 @@
       .nav-links li:last-child a { border-bottom: none; }
     }
       .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
   </style>
 
   <script type="application/ld+json">
@@ -520,7 +523,7 @@
     <ul class="nav-links">
       <li><a href="index.html" class="active">Converter</a></li><li><a href="keyboard.html">Keyboard</a></li><li><a href="generator.html">Name Generator</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li>
     </ul>
-    <div class="nav-right"><button id="themeToggle" aria-label="Toggle theme">
+    <div class="nav-right"><div class="lang-switcher"><a href="index.html" class="lang-btn active">EN</a><a href="fr/index.html" class="lang-btn">FR</a><a href="ar/index.html" class="lang-btn">AR</a></div><button id="themeToggle" aria-label="Toggle theme">
       <span class="moon-icon">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
       </span>
@@ -681,7 +684,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer>
+    <footer>
     <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
     <div class="footer-links">
       <a href="index.html">Converter</a>
