@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clavier Tifinagh en Ligne | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
+  <meta name="description" content="Clavier Tifinagh gratuit en ligne — tapez l'écriture amazighe avec des touches latines, arabes ou virtuelles." />
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Tifinagh&family=Noto+Naskh+Arabic&display=swap" rel="stylesheet">
+  <style>
+    :root{--sand:#f5ede0;--sand-dark:#e8d9c4;--ochre:#c9853a;--ochre-deep:#a3622a;--terracotta:#b85c38;--indigo:#3d3580;--text:#1a1a2e;--text-muted:#5a5a7a;--card-bg:rgba(255,255,255,0.72);--border:rgba(201,133,58,0.2);--glow:rgba(201,133,58,0.15);--tag-bg:rgba(201,133,58,0.1);--key-bg:#ffffff;--key-border:#d4b896;--key-text:#1a1a2e;--delete-bg:#dc2626;}
+    html.dark{--sand:#1a1728;--sand-dark:#231e35;--ochre:#e0a050;--ochre-deep:#c9853a;--text:#f0ece4;--text-muted:#9d97b8;--card-bg:rgba(35,30,53,0.85);--border:rgba(224,160,80,0.2);--glow:rgba(224,160,80,0.1);--key-bg:#2e2845;--key-border:#4a4070;--key-text:#f0ece4;--delete-bg:#b91c1c;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background-color:var(--sand);color:var(--text);min-height:100vh;transition:background-color 0.4s,color 0.4s;position:relative;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(201,133,58,0.04) 30px,rgba(201,133,58,0.04) 31px),repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(61,53,128,0.04) 30px,rgba(61,53,128,0.04) 31px);pointer-events:none;z-index:0;}
+    .page-wrap{position:relative;z-index:1;}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(245,237,224,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;transition:background 0.4s;}
+    html.dark nav{background:rgba(26,23,40,0.88);}
+    .nav-brand{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.6rem;color:var(--ochre);text-decoration:none;}
+    .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+    .nav-links a{text-decoration:none;color:var(--text-muted);font-size:0.9rem;font-weight:500;transition:color 0.2s;position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--ochre);transform:scaleX(0);transition:transform 0.2s;}
+    .nav-links a:hover{color:var(--ochre);}.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}.nav-links a.active{color:var(--ochre);}
+    #themeToggle{background:none;border:1.5px solid var(--border);border-radius:50%;width:38px;height:38px;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+    #themeToggle:hover{border-color:var(--ochre);color:var(--ochre);}
+    .sun-icon{display:none;}html.dark .moon-icon{display:none;}html.dark .sun-icon{display:flex;}
+    .nav-hamburger{display:none;background:none;border:1.5px solid var(--border);border-radius:8px;width:38px;height:38px;cursor:pointer;color:var(--text-muted);align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
+    .nav-hamburger:hover{border-color:var(--ochre);color:var(--ochre);}
+    .nav-right{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
+    .page-header{text-align:center;padding:3.5rem 2rem 2rem;}
+    .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;color:var(--text);margin-bottom:0.75rem;}
+    .page-header p{color:var(--text-muted);font-size:0.95rem;max-width:560px;margin:0 auto;line-height:1.7;}
+    .divider-ornament{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.75rem auto;max-width:300px;}
+    .divider-ornament::before,.divider-ornament::after{content:'';flex:1;height:1px;}
+    .divider-ornament::before{background:linear-gradient(to right,transparent,var(--ochre));}
+    .divider-ornament::after{background:linear-gradient(to left,transparent,var(--ochre));}
+    .divider-diamond{width:8px;height:8px;background:var(--ochre);transform:rotate(45deg);}
+    .keyboard-wrap{max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem;}
+    .keyboard-card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2rem;backdrop-filter:blur(16px);box-shadow:0 4px 32px rgba(0,0,0,0.07);}
+    #keyboardInput{width:100%;min-height:130px;padding:1rem 1.25rem;font-family:'Noto Sans Tifinagh','Noto Naskh Arabic','DM Sans',sans-serif;font-size:1.4rem;line-height:1.6;background:rgba(255,255,255,0.7);border:1.5px solid var(--border);border-radius:12px;color:var(--text);resize:vertical;outline:none;transition:border-color 0.2s,box-shadow 0.2s;margin-bottom:1.25rem;}
+    html.dark #keyboardInput{background:rgba(255,255,255,0.07);}
+    #keyboardInput:focus{border-color:var(--ochre);box-shadow:0 0 0 3px var(--glow);}
+    .action-buttons{display:flex;justify-content:center;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .btn-action{display:flex;align-items:center;gap:0.5rem;padding:0.6rem 1.4rem;border-radius:10px;border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
+    .btn-action.copy{background:var(--ochre);border-color:var(--ochre);color:white;}
+    .btn-action.copy:hover{background:var(--ochre-deep);border-color:var(--ochre-deep);}
+    .btn-action.clear{background:transparent;color:var(--text-muted);}
+    .btn-action.clear:hover{border-color:var(--terracotta);color:var(--terracotta);}
+    .keyboard-layout{display:flex;flex-direction:column;gap:10px;}
+    .keyboard-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+    .key-group{display:flex;flex-direction:column;align-items:center;width:74px;min-width:74px;max-width:74px;}
+    .label-container{display:flex;justify-content:center;gap:4px;width:100%;margin-bottom:-4px;min-height:1.1rem;}
+    .latin-label{font-size:0.68rem;color:var(--text-muted);line-height:1;letter-spacing:0.4px;font-family:'DM Sans',sans-serif;}
+    .arabic-label{font-size:0.62rem;color:var(--text-muted);font-family:'Noto Naskh Arabic',sans-serif;direction:rtl;}
+    .keyboard-key{height:56px;width:100%;border-radius:11px;border:1.5px solid var(--key-border);background:var(--key-bg);color:var(--key-text);font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.12s ease;box-shadow:0 2px 6px rgba(0,0,0,0.07);user-select:none;}
+    .keyboard-key:hover{transform:translateY(-3px);border-color:var(--ochre);background:rgba(201,133,58,0.08);box-shadow:0 6px 14px rgba(201,133,58,0.18);}
+    .keyboard-key:active{transform:translateY(0);}
+    .keyboard-key.delete{background:var(--delete-bg);color:white;border-color:var(--delete-bg);}
+    .keyboard-key.delete:hover{background:#b91c1c;transform:translateY(-2px);}
+    .keyboard-key.wide{font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);}
+    .key-group.space-key{flex-grow:1;min-width:140px;max-width:320px;width:auto;}
+    .key-group.delete-key{width:74px;min-width:74px;max-width:74px;}
+    .keyboard-key.key-active:not(.delete){animation:keyPop 0.15s ease forwards;}
+    @keyframes keyPop{0%{transform:translateY(0);}40%{transform:translateY(-4px);border-color:var(--ochre);background:rgba(201,133,58,0.15);}100%{transform:translateY(0);}}
+    .guide-section{max-width:900px;margin:0 auto;padding:0 1.5rem 5rem;}
+    .guide-heading{text-align:center;margin-bottom:2.5rem;}
+    .guide-heading h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--text);margin-bottom:0.4rem;}
+    .guide-heading p{color:var(--text-muted);font-size:0.93rem;line-height:1.6;}
+    .guide-divider{display:flex;align-items:center;gap:1rem;margin:1.5rem auto 2.5rem;max-width:260px;}
+    .guide-divider::before{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--ochre));}
+    .guide-divider::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,var(--ochre));}
+    .guide-diamond{width:7px;height:7px;background:var(--ochre);transform:rotate(45deg);flex-shrink:0;}
+    .guide-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem;background:var(--card-bg);backdrop-filter:blur(12px);}
+    .guide-tab{flex:1;padding:0.85rem 0.5rem;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;color:var(--text-muted);transition:all 0.2s;border-right:1px solid var(--border);line-height:1.3;}
+    .guide-tab:last-child{border-right:none;}
+    .guide-tab.active{background:var(--ochre);color:white;font-weight:600;}
+    .guide-tab:hover:not(.active){color:var(--ochre);background:var(--tag-bg);}
+    .guide-tab .tab-icon{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.1rem;display:block;margin-bottom:0.2rem;}
+    .guide-tab .tab-icon.ar-icon{font-family:'Noto Naskh Arabic',serif;font-size:1.2rem;}
+    .guide-panel{display:none;}.guide-panel.active{display:block;}
+    .guide-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;backdrop-filter:blur(12px);}
+    .guide-card-intro{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);background:rgba(201,133,58,0.04);}
+    .guide-card-intro p{font-size:0.88rem;color:var(--text-muted);line-height:1.65;margin:0;}
+    .guide-card-intro strong{color:var(--text);}
+    .map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1px;background:var(--border);}
+    .map-cell{display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0.85rem;background:var(--card-bg);gap:0.5rem;transition:background 0.15s;}
+    .map-cell:hover{background:rgba(201,133,58,0.07);}
+    .map-from-val{font-size:0.95rem;font-weight:600;color:var(--text);font-family:'DM Sans',sans-serif;min-width:32px;}
+    .map-from-val.ar{font-family:'Noto Naskh Arabic',serif;font-size:1.1rem;direction:rtl;}
+    .map-from-val.cap{font-size:1.1rem;font-weight:800;color:var(--ochre);}
+    .map-tifi{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);font-weight:600;}
+    .tip-banner{margin:1.5rem 0 0;padding:0.9rem 1.25rem;background:rgba(201,133,58,0.07);border:1px solid rgba(201,133,58,0.2);border-radius:10px;font-size:0.84rem;color:var(--text-muted);line-height:1.6;}
+    .tip-banner strong{color:var(--text);}
+    footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.88rem;background:rgba(245,237,224,0.5);transition:background 0.4s;}
+    html.dark footer{background:rgba(26,23,40,0.5);}
+    footer a{color:var(--ochre);text-decoration:none;}footer a:hover{text-decoration:underline;}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin:0.75rem 0;flex-wrap:wrap;}
+    @media(max-width:900px){.key-group{width:68px;min-width:68px;max-width:68px;}.keyboard-key{height:52px;font-size:1.4rem;}}
+    @media(max-width:640px){
+      nav{padding:0 1rem !important;display:flex;align-items:center;justify-content:space-between;}
+      .nav-brand{font-size:1.3rem;color:var(--ochre) !important;flex-shrink:0;display:flex !important;}
+      .nav-hamburger{display:flex !important;}
+      .nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(245,237,224,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);flex-direction:column;gap:0;z-index:99;padding:0.5rem 0 1rem;list-style:none;}
+      html.dark .nav-links{background:rgba(26,23,40,0.97);}
+      .nav-links.open{display:flex;}
+      .nav-links li{width:100%;}
+      .nav-links a{display:block;padding:0.9rem 1.5rem;font-size:1rem;border-bottom:1px solid var(--border);color:var(--text);}
+      .nav-links a:hover,.nav-links a.active{color:var(--ochre);background:var(--tag-bg);}
+      .nav-links a::after{display:none;}
+      .key-group{width:62px;min-width:62px;max-width:62px;}
+      .keyboard-row{gap:7px;}
+      .keyboard-key{height:48px;font-size:1.25rem;border-radius:9px;}
+      .keyboard-card{padding:1.25rem;}
+      .page-header{padding:2rem 1.25rem 1.5rem;}
+    }
+    @media(max-width:480px){
+      .key-group{width:40px;min-width:40px;max-width:40px;}
+      .key-group.delete-key{width:44px;min-width:44px;max-width:44px;}
+      .key-group.space-key{min-width:100px;max-width:200px;}
+      .keyboard-row{gap:5px;}
+      .keyboard-layout{gap:6px;}
+      .keyboard-key{height:42px;font-size:1.1rem;border-radius:8px;}
+      .latin-label,.arabic-label{font-size:0.58rem;}
+    }
+    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="../index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Convertisseur</a></li><li><a href="keyboard.html" class="active">Clavier</a></li><li><a href="generator.html">Générateur</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">À propos</a></li>
+    </ul>
+    <div class="nav-right">
+      
+      <div class="lang-switcher"><a href="../keyboard.html" class="lang-btn">EN</a><a href="keyboard.html" class="lang-btn active">FR</a><a href="../ar/keyboard.html" class="lang-btn">AR</a></div><button id="themeToggle" aria-label="Changer le thème">
+        <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+        <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Ouvrir le menu">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <h1>Clavier Tifinagh en Ligne</h1>
+    <p>Tapez le Tamazight et l'écriture amazighe avec votre clavier physique, ou cliquez sur les touches ci-dessous. Supporte la saisie latine et arabe.</p>
+    <div class="divider-ornament"><span class="divider-diamond"></span></div>
+  </header>
+
+  <div class="keyboard-wrap">
+    <div class="keyboard-card">
+      <textarea id="keyboardInput" placeholder="Commencez à taper en Tifinagh, Latin ou Arabe ici…" lang="ber" inputmode="text"></textarea>
+      <div class="action-buttons">
+        <button class="btn-action copy" id="copyBtn">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copier le texte
+        </button>
+        <button class="btn-action clear" id="clearBtn">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          Effacer
+        </button>
+      </div>
+      <div class="keyboard-layout">
+        <div class="keyboard-row">
+          <div class="key-group"><div class="label-container"><span class="latin-label">a</span><span class="arabic-label">أَ</span></div><button class="keyboard-key" data-key="ⴰ">ⴰ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">b</span><span class="arabic-label">ب</span></div><button class="keyboard-key" data-key="ⴱ">ⴱ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">d</span><span class="arabic-label">د</span></div><button class="keyboard-key" data-key="ⴷ">ⴷ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ḍ</span><span class="arabic-label">ض</span></div><button class="keyboard-key" data-key="ⴹ">ⴹ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">e</span><span class="arabic-label"></span></div><button class="keyboard-key" data-key="ⴻ">ⴻ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">f</span><span class="arabic-label">ف</span></div><button class="keyboard-key" data-key="ⴼ">ⴼ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">g</span><span class="arabic-label">ڭ</span></div><button class="keyboard-key" data-key="ⴳ">ⴳ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">h</span><span class="arabic-label">ه</span></div><button class="keyboard-key" data-key="ⵀ">ⵀ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ḥ</span><span class="arabic-label">ح</span></div><button class="keyboard-key" data-key="ⵃ">ⵃ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">i</span><span class="arabic-label">إِ</span></div><button class="keyboard-key" data-key="ⵉ">ⵉ</button></div>
+        </div>
+        <div class="keyboard-row">
+          <div class="key-group"><div class="label-container"><span class="latin-label">j</span><span class="arabic-label">ج</span></div><button class="keyboard-key" data-key="ⵊ">ⵊ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">k</span><span class="arabic-label">ك</span></div><button class="keyboard-key" data-key="ⴽ">ⴽ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">l</span><span class="arabic-label">ل</span></div><button class="keyboard-key" data-key="ⵍ">ⵍ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">m</span><span class="arabic-label">م</span></div><button class="keyboard-key" data-key="ⵎ">ⵎ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">n</span><span class="arabic-label">ن</span></div><button class="keyboard-key" data-key="ⵏ">ⵏ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">p</span><span class="arabic-label">پ</span></div><button class="keyboard-key" data-key="ⵒ">ⵒ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">q</span><span class="arabic-label">ق</span></div><button class="keyboard-key" data-key="ⵇ">ⵇ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">r</span><span class="arabic-label">ر</span></div><button class="keyboard-key" data-key="ⵔ">ⵔ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ṛ</span><span class="arabic-label"></span></div><button class="keyboard-key" data-key="ⵕ">ⵕ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">s</span><span class="arabic-label">س</span></div><button class="keyboard-key" data-key="ⵙ">ⵙ</button></div>
+        </div>
+        <div class="keyboard-row">
+          <div class="key-group"><div class="label-container"><span class="latin-label">sh</span><span class="arabic-label">ش</span></div><button class="keyboard-key" data-key="ⵛ">ⵛ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ṣ</span><span class="arabic-label">ص</span></div><button class="keyboard-key" data-key="ⵚ">ⵚ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">t</span><span class="arabic-label">ت</span></div><button class="keyboard-key" data-key="ⵜ">ⵜ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ṭ</span><span class="arabic-label">ط</span></div><button class="keyboard-key" data-key="ⵟ">ⵟ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">u</span><span class="arabic-label">أُ</span></div><button class="keyboard-key" data-key="ⵓ">ⵓ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">v</span><span class="arabic-label">ڤ</span></div><button class="keyboard-key" data-key="ⵠ">ⵠ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">w</span><span class="arabic-label">و</span></div><button class="keyboard-key" data-key="ⵡ">ⵡ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">kh</span><span class="arabic-label">خ</span></div><button class="keyboard-key" data-key="ⵅ">ⵅ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">y</span><span class="arabic-label">ي</span></div><button class="keyboard-key" data-key="ⵢ">ⵢ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">z</span><span class="arabic-label">ز</span></div><button class="keyboard-key" data-key="ⵣ">ⵣ</button></div>
+        </div>
+        <div class="keyboard-row">
+          <div class="key-group"><div class="label-container"><span class="latin-label">ẓ</span></div><button class="keyboard-key" data-key="ⵥ">ⵥ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ʷ</span></div><button class="keyboard-key" data-key="ⵯ">ⵯ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">ɛ</span><span class="arabic-label">ع</span></div><button class="keyboard-key" data-key="ⵄ">ⵄ</button></div>
+          <div class="key-group"><div class="label-container"><span class="latin-label">gh</span><span class="arabic-label">غ</span></div><button class="keyboard-key" data-key="ⵖ">ⵖ</button></div>
+          <div class="key-group space-key"><div class="label-container"></div><button class="keyboard-key wide" data-key=" ">ESPACE</button></div>
+          <div class="key-group delete-key"><div class="label-container"></div><button class="keyboard-key delete" data-key="backspace" title="Retour arrière"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19H5a2 2 0 01-2-2V7a2 2 0 012-2h7l5 5-5 5v4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 12l-4-4m0 8l4-4"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="guide-section">
+    <div class="guide-heading">
+      <h2>Comment taper en Tifinagh</h2>
+      <p>Utilisez les touches à l'écran, votre clavier physique, ou tapez directement en arabe ou en latin.</p>
+      <div class="guide-divider"><span class="guide-diamond"></span></div>
+    </div>
+    <div class="guide-tabs">
+      <button class="guide-tab active" onclick="showTab('arabic',this)"><span class="tab-icon ar-icon">ع</span>Saisie Arabe</button>
+      <button class="guide-tab" onclick="showTab('latin',this)"><span class="tab-icon">a</span>Touches Latines</button>
+      <button class="guide-tab" onclick="showTab('capitals',this)"><span class="tab-icon">A</span>Majuscules</button>
+    </div>
+    <div class="guide-panel active" id="panel-arabic">
+      <div class="guide-card">
+        <div class="guide-card-intro"><p>Passez votre téléphone ou clavier en <strong>arabe</strong> et commencez à taper — chaque lettre est instantanément convertie en son équivalent Tifinagh.</p></div>
+        <div class="map-grid">
+          <div class="map-cell"><span class="map-from-val ar">ا / أ</span><span class="map-tifi">ⴰ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ب</span><span class="map-tifi">ⴱ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ت / ث</span><span class="map-tifi">ⵜ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ج</span><span class="map-tifi">ⵊ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ح</span><span class="map-tifi">ⵃ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">خ</span><span class="map-tifi">ⵅ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">د / ذ</span><span class="map-tifi">ⴷ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ر</span><span class="map-tifi">ⵔ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ز</span><span class="map-tifi">ⵣ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">س</span><span class="map-tifi">ⵙ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ش</span><span class="map-tifi">ⵛ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ص</span><span class="map-tifi">ⵚ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ض</span><span class="map-tifi">ⴹ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ط</span><span class="map-tifi">ⵟ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ع</span><span class="map-tifi">ⵄ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">غ</span><span class="map-tifi">ⵖ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ف</span><span class="map-tifi">ⴼ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ق</span><span class="map-tifi">ⵇ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ك</span><span class="map-tifi">ⴽ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ل</span><span class="map-tifi">ⵍ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">م</span><span class="map-tifi">ⵎ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ن</span><span class="map-tifi">ⵏ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ه</span><span class="map-tifi">ⵀ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">و</span><span class="map-tifi">ⵡ</span></div>
+          <div class="map-cell"><span class="map-from-val ar">ي</span><span class="map-tifi">ⵢ</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="guide-panel" id="panel-latin">
+      <div class="guide-card">
+        <div class="guide-card-intro"><p>Tapez n'importe quelle <strong>lettre minuscule</strong> sur un clavier latin. Les digrammes comme <strong>gh</strong>, <strong>sh</strong> et <strong>kh</strong> sont aussi reconnus automatiquement.</p></div>
+        <div class="map-grid">
+          <div class="map-cell"><span class="map-from-val">a</span><span class="map-tifi">ⴰ</span></div>
+          <div class="map-cell"><span class="map-from-val">b</span><span class="map-tifi">ⴱ</span></div>
+          <div class="map-cell"><span class="map-from-val">d</span><span class="map-tifi">ⴷ</span></div>
+          <div class="map-cell"><span class="map-from-val">e</span><span class="map-tifi">ⴻ</span></div>
+          <div class="map-cell"><span class="map-from-val">f</span><span class="map-tifi">ⴼ</span></div>
+          <div class="map-cell"><span class="map-from-val">g</span><span class="map-tifi">ⴳ</span></div>
+          <div class="map-cell"><span class="map-from-val">gh</span><span class="map-tifi">ⵖ</span></div>
+          <div class="map-cell"><span class="map-from-val">h</span><span class="map-tifi">ⵀ</span></div>
+          <div class="map-cell"><span class="map-from-val">i</span><span class="map-tifi">ⵉ</span></div>
+          <div class="map-cell"><span class="map-from-val">j</span><span class="map-tifi">ⵊ</span></div>
+          <div class="map-cell"><span class="map-from-val">k</span><span class="map-tifi">ⴽ</span></div>
+          <div class="map-cell"><span class="map-from-val">kh</span><span class="map-tifi">ⵅ</span></div>
+          <div class="map-cell"><span class="map-from-val">l</span><span class="map-tifi">ⵍ</span></div>
+          <div class="map-cell"><span class="map-from-val">m</span><span class="map-tifi">ⵎ</span></div>
+          <div class="map-cell"><span class="map-from-val">n</span><span class="map-tifi">ⵏ</span></div>
+          <div class="map-cell"><span class="map-from-val">o / u</span><span class="map-tifi">ⵓ</span></div>
+          <div class="map-cell"><span class="map-from-val">q</span><span class="map-tifi">ⵇ</span></div>
+          <div class="map-cell"><span class="map-from-val">r</span><span class="map-tifi">ⵔ</span></div>
+          <div class="map-cell"><span class="map-from-val">s</span><span class="map-tifi">ⵙ</span></div>
+          <div class="map-cell"><span class="map-from-val">sh</span><span class="map-tifi">ⵛ</span></div>
+          <div class="map-cell"><span class="map-from-val">t</span><span class="map-tifi">ⵜ</span></div>
+          <div class="map-cell"><span class="map-from-val">w</span><span class="map-tifi">ⵡ</span></div>
+          <div class="map-cell"><span class="map-from-val">x</span><span class="map-tifi">ⵅ</span></div>
+          <div class="map-cell"><span class="map-from-val">y</span><span class="map-tifi">ⵢ</span></div>
+          <div class="map-cell"><span class="map-from-val">z</span><span class="map-tifi">ⵣ</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="guide-panel" id="panel-capitals">
+      <div class="guide-card">
+        <div class="guide-card-intro"><p>Maintenez <strong>SHIFT</strong> pour produire des consonnes emphatiques — des sons prononcés plus profondément dans la gorge, communs en Tamazight et en arabe.</p></div>
+        <div class="map-grid">
+          <div class="map-cell"><span class="map-from-val cap">D</span><span class="map-tifi">ⴹ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">H</span><span class="map-tifi">ⵃ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">R</span><span class="map-tifi">ⵕ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">S</span><span class="map-tifi">ⵚ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">T</span><span class="map-tifi">ⵟ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">Z</span><span class="map-tifi">ⵥ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">G</span><span class="map-tifi">ⵖ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">A</span><span class="map-tifi">ⵄ</span></div>
+          <div class="map-cell"><span class="map-from-val cap">W</span><span class="map-tifi">ⵯ</span></div>
+        </div>
+      </div>
+      <div class="tip-banner">
+        <p style="margin:0 0 0.6rem;font-weight:600;color:var(--text);">💡 Équivalents arabes :</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem 0.75rem;font-size:0.82rem;">
+          <span><strong>D → ⴹ</strong> comme ض</span>
+          <span><strong>T → ⵟ</strong> comme ط</span>
+          <span><strong>S → ⵚ</strong> comme ص</span>
+          <span><strong>Z → ⵥ</strong> comme ز emphatique</span>
+          <span><strong>G → ⵖ</strong> comme غ</span>
+          <span><strong>A → ⵄ</strong> comme ع</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <footer>
+    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
+    <div class="footer-links">
+      <a href="index.html">Convertisseur</a>
+      <a href="keyboard.html">Clavier en ligne</a>
+      <a href="articles.html">Articles</a>
+      <a href="about.html">À propos</a>
+      <a href="privacy.html">Confidentialité</a>
+    </div>
+    <p>Fait avec ❤ pour la culture amazighe · Par Anaruz Elhabib</p>
+    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+  </footer>
+</div>
+<script src="../themeToggle.js"></script>
+<script src="../keyboard.js"></script>
+<script>
+  document.getElementById('copyright-year').textContent=new Date().getFullYear();
+  function showTab(name,btn){document.querySelectorAll('.guide-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.guide-tab').forEach(b=>b.classList.remove('active'));document.getElementById('panel-'+name).classList.add('active');btn.classList.add('active');}
+  const hamburger=document.getElementById('hamburger');
+  const navLinks=document.querySelector('.nav-links');
+  if(hamburger&&navLinks){hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.innerHTML=navLinks.classList.contains('open')?'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>':'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';});navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.innerHTML='<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';}));}
+</script>
+</body>
+</html>
