@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>اكتب اسمك بالتيفيناغ | مولّد الأسماء المجاني | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
-  <meta name="description" content="حوّل اسمك إلى كتابة التيفيناغ فوراً. اكتب اسمك باللاتينية أو العربية وشاهده بالأبجدية الأمازيغية القديمة. تنزيل كصورة أو نسخ أو مشاركة." />
-  <meta name="keywords" content="name in tifinagh, tifinagh name generator, amazigh name, write name in tifinagh, tifinagh converter, amghnas" />
-  <link rel="canonical" href="https://amghnas.com/generator.html" />
+  <title>كتابة الاسم بالتيفيناغ (ⴰⵎⵖⵏⴰⵙ) – مولّد الأسماء الأمازيغية وبطاقات فنية مجانية</title>
+  <meta name="description" content="حوّل اسمك إلى حروف التيفيناغ الأمازيغية الأصلية فوراً. مولّد أسماء مجاني مع تصاميم بطاقات فنية فاخرة، وتنزيل صورة عالية الدقة PNG ونسخ يونيكود للبروفايل والوشم." />
+  <meta name="keywords" content="كتابة الاسم بالتيفيناغ, اسمي بالأمازيغية, مولد الأسماء الأمازيغية, تحويل الأسماء للتيفيناغ, زخرفة الأسماء بالتيفيناغ, اسمي بحروف التيفيناغ, حروف تيفيناغ, اسماء امازيغية للوشم, تيفيناغ اسمي, amghnas" />
+  <link rel="canonical" href="https://amghnas.com/ar/generator.html" />
+  <link rel="alternate" hreflang="en" href="https://amghnas.com/generator.html" />
+  <link rel="alternate" hreflang="fr" href="https://amghnas.com/fr/generator.html" />
+  <link rel="alternate" hreflang="ar" href="https://amghnas.com/ar/generator.html" />
+  <link rel="alternate" hreflang="x-default" href="https://amghnas.com/generator.html" />
   <link rel="icon" href="../favicon.png" type="image/png" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Write Your Name in Tifinagh | amghnas" />
-  <meta property="og:description" content="See your name in the ancient Tifinagh script. Free, instant, beautiful." />
-  <meta property="og:url" content="https://amghnas.com/generator.html" />
+  <meta property="og:site_name" content="amghnas" />
+  <meta property="og:title" content="كتابة الاسم بالتيفيناغ (ⴰⵎⵖⵏⴰⵙ) – مولّد الأسماء الأمازيغية وبطاقات فنية مجانية" />
+  <meta property="og:description" content="حوّل اسمك إلى كتابة التيفيناغ الأمازيغية فوراً. بطاقات فنية فاخرة وتنزيل صورة مجانية لبروفايلك والوشم." />
+  <meta property="og:url" content="https://amghnas.com/ar/generator.html" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://amghnas.com/favicon.png" />
+  <meta property="og:locale" content="ar_AR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="كتابة الاسم بالتيفيناغ | مولّد الأسماء الأمازيغية" />
+  <meta name="twitter:description" content="حوّل اسمك إلى كتابة التيفيناغ الأمازيغية فوراً مع بطاقات فنية وتنزيل صورة مجاناً." />
+  <meta name="twitter:image" content="https://amghnas.com/favicon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -188,7 +201,23 @@
     }
 
     .input-row {
-      display: flex; gap: 1rem; margin-bottom: 1rem;
+      display: flex; gap: 0.65rem; margin-bottom: 1rem;
+    }
+    .input-lang-btn {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .input-lang-btn.active, .input-lang-btn:hover {
+      border-color: var(--ochre);
+      color: var(--ochre);
+      background: rgba(201,133,58,0.1);
     }
 
     .name-input {
@@ -388,26 +417,446 @@
     .toast.show { transform: translateX(-50%) translateY(0); }
       .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
-    footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.88rem;background:rgba(245,237,224,0.5);transition:background 0.4s;}
-    html.dark footer{background:rgba(26,23,40,0.5);}
-    footer a{color:var(--ochre);text-decoration:none;}footer a:hover{text-decoration:underline;}
-    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
-    .footer-links{display:flex;justify-content:center;gap:2rem;margin:0.75rem 0;flex-wrap:wrap;}
+    footer{border:1px solid var(--border);border-radius:24px;background:var(--bg2);text-align:center;padding:3rem 1.5rem 2.5rem;max-width:1100px;margin:3.5rem auto 2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.06);position:relative;z-index:1;transition:background 0.3s,border-color 0.3s;font-family:'Cairo',sans-serif;}
+    html.dark footer{background:var(--bg2);box-shadow:0 4px 24px rgba(0,0,0,0.2);}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.75rem;color:var(--ochre);letter-spacing:4px;display:block;margin-bottom:1.35rem;}
+    .footer-links-row{display:flex;justify-content:center;gap:2.25rem;margin-bottom:1.15rem;flex-wrap:wrap;}
+    .footer-links-row:last-of-type{margin-bottom:1.6rem;}
+    .footer-links-row a{color:var(--ochre);font-size:0.98rem;font-weight:700;text-decoration:none;transition:all 0.2s ease;display:inline-block;}
+    .footer-links-row a:hover{color:var(--ochre-light);transform:translateY(-1px);text-decoration:none;}
+    .footer-credit{font-size:0.92rem;color:var(--text-muted);margin:0 0 0.45rem;line-height:1.6;}
+    .footer-copy{font-size:0.88rem;color:var(--text-muted);opacity:0.85;margin:0;}
+    @media (max-width: 640px) {
+      footer{margin:2rem 0.85rem 1.75rem;border-radius:20px;padding:2.25rem 1rem 2rem;}
+      .footer-tifinagh{font-size:1.5rem;margin-bottom:1.1rem;}
+      .footer-links-row{gap:1.1rem 1.4rem;margin-bottom:0.9rem;}
+      .footer-links-row a{font-size:0.92rem;}
+    }
     .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
     .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
     .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
-  </style>
+    /* SEO & Content Section */
+    .seo-rich-wrapper {
+      max-width: 900px;
+      margin: 3rem auto 2rem;
+      padding: 0 1.25rem;
+    }
+    .seo-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2.25rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .seo-card h2 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--ochre);
+      margin-bottom: 0.85rem;
+      line-height: 1.35;
+    }
+    .seo-card h3 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 1.5rem 0 0.5rem;
+    }
+    .seo-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .popular-names-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.25rem;
+    }
+    .popular-names-tabs::-webkit-scrollbar { display: none; }
+    .popular-tab-btn {
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text-muted);
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-family: 'Cairo', sans-serif;
+    }
+    .popular-tab-btn.active, .popular-tab-btn:hover {
+      background: var(--ochre);
+      color: #fff;
+      border-color: var(--ochre);
+    }
+    .popular-names-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .popular-name-badge {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg3);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      cursor: pointer;
+      text-align: right;
+      transition: all 0.2s ease;
+      color: inherit;
+    }
+    .popular-name-badge:hover {
+      border-color: var(--ochre);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(201,133,58,0.15);
+    }
+    .badge-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    .badge-latin {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
+    .badge-tifi {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      color: var(--ochre);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .badge-meaning {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .seo-features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 680px) {
+      .seo-features-grid { grid-template-columns: 1fr; }
+      .seo-card { padding: 1.5rem 1.1rem; }
+      .popular-names-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .seo-feature-item {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .seo-feature-item h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Cairo', sans-serif;
+    }
+    .seo-feature-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .seo-faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+    .seo-faq-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg3);
+      overflow: hidden;
+    }
+    .seo-faq-question {
+      padding: 1rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      font-family: 'Cairo', sans-serif;
+    }
+    .seo-faq-chevron {
+      color: var(--ochre);
+      font-size: 0.85rem;
+      transition: transform 0.25s ease;
+    }
+    .seo-faq-item[open] .seo-faq-chevron {
+      transform: rotate(180deg);
+    }
+    .seo-faq-answer {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+    .seo-links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .seo-link-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+    .seo-link-card:hover {
+      border-color: var(--ochre);
+      transform: translateY(-2px);
+    }
+    .seo-link-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ochre);
+      margin-bottom: 0.25rem;
+      font-family: 'Cairo', sans-serif;
+    }
+    .seo-link-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+  
+    /* Support Button & Footer Card */
+    .nav-support-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(201,133,58,0.12);
+      color: var(--ochre) !important;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-support-btn:hover {
+      background: var(--ochre);
+      color: #fff !important;
+      border-color: var(--ochre);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(201,133,58,0.25);
+    }
+    .footer-support-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem 2rem;
+      max-width: 680px;
+      margin: 0 auto 2.25rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      backdrop-filter: blur(8px);
+    }
+    .fsc-badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--ochre);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 0.22rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    .fsc-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.45rem;
+      line-height: 1.4;
+    }
+    .fsc-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .fsc-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .fsc-btn-kofi {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #ff5e5b;
+      color: white !important;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(255,94,91,0.25);
+    }
+    .fsc-btn-kofi:hover {
+      background: #e64c49;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(255,94,91,0.35);
+      text-decoration: none;
+    }
+    .fsc-btn-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--ochre) !important;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .fsc-btn-more:hover {
+      background: rgba(201,133,58,0.14);
+      border-color: var(--ochre);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+    @media (max-width: 640px) {
+      .footer-support-card { padding: 1.35rem 1.1rem; margin-bottom: 1.75rem; }
+      .fsc-title { font-size: 1.2rem; }
+      .fsc-desc { font-size: 0.86rem; }
+      .fsc-actions { flex-direction: column; width: 100%; gap: 0.6rem; }
+      .fsc-btn-kofi, .fsc-btn-more { width: 100%; justify-content: center; }
+      .nav-support-btn { padding: 0.22rem 0.55rem; font-size: 0.75rem; }
+    }
+</style>
 
+  <!-- Schema.org WebApplication + FAQPage + Breadcrumbs (Arabic) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Tifinagh Name Generator",
-    "url": "https://amghnas.com/generator.html",
-    "description": "Convert your name to Tifinagh script instantly and download as image",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://amghnas.com/ar/generator.html#app",
+        "name": "مولّد الأسماء بالتيفيناغ | amghnas",
+        "url": "https://amghnas.com/ar/generator.html",
+        "description": "اكتب اسمك بالعربية أو اللاتينية وشاهده فورياً بحروف التيفيناغ الأمازيغية الرسمية مع تصاميم بطاقات فنية راقية وتنزيل صورة عالية الدقة مجاناً.",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "All",
+        "inLanguage": ["ar", "en", "fr"],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "تحويل فوري للأسماء إلى التيفيناغ المعياري للإيركام (IRCAM)",
+          "دعم كتابة الأسماء بالحروف العربية واللاتينية",
+          "3 خلفيات بطاقات فاخرة: الأسود الداكن، الذهبي الملكي، الرملي الصحراوي",
+          "تنزيل بطاقة الاسم بدقة عالية كصورة PNG",
+          "نسخ نص يونيكود التيفيناغ بنقرة واحدة لإنستغرام، تيك توك، واتساب والوشم"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "الرئيسية",
+            "item": "https://amghnas.com/ar/index.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "مولّد الأسماء بالتيفيناغ",
+            "item": "https://amghnas.com/ar/generator.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "كيف أكتب اسمي بحروف التيفيناغ الأمازيغية؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ما عليك سوى كتابة اسمك في خانة الإدخال بالأعلى بالحروف العربية أو اللاتينية. يقوم المولّد بتحويله صوتياً في الوقت الفعلي إلى حروف التيفيناغ المعيارية المعتمدة رسمياً، ويمكنك بعدها تخصيص مظهر البطاقة وتنزيلها كصورة أو نسخ الحروف."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل يمكن كتابة الأسماء العربية أو العالمية بالتيفيناغ؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم! يحتوي المولّد على قواعد صوتية دقيقة وقاموس ضخم يضم آلاف الأسماء العربية والإسلامية والعالمية، مما يضمن ظهور الحركات وحروف العلة بدقة صوتية صحيحة مثل (فاطمة ← ⴼⴰⵟⵉⵎⴰ، يوسف ← ⵢⵓⵙⴼ، سارة ← ⵙⴰⵕⴰ)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "كيف أنسخ اسمي بالتيفيناغ لوضعه في إنستغرام أو واتساب أو الوشم؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "اضغط على زر «نسخ التيفيناغ» وسيتم نسخ حروف يونيكود الأصلية إلى الحافظة مباشرة. يمكنك لصقها في بايو إنستغرام أو تويتر أو إرسالها لرسام الوشم كمرجع دقيق، أو تنزيل الصورة كبطاقة فنية."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "كيف أنزّل بطاقة الاسم كصورة عالية الجودة؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "اختر نمط البطاقة المفضل لديك (الأسود الداكن، الذهبي، أو الرملي) ثم اضغط على زر «تحميل PNG». سيتم توليد وتنزيل صورة واضحة وعالية الدقة فوراً لجهازك."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل مولّد الأسماء بالتيفيناغ مجاني؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم، مولّد الأسماء من amghnas مجاني 100% بدون أي رسوم أو تسجيل أو علامات مائية إعلانية."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -415,12 +864,17 @@
 
 <!-- NAV -->
 <nav>
-  <a href="../index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+  <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
   <ul class="nav-links" id="navLinks">
       <li><a href="index.html">المحوّل</a></li><li><a href="keyboard.html">لوحة المفاتيح</a></li><li><a href="generator.html" class="active">مولّد الأسماء</a></li><li><a href="faq.html">أسئلة شائعة</a></li><li><a href="articles.html">مقالات</a></li><li><a href="about.html">عن الموقع</a></li>
+      <li><a href="support.html" style="color:var(--ochre);font-weight:700;">ادعمنا 💛</a></li>
     </ul>
   <div class="nav-right">
       
+            <a href="support.html" class="nav-support-btn" title="ادعم أمغناس">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span>ادعمنا</span>
+      </a>
       <div class="lang-switcher"><a href="../generator.html" class="lang-btn">EN</a><a href="../fr/generator.html" class="lang-btn">FR</a><a href="generator.html" class="lang-btn active">AR</a></div><button id="themeToggle" aria-label="تبديل المظهر">
     <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
     <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
@@ -446,8 +900,8 @@
   <div class="input-section">
     <label class="input-label">اسمك</label>
     <div class="input-row">
-      <button class="lang-btn active" onclick="setLang('latin')">لاتيني</button>
-      <button class="lang-btn" onclick="setLang('arabic')">العربية</button>
+      <button type="button" class="input-lang-btn active" data-lang="latin" onclick="setLang('latin')">لاتيني</button>
+      <button type="button" class="input-lang-btn" data-lang="arabic" onclick="setLang('arabic')">العربية</button>
     </div>
     <input
       type="text"
@@ -504,34 +958,325 @@
   <div class="info-strip">
     <div class="info-card">
       <span class="info-icon">ⵜ</span>
-      <div class="info-title">Ancient Script</div>
-      <div class="info-desc">Tifinagh is over 2,500 years old — one of the oldest writing systems still in use today.</div>
+      <div class="info-title">خط عريق</div>
+      <div class="info-desc">يتجاوز عمر التيفيناغ 2500 عام، وهو من أقدم أنظمة الكتابة المستمرة حتى اليوم.</div>
     </div>
     <div class="info-card">
       <span class="info-icon">ⵎ</span>
-      <div class="info-title">Amazigh Heritage</div>
-      <div class="info-desc">Used by Tuareg, Moroccan, and Algerian Amazigh communities across North Africa.</div>
+      <div class="info-title">تراث أمازيغي أصيل</div>
+      <div class="info-desc">معتمد رسمياً في المغرب والجزائر ويستخدمه الأمازيغ والطوارق عبر شمال أفريقيا.</div>
     </div>
     <div class="info-card">
       <span class="info-icon">ⵣ</span>
-      <div class="info-title">Share Your Name</div>
-      <div class="info-desc">Download your name as an image for WhatsApp, Instagram, or a tattoo design.</div>
+      <div class="info-title">شارك اسمك</div>
+      <div class="info-desc">نزّل اسمك كصورة فنية فاخرة للبروفايل، حالات واتساب، أو لتصميم وشم أصيل.</div>
     </div>
   </div>
 
 </main>
 
-  <footer>
-    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
-    <div class="footer-links">
-      <a href="../index.html">المحوّل</a>
-      <a href="../keyboard.html">لوحة المفاتيح</a>
-      <a href="../articles.html">مقالات</a>
-      <a href="../about.html">عن الموقع</a>
-      <a href="../privacy.html">الخصوصية</a>
+  <!-- SEO & Content Sections (Arabic) -->
+  <section class="seo-rich-wrapper">
+
+    <!-- Interactive Popular Names Showcase -->
+    <div class="seo-card">
+      <h2>أشهر الأسماء بحروف التيفيناغ الأمازيغية</h2>
+      <p>استكشف نماذج لأشهر الأسماء الأمازيغية والعربية والعالمية مكتوبة بخط التيفيناغ المعياري الرسمي. <strong>اضغط على أي اسم لمعاينته فوراً وتخصيص بطاقتك بالأعلى:</strong></p>
+
+      <div class="popular-names-tabs">
+        <button type="button" class="popular-tab-btn active" onclick="switchPopularCategory('boys', this)">ⵣ أسماء أولاد أمازيغية</button>
+        <button type="button" class="popular-tab-btn" onclick="switchPopularCategory('girls', this)">ⵣ أسماء بنات أمازيغية</button>
+        <button type="button" class="popular-tab-btn" onclick="switchPopularCategory('world', this)">🌍 أسماء عربية وعالمية</button>
+      </div>
+
+      <!-- Category: Amazigh Boys -->
+      <div class="popular-names-grid" id="names-boys">
+        <div class="popular-name-badge" onclick="selectPopularName('أنير', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">أنير (Anir)</span><span class="badge-tifi">ⴰⵏⵉⵔ</span></div>
+          <span class="badge-meaning">ملاك النور · الصافي النقي</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('ماسينيسا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">ماسينيسا (Massinissa)</span><span class="badge-tifi">ⵎⴰⵙⵉⵏⵉⵙⵙⴰ</span></div>
+          <span class="badge-meaning">أول ملوك نوميديا الموحدة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('أكسيل', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">أكسيل (Aksil)</span><span class="badge-tifi">ⴰⴽⵙⵉⵍ</span></div>
+          <span class="badge-meaning">الفهد أو النمر · الشجاع</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('يوغرطة', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">يوغرطة (Jugurtha)</span><span class="badge-tifi">ⵢⵓⴳⵓⵔⵜⴰ</span></div>
+          <span class="badge-meaning">ملك نوميدي تاريخي · من فاق أقرانه</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('ييدير', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">ييدير (Yidir)</span><span class="badge-tifi">ⵢⵉⴷⵉⵔ</span></div>
+          <span class="badge-meaning">سيعيش · المتدفق بالحياة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('إتري', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">إتري (Itri)</span><span class="badge-tifi">ⵉⵜⵔⵉ</span></div>
+          <span class="badge-meaning">النجم الهادي في سماء الصحراء</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('يانيس', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">يانيس (Yanis)</span><span class="badge-tifi">ⵢⴰⵏⵉⵙ</span></div>
+          <span class="badge-meaning">الرفيق الوفي المخلص</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('أماياس', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">أماياس (Amayyas)</span><span class="badge-tifi">ⴰⵎⴰⵢⵢⴰⵙ</span></div>
+          <span class="badge-meaning">الفهد الصياد الأنيق</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('باديس', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">باديس (Badis)</span><span class="badge-tifi">ⴱⴰⴷⵉⵙ</span></div>
+          <span class="badge-meaning">الحاكم الزيري الصامد</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('سيفاكس', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">سيفاكس (Sifaks)</span><span class="badge-tifi">ⵙⵉⴼⴰⴽⵙ</span></div>
+          <span class="badge-meaning">ملك نوميديا الغربية</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('غايا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">غايا (Gaya)</span><span class="badge-tifi">ⴳⴰⵢⴰ</span></div>
+          <span class="badge-meaning">والد ماسينيسا وملك الماسيل</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('أناروز', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">أناروز (Anaruz)</span><span class="badge-tifi">ⴰⵏⴰⵔⵓⵣ</span></div>
+          <span class="badge-meaning">الأمل والتفاؤل بالغد</span>
+        </div>
+      </div>
+
+      <!-- Category: Amazigh Girls -->
+      <div class="popular-names-grid" id="names-girls" style="display:none;">
+        <div class="popular-name-badge" onclick="selectPopularName('تيزيري', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">تيزيري (Tiziri)</span><span class="badge-tifi">ⵜⵉⵣⵉⵔⵉ</span></div>
+          <span class="badge-meaning">ضوء القمر المنير</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('نوميديا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">نوميديا (Numidia)</span><span class="badge-tifi">ⵏⵓⵎⵉⴷⵢⴰ</span></div>
+          <span class="badge-meaning">المملكة الأمازيغية العظمى</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('ديهيا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">ديهيا (Dihya)</span><span class="badge-tifi">ⴷⵉⵀⵢⴰ</span></div>
+          <span class="badge-meaning">ملكة الأوراس الشجاعة (الكاهنة)</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('داميا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">داميا (Damia)</span><span class="badge-tifi">ⴷⴰⵎⵢⴰ</span></div>
+          <span class="badge-meaning">القائدة الحكيمة والشجاعة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('تين هينان', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">تين هينان (Tin Hinan)</span><span class="badge-tifi">ⵜⵉⵏ ⵀⵉⵏⴰⵏ</span></div>
+          <span class="badge-meaning">الأم المؤسسة لقبائل الطوارق</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('ماسيليا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">ماسيليا (Massilya)</span><span class="badge-tifi">ⵎⴰⵙⵉⵍⵢⴰ</span></div>
+          <span class="badge-meaning">نسبة إلى نوميديا الشرقية</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('سيليا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">سيليا (Silya)</span><span class="badge-tifi">ⵙⵉⵍⵢⴰ</span></div>
+          <span class="badge-meaning">ابنة البحر وندى الصباح الرقيق</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('مايا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">مايا (Maya)</span><span class="badge-tifi">ⵎⴰⵢⴰ</span></div>
+          <span class="badge-meaning">الأناقة والنعومة الفائقة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('تافات', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">تافات (Tafath)</span><span class="badge-tifi">ⵜⴰⴼⴰⵜ</span></div>
+          <span class="badge-meaning">النور الساطع وإشراقة الفجر</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('كنزة', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">كنزة (Kenza)</span><span class="badge-tifi">ⴽⴻⵏⵣⴰ</span></div>
+          <span class="badge-meaning">الكنز النفيس المحفوظ</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('لالة', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">لالة (Lalla)</span><span class="badge-tifi">ⵍⴰⵍⵍⴰ</span></div>
+          <span class="badge-meaning">السيدة النبيلة المبجلة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('سيلين', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">سيلين (Selin)</span><span class="badge-tifi">ⵙⵉⵍⵉⵏ</span></div>
+          <span class="badge-meaning">عنب أبيض حلو المذاق</span>
+        </div>
+      </div>
+
+      <!-- Category: World & Arabic -->
+      <div class="popular-names-grid" id="names-world" style="display:none;">
+        <div class="popular-name-badge" onclick="selectPopularName('آدم', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">آدم (Adam)</span><span class="badge-tifi">ⴰⴷⴰⵎ</span></div>
+          <span class="badge-meaning">أبو البشر</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('محمد', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">محمد (Mohamed)</span><span class="badge-tifi">ⵎⵓⵃⴰⵎⵎⴰⴷ</span></div>
+          <span class="badge-meaning">المحمود الخصال</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('سارة', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">سارة (Sarah)</span><span class="badge-tifi">ⵙⴰⵕⴰ</span></div>
+          <span class="badge-meaning">الأميرة المبهجة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('فاطمة', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">فاطمة (Fatima)</span><span class="badge-tifi">ⴼⴰⵟⵉⵎⴰ</span></div>
+          <span class="badge-meaning">الطاهرة النقية</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('علي', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">علي (Ali)</span><span class="badge-tifi">ⵄⴰⵍⵉ</span></div>
+          <span class="badge-meaning">العالي الشأن والرفيع</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('صوفيا', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">صوفيا (Sofia)</span><span class="badge-tifi">ⵙⵓⴼⵢⴰ</span></div>
+          <span class="badge-meaning">الحكمة والنقاء</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('يوسف', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">يوسف (Youssef)</span><span class="badge-tifi">ⵢⵓⵙⴼ</span></div>
+          <span class="badge-meaning">جميل المحيا</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('مريم', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">مريم (Maryam)</span><span class="badge-tifi">ⵎⴰⵔⵢⴰⵎ</span></div>
+          <span class="badge-meaning">سيدة العفاف ونجمة البحر</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('ريان', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">ريان (Rayan)</span><span class="badge-tifi">ⵔⴰⵢⴰⵏ</span></div>
+          <span class="badge-meaning">المرتوي وباب من أبواب الجنة</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('داود', 'arabic')">
+          <div class="badge-name-row"><span class="badge-latin">داود (David)</span><span class="badge-tifi">ⴷⴰⵡⵓⴷ</span></div>
+          <span class="badge-meaning">الحبيب والمحبوب</span>
+        </div>
+      </div>
     </div>
-    <p>صُنع بـ ❤ للثقافة الأمازيغية · بقلم Anaruz Elhabib</p>
-    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+
+    <!-- Complete Guide: How It Works & Phonetic Rules -->
+    <div class="seo-card">
+      <h2>كيف يعمل مولّد الأسماء بالتيفيناغ وما هي قواعده؟</h2>
+      <p>يعتمد <strong>مولّد الأسماء الأمازيغية (amghnas)</strong> على أبجدية <strong>النيو-تيفيناغ الرسمية الموحدة</strong> الصادرة عن المعهد الملكي للثقافة الأمازيغية (IRCAM) والمعتمدة في معيار يونيكود العالمي (U+2D30 حتى U+2D7F). بدلاً من استبدال الحروف عشوائياً، يعتمد نظامنا على معالجة فونولوجية صوتية متكاملة وقاموس يضم آلاف الأسماء المغاربية والإسلامية والعالمية.</p>
+
+      <div class="seo-features-grid">
+        <div class="seo-feature-item">
+          <h4><span>🔤</span> حروف العلة والحركات الصريحة</h4>
+          <p>تُكتب كافة الحركات في التيفيناغ كحروف مستقلة: <strong>الألف</strong> (<span class="badge-tifi">ⴰ</span>)، <strong>الياء</strong> (<span class="badge-tifi">ⵉ</span>)، <strong>الواو والضمة</strong> (<span class="badge-tifi">ⵓ</span>)، والحركة المحايدة الشوا <em>Schwa</em> (<span class="badge-tifi">ⴻ</span>).</p>
+        </div>
+        <div class="seo-feature-item">
+          <h4><span>✨</span> الأصوات الأمازيغية الصرفة</h4>
+          <p>تمثيل الأصوات المركبة بدقة بحرف تيفيناغ أصيل مستقل: حرف <strong>الغين</strong> (<span class="badge-tifi">ⵖ</span>)، حرف <strong>الخاء</strong> (<span class="badge-tifi">ⵅ</span>)، وحرف <strong>الشين</strong> (<span class="badge-tifi">ⵛ</span>).</p>
+        </div>
+        <div class="seo-feature-item">
+          <h4><span>📍</span> الحروف المفخمة المميزة</h4>
+          <p>أصوات الحلق والتفخيم ذات أشكال هندسية خاصة: <strong>الضاد</strong> (<span class="badge-tifi">ⴹ</span>)، <strong>الطاء</strong> (<span class="badge-tifi">ⵟ</span>)، <strong>الصاد</strong> (<span class="badge-tifi">ⵚ</span>)، <strong>الزاي المفخمة</strong> (<span class="badge-tifi">ⵥ</span>)، و<strong>الراء المفخمة</strong> (<span class="badge-tifi">ⵕ</span>).</p>
+        </div>
+        <div class="seo-feature-item">
+          <h4><span>🌙</span> المعالجة الذكية لحركات الأسماء العربية</h4>
+          <p>الأسماء العربية غالباً ما تُكتب دون تشكيل؛ لذا يقوم النظام بربطها بقاموس ذكي يحدد الفتحة والكسرة والضمة تلقائياً (مثل <em>فاطمة ← ⴼⴰⵟⵉⵎⴰ</em>، <em>يوسف ← ⵢⵓⵙⴼ</em>).</p>
+        </div>
+      </div>
+
+      <h3>أفكار مميزة لاستخدام بطاقة اسمك بالتيفيناغ</h3>
+      <p>بعد توليد اسمك واختيار المظهر المفضل من بين <strong>الأسود الداكن الفاخر</strong>، <strong>الذهبي الملكي</strong>، أو <strong>الرملي الصحراوي</strong>، يمكنك الاستفادة من التصميم في عدة مجالات:</p>
+      <ul style="margin:0 1.5rem 1.25rem 0;line-height:2.2;color:var(--text-muted);font-size:0.92rem;">
+        <li><strong>تصاميم الوشم والفنون الجسدية (Tattoo Design):</strong> تجعل الخطوط الهندسية الصافية للتيفيناغ (الدوائر، والصلبان، والزوايا) من اسمك وشمًا بديعًا يحمل عراقة آلاف السنين. ملف الصورة عالي الدقة (PNG) يمنح فنان الوشم مقاسات بالغة الدقة.</li>
+        <li><strong>السيرة الذاتية (Bio) على وسائل التواصل:</strong> اضغط «نسخ التيفيناغ» وضع حروف يونيكود مباشرة في بايو إنستغرام، تيك توك، تويتر، أو حالة واتساب.</li>
+        <li><strong>نقوش المجوهرات والحلي الفضية:</strong> حفر اسمك بخط تيفيناغ الأنيق على القلائد والخواتم الفضية الأمازيغية التقليدية.</li>
+        <li><strong>بطاقات إعلان قدوم المواليد:</strong> شارك عائلتك بطاقة اسم مولودك الجديد بتصميم ثقافي ساحر وعالي الجودة.</li>
+      </ul>
+
+      <!-- Internal Link Cards -->
+      <h3 style="margin-top:2rem;">أدوات ومقالات إضافية للغة والثقافة الأمازيغية</h3>
+      <div class="seo-links-grid">
+        <a href="amazigh-baby-names.html" class="seo-link-card">
+          <h4>👶 أسماء أطفال أمازيغية</h4>
+          <p>أكثر من 60 اسماً أصيلاً مع الدلالات التاريخية والمعاني العميقة.</p>
+        </a>
+        <a href="index.html" class="seo-link-card">
+          <h4>🔄 محوّل التيفيناغ الشامل</h4>
+          <p>حوّل الجمل والنصوص الكاملة بين التيفيناغ واللاتينية والعربية.</p>
+        </a>
+        <a href="keyboard.html" class="seo-link-card">
+          <h4>⌨️ لوحة مفاتيح التيفيناغ</h4>
+          <p>اكتب بسهولة جميع حروف التيفيناغ الـ 33 من هاتفك أو حاسوبك.</p>
+        </a>
+        <a href="talatint-guide.html" class="seo-link-card">
+          <h4>📖 دليل تالاتينت (التمعمريت)</h4>
+          <p>تعرف على قواعد الكتابة الصوتية للأمازيغية بالحروف اللاتينية.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Frequently Asked Questions -->
+    <div class="seo-card">
+      <h2>الأسئلة الشائعة حول كتابة الأسماء بالتيفيناغ</h2>
+      <div class="seo-faq-list">
+        <details class="seo-faq-item" open>
+          <summary class="seo-faq-question">
+            <span>كيف أكتب اسمي بحروف التيفيناغ الأمازيغية؟</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            كل ما عليك هو إدخال اسمك في مربع الكتابة أعلى الصفحة سواء بالحروف العربية أو اللاتينية. يقوم المولّد بتحويله صوتياً في لحظة واحدة إلى حروف التيفيناغ الرسمية المعتمدة من الإيركام، ويمكنك بعدها نسخ الحروف أو تنزيل بطاقة فنية كصورة PNG.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>هل يمكن كتابة الأسماء غير الأمازيغية (كالعربية أو الغربية) بالتيفيناغ؟</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            نعم بالتأكيد! يحتوي المولّد على خوارزمية ذكية وقاموس يضم آلاف الأسماء العربية والإسلامية والعالمية، مما يضمن كتابة الحركات والعلل بدقة صوتية صحيحة تامة.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>هل يمكن نسخ النص لوضعه في إنستغرام أو تويتر أو لتصميم وشم؟</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            نعم. الحروف الناتجة هي حروف يونيكود حقيقية ومعتمدة قياسياً (U+2D30 إلى U+2D7F). يمكنك الضغط على «نسخ التيفيناغ» ولصقها في أي تطبيق أو إرسال الصورة كمرجع خطي لفنان الوشم.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>كيف أقوم بتنزيل بطاقة اسمي كصورة عالية الدقة؟</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            اختر أحد الأنماط الجمالية الثلاثة (الأسود الداكن، الذهبي الفاخر، أو الرملي) عبر الضغط على دوائر الألوان أعلى المعاينة، ثم اضغط على زر «تحميل PNG» لحفظ الصورة على جهازك مباشرة وبجودة عالية.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>هل هذه الخدمة مجانية بالكامل؟</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            نعم، مولّد الأسماء من amghnas مجاني بنسبة 100%، بدون أي تسجيل دخول أو اشتراكات وبدون أي علامات مائية على الصور المنزلة.
+          </div>
+        </details>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+        <div class="footer-support-card">
+      <div class="fsc-badge">💛 تِويزي · تضامن مجتمعي</div>
+      <h3 class="fsc-title">ساعد في إبقاء أمغناس مجانياً 100% وبدون إعلانات</h3>
+      <p class="fsc-desc">أمغناس مبادرة رقمية مستقلة مخصصة للحفاظ على اللغة الأمازيغية وحرف التيفيناغ رقمياً. إذا كانت أدواتنا تفيدك، نرحب بدعمك لمسيرتنا.</p>
+      <div class="fsc-actions">
+        <a href="https://ko-fi.com/amghnas" target="_blank" rel="noopener noreferrer" class="fsc-btn-kofi">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.022 5.04c-1.391 1.761-4.022 3.012-4.022 3.012s-2.631-1.251-4.022-3.012c-1.503-1.902-1.077-4.102.39-4.996 1.467-.894 3.033.272 3.632 1.09.599-.818 2.165-1.984 3.632-1.09 1.467.894 1.893 3.094.39 4.996zm6.271-2.122c-.447 2.361-2.485 2.502-2.485 2.502V7.126s1.956.033 2.485 1.547c.53 1.514.447 2.361 0 3.191z"/></svg>
+          ادعم عبر Ko-fi
+        </a>
+        <a href="support.html" class="fsc-btn-more">طرق الدعم وبايبال ←</a>
+      </div>
+    </div>
+
+<div class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</div>
+    <div class="footer-links-row">
+      <a href="index.html">المحوّل</a>
+      <a href="keyboard.html">لوحة المفاتيح</a>
+      <a href="generator.html">مولّد الأسماء</a>
+    </div>
+    <div class="footer-links-row">
+      <a href="articles.html">المقالات والتاريخ</a>
+      <a href="faq.html">الأسئلة الشائعة</a>
+      <a href="about.html">من نحن</a>
+      <a href="support.html" style="color:var(--ochre);font-weight:700;">ادعم أمغناس 💛</a>
+      <a href="privacy.html">سياسة الخصوصية</a>
+    </div>
+    <p class="footer-credit">صُنع بـ ❤ للثقافة والتراث الأمازيغي · بقلم Anaruz Elhabib</p>
+    <p class="footer-copy">&copy; <span id="copyright-year"></span> amghnas.com</p>
   </footer>
 
 <div class="toast" id="toast"></div>
@@ -2673,13 +3418,16 @@ const styles = {
 function setLang(lang) {
   currentLang = lang;
   const input = document.getElementById('nameInput');
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  input.dir = lang === 'arabic' ? 'rtl' : 'ltr';
-  input.placeholder = lang === 'arabic' ? 'مثال: أنارز، تيزيري...' : 'e.g. Anaruz, Tiziri, Yidir...';
-  input.value = '';
-  updateDisplay('');
-  input.focus();
+  document.querySelectorAll('.input-lang-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.input-lang-btn[data-lang="${lang}"]`);
+  if (btn) btn.classList.add('active');
+  if (input) {
+    input.dir = lang === 'arabic' ? 'rtl' : 'ltr';
+    input.placeholder = lang === 'arabic' ? 'مثال: أنارز، تيزيري، إيدير...' : 'e.g. Anaruz, Tiziri, Yidir...';
+    input.value = '';
+    updateDisplay('');
+    input.focus();
+  }
 }
 
 function setStyle(style) {
@@ -2901,6 +3649,29 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Switch Popular Names Tab
+function switchPopularCategory(cat, btn) {
+  document.querySelectorAll('.popular-tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const boys = document.getElementById('names-boys');
+  const girls = document.getElementById('names-girls');
+  const world = document.getElementById('names-world');
+  if (boys) boys.style.display = cat === 'boys' ? 'grid' : 'none';
+  if (girls) girls.style.display = cat === 'girls' ? 'grid' : 'none';
+  if (world) world.style.display = cat === 'world' ? 'grid' : 'none';
+}
+
+// Select Popular Name and trigger live generation
+function selectPopularName(name, lang) {
+  if (typeof setLang === 'function') setLang(lang);
+  const input = document.getElementById('nameInput');
+  if (input) {
+    input.value = name;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  document.querySelector('.main-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Input listener

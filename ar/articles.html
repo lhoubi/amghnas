@@ -3,9 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مقالات تيفيناغ وتامازيغت | الثقافة والتاريخ الأمازيغي | amghnas.com</title>
-  <meta name="description" content="مقالات معمّقة حول الكتابة تيفيناغ، اللغة الأمازيغية، الهوية الأمازيغية، الممالك الأمازيغية والثقافة الأمازيغية." />
+  <title>مقالات تيفيناغ وتامازيغت | الثقافة والتاريخ الأمازيغي | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
+  <meta name="description" content="مقالات تعليمية معمّقة حول كتابة التيفيناغ، اللغة الأمازيغية، الأسماء الأمازيغية، الممالك القديمة والتراث الأمازيغي في شمال أفريقيا." />
   <meta name="keywords" content="مقالات تيفيناغ، اللغة الأمازيغية، الثقافة الأمازيغية، التاريخ الأمازيغي، الكتابة تيفيناغ، الهوية الأمازيغية" />
+  <link rel="canonical" href="https://amghnas.com/ar/articles.html" />
+  <link rel="alternate" hreflang="ar" href="https://amghnas.com/ar/articles.html" />
+  <link rel="alternate" hreflang="en" href="https://amghnas.com/articles.html" />
+  <link rel="alternate" hreflang="fr" href="https://amghnas.com/fr/articles.html" />
+  <link rel="alternate" hreflang="x-default" href="https://amghnas.com/articles.html" />
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="amghnas" />
+  <meta property="og:title" content="مقالات التيفيناغ واللغة الأمازيغية | الثقافة والتاريخ الأمازيغي | amghnas" />
+  <meta property="og:description" content="مقالات تعليمية معمّقة حول كتابة التيفيناغ، اللغة الأمازيغية، الأسماء الأمازيغية، الممالك القديمة والتراث الأمازيغي." />
+  <meta property="og:url" content="https://amghnas.com/ar/articles.html" />
+  <meta property="og:image" content="https://amghnas.com/favicon.png" />
+  <meta property="og:locale" content="ar_MA" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="مقالات التيفيناغ واللغة الأمازيغية | amghnas" />
+  <meta name="twitter:description" content="مقالات تعليمية حول التيفيناغ واللغة والتاريخ الأمازيغي." />
+  <meta name="twitter:image" content="https://amghnas.com/favicon.png" />
+
+  <!-- Schema.org CollectionPage & BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "مقالات الثقافة والتاريخ الأمازيغي",
+    "description": "دليل تعليمي شامل حول حروف التيفيناغ واللغة الأمازيغية والتاريخ القديم.",
+    "url": "https://amghnas.com/ar/articles.html",
+    "inLanguage": "ar",
+    "publisher": {
+      "@type": "Organization",
+      "name": "amghnas",
+      "url": "https://amghnas.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amghnas.com/favicon.png"
+      }
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://amghnas.com/ar/" },
+      { "@type": "ListItem", "position": 2, "name": "المقالات", "item": "https://amghnas.com/ar/articles.html" }
+    ]
+  }
+  </script>
   <link rel="icon" type="image/png" href="../favicon.png">
   <link rel="apple-touch-icon" href="../favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,18 +122,29 @@
     .read-more{font-size:0.85rem;font-weight:600;color:var(--ochre);display:flex;align-items:center;gap:0.35rem;margin-top:auto;}
     .read-more svg{transition:transform 0.2s;}
     .article-card:hover .read-more svg{transform:translateX(-4px);}
-    footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.9rem;background:rgba(245,237,224,0.5);transition:background 0.4s;}
-    html.dark footer{background:rgba(26,23,40,0.5);}
-    footer a{color:var(--ochre);text-decoration:none;}footer a:hover{text-decoration:underline;}
-    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
-    .footer-links{display:flex;justify-content:center;gap:2rem;margin:0.75rem 0;flex-wrap:wrap;}
+    /* FOOTER */
+    footer{border:1px solid var(--border);border-radius:24px;background:var(--bg2);text-align:center;padding:3rem 1.5rem 2.5rem;max-width:1100px;margin:3.5rem auto 2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.06);position:relative;z-index:1;transition:background 0.3s,border-color 0.3s;font-family:'Cairo',sans-serif;}
+    html.dark footer{background:var(--bg2);box-shadow:0 4px 24px rgba(0,0,0,0.2);}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.75rem;color:var(--ochre);letter-spacing:4px;display:block;margin-bottom:1.35rem;}
+    .footer-links-row{display:flex;justify-content:center;gap:2.25rem;margin-bottom:1.15rem;flex-wrap:wrap;}
+    .footer-links-row:last-of-type{margin-bottom:1.6rem;}
+    .footer-links-row a{color:var(--ochre);font-size:0.98rem;font-weight:700;text-decoration:none;transition:all 0.2s ease;display:inline-block;}
+    .footer-links-row a:hover{color:var(--ochre-light);transform:translateY(-1px);text-decoration:none;}
+    .footer-credit{font-size:0.92rem;color:var(--text-muted);margin:0 0 0.45rem;line-height:1.6;}
+    .footer-copy{font-size:0.88rem;color:var(--text-muted);opacity:0.85;margin:0;}
+    @media (max-width: 640px) {
+      footer{margin:2rem 0.85rem 1.75rem;border-radius:20px;padding:2.25rem 1rem 2rem;}
+      .footer-tifinagh{font-size:1.5rem;margin-bottom:1.1rem;}
+      .footer-links-row{gap:1.1rem 1.4rem;margin-bottom:0.9rem;}
+      .footer-links-row a{font-size:0.92rem;}
+    }
     @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
     .animate-in{animation:fadeUp 0.6s ease both;}
     .nav-hamburger{display:none;background:none;border:1.5px solid var(--border);border-radius:8px;width:38px;height:38px;cursor:pointer;color:var(--text-muted);align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
     .nav-hamburger:hover{border-color:var(--ochre);color:var(--ochre);}
-    .nav-right{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
-    .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
-    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;}
+    .nav-right{display:flex;align-items:center;gap:0.6rem;flex-shrink:0;}
+    .lang-switcher{display:flex;align-items:center;gap:0.35rem;flex-shrink:0;direction:ltr;}
+    .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.22rem 0.55rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;font-family:'DM Sans',-apple-system,sans-serif;line-height:1.3;}
     .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
     @media(max-width:640px){
       nav{padding:0 1rem;}
@@ -100,22 +162,146 @@
       .articles-section{padding:0 1rem 3rem;}
       .articles-grid{gap:0.85rem;}
     }
-  </style>
+  
+    /* Support Button & Footer Card */
+    .nav-support-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(201,133,58,0.12);
+      color: var(--ochre) !important;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-support-btn:hover {
+      background: var(--ochre);
+      color: #fff !important;
+      border-color: var(--ochre);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(201,133,58,0.25);
+    }
+    .footer-support-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem 2rem;
+      max-width: 680px;
+      margin: 0 auto 2.25rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      backdrop-filter: blur(8px);
+    }
+    .fsc-badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--ochre);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 0.22rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    .fsc-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.45rem;
+      line-height: 1.4;
+    }
+    .fsc-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .fsc-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .fsc-btn-kofi {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #ff5e5b;
+      color: white !important;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(255,94,91,0.25);
+    }
+    .fsc-btn-kofi:hover {
+      background: #e64c49;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(255,94,91,0.35);
+      text-decoration: none;
+    }
+    .fsc-btn-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--ochre) !important;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .fsc-btn-more:hover {
+      background: rgba(201,133,58,0.14);
+      border-color: var(--ochre);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+    @media (max-width: 640px) {
+      .footer-support-card { padding: 1.35rem 1.1rem; margin-bottom: 1.75rem; }
+      .fsc-title { font-size: 1.2rem; }
+      .fsc-desc { font-size: 0.86rem; }
+      .fsc-actions { flex-direction: column; width: 100%; gap: 0.6rem; }
+      .fsc-btn-kofi, .fsc-btn-more { width: 100%; justify-content: center; }
+      .nav-support-btn { padding: 0.22rem 0.55rem; font-size: 0.75rem; }
+    }
+</style>
 </head>
 <body>
 <div class="page-wrap">
 
   <nav>
-    <a href="../index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html">المحوّل</a></li>
-      <li><a href="../keyboard.html">لوحة المفاتيح</a></li>
-      <li><a href="../generator.html">مولّد الأسماء</a></li>
-      <li><a href="../faq.html">الأسئلة الشائعة</a></li>
+      <li><a href="index.html">المحوّل</a></li>
+      <li><a href="keyboard.html">لوحة المفاتيح</a></li>
+      <li><a href="generator.html">مولّد الأسماء</a></li>
+      <li><a href="faq.html">الأسئلة الشائعة</a></li>
       <li><a href="articles.html" class="active">المقالات</a></li>
-      <li><a href="../about.html">من نحن</a></li>
+      <li><a href="about.html">عن الموقع</a></li>
+      <li><a href="support.html" style="color:var(--ochre);font-weight:700;">ادعمنا 💛</a></li>
     </ul>
     <div class="nav-right">
+            <a href="support.html" class="nav-support-btn" title="ادعم أمغناس">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span>ادعمنا</span>
+      </a>
       <div class="lang-switcher">
         <a href="../articles.html" class="lang-btn">EN</a>
         <a href="../fr/articles.html" class="lang-btn">FR</a>
@@ -168,8 +354,8 @@
         <div class="article-card-visual" style="background:linear-gradient(135deg,#3d3580 0%,#b85c38 100%)"><span class="article-card-glyph">ⵜⴰⵎⴰⵣⵉⵖⵜ</span></div>
         <div class="article-card-body">
           <span class="tag">اللغة</span>
-          <h3>مدخل إلى تامازيغت: لغة الشعب الأمازيغي</h3>
-          <p>نظرة شاملة على عائلة اللغة الأمازيغية ولهجاتها عبر شمال أفريقيا وتزايد اعترافها الرسمي.</p>
+          <h3>مدخل إلى اللغة الأمازيغية</h3>
+          <p>نظرة شاملة على عائلة اللغة الأمازيغية وتنوعاتها عبر شمال أفريقيا وتزايد اعترافها الرسمي.</p>
           <span class="read-more"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> اقرأ المقال</span>
         </div>
       </a>
@@ -218,8 +404,8 @@
         <div class="article-card-visual" style="background:linear-gradient(135deg,#1a5c6b 0%,#c9853a 100%)"><span class="article-card-glyph">ⵜⴰⵛⵍⵃⵉⵜ</span></div>
         <div class="article-card-body">
           <span class="tag">اللغة</span>
-          <h3>تاشلحيت وتامازيغت وتاريفيت: في الطيف اللهجي الأمازيغي</h3>
-          <p>اللهجات الأمازيغية الكبرى في المغرب وعلاقتها ببعضها — من الأطلس الكبير إلى جبال الريف.</p>
+          <h3>تاشلحيت وتمازيغت وتاريفيت: في الطيف اللهجي الأمازيغي</h3>
+          <p>الفروع اللغوية الأمازيغية الكبرى في المغرب وعلاقتها ببعضها — من الأطلس الكبير وسوس إلى جبال الريف.</p>
           <span class="read-more"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> اقرأ المقال</span>
         </div>
       </a>
@@ -237,17 +423,36 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
-    <div class="footer-links">
-      <a href="../index.html">المحوّل</a>
-      <a href="../keyboard.html">لوحة المفاتيح</a>
-      <a href="articles.html">المقالات</a>
-      <a href="../about.html">من نحن</a>
-      <a href="../privacy.html">سياسة الخصوصية</a>
+        <div class="footer-support-card">
+      <div class="fsc-badge">💛 تِويزي · تضامن مجتمعي</div>
+      <h3 class="fsc-title">ساعد في إبقاء أمغناس مجانياً 100% وبدون إعلانات</h3>
+      <p class="fsc-desc">أمغناس مبادرة رقمية مستقلة مخصصة للحفاظ على اللغة الأمازيغية وحرف التيفيناغ رقمياً. إذا كانت أدواتنا تفيدك، نرحب بدعمك لمسيرتنا.</p>
+      <div class="fsc-actions">
+        <a href="https://ko-fi.com/amghnas" target="_blank" rel="noopener noreferrer" class="fsc-btn-kofi">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.022 5.04c-1.391 1.761-4.022 3.012-4.022 3.012s-2.631-1.251-4.022-3.012c-1.503-1.902-1.077-4.102.39-4.996 1.467-.894 3.033.272 3.632 1.09.599-.818 2.165-1.984 3.632-1.09 1.467.894 1.893 3.094.39 4.996zm6.271-2.122c-.447 2.361-2.485 2.502-2.485 2.502V7.126s1.956.033 2.485 1.547c.53 1.514.447 2.361 0 3.191z"/></svg>
+          ادعم عبر Ko-fi
+        </a>
+        <a href="support.html" class="fsc-btn-more">طرق الدعم وبايبال ←</a>
+      </div>
     </div>
-    <p>صُنع بـ ❤ للثقافة الأمازيغية · بقلم أنارُوز الحبيب</p>
-    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+
+<div class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</div>
+    <div class="footer-links-row">
+      <a href="index.html">المحوّل</a>
+      <a href="keyboard.html">لوحة المفاتيح</a>
+      <a href="generator.html">مولّد الأسماء</a>
+    </div>
+    <div class="footer-links-row">
+      <a href="articles.html">المقالات والتاريخ</a>
+      <a href="faq.html">الأسئلة الشائعة</a>
+      <a href="about.html">من نحن</a>
+      <a href="support.html" style="color:var(--ochre);font-weight:700;">ادعم أمغناس 💛</a>
+      <a href="privacy.html">سياسة الخصوصية</a>
+    </div>
+    <p class="footer-credit">صُنع بـ ❤ للثقافة والتراث الأمازيغي · بقلم Anaruz Elhabib</p>
+    <p class="footer-copy">&copy; <span id="copyright-year"></span> amghnas.com</p>
   </footer>
 </div>
 
