@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.amghnas.com/sitemap.xml
+Sitemap: https://amghnas.com/sitemap.xml

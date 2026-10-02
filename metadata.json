@@ -1,0 +1,8 @@
+{
+  "name": "amghnas",
+  "description": "Tifinagh converter and Amazigh keyboard application supporting Tifinagh, Latin (Talatint), and Arabic script translation.",
+  "requestFramePermissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

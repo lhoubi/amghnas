@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support amghnas — Help Keep Amazigh Digital Heritage Free & Open</title>
+  <meta name="description" content="Support amghnas (ⴰⵎⵖⵏⴰⵙ). Help us keep our free Tifinagh converter, keyboard, name generator, and educational articles open, independent, and ad-free." />
+  <meta name="keywords" content="support amghnas, donate amazigh, tifinagh donation, tiwizi, amazigh heritage support, ko-fi amghnas, paypal amghnas" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="canonical" href="https://amghnas.com/support.html" />
+  <link rel="alternate" hreflang="en" href="https://amghnas.com/support.html" />
+  <link rel="alternate" hreflang="fr" href="https://amghnas.com/fr/support.html" />
+  <link rel="alternate" hreflang="ar" href="https://amghnas.com/ar/support.html" />
+  <link rel="alternate" hreflang="x-default" href="https://amghnas.com/support.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Support amghnas — Keep Amazigh Tools Free & Open" />
+  <meta property="og:description" content="Help keep amghnas 100% free, independent, and ad-free for students, researchers, and Amazigh communities worldwide." />
+  <meta property="og:url" content="https://amghnas.com/support.html" />
+  <meta property="og:image" content="https://amghnas.com/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Tifinagh&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sand: #f5ede0; --sand-dark: #e8d9c4; --ochre: #c9853a; --ochre-deep: #a3622a;
+      --ochre-light: #e0a050; --terracotta: #b85c38; --indigo: #3d3580; --text: #1a1a2e;
+      --text-muted: #5a5a7a; --bg2: rgba(255,255,255,0.7); --card-bg: rgba(255,255,255,0.85);
+      --border: rgba(201,133,58,0.2); --glow: rgba(201,133,58,0.15); --tag-bg: rgba(201,133,58,0.08);
+      --kofi: #ff5e5b; --paypal: #0070ba;
+    }
+    html.dark {
+      --sand: #141122; --sand-dark: #1e1933; --ochre: #e0a050; --ochre-deep: #c9853a;
+      --ochre-light: #f5bc70; --text: #f0ece4; --text-muted: #9d97b8; --bg2: rgba(26,22,44,0.7);
+      --card-bg: rgba(30,25,50,0.88); --border: rgba(224,160,80,0.22); --glow: rgba(224,160,80,0.12);
+      --tag-bg: rgba(224,160,80,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      background: rgba(245,237,224,0.92); border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      transition: background 0.3s;
+    }
+    html.dark nav { background: rgba(20,17,34,0.92); }
+    .nav-brand {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      font-size: 1.5rem; color: var(--ochre);
+      text-decoration: none; font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; align-items: center; gap: 0.35rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-muted);
+      font-size: 0.88rem; font-weight: 500;
+      padding: 0.35rem 0.8rem; border-radius: 8px;
+      transition: all 0.2s; position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ochre); }
+    .nav-right { display: flex; align-items: center; gap: 0.6rem; }
+    .nav-support-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: var(--ochre); color: white !important;
+      border: 1.5px solid var(--ochre); border-radius: 999px;
+      padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nav-support-btn:hover {
+      background: var(--ochre-deep); border-color: var(--ochre-deep);
+      transform: translateY(-1px); box-shadow: 0 4px 14px rgba(201,133,58,0.3);
+    }
+    .lang-switcher { display: flex; align-items: center; gap: 0.25rem; }
+    .lang-btn {
+      background: none; border: 1.5px solid var(--border);
+      border-radius: 6px; padding: 0.22rem 0.55rem;
+      font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      border-color: var(--ochre); color: var(--ochre); background: rgba(201,133,58,0.1);
+    }
+    #themeToggle {
+      background: none; border: 1.5px solid var(--border); border-radius: 50%;
+      width: 36px; height: 36px; cursor: pointer; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    #themeToggle:hover { color: var(--ochre); border-color: var(--ochre); }
+    .sun-icon { display: none; }
+    html.dark .sun-icon { display: flex; }
+    html.dark .moon-icon { display: none; }
+    .nav-hamburger {
+      display: none; background: none; border: 1.5px solid var(--border);
+      border-radius: 8px; width: 36px; height: 36px; cursor: pointer;
+      color: var(--text-muted); align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+
+    /* CONTAINER */
+    .support-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+    }
+
+    /* HERO */
+    .support-hero {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+    .tiwizi-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--tag-bg); color: var(--ochre);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 1.1rem;
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .tiwizi-badge span.tifinagh {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      font-size: 1.15em;
+    }
+    .support-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .support-hero p {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* PAYMENT CARDS GRID */
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+      margin-bottom: 3.5rem;
+    }
+    .payment-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2.2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .payment-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ochre);
+      box-shadow: 0 16px 40px rgba(201,133,58,0.14);
+    }
+    .card-popular-tag {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--ochre) 0%, var(--ochre-deep) 100%);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.85rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      box-shadow: 0 4px 12px rgba(201,133,58,0.35);
+    }
+    .payment-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .payment-logo {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .payment-logo.kofi { background: rgba(255, 94, 91, 0.12); color: var(--kofi); }
+    .payment-logo.paypal { background: rgba(0, 112, 186, 0.12); color: var(--paypal); }
+    .payment-card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .payment-card-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+    .payment-methods-list {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+    .method-chip {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ACTION BUTTONS */
+    .btn-kofi {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: var(--kofi);
+      color: white;
+      text-decoration: none;
+      padding: 0.95rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(255,94,91,0.28);
+    }
+    .btn-kofi:hover {
+      background: #e64c49;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,94,91,0.4);
+    }
+    .btn-paypal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: var(--paypal);
+      color: white;
+      text-decoration: none;
+      padding: 0.95rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0,112,186,0.28);
+      margin-bottom: 0.75rem;
+    }
+    .btn-paypal:hover {
+      background: #005ea6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,112,186,0.4);
+    }
+
+    /* PAYPAL EMAIL COPY BOX */
+    .paypal-copy-box {
+      background: var(--tag-bg);
+      border: 1.5px dashed var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .paypal-email-info {
+      min-width: 0;
+      flex: 1;
+    }
+    .paypal-label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .paypal-email-text {
+      font-family: 'DM Mono', monospace, ui-monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+    .btn-copy {
+      background: var(--ochre);
+      border: 1px solid var(--ochre);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-copy:hover {
+      background: var(--ochre-deep);
+      border-color: var(--ochre-deep);
+      transform: translateY(-1px);
+    }
+    .paypal-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.85rem;
+      padding: 0.85rem 1rem;
+      background: var(--tag-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .paypal-step {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      line-height: 1.4;
+    }
+    .paypal-step-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--paypal);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* IMPACT TIWIZI SECTION */
+    .tiwizi-story {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--ochre);
+      border-radius: 0 16px 16px 0;
+      padding: 2.25rem;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.03);
+    }
+    .tiwizi-story h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--ochre);
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+    }
+    .tiwizi-story p {
+      font-size: 1.02rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .tiwizi-story p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* TRANSPARENCY PILLARS */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+    .pillar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.6rem;
+      text-align: center;
+    }
+    .pillar-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+    .pillar-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .pillar-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .support-faq {
+      margin-bottom: 3.5rem;
+    }
+    .support-faq h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .faq-item h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ochre);
+      margin-bottom: 0.4rem;
+    }
+    .faq-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1a1a2e;
+      color: #fff;
+      border: 1px solid var(--ochre);
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* FOOTER */
+    footer {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--bg2);
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem;
+      max-width: 1100px;
+      margin: 3.5rem auto 2.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      position: relative; z-index: 1;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    html.dark footer { background: var(--bg2); box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
+    .footer-tifinagh { font-family: 'Noto Sans Tifinagh', sans-serif; font-size: 1.75rem; color: var(--ochre); letter-spacing: 4px; display: block; margin-bottom: 1.35rem; }
+    .footer-links-row { display: flex; justify-content: center; gap: 2.25rem; margin-bottom: 1.15rem; flex-wrap: wrap; }
+    .footer-links-row:last-of-type { margin-bottom: 1.6rem; }
+    .footer-links-row a { color: var(--ochre); font-size: 0.98rem; font-weight: 600; text-decoration: none; transition: all 0.2s ease; display: inline-block; }
+    .footer-links-row a:hover { color: var(--ochre-light); transform: translateY(-1px); }
+    .footer-credit { font-size: 0.92rem; color: var(--text-muted); margin: 0 0 0.45rem; line-height: 1.6; }
+    .footer-copy { font-size: 0.88rem; color: var(--text-muted); opacity: 0.85; margin: 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .payment-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .pillars-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .support-wrap { padding: 2.5rem 1rem 4rem; }
+      nav { padding: 0 1rem; height: 56px; }
+      .nav-brand { font-size: 1.35rem; }
+      .nav-links {
+        display: none; position: fixed; top: 56px; left: 0; right: 0;
+        background: rgba(245,237,224,0.98); backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border); flex-direction: column;
+        padding: 0.5rem 0 1rem; z-index: 99; list-style: none;
+      }
+      html.dark .nav-links { background: rgba(20,17,34,0.98); }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+      .nav-hamburger { display: flex; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 0.75rem; height: 56px; }
+      .nav-brand { font-size: 1.3rem; }
+      .nav-right { gap: 0.35rem; }
+      .nav-support-btn { padding: 0.22rem 0.55rem; font-size: 0.72rem; }
+      .lang-switcher { gap: 0.2rem; }
+      .lang-btn { padding: 0.2rem 0.45rem; font-size: 0.72rem; }
+      #themeToggle, .nav-hamburger { width: 34px; height: 34px; }
+      .payment-card { padding: 1.5rem 1.25rem; border-radius: 16px; }
+      .tiwizi-story { padding: 1.5rem 1.25rem; }
+      .support-hero h1 { font-size: 1.85rem; }
+      .support-hero p { font-size: 0.95rem; }
+      .paypal-copy-box { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+      .btn-copy { width: 100%; justify-content: center; padding: 0.55rem; }
+      .btn-kofi, .btn-paypal { padding: 0.85rem 1.15rem; font-size: 0.92rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Converter</a></li>
+      <li><a href="keyboard.html">Keyboard</a></li>
+      <li><a href="generator.html">Name Generator</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="support.html" class="active" style="color:var(--ochre);font-weight:700;">Support 💛</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="support.html" class="nav-support-btn" title="Support amghnas">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span>Support</span>
+      </a>
+      <div class="lang-switcher">
+        <a href="support.html" class="lang-btn active">EN</a>
+        <a href="fr/support.html" class="lang-btn">FR</a>
+        <a href="ar/support.html" class="lang-btn">AR</a>
+      </div>
+      <button id="themeToggle" aria-label="Toggle theme">
+        <span class="moon-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
+        <span class="sun-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="support-wrap">
+    <div class="support-hero">
+      <div class="tiwizi-badge">
+        <span class="tifinagh">ⵜⵉⵡⵉⵣⵉ</span> · Community Solidarity
+      </div>
+      <h1>Help Keep amghnas Free &amp; Open to Everyone</h1>
+      <p>
+        amghnas (ⴰⵎⵖⵏⴰⵙ) is an independent, non-profit digital project dedicated to preserving and revitalizing the Amazigh language and Tifinagh script online. We have zero ads, no paywalls, and sell no data.
+      </p>
+    </div>
+
+    <!-- PAYMENT OPTIONS -->
+    <div class="payment-grid">
+      <!-- KO-FI CARD -->
+      <div class="payment-card">
+        <div class="card-popular-tag">Recommended · 1-Click</div>
+        <div>
+          <div class="payment-card-header">
+            <div class="payment-logo kofi">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.022 5.04c-1.391 1.761-4.022 3.012-4.022 3.012s-2.631-1.251-4.022-3.012c-1.503-1.902-1.077-4.102.39-4.996 1.467-.894 3.033.272 3.632 1.09.599-.818 2.165-1.984 3.632-1.09 1.467.894 1.893 3.094.39 4.996zm6.271-2.122c-.447 2.361-2.485 2.502-2.485 2.502V7.126s1.956.033 2.485 1.547c.53 1.514.447 2.361 0 3.191z"/></svg>
+            </div>
+            <div>
+              <h2>Support via Ko-fi</h2>
+              <span style="font-size:0.82rem;color:var(--text-muted);">Quick, secure micro-donations</span>
+            </div>
+          </div>
+          <p class="payment-card-desc">
+            Support amghnas directly on Ko-fi with a one-time tip. Supports <strong>Apple Pay</strong>, <strong>Google Pay</strong>, credit cards, or PayPal without needing an account.
+          </p>
+          <div class="payment-methods-list">
+            <span class="method-chip">Apple Pay</span>
+            <span class="method-chip">Google Pay</span>
+            <span class="method-chip">Credit Card</span>
+            <span class="method-chip">PayPal</span>
+            <span class="method-chip">0% Fee</span>
+          </div>
+        </div>
+        <a href="https://ko-fi.com/amghnas" target="_blank" rel="noopener noreferrer" class="btn-kofi">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Support on Ko-fi (ko-fi.com/amghnas)
+        </a>
+      </div>
+
+      <!-- PAYPAL CARD -->
+      <div class="payment-card">
+        <div>
+          <div class="payment-card-header">
+            <div class="payment-logo paypal">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.305-.536 3.447-2.613 5.422-5.753 5.422h-2.14l-1.42 9.07c-.046.294-.298.513-.596.513l-3.175.217z"/></svg>
+            </div>
+            <div>
+              <h2>Direct PayPal Transfer</h2>
+              <span style="font-size:0.82rem;color:var(--text-muted);">Direct to project founder account</span>
+            </div>
+          </div>
+          <p class="payment-card-desc">
+            Support directly via your personal PayPal app or web account. Copy our verified founder email below, then open PayPal to send your gift.
+          </p>
+          <div class="payment-methods-list">
+            <span class="method-chip">Personal Account</span>
+            <span class="method-chip">Worldwide</span>
+            <span class="method-chip">Zero Middleman</span>
+          </div>
+        </div>
+        <div>
+          <div class="paypal-copy-box">
+            <div class="paypal-email-info">
+              <span class="paypal-label">Founder PayPal Email</span>
+              <span class="paypal-email-text" id="paypalEmail">anaruzelhabib@gmail.com</span>
+            </div>
+            <button class="btn-copy" id="copyEmailBtn" aria-label="Copy PayPal Email">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              <span>Copy Email</span>
+            </button>
+          </div>
+
+          <a href="https://www.paypal.com/myaccount/transfer/homepage" target="_blank" rel="noopener noreferrer" class="btn-paypal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.305-.536 3.447-2.613 5.422-5.753 5.422h-2.14l-1.42 9.07c-.046.294-.298.513-.596.513l-3.175.217z"/></svg>
+            Open PayPal App / Web
+          </a>
+
+          <div class="paypal-steps">
+            <div class="paypal-step">
+              <span class="paypal-step-num">1</span>
+              <span>Click <strong>Copy Email</strong> above</span>
+            </div>
+            <div class="paypal-step">
+              <span class="paypal-step-num">2</span>
+              <span>Open PayPal &amp; choose <strong>Send Money</strong></span>
+            </div>
+            <div class="paypal-step">
+              <span class="paypal-step-num">3</span>
+              <span>Paste <strong>anaruzelhabib@gmail.com</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT YOUR SUPPORT FUNDS -->
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--text);">How Your Contribution Is Used</h3>
+      <p style="color:var(--text-muted);font-size:0.95rem;">Every dollar received directly finances the preservation and technical accessibility of Tamazight.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <span class="pillar-icon">🌐</span>
+        <h4>Hosting &amp; Zero Downtime</h4>
+        <p>Keeping global high-performance servers running smoothly 24/7 without invasive third-party banner ads.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">📚</span>
+        <h4>Linguistic Research</h4>
+        <p>Documenting vocabulary and phonetic nuances across Tashelhit, Tarifit, Kabyle, Atlas, and Tamasheq dialects.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">🛠️</span>
+        <h4>New Free Tools</h4>
+        <p>Developing open mobile keyboard integrations, desktop fonts, and automated Tifinagh transliteration software.</p>
+      </div>
+    </div>
+
+    <!-- THE TIWIZI SPIRIT -->
+    <div class="tiwizi-story">
+      <h3>The Spirit of Tiwizi (ⵜⵉⵡⵉⵣⵉ)</h3>
+      <p>
+        In Amazigh culture, <strong>Tiwizi</strong> is the ancient tradition of collective mutual aid — when villagers unite to harvest fields, build homes, or protect shared water canals for the common good.
+      </p>
+      <p>
+        We built <strong>amghnas</strong> in that exact spirit: giving back to our heritage by offering free tools to children, teachers, university scholars, and diaspora communities who want to connect with their roots.
+      </p>
+      <p>
+        Whether you support with $3, a kind message, or by sharing the site with family and friends — <em>Tanmirt bahra</em> (ⵜⴰⵏⵎⵉⵔⵜ ⴱⴰⵀⵔⴰ — Thank you deeply from the heart).
+      </p>
+    </div>
+
+    <!-- FAQ -->
+    <div class="support-faq">
+      <h3>Frequently Asked Questions</h3>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Is my donation secure?</h4>
+          <p>Yes. All transactions are securely processed through Ko-fi (Stripe/PayPal) or directly through PayPal's official encrypted infrastructure.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I support without PayPal?</h4>
+          <p>Yes! Our Ko-fi page allows one-click support via Apple Pay, Google Pay, and any major debit or credit card.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Are there other ways to support?</h4>
+          <p>Absolutely! Sharing amghnas on social media, linking to our guides, or suggesting linguistic improvements helps our community tremendously.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I suggest a feature or tool?</h4>
+          <p>We love feedback from learners and native speakers. Feel free to reach out via our About page with ideas or dialect additions.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">PayPal email copied to clipboard!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</div>
+    <div class="footer-links-row">
+      <a href="index.html">Converter</a>
+      <a href="keyboard.html">Online Keyboard</a>
+      <a href="generator.html">Name Generator</a>
+    </div>
+    <div class="footer-links-row">
+      <a href="articles.html">Articles &amp; History</a>
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="support.html" style="color:var(--ochre);font-weight:700;">Support amghnas 💛</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <p class="footer-credit">Built with ❤ for Amazigh culture &amp; heritage · By Anaruz Elhabib</p>
+    <p class="footer-copy">&copy; <span id="copyright-year">2026</span> amghnas.com</p>
+  </footer>
+</div>
+
+<script src="themeToggle.js"></script>
+<script>
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      hamburger.innerHTML = navLinks.classList.contains('open')
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Copy PayPal Email
+  const copyBtn = document.getElementById('copyEmailBtn');
+  const toast = document.getElementById('toast');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const email = document.getElementById('paypalEmail').innerText.trim();
+      navigator.clipboard.writeText(email).then(() => {
+        toast.classList.add('show');
+        copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span>Copied! ✓</span>';
+        setTimeout(() => {
+          toast.classList.remove('show');
+          copyBtn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg> <span>Copy Email</span>';
+        }, 2500);
+      });
+    });
+  }
+</script>
+</body>
+</html>

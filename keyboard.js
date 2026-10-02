@@ -37,11 +37,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── KEY MAP ─────────────────────────────────────────────────────────────
-    // Digraphs MUST come before single chars (sorted by length below)
+    // Digraphs & Ligatures MUST come before single chars (sorted by length below)
     const keyMap = {
-        // Digraphs
+        // Digraphs (Latin)
         'gh':'ⵖ', 'kh':'ⵅ', 'ch':'ⵛ', 'sh':'ⵛ', 'dh':'ⴹ', 'ts':'ⵚ', 'gl':'ⴳⵍ',
+        // Tifinagh + Latin digraph continuations (when previous char is already Tifinagh)
+        'ⴳh':'ⵖ', 'ⴳH':'ⵖ',
+        'ⴽh':'ⵅ', 'ⴽH':'ⵅ',
+        'ⵛh':'ⵛ', 'ⵛH':'ⵛ',
+        'ⵙh':'ⵛ', 'ⵙH':'ⵛ',
+        'ⴷh':'ⴹ', 'ⴷH':'ⴹ',
+        'ⵜs':'ⵚ', 'ⵜS':'ⵚ',
+        'ⴳl':'ⴳⵍ', 'ⴳL':'ⴳⵍ',
+        // Arabic Lam-Alif ligatures and variations (physical 'b' key on Arabic keyboards)
+        // Produces strictly 'ⵍⴰ' without any stray leading 'ⴰ'
         'لا':'ⵍⴰ',
+        'لآ':'ⵍⴰ',
+        'لأ':'ⵍⴰ',
+        'لإ':'ⵍⴰ',
+        'الا':'ⵍⴰ',
+        'ألا':'ⵍⴰ',
+        'آلا':'ⵍⴰ',
+        'إلا':'ⵍⴰ',
+        'ⵍا':'ⵍⴰ',
+        'ⵍأ':'ⵍⴰ',
+        'ⵍآ':'ⵍⴰ',
+        'ⵍإ':'ⵍⴰ',
+        // If an initial Alif (ⴰ) was typed before pressing Lam-Alif (لا), collapse to 'ⵍⴰ'
+        'ⴰلا':'ⵍⴰ',
+        'ⴰلآ':'ⵍⴰ',
+        'ⴰلأ':'ⵍⴰ',
+        'ⴰلإ':'ⵍⴰ',
+        'ⴰالا':'ⵍⴰ',
+        'ⴰألا':'ⵍⴰ',
+        // Unicode presentation forms for Lam-Alif ligatures
+        '\uFEFB':'ⵍⴰ', // ﻻ Isolated
+        '\uFEFC':'ⵍⴰ', // ﻼ Final
+        '\uFEF7':'ⵍⴰ', // ﻷ Isolated Hamza Above
+        '\uFEF8':'ⵍⴰ', // ﻸ Final Hamza Above
+        '\uFEF9':'ⵍⴰ', // ﻹ Isolated Hamza Below
+        '\uFEFA':'ⵍⴰ', // ﻺ Final Hamza Below
+        '\uFEF5':'ⵍⴰ', // ﻵ Isolated Madda Above
+        '\uFEF6':'ⵍⴰ', // ﻶ Final Madda Above
         // Lowercase Latin
         'a':'ⴰ','b':'ⴱ','c':'ⵛ','d':'ⴷ','e':'ⴻ','f':'ⴼ',
         'g':'ⴳ','h':'ⵀ','i':'ⵉ','j':'ⵊ','k':'ⴽ','l':'ⵍ',
@@ -79,17 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return cp >= 0x2D30 && cp <= 0x2D7F;
     }
 
-    // Convert any string to Tifinagh, preserving already-Tifinagh chars
+    // Numbers, punctuation, math symbols, and brackets allowed through without alteration
+    function isPassthrough(ch) {
+        return /[0-9\u0660-\u0669\(\)\-_+=:;.,?!/\\*%"'@#$&\[\]{}<>~^|`،؟«»؛•°—–…\s]/.test(ch);
+    }
+
+    // Convert any string to Tifinagh, preserving already-Tifinagh chars, numbers, and symbols
     function toTifinagh(str) {
         str = str.replace(TASHKEEL, '');
         let out = '', i = 0;
         while (i < str.length) {
             const ch = str[i];
-            // Already Tifinagh → keep
-            if (isTifinagh(ch)) { out += ch; i++; continue; }
-            // Space / passthrough punctuation
-            if (ch === ' ' || ch === '\n') { out += ch; i++; continue; }
-            // Try longest match first
+            // Space / newline / numbers & symbols → keep directly
+            if (ch === ' ' || ch === '\n' || isPassthrough(ch)) { out += ch; i++; continue; }
+            // Try longest match first (ensures multi-char ligatures and digraphs like 'لا' and 'الا' take precedence)
             let matched = false;
             for (const k of SORTED_KEYS) {
                 if (str.substr(i, k.length) === k) {
@@ -99,7 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
                 }
             }
-            if (!matched) { i++; } // skip unmapped chars silently
+            if (matched) continue;
+            // Already Tifinagh → keep
+            if (isTifinagh(ch)) { out += ch; i++; continue; }
+            // If not matched to Tifinagh and not blocked (like ة), keep character intact
+            if (ch !== 'ة') {
+                out += ch;
+            }
+            i++;
         }
         return out;
     }
@@ -192,35 +239,34 @@ document.addEventListener('DOMContentLoaded', () => {
         // ة → block, produce nothing
         if (key === 'ة') { e.preventDefault(); return; }
 
-        // Only handle single printable characters beyond here
-        if (key.length !== 1) { e.preventDefault(); return; }
-
-        // ── Digraph check ──
-        // If the character just before the cursor + this new key forms a digraph,
-        // remove the previous character and insert the digraph result instead.
+        // ── Digraph / Ligature check ──
+        // If the character just before the cursor + this new key forms a recognized digraph or ligature,
+        // replace the previous character and insert the converted glyph.
         const pos    = keyboardInput.selectionStart;
         const selEnd = keyboardInput.selectionEnd;
         if (pos === selEnd && pos > 0) {
             const prevChar = keyboardInput.value[pos - 1];
-            const digraph  = (prevChar + key).toLowerCase();
-            if (keyMap[digraph]) {
+            const digraph  = (prevChar + key);
+            const digraphLower = (prevChar + key).toLowerCase();
+            const matchedDigraph = keyMap[digraph] || keyMap[digraphLower];
+            if (matchedDigraph) {
                 e.preventDefault();
                 const val = keyboardInput.value;
-                keyboardInput.value = val.substring(0, pos - 1) + keyMap[digraph] + val.substring(pos);
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = pos - 1 + keyMap[digraph].length;
+                keyboardInput.value = val.substring(0, pos - 1) + matchedDigraph + val.substring(pos);
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = pos - 1 + matchedDigraph.length;
                 keyboardInput.focus();
-                const vk = document.querySelector(`.keyboard-key[data-key="${keyMap[digraph]}"]`);
+                const vk = findVirtualKey(matchedDigraph);
                 if (vk) applyClickEffect(vk);
                 return;
             }
         }
 
-        // ── Single char lookup ──
-        // Emphatic uppercase first (A D G H R S T W Z)
+        // ── Direct key lookup ──
+        // Handles single characters as well as multi-char keys (e.g. Arabic 'لا', 'الا', 'ألا')
         let tif = keyMap[key];
 
         // Non-emphatic uppercase → use lowercase Tifinagh
-        if (tif === undefined && key >= 'A' && key <= 'Z') {
+        if (tif === undefined && key.length === 1 && key >= 'A' && key <= 'Z') {
             tif = keyMap[key.toLowerCase()];
         }
 
@@ -231,9 +277,18 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             insertAtCursor(tif); // tif may be '' (blocked chars like ة)
             if (tif) {
-                const vk = document.querySelector(`.keyboard-key[data-key="${tif}"]`);
+                const vk = findVirtualKey(tif);
                 if (vk) applyClickEffect(vk);
             }
+            return;
+        }
+
+        // ── Numbers & Punctuation symbols (0-9, Arabic-Indic numbers, ) ( - _ + = etc.) ──
+        if (isPassthrough(key)) {
+            e.preventDefault();
+            insertAtCursor(key);
+            const vk = findVirtualKey(key);
+            if (vk) applyClickEffect(vk);
             return;
         }
 
@@ -251,21 +306,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const raw     = e.data.replace(TASHKEEL, '');
         if (!raw) { e.preventDefault(); return; }
 
-        // If entirely Tifinagh already (virtual key on mobile), let it through
-        if ([...raw].every(isTifinagh)) return;
+        // If entirely Tifinagh or allowed numbers/symbols already, let it through
+        if ([...raw].every(ch => isTifinagh(ch) || isPassthrough(ch))) return;
 
         e.preventDefault();
 
-        // Digraph check (same logic as keydown)
+        // Digraph / Ligature check (same logic as keydown)
         const pos    = keyboardInput.selectionStart;
         const selEnd = keyboardInput.selectionEnd;
-        if (raw.length === 1 && pos === selEnd && pos > 0) {
+        if (pos === selEnd && pos > 0) {
             const prev    = keyboardInput.value[pos - 1];
-            const digraph = (prev + raw).toLowerCase();
-            if (keyMap[digraph]) {
+            const digraph = (prev + raw);
+            const digraphLower = (prev + raw).toLowerCase();
+            const matched = keyMap[digraph] || keyMap[digraphLower];
+            if (matched) {
                 const val = keyboardInput.value;
-                keyboardInput.value = val.substring(0, pos - 1) + keyMap[digraph] + val.substring(pos);
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = pos - 1 + keyMap[digraph].length;
+                keyboardInput.value = val.substring(0, pos - 1) + matched + val.substring(pos);
+                keyboardInput.selectionStart = keyboardInput.selectionEnd = pos - 1 + matched.length;
                 keyboardInput.focus();
                 return;
             }
@@ -339,6 +396,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── KEY PRESS EFFECT ────────────────────────────────────────────────────
+    function findVirtualKey(val) {
+        if (!val) return null;
+        if (val === 'ⵍⴰ') val = 'ⵍ';
+        try {
+            if (window.CSS && CSS.escape) {
+                return document.querySelector(`.keyboard-key[data-key="${CSS.escape(val)}"]`);
+            }
+        } catch (_) {}
+        for (let i = 0; i < keyboardKeys.length; i++) {
+            if (keyboardKeys[i].dataset.key === val) return keyboardKeys[i];
+        }
+        return null;
+    }
+
     function applyClickEffect(el) {
         if (!el) return;
         el.classList.add('key-active');

@@ -126,7 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!arabicInput || !arabicTifinaghOutput) return;
 
     const arabicToTifinaghMap = {
-        'لا': 'ⵍⴰ',
+        'لا': 'ⵍⴰ', 'لآ': 'ⵍⴰ', 'لأ': 'ⵍⴰ', 'لإ': 'ⵍⴰ',
+        'الا': 'ⵍⴰ', 'ألا': 'ⵍⴰ', 'آلا': 'ⵍⴰ', 'إلا': 'ⵍⴰ',
+        '\uFEFB': 'ⵍⴰ', '\uFEFC': 'ⵍⴰ', '\uFEF7': 'ⵍⴰ', '\uFEF8': 'ⵍⴰ',
+        '\uFEF9': 'ⵍⴰ', '\uFEFA': 'ⵍⴰ', '\uFEF5': 'ⵍⴰ', '\uFEF6': 'ⵍⴰ',
         'ا': 'ⴰ', 'أ': 'ⴰ', 'آ': 'ⴰ', 'إ': 'ⵉ',
         'ب': 'ⴱ', 'ت': 'ⵜ', 'ث': 'ⵜ',
         'ج': 'ⵊ', 'ح': 'ⵃ', 'خ': 'ⵅ',
