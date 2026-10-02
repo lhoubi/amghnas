@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Écrire son Prénom en Tifinagh | Générateur Gratuit | amghnas — ⴰⵎⵖⵏⴰⵙ</title>
-  <meta name="description" content="Convertissez votre prénom en Tifinagh instantanément. Tapez votre nom en latin ou arabe et voyez-le dans l'alphabet amazigh ancien. Télécharger en image, copier ou partager." />
-  <meta name="keywords" content="name in tifinagh, tifinagh name generator, amazigh name, write name in tifinagh, tifinagh converter, amghnas" />
-  <link rel="canonical" href="https://amghnas.com/generator.html" />
+  <title>Écrire son Prénom en Tifinagh (ⴰⵎⵖⵏⴰⵙ) – Générateur de Noms Amazighs Gratuit &amp; Cartes d'Art</title>
+  <meta name="description" content="Convertissez votre prénom en alphabet Tifinagh officiel IRCAM instantanément. Générateur amazigh gratuit avec cartes graphiques de luxe, téléchargement PNG et copie Unicode pour réseaux sociaux et tatouages." />
+  <meta name="keywords" content="prénom en tifinagh, ecrire son nom en tifinagh, generateur nom amazigh, prenom berbere tifinagh, tatouage tifinagh nom, alphabet tifinagh prenom, calligraphie tifinagh, amghnas" />
+  <link rel="canonical" href="https://amghnas.com/fr/generator.html" />
+  <link rel="alternate" hreflang="en" href="https://amghnas.com/generator.html" />
+  <link rel="alternate" hreflang="fr" href="https://amghnas.com/fr/generator.html" />
+  <link rel="alternate" hreflang="ar" href="https://amghnas.com/ar/generator.html" />
+  <link rel="alternate" hreflang="x-default" href="https://amghnas.com/generator.html" />
   <link rel="icon" href="../favicon.png" type="image/png" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Write Your Name in Tifinagh | amghnas" />
-  <meta property="og:description" content="See your name in the ancient Tifinagh script. Free, instant, beautiful." />
-  <meta property="og:url" content="https://amghnas.com/generator.html" />
+  <meta property="og:site_name" content="amghnas" />
+  <meta property="og:title" content="Écrire son Prénom en Tifinagh (ⴰⵎⵖⵏⴰⵙ) – Générateur Gratuit" />
+  <meta property="og:description" content="Découvrez votre prénom dans l'ancien alphabet amazigh Tifinagh. Cartes d'art de luxe, téléchargement PNG haute définition et copie Unicode." />
+  <meta property="og:url" content="https://amghnas.com/fr/generator.html" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://amghnas.com/favicon.png" />
+  <meta property="og:locale" content="fr_FR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Écrire son Prénom en Tifinagh | Générateur Amazigh" />
+  <meta name="twitter:description" content="Découvrez votre prénom dans l'ancien alphabet amazigh Tifinagh. Téléchargement d'image gratuit et copie Unicode." />
+  <meta name="twitter:image" content="https://amghnas.com/favicon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -188,7 +201,23 @@
     }
 
     .input-row {
-      display: flex; gap: 1rem; margin-bottom: 1rem;
+      display: flex; gap: 0.65rem; margin-bottom: 1rem;
+    }
+    .input-lang-btn {
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .input-lang-btn.active, .input-lang-btn:hover {
+      border-color: var(--ochre);
+      color: var(--ochre);
+      background: rgba(201,133,58,0.1);
     }
 
     .name-input {
@@ -388,26 +417,443 @@
     .toast.show { transform: translateX(-50%) translateY(0); }
       .nav-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
-    footer{border-top:1px solid var(--border);text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.88rem;background:rgba(245,237,224,0.5);transition:background 0.4s;}
-    html.dark footer{background:rgba(26,23,40,0.5);}
-    footer a{color:var(--ochre);text-decoration:none;}footer a:hover{text-decoration:underline;}
-    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.3rem;color:var(--ochre);display:block;margin-bottom:0.5rem;}
-    .footer-links{display:flex;justify-content:center;gap:2rem;margin:0.75rem 0;flex-wrap:wrap;}
+    footer{border:1px solid var(--border);border-radius:24px;background:var(--bg2);text-align:center;padding:3rem 1.5rem 2.5rem;max-width:1100px;margin:3.5rem auto 2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.06);position:relative;z-index:1;transition:background 0.3s,border-color 0.3s;}
+    html.dark footer{background:var(--bg2);box-shadow:0 4px 24px rgba(0,0,0,0.2);}
+    .footer-tifinagh{font-family:'Noto Sans Tifinagh',sans-serif;font-size:1.75rem;color:var(--ochre);letter-spacing:4px;display:block;margin-bottom:1.35rem;}
+    .footer-links-row{display:flex;justify-content:center;gap:2.25rem;margin-bottom:1.15rem;flex-wrap:wrap;}
+    .footer-links-row:last-of-type{margin-bottom:1.6rem;}
+    .footer-links-row a{color:var(--ochre);font-size:0.98rem;font-weight:600;text-decoration:none;transition:all 0.2s ease;display:inline-block;}
+    .footer-links-row a:hover{color:var(--ochre-light);transform:translateY(-1px);text-decoration:none;}
+    .footer-credit{font-size:0.92rem;color:var(--text-muted);margin:0 0 0.45rem;line-height:1.6;}
+    .footer-copy{font-size:0.88rem;color:var(--text-muted);opacity:0.85;margin:0;}
+    @media (max-width: 640px) {
+      footer{margin:2rem 0.85rem 1.75rem;border-radius:20px;padding:2.25rem 1rem 2rem;}
+      .footer-tifinagh{font-size:1.5rem;margin-bottom:1.1rem;}
+      .footer-links-row{gap:1.1rem 1.4rem;margin-bottom:0.9rem;}
+      .footer-links-row a{font-size:0.92rem;}
+    }
     .lang-switcher{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
     .lang-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
     .lang-btn:hover,.lang-btn.active{border-color:var(--ochre);color:var(--ochre);background:rgba(201,133,58,0.08);}
-  </style>
+    /* SEO & Content Section */
+    .seo-rich-wrapper {
+      max-width: 900px;
+      margin: 3rem auto 2rem;
+      padding: 0 1.25rem;
+    }
+    .seo-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2.25rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .seo-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--ochre);
+      margin-bottom: 0.85rem;
+      line-height: 1.25;
+    }
+    .seo-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin: 1.5rem 0 0.5rem;
+    }
+    .seo-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .popular-names-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.25rem;
+    }
+    .popular-names-tabs::-webkit-scrollbar { display: none; }
+    .popular-tab-btn {
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text-muted);
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .popular-tab-btn.active, .popular-tab-btn:hover {
+      background: var(--ochre);
+      color: #fff;
+      border-color: var(--ochre);
+    }
+    .popular-names-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .popular-name-badge {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg3);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      color: inherit;
+    }
+    .popular-name-badge:hover {
+      border-color: var(--ochre);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(201,133,58,0.15);
+    }
+    .badge-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    .badge-latin {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
+    .badge-tifi {
+      font-family: 'Noto Sans Tifinagh', sans-serif;
+      color: var(--ochre);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .badge-meaning {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .seo-features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 680px) {
+      .seo-features-grid { grid-template-columns: 1fr; }
+      .seo-card { padding: 1.5rem 1.1rem; }
+      .popular-names-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .seo-feature-item {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .seo-feature-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .seo-feature-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .seo-faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+    .seo-faq-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg3);
+      overflow: hidden;
+    }
+    .seo-faq-question {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .seo-faq-chevron {
+      color: var(--ochre);
+      font-size: 0.85rem;
+      transition: transform 0.25s ease;
+    }
+    .seo-faq-item[open] .seo-faq-chevron {
+      transform: rotate(180deg);
+    }
+    .seo-faq-answer {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+    .seo-links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .seo-link-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+    .seo-link-card:hover {
+      border-color: var(--ochre);
+      transform: translateY(-2px);
+    }
+    .seo-link-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ochre);
+      margin-bottom: 0.25rem;
+    }
+    .seo-link-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+  
+    /* Support Button & Footer Card */
+    .nav-support-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(201,133,58,0.12);
+      color: var(--ochre) !important;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-support-btn:hover {
+      background: var(--ochre);
+      color: #fff !important;
+      border-color: var(--ochre);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(201,133,58,0.25);
+    }
+    .footer-support-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem 2rem;
+      max-width: 680px;
+      margin: 0 auto 2.25rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      backdrop-filter: blur(8px);
+    }
+    .fsc-badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ochre);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 0.22rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    .fsc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.45rem;
+      line-height: 1.3;
+    }
+    .fsc-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .fsc-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .fsc-btn-kofi {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #ff5e5b;
+      color: white !important;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(255,94,91,0.25);
+    }
+    .fsc-btn-kofi:hover {
+      background: #e64c49;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(255,94,91,0.35);
+      text-decoration: none;
+    }
+    .fsc-btn-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--ochre) !important;
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.55rem 1.15rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .fsc-btn-more:hover {
+      background: rgba(201,133,58,0.14);
+      border-color: var(--ochre);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+    @media (max-width: 640px) {
+      .footer-support-card { padding: 1.35rem 1.1rem; margin-bottom: 1.75rem; }
+      .fsc-title { font-size: 1.25rem; }
+      .fsc-desc { font-size: 0.84rem; }
+      .fsc-actions { flex-direction: column; width: 100%; gap: 0.6rem; }
+      .fsc-btn-kofi, .fsc-btn-more { width: 100%; justify-content: center; }
+      .nav-support-btn { padding: 0.22rem 0.55rem; font-size: 0.72rem; }
+    }
+</style>
 
+  <!-- Schema.org WebApplication + FAQPage + Breadcrumbs (French) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Tifinagh Name Generator",
-    "url": "https://amghnas.com/generator.html",
-    "description": "Convert your name to Tifinagh script instantly and download as image",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://amghnas.com/fr/generator.html#app",
+        "name": "amghnas Générateur de Prénom Tifinagh",
+        "url": "https://amghnas.com/fr/generator.html",
+        "description": "Convertissez tout prénom français, latin ou arabe en écriture authentique Tifinagh amazighe. Personnalisez des cartes artistiques de luxe et téléchargez en image PNG.",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "All",
+        "inLanguage": ["fr", "en", "ar"],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Conversion instantanée en caractères Tifinagh officiels IRCAM Unicode",
+          "Support des noms latins, français et arabes",
+          "3 styles de cartes de luxe : Noir Obsidienne, Or Royal, Sable Désert",
+          "Téléchargement d'image PNG haute résolution",
+          "Copie Unicode en un clic pour bio Instagram, TikTok, WhatsApp et tatouages"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://amghnas.com/fr/index.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Générateur de Prénom Tifinagh",
+            "item": "https://amghnas.com/fr/generator.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Comment écrire mon prénom en Tifinagh ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Saisissez simplement votre prénom dans le champ en caractères latins ou arabes. Le générateur convertit chaque syllabe en temps réel vers les 33 lettres officielles Tifinagh standardisées par l'IRCAM."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Puis-je convertir des prénoms non amazighs (français, arabes ou internationaux) ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui ! Le générateur intègre des règles phonétiques rigoureuses et un dictionnaire de milliers de prénoms internationaux pour restituer fidèlement les voyelles et sonorités."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Puis-je copier le texte Tifinagh pour Instagram, WhatsApp ou un tatouage ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolument. Les caractères générés sont conformes au standard Unicode mondial (U+2D30 à U+2D7F). Cliquez sur « Copier Tifinagh » pour coller directement dans votre profil ou donner le visuel à votre tatoueur."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Comment télécharger mon prénom sous forme d'image de carte d'art ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Choisissez votre fond préféré (Obsidienne, Or ou Sable), puis cliquez sur « Télécharger PNG ». Une image haute définition nette sera immédiatement enregistrée sur votre appareil."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Ce générateur de prénoms en Tifinagh est-il gratuit ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui, le générateur amghnas est 100% gratuit, sans inscription, sans filigrane et sans publicité."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -415,12 +861,17 @@
 
 <!-- NAV -->
 <nav>
-  <a href="../index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
+  <a href="index.html" class="nav-brand">ⴰⵎⵖⵏⴰⵙ</a>
   <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Convertisseur</a></li><li><a href="keyboard.html">Clavier</a></li><li><a href="generator.html" class="active">Générateur</a></li><li><a href="faq.html">FAQ</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">À propos</a></li>
+      <li><a href="support.html" style="color:var(--ochre);font-weight:700;">Soutenir 💛</a></li>
     </ul>
   <div class="nav-right">
       
+            <a href="support.html" class="nav-support-btn" title="Soutenir amghnas">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span>Soutenir</span>
+      </a>
       <div class="lang-switcher"><a href="../generator.html" class="lang-btn">EN</a><a href="generator.html" class="lang-btn active">FR</a><a href="../ar/generator.html" class="lang-btn">AR</a></div><button id="themeToggle" aria-label="Changer le thème">
     <span class="moon-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></span>
     <span class="sun-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
@@ -446,8 +897,8 @@
   <div class="input-section">
     <label class="input-label">Votre Prénom</label>
     <div class="input-row">
-      <button class="lang-btn active" onclick="setLang('latin')">Latin</button>
-      <button class="lang-btn" onclick="setLang('arabic')">العربية</button>
+      <button type="button" class="input-lang-btn active" data-lang="latin" onclick="setLang('latin')">Latin</button>
+      <button type="button" class="input-lang-btn" data-lang="arabic" onclick="setLang('arabic')">العربية</button>
     </div>
     <input
       type="text"
@@ -504,34 +955,333 @@
   <div class="info-strip">
     <div class="info-card">
       <span class="info-icon">ⵜ</span>
-      <div class="info-title">Ancient Script</div>
-      <div class="info-desc">Tifinagh is over 2,500 years old — one of the oldest writing systems still in use today.</div>
+      <div class="info-title">Écriture Millénaire</div>
+      <div class="info-desc">Le Tifinagh a plus de 2 500 ans d'histoire — l'un des systèmes d'écriture vivants les plus anciens au monde.</div>
     </div>
     <div class="info-card">
       <span class="info-icon">ⵎ</span>
-      <div class="info-title">Amazigh Heritage</div>
-      <div class="info-desc">Used by Tuareg, Moroccan, and Algerian Amazigh communities across North Africa.</div>
+      <div class="info-title">Héritage Amazigh</div>
+      <div class="info-desc">Reconnu officiellement au Maroc et en Algérie, et préservé par les peuples berbères et touaregs.</div>
     </div>
     <div class="info-card">
       <span class="info-icon">ⵣ</span>
-      <div class="info-title">Share Your Name</div>
-      <div class="info-desc">Download your name as an image for WhatsApp, Instagram, or a tattoo design.</div>
+      <div class="info-title">Partagez Votre Nom</div>
+      <div class="info-desc">Téléchargez votre prénom en badge d'art de luxe pour vos réseaux sociaux, votre bio ou un tatouage.</div>
     </div>
   </div>
 
 </main>
 
-  <footer>
-    <span class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</span>
-    <div class="footer-links">
-      <a href="index.html">Convertisseur</a>
-      <a href="keyboard.html">Clavier en ligne</a>
-      <a href="articles.html">Articles</a>
-      <a href="about.html">À propos</a>
-      <a href="privacy.html">Confidentialité</a>
+  <!-- SEO & Content Sections (French) -->
+  <section class="seo-rich-wrapper">
+
+    <!-- Interactive Popular Names Showcase -->
+    <div class="seo-card">
+      <h2>Prénoms Populaires en Tifinagh</h2>
+      <p>Explorez des prénoms authentiques amazighs, arabes et internationaux transcrits en Tifinagh officiel IRCAM. <strong>Cliquez sur un prénom pour prévisualiser et personnaliser instantanément votre carte ci-dessus :</strong></p>
+
+      <div class="popular-names-tabs">
+        <button type="button" class="popular-tab-btn active" onclick="switchPopularCategory('boys', this)">ⵣ Garçons Amazighs</button>
+        <button type="button" class="popular-tab-btn" onclick="switchPopularCategory('girls', this)">ⵣ Filles Amazighes</button>
+        <button type="button" class="popular-tab-btn" onclick="switchPopularCategory('world', this)">🌍 Internationaux &amp; Arabes</button>
+      </div>
+
+      <!-- Category: Amazigh Boys -->
+      <div class="popular-names-grid" id="names-boys">
+        <div class="popular-name-badge" onclick="selectPopularName('Anir', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Anir</span><span class="badge-tifi">ⴰⵏⵉⵔ</span></div>
+          <span class="badge-meaning">Ange de lumière · Lumineux et pur</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Massinissa', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Massinissa</span><span class="badge-tifi">ⵎⴰⵙⵉⵏⵉⵙⵙⴰ</span></div>
+          <span class="badge-meaning">Premier roi de la Numidie unifiée</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Aksil', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Aksil</span><span class="badge-tifi">ⴰⴽⵙⵉⵍ</span></div>
+          <span class="badge-meaning">Le guépard / léopard · Courageux</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Jugurtha', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Jugurtha</span><span class="badge-tifi">ⵢⵓⴳⵓⵔⵜⴰ</span></div>
+          <span class="badge-meaning">Roi numide historique · Celui qui surpasse</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Yidir', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Yidir</span><span class="badge-tifi">ⵢⵉⴷⵉⵔ</span></div>
+          <span class="badge-meaning">Il vivra · Plein de vitalité</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Itri', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Itri</span><span class="badge-tifi">ⵉⵜⵔⵉ</span></div>
+          <span class="badge-meaning">Étoile brillante du désert</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Yanis', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Yanis</span><span class="badge-tifi">ⵢⴰⵏⵉⵙ</span></div>
+          <span class="badge-meaning">Fidèle compagnon de route</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Amayyas', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Amayyas</span><span class="badge-tifi">ⴰⵎⴰⵢⵢⴰⵙ</span></div>
+          <span class="badge-meaning">Noble guépard agile</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Badis', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Badis</span><span class="badge-tifi">ⴱⴰⴷⵉⵙ</span></div>
+          <span class="badge-meaning">Souverain ziride inébranlable</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Sifaks', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Sifaks</span><span class="badge-tifi">ⵙⵉⴼⴰⴽⵙ</span></div>
+          <span class="badge-meaning">Roi de Numidie occidentale (Syphax)</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Gaya', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Gaya</span><span class="badge-tifi">ⴳⴰⵢⴰ</span></div>
+          <span class="badge-meaning">Père de Massinissa et roi des Massyles</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Anaruz', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Anaruz</span><span class="badge-tifi">ⴰⵏⴰⵔⵓⵣ</span></div>
+          <span class="badge-meaning">Espoir et optimisme vers l'avenir</span>
+        </div>
+      </div>
+
+      <!-- Category: Amazigh Girls -->
+      <div class="popular-names-grid" id="names-girls" style="display:none;">
+        <div class="popular-name-badge" onclick="selectPopularName('Tiziri', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Tiziri</span><span class="badge-tifi">ⵜⵉⵣⵉⵔⵉ</span></div>
+          <span class="badge-meaning">Clair de lune lumineux</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Numidia', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Numidia</span><span class="badge-tifi">ⵏⵓⵎⵉⴷⵢⴰ</span></div>
+          <span class="badge-meaning">Grand royaume antique amazigh</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Dihya', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Dihya</span><span class="badge-tifi">ⴷⵉⵀⵢⴰ</span></div>
+          <span class="badge-meaning">Légendaire reine des Aurès</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Damia', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Damia</span><span class="badge-tifi">ⴷⴰⵎⵢⴰ</span></div>
+          <span class="badge-meaning">Femme vaillante et inspirante</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Tin Hinan', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Tin Hinan</span><span class="badge-tifi">ⵜⵉⵏ ⵀⵉⵏⴰⵏ</span></div>
+          <span class="badge-meaning">Reine matriarche des Touaregs</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Massilya', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Massilya</span><span class="badge-tifi">ⵎⴰⵙⵉⵍⵢⴰ</span></div>
+          <span class="badge-meaning">Du noble royaume de Numidie orientale</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Silya', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Silya</span><span class="badge-tifi">ⵙⵉⵍⵢⴰ</span></div>
+          <span class="badge-meaning">Fille de la mer · Douce rosée</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Maya', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Maya</span><span class="badge-tifi">ⵎⴰⵢⴰ</span></div>
+          <span class="badge-meaning">Élégance, grâce et délicatesse</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Tafath', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Tafath</span><span class="badge-tifi">ⵜⴰⴼⴰⵜ</span></div>
+          <span class="badge-meaning">Clarté de l'aube naissante</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Kenza', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Kenza</span><span class="badge-tifi">ⴽⴻⵏⵣⴰ</span></div>
+          <span class="badge-meaning">Précieux trésor inestimable</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Lalla', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Lalla</span><span class="badge-tifi">ⵍⴰⵍⵍⴰ</span></div>
+          <span class="badge-meaning">Dame noble et respectée</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Selin', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Selin</span><span class="badge-tifi">ⵙⵉⵍⵉⵏ</span></div>
+          <span class="badge-meaning">Raisin blanc sucré et généreux</span>
+        </div>
+      </div>
+
+      <!-- Category: World & Arabic -->
+      <div class="popular-names-grid" id="names-world" style="display:none;">
+        <div class="popular-name-badge" onclick="selectPopularName('Adam', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Adam</span><span class="badge-tifi">ⴰⴷⴰⵎ</span></div>
+          <span class="badge-meaning">Homme de la terre</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Mohamed', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Mohamed</span><span class="badge-tifi">ⵎⵓⵃⴰⵎⵎⴰⴷ</span></div>
+          <span class="badge-meaning">Le digne de louanges</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Sarah', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Sarah</span><span class="badge-tifi">ⵙⴰⵕⴰ</span></div>
+          <span class="badge-meaning">Princesse joyeuse</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Fatima', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Fatima</span><span class="badge-tifi">ⴼⴰⵟⵉⵎⴰ</span></div>
+          <span class="badge-meaning">Pureté et bienveillance</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Ali', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Ali</span><span class="badge-tifi">ⵄⴰⵍⵉ</span></div>
+          <span class="badge-meaning">Élevé et noble</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Sofia', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Sofia</span><span class="badge-tifi">ⵙⵓⴼⵢⴰ</span></div>
+          <span class="badge-meaning">Sagesse et clarté</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Lucas', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Lucas</span><span class="badge-tifi">ⵍⵓⴽⴰⵙ</span></div>
+          <span class="badge-meaning">Porteur de lumière</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Youssef', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Youssef</span><span class="badge-tifi">ⵢⵓⵙⴼ</span></div>
+          <span class="badge-meaning">Beauté et droiture</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Maryam', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Maryam</span><span class="badge-tifi">ⵎⴰⵔⵢⴰⵎ</span></div>
+          <span class="badge-meaning">Étoile bienveillante de la mer</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Rayan', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Rayan</span><span class="badge-tifi">ⵔⴰⵢⴰⵏ</span></div>
+          <span class="badge-meaning">Porte du Paradis fleuri</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('David', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">David</span><span class="badge-tifi">ⴷⴰⵡⵓⴷ</span></div>
+          <span class="badge-meaning">Le bien-aimé</span>
+        </div>
+        <div class="popular-name-badge" onclick="selectPopularName('Emma', 'latin')">
+          <div class="badge-name-row"><span class="badge-latin">Emma</span><span class="badge-tifi">ⴻⵎⵎⴰ</span></div>
+          <span class="badge-meaning">Universelle et complète</span>
+        </div>
+      </div>
     </div>
-    <p>Fait avec ❤ pour la culture amazighe · Par Anaruz Elhabib</p>
-    <p style="margin-top:0.4rem">&copy; <span id="copyright-year"></span> amghnas.com</p>
+
+    <!-- Complete Guide: How It Works & Phonetic Rules -->
+    <div class="seo-card">
+      <h2>Comment fonctionne le Générateur de Prénoms en Tifinagh ?</h2>
+      <p>Le <strong>Générateur de Noms amghnas</strong> utilise l'alphabet <strong>Néo-Tifinagh officiel à 33 lettres</strong> standardisé par l'Institut Royal de la Culture Amazighe (IRCAM) et intégré dans la norme universelle Unicode (U+2D30 à U+2D7F). Notre outil combine des règles phonétiques rigoureuses avec un dictionnaire de plusieurs milliers de prénoms maghrébins, berbères et internationaux.</p>
+
+      <div class="seo-features-grid">
+        <div class="seo-feature-item">
+          <h4><span>🔤</span> Voyelles phonétiques explicites</h4>
+          <p>Le Tifinagh note toutes les voyelles précisément : <strong>A</strong> (<span class="badge-tifi">ⴰ</span>), <strong>I</strong> (<span class="badge-tifi">ⵉ</span>), <strong>U / O</strong> (<span class="badge-tifi">ⵓ</span>), et la voyelle neutre amazighe <em>Schwa</em> <strong>E</strong> (<span class="badge-tifi">ⴻ</span>).</p>
+        </div>
+        <div class="seo-feature-item">
+          <h4><span>✨</span> Consonnes berbères spécifiques</h4>
+          <p>Chaque son riche dispose de son glyphe authentique : <strong>GH</strong> devient <em>Ghayn</em> (<span class="badge-tifi">ⵖ</span>), <strong>KH</strong> devient <em>Kha</em> (<span class="badge-tifi">ⵅ</span>), et <strong>CH</strong> devient <em>Shin</em> (<span class="badge-tifi">ⵛ</span>).</p>
+        </div>
+        <div class="seo-feature-item">
+          <h4><span>📍</span> Consonnes emphatiques à point souscrit</h4>
+          <p>Les consonnes profondes portent des signes distinctifs : <strong>ḍ</strong> (<span class="badge-tifi">ⴹ</span>), <strong>ṭ</strong> (<span class="badge-tifi">ⵟ</span>), <strong>ṣ</strong> (<span class="badge-tifi">ⵚ</span>), <strong>ẓ</strong> (<span class="badge-tifi">ⵥ</span>), et <strong>ṛ</strong> (<span class="badge-tifi">ⵕ</span>).</p>
+        </div>
+        <div class="seo-feature-item">
+          <h4><span>🌙</span> Translittération intelligente des noms arabes</h4>
+          <p>Les noms arabes non vocalisés sont reconnus automatiquement pour faire apparaître les voyelles brèves correctes (ex. <em>فاطمة → ⴼⴰⵟⵉⵎⴰ</em>, <em>يوسف → ⵢⵓⵙⴼ</em>).</p>
+        </div>
+      </div>
+
+      <h3>Idées créatives pour utiliser votre badge en Tifinagh</h3>
+      <p>Après avoir généré votre nom et choisi votre style préféré parmi <strong>Noir Obsidienne</strong>, <strong>Or Royal</strong> ou <strong>Sable Désert</strong>, voici plusieurs usages inspirants :</p>
+      <ul style="margin:0 0 1.25rem 1.5rem;line-height:2.2;color:var(--text-muted);font-size:0.92rem;">
+        <li><strong>Modèle pour Tatouage (Tattoo Design) :</strong> Les formes géométriques épurées du Tifinagh (cercles, croix, chevrons) composent des tatouages magnifiques et intemporels. L'image PNG nette constitue un pochoir parfait pour votre tatoueur.</li>
+        <li><strong>Bio Réseaux Sociaux &amp; Profils :</strong> Cliquez sur « Copier Tifinagh » pour coller les vrais caractères Unicode dans votre bio Instagram, TikTok, statut WhatsApp ou profil Twitter.</li>
+        <li><strong>Gravure sur Bijoux &amp; Objets d'Art :</strong> Gravez votre prénom en Tifinagh sur des pendentifs en argent berbère ou des chevalières traditionnelles.</li>
+        <li><strong>Faire-part &amp; Naissance :</strong> Annoncez la venue de votre enfant avec une carte culturelle personnalisée en haute définition.</li>
+      </ul>
+
+      <!-- Internal Link Cards -->
+      <h3 style="margin-top:2rem;">Explorez nos autres outils et ressources amazighes</h3>
+      <div class="seo-links-grid">
+        <a href="amazigh-baby-names.html" class="seo-link-card">
+          <h4>👶 Prénoms Berbères</h4>
+          <p>Plus de 60 prénoms traditionnels avec étymologie et signification.</p>
+        </a>
+        <a href="index.html" class="seo-link-card">
+          <h4>🔄 Convertisseur de Texte</h4>
+          <p>Traduisez des phrases complètes entre Tifinagh, Latin et Arabe.</p>
+        </a>
+        <a href="keyboard.html" class="seo-link-card">
+          <h4>⌨️ Clavier Tifinagh en Ligne</h4>
+          <p>Saisissez facilement les 33 caractères amazighs sur mobile ou PC.</p>
+        </a>
+        <a href="talatint-guide.html" class="seo-link-card">
+          <h4>📖 Guide Talatint (Tamɛemmrit)</h4>
+          <p>Maîtrisez les règles de transcription latine phonétique.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Frequently Asked Questions -->
+    <div class="seo-card">
+      <h2>Foire Aux Questions (FAQ)</h2>
+      <div class="seo-faq-list">
+        <details class="seo-faq-item" open>
+          <summary class="seo-faq-question">
+            <span>Comment écrire mon prénom en Tifinagh ?</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            Saisissez simplement votre prénom dans le champ en caractères latins ou arabes. Le générateur transcrit en direct votre prénom en caractères officiels IRCAM Unicode. Vous pouvez ensuite copier le texte ou télécharger la carte d'art en PNG.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>Puis-je convertir des prénoms non amazighs (comme des prénoms français ou arabes) ?</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            Oui ! L'algorithme phonétique et notre dictionnaire intégré gèrent des milliers de prénoms internationaux, bibliques, islamiques et mondiaux selon les règles phonologiques amazighes.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>Puis-je copier le texte Tifinagh pour Instagram, WhatsApp ou pour un tatouage ?</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            Oui. Ce sont de véritables caractères Unicode (U+2D30 à U+2D7F). Cliquez sur « Copier Tifinagh » pour coller directement dans votre profil social ou envoyer l'image nette comme modèle à votre artiste tatoueur.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>Comment télécharger mon prénom en image ?</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            Choisissez votre thème préféré (Noir Obsidienne, Or Royal ou Sable) grâce aux pastilles de couleur au-dessus du cadre, puis cliquez sur « Télécharger PNG ». Une image haute définition est générée et téléchargée sur votre appareil.
+          </div>
+        </details>
+        <details class="seo-faq-item">
+          <summary class="seo-faq-question">
+            <span>Ce générateur est-il totalement gratuit ?</span>
+            <span class="seo-faq-chevron">▼</span>
+          </summary>
+          <div class="seo-faq-answer">
+            Oui, le générateur de prénoms amghnas est 100% gratuit, sans inscription, sans filigrane et sans publicité.
+          </div>
+        </details>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+        <div class="footer-support-card">
+      <div class="fsc-badge">💛 Tiwizi · Solidarité Communautaire</div>
+      <h3 class="fsc-title">Aidez à maintenir amghnas 100% gratuit &amp; sans pub</h3>
+      <p class="fsc-desc">amghnas est un projet numérique indépendant dédié à la préservation de la langue amazighe et du Tifinagh en ligne. Si nos outils vous sont utiles, soutenez notre mission.</p>
+      <div class="fsc-actions">
+        <a href="https://ko-fi.com/amghnas" target="_blank" rel="noopener noreferrer" class="fsc-btn-kofi">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.022 5.04c-1.391 1.761-4.022 3.012-4.022 3.012s-2.631-1.251-4.022-3.012c-1.503-1.902-1.077-4.102.39-4.996 1.467-.894 3.033.272 3.632 1.09.599-.818 2.165-1.984 3.632-1.09 1.467.894 1.893 3.094.39 4.996zm6.271-2.122c-.447 2.361-2.485 2.502-2.485 2.502V7.126s1.956.033 2.485 1.547c.53 1.514.447 2.361 0 3.191z"/></svg>
+          Soutenir sur Ko-fi
+        </a>
+        <a href="support.html" class="fsc-btn-more">Options de don &amp; PayPal →</a>
+      </div>
+    </div>
+
+<div class="footer-tifinagh">ⴰⵎⵖⵏⴰⵙ</div>
+    <div class="footer-links-row">
+      <a href="index.html">Convertisseur</a>
+      <a href="keyboard.html">Clavier Virtuel</a>
+      <a href="generator.html">Générateur de Noms</a>
+    </div>
+    <div class="footer-links-row">
+      <a href="articles.html">Articles &amp; Histoire</a>
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">À propos</a>
+      <a href="support.html" style="color:var(--ochre);font-weight:700;">Soutenir amghnas 💛</a>
+      <a href="privacy.html">Politique de Confidentialité</a>
+    </div>
+    <p class="footer-credit">Créé avec ❤ pour la culture et l'héritage amazighs · Par Anaruz Elhabib</p>
+    <p class="footer-copy">&copy; <span id="copyright-year"></span> amghnas.com</p>
   </footer>
 
 <div class="toast" id="toast"></div>
@@ -2673,13 +3423,16 @@ const styles = {
 function setLang(lang) {
   currentLang = lang;
   const input = document.getElementById('nameInput');
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  input.dir = lang === 'arabic' ? 'rtl' : 'ltr';
-  input.placeholder = lang === 'arabic' ? 'مثال: أنارز، تيزيري...' : 'e.g. Anaruz, Tiziri, Yidir...';
-  input.value = '';
-  updateDisplay('');
-  input.focus();
+  document.querySelectorAll('.input-lang-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.input-lang-btn[data-lang="${lang}"]`);
+  if (btn) btn.classList.add('active');
+  if (input) {
+    input.dir = lang === 'arabic' ? 'rtl' : 'ltr';
+    input.placeholder = lang === 'arabic' ? 'مثال: أنارز، تيزيري...' : 'ex. Anaruz, Tiziri, Yidir...';
+    input.value = '';
+    updateDisplay('');
+    input.focus();
+  }
 }
 
 function setStyle(style) {
@@ -2901,6 +3654,29 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Switch Popular Names Tab
+function switchPopularCategory(cat, btn) {
+  document.querySelectorAll('.popular-tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const boys = document.getElementById('names-boys');
+  const girls = document.getElementById('names-girls');
+  const world = document.getElementById('names-world');
+  if (boys) boys.style.display = cat === 'boys' ? 'grid' : 'none';
+  if (girls) girls.style.display = cat === 'girls' ? 'grid' : 'none';
+  if (world) world.style.display = cat === 'world' ? 'grid' : 'none';
+}
+
+// Select Popular Name and trigger live generation
+function selectPopularName(name, lang) {
+  if (typeof setLang === 'function') setLang(lang);
+  const input = document.getElementById('nameInput');
+  if (input) {
+    input.value = name;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  document.querySelector('.main-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Input listener
