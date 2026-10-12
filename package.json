@@ -9,6 +9,8 @@
     "build": "node -e \"console.log('Build complete')\""
   },
   "dependencies": {
+    "@google/genai": "^2.27.0",
+    "@gradio/client": "^2.7.1",
     "express": "^4.21.2"
   }
 }

@@ -115,6 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Prefill from URL query params (e.g. from OCR tool)
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialText = urlParams.get('text');
+        if (initialText && tifinaghInput && talatintOutput) {
+            tifinaghInput.value = initialText;
+            talatintOutput.value = convertTifinaghToTalatint(initialText);
+        }
+    } catch (_) {}
+
 
 }); // End of DOMContentLoaded
 

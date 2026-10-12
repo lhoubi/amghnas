@@ -13,6 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Check for prefilled text in URL query params (e.g. from OCR page)
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialText = urlParams.get('text');
+        if (initialText) {
+            keyboardInput.value = initialText;
+        }
+    } catch (_) {}
+
     // ─── THEME ───────────────────────────────────────────────────────────────
     function applyTheme(isDark) {
         if (isDark) {
@@ -193,13 +202,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Check if the current device is a mobile phone / tablet with a virtual keyboard
+    function isMobileDevice() {
+        return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+            || (navigator.maxTouchPoints > 1 && /Mobi|Tablet/i.test(navigator.userAgent));
+    }
+
     // ─── PHYSICAL KEYBOARD (keydown) ─────────────────────────────────────────
-    // This is the PRIMARY handler for desktop. It intercepts every keystroke
-    // BEFORE the browser inserts anything, converts it, and inserts Tifinagh.
-    // Because we call e.preventDefault() the browser never writes the raw key —
-    // so editing in the middle of text works perfectly.
+    // This is the PRIMARY handler for desktop physical keyboards.
+    // It intercepts keystrokes BEFORE the browser inserts anything and inserts Tifinagh.
+    // On mobile devices (phones/tablets), virtual keyboards manage input via the native
+    // 'input' event, so we skip manual keydown interception to prevent duplicate characters.
     document.addEventListener('keydown', (e) => {
         if (document.activeElement !== keyboardInput) return;
+
+        // On mobile devices or during IME composition, let the mobile keyboard type naturally;
+        // the 'input' event handles instant conversion with zero double-characters.
+        if (isMobileDevice() || e.isComposing || e.keyCode === 229) return;
 
         // Always allow: browser shortcuts, navigation keys
         if (e.ctrlKey || e.metaKey) return;
@@ -296,50 +315,15 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
     });
 
-    // ─── MOBILE / beforeinput ────────────────────────────────────────────────
-    // On mobile, keydown often does not fire at all.
-    // beforeinput fires BEFORE the browser inserts text, so we can intercept
-    // and insert Tifinagh instead — at any cursor position.
-    keyboardInput.addEventListener('beforeinput', (e) => {
-        if (!e.data) return; // deletions handled by browser natively
-
-        const raw     = e.data.replace(TASHKEEL, '');
-        if (!raw) { e.preventDefault(); return; }
-
-        // If entirely Tifinagh or allowed numbers/symbols already, let it through
-        if ([...raw].every(ch => isTifinagh(ch) || isPassthrough(ch))) return;
-
-        e.preventDefault();
-
-        // Digraph / Ligature check (same logic as keydown)
-        const pos    = keyboardInput.selectionStart;
-        const selEnd = keyboardInput.selectionEnd;
-        if (pos === selEnd && pos > 0) {
-            const prev    = keyboardInput.value[pos - 1];
-            const digraph = (prev + raw);
-            const digraphLower = (prev + raw).toLowerCase();
-            const matched = keyMap[digraph] || keyMap[digraphLower];
-            if (matched) {
-                const val = keyboardInput.value;
-                keyboardInput.value = val.substring(0, pos - 1) + matched + val.substring(pos);
-                keyboardInput.selectionStart = keyboardInput.selectionEnd = pos - 1 + matched.length;
-                keyboardInput.focus();
-                return;
-            }
-        }
-
-        insertAtCursor(toTifinagh(raw));
-    });
-
-    // ─── SAFETY NET (input event) ────────────────────────────────────────────
-    // Catches paste, autocorrect, voice input, etc.
-    // Scans the full value and converts any stray Latin/Arabic characters.
+    // ─── INPUT EVENT (Primary for mobile phone keyboards & paste/autocorrect) ────
+    // Converts text from phone virtual keyboards, paste, autocorrect, voice typing, etc.
+    // Seamlessly converts Latin & Arabic characters into Tifinagh without duplication.
     keyboardInput.addEventListener('input', function () {
         const val = this.value;
         const pos = this.selectionStart;
 
         // Quick bail-out if nothing to convert
-        if (!/[a-zA-Z\u0600-\u06FF]/.test(val)) return;
+        if (!/[a-zA-Z\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(val)) return;
 
         // Strip ة anywhere
         if (val.includes('ة')) {
@@ -355,6 +339,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const convBefore     = toTifinagh(beforeCursor);
             this.value           = converted;
             this.selectionStart  = this.selectionEnd = convBefore.length;
+            const lastChar = convBefore.slice(-1);
+            if (lastChar) {
+                const vk = findVirtualKey(lastChar);
+                if (vk) applyClickEffect(vk);
+            }
         }
     });
 

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Sitemaps
 Sitemap: https://amghnas.com/sitemap.xml
+
+# Preferred domain host
+Host: https://amghnas.com
